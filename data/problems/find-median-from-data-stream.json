@@ -1,0 +1,82 @@
+{
+    "id": "find-median-from-data-stream",
+    "title": "Find Median from Data Stream",
+    "description": "The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value and the median is the mean of the two middle values. Design a data structure that supports the following two operations: void addNum(int num) - Add a integer number from the data stream to the data structure. double findMedian() - Return the median of all elements so far.",
+    "examples": [
+        {
+            "input": "[\"MedianFinder\", \"addNum\", \"addNum\", \"findMedian\", \"addNum\", \"findMedian\"]\n[[], [1], [2], [], [3], []]",
+            "output": "[null, null, null, 1.5, null, 2.0]"
+        }
+    ],
+    "constraints": [
+        "-10^5 <= num <= 10^5",
+        "There will be at least one element in the data structure before calling findMedian.",
+        "At most 5 * 10^4 calls will be made to addNum and findMedian."
+    ],
+    "difficulty": "Hard",
+    "topic": "Heap / Priority Queue",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Sorting",
+            "description": "Sort list on every findMedian call.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define MedianFinder class.",
+                    "placeholderCode": "class MedianFinder:\n    def __init__(self):\n        self.nums = []",
+                    "validationRegex": "^class\\s+MedianFinder:\\s*def\\s+__init__\\(self\\):\\s*self\\.nums\\s*=\\s*\\[\\]$",
+                    "hint": "Initialize a list to store the numbers.",
+                    "solutionCode": "class MedianFinder:\n    def __init__(self):\n        self.nums = []"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Implement addNum.",
+                    "placeholderCode": "    def addNum(self, num):\n        self.nums.append(num)",
+                    "validationRegex": "^\\s+def\\s+addNum\\(self,\\s*num\\):\\s*self\\.nums\\.append\\(num\\)$",
+                    "hint": "Append the number to the list.",
+                    "solutionCode": "    def addNum(self, num):\n        self.nums.append(num)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Implement findMedian.",
+                    "placeholderCode": "    def findMedian(self):\n        self.nums.sort()\n        n = len(self.nums)\n        if n % 2 == 1:\n            return float(self.nums[n // 2])\n        else:\n            return (self.nums[n // 2] + self.nums[n // 2 - 1]) / 2.0",
+                    "validationRegex": "^\\s+def\\s+findMedian\\(self\\):\\s*self\\.nums\\.sort\\(\\)\\s*n\\s*=\\s*len\\(self\\.nums\\)\\s*if\\s+n\\s*%\\s*2\\s*==\\s*1:\\s*return\\s+float\\(self\\.nums\\[n\\s*//\\s*2\\]\\)\\s*else:\\s*return\\s*\\(self\\.nums\\[n\\s*//\\s*2\\]\\s*\\+\\s*self\\.nums\\[n\\s*//\\s*2\\s*-\\s*1\\]\\)\\s*/\\s*2\\.0$",
+                    "hint": "Sort the list and return the middle element or the average of the two middle elements.",
+                    "solutionCode": "    def findMedian(self):\n        self.nums.sort()\n        n = len(self.nums)\n        if n % 2 == 1:\n            return float(self.nums[n // 2])\n        else:\n            return (self.nums[n // 2] + self.nums[n // 2 - 1]) / 2.0"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Two Heaps",
+            "description": "Use max heap for lower half and min heap for upper half.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define MedianFinder class.",
+                    "placeholderCode": "class MedianFinder:\n    def __init__(self):\n        self.small = [] # max heap\n        self.large = [] # min heap",
+                    "validationRegex": "^class\\s+MedianFinder:\\s*def\\s+__init__\\(self\\):\\s*self\\.small\\s*=\\s*\\[\\]\\s*self\\.large\\s*=\\s*\\[\\]$",
+                    "hint": "Initialize two heaps: a max-heap for the smaller half and a min-heap for the larger half.",
+                    "solutionCode": "class MedianFinder:\n    def __init__(self):\n        self.small = [] # max heap\n        self.large = [] # min heap"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Implement addNum.",
+                    "placeholderCode": "    def addNum(self, num):\n        heapq.heappush(self.small, -1 * num)\n        if self.small and self.large and (-1 * self.small[0]) > self.large[0]:\n            val = -1 * heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.small) > len(self.large) + 1:\n            val = -1 * heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.large) > len(self.small) + 1:\n            val = heapq.heappop(self.large)\n            heapq.heappush(self.small, -1 * val)",
+                    "validationRegex": "^\\s+def\\s+addNum\\(self,\\s*num\\):\\s*heapq\\.heappush\\(self\\.small,\\s*-1\\s*\\*\\s*num\\)\\s*if\\s+self\\.small\\s+and\\s+self\\.large\\s+and\\s*\\(-1\\s*\\*\\s*self\\.small\\[0\\]\\)\\s*>\\s*self\\.large\\[0\\]:\\s*val\\s*=\\s*-1\\s*\\*\\s*heapq\\.heappop\\(self\\.small\\)\\s*heapq\\.heappush\\(self\\.large,\\s*val\\)\\s*if\\s+len\\(self\\.small\\)\\s*>\\s+len\\(self\\.large\\)\\s*\\+\\s*1:\\s*val\\s*=\\s*-1\\s*\\*\\s*heapq\\.heappop\\(self\\.small\\)\\s*heapq\\.heappush\\(self\\.large,\\s*val\\)\\s*if\\s+len\\(self\\.large\\)\\s*>\\s+len\\(self\\.small\\)\\s*\\+\\s*1:\\s*val\\s*=\\s*heapq\\.heappop\\(self\\.large\\)\\s*heapq\\.heappush\\(self\\.small,\\s*-1\\s*\\*\\s*val\\)$",
+                    "hint": "Add number to max-heap, then balance heaps to ensure size property and order property.\\n\\nExample:\\nSmall=[-1], Large=[2]. Add 3.\\nPush -3 to Small -> [-3, -1]. Max is 3. 3 > 2 (Large[0]).\\nMove 3 to Large -> Large=[2, 3]. Small=[-1].\\nSizes equal. OK.",
+                    "solutionCode": "    def addNum(self, num):\n        heapq.heappush(self.small, -1 * num)\n        if self.small and self.large and (-1 * self.small[0]) > self.large[0]:\n            val = -1 * heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.small) > len(self.large) + 1:\n            val = -1 * heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.large) > len(self.small) + 1:\n            val = heapq.heappop(self.large)\n            heapq.heappush(self.small, -1 * val)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Implement findMedian.",
+                    "placeholderCode": "    def findMedian(self):\n        if len(self.small) > len(self.large):\n            return -1 * self.small[0]\n        if len(self.large) > len(self.small):\n            return self.large[0]\n        return (-1 * self.small[0] + self.large[0]) / 2.0",
+                    "validationRegex": "^\\s+def\\s+findMedian\\(self\\):\\s*if\\s+len\\(self\\.small\\)\\s*>\\s+len\\(self\\.large\\):\\s*return\\s*-1\\s*\\*\\s*self\\.small\\[0\\]\\s*if\\s+len\\(self\\.large\\)\\s*>\\s+len\\(self\\.small\\):\\s*return\\s+self\\.large\\[0\\]\\s*return\\s*\\(-1\\s*\\*\\s*self\\.small\\[0\\]\\s*\\+\\s*self\\.large\\[0\\]\\)\\s*/\\s*2\\.0$",
+                    "hint": "Return the top of the larger heap or the average of both tops.",
+                    "solutionCode": "    def findMedian(self):\n        if len(self.small) > len(self.large):\n            return -1 * self.small[0]\n        if len(self.large) > len(self.small):\n            return self.large[0]\n        return (-1 * self.small[0] + self.large[0]) / 2.0"
+                }
+            ]
+        }
+    }
+}

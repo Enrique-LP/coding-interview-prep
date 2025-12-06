@@ -1,0 +1,87 @@
+{
+    "id": "find-the-duplicate-number",
+    "title": "Find the Duplicate Number",
+    "description": "Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive. There is only one repeated number in nums, return this repeated number. You must solve the problem without modifying the array nums and uses only constant extra space.",
+    "examples": [
+        {
+            "input": "nums = [1,3,4,2,2]",
+            "output": "2"
+        },
+        {
+            "input": "nums = [3,1,3,4,2]",
+            "output": "3"
+        }
+    ],
+    "constraints": [
+        "1 <= n <= 10^5",
+        "nums.length == n + 1",
+        "1 <= nums[i] <= n",
+        "All the integers in nums appear only once except for precisely one integer which appears two or more times."
+    ],
+    "difficulty": "Medium",
+    "topic": "Linked List",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Sorting (Not Allowed)",
+            "description": "Sort and check adjacent. (Violates constraints)",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function find_duplicate that takes nums.",
+                    "placeholderCode": "def find_duplicate(nums):",
+                    "validationRegex": "^def\\s+find_duplicate\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def find_duplicate(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Sort.",
+                    "placeholderCode": "    nums.sort()",
+                    "validationRegex": "^\\s+nums\\.sort\\(\\)$",
+                    "hint": "Sort the array in-place.",
+                    "solutionCode": "    nums.sort()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Check adjacent.",
+                    "placeholderCode": "    for i in range(1, len(nums)):\n        if nums[i] == nums[i - 1]:\n            return nums[i]",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(1,\\s*len\\(nums\\)\\):\\s*if\\s+nums\\[i\\]\\s*==\\s*nums\\[i\\s*-\\s*1\\]:\\s*return\\s+nums\\[i\\]$",
+                    "hint": "Iterate and check if `nums[i] == nums[i-1]`.",
+                    "solutionCode": "    for i in range(1, len(nums)):\n        if nums[i] == nums[i - 1]:\n            return nums[i]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Floyd's Cycle-Finding",
+            "description": "Treat array as linked list and find cycle start.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function find_duplicate that takes nums.",
+                    "placeholderCode": "def find_duplicate(nums):",
+                    "validationRegex": "^def\\s+find_duplicate\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def find_duplicate(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Find intersection.",
+                    "placeholderCode": "    slow, fast = 0, 0\n    while True:\n        slow = nums[slow]\n        fast = nums[nums[fast]]\n        if slow == fast:\n            break",
+                    "validationRegex": "^\\s+slow,\\s*fast\\s*=\\s*0,\\s*0\\s*while\\s+True:\\s*slow\\s*=\\s*nums\\[slow\\]\\s*fast\\s*=\\s*nums\\[nums\\[fast\\]\\]\\s*if\\s+slow\\s*==\\s*fast:\\s*break$",
+                    "hint": "Use slow/fast pointers to find cycle intersection.\\n\\nExample:\\nnums=[1,3,4,2,2]. Treat as indices: 0->1->3->2->4->2...\\nCycle is 2->4->2. Slow/Fast will meet inside this cycle.",
+                    "solutionCode": "    slow, fast = 0, 0\n    while True:\n        slow = nums[slow]\n        fast = nums[nums[fast]]\n        if slow == fast:\n            break"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Find cycle start.",
+                    "placeholderCode": "    slow2 = 0\n    while True:\n        slow = nums[slow]\n        slow2 = nums[slow2]\n        if slow == slow2:\n            return slow",
+                    "validationRegex": "^\\s+slow2\\s*=\\s*0\\s*while\\s+True:\\s*slow\\s*=\\s*nums\\[slow\\]\\s*slow2\\s*=\\s*nums\\[slow2\\]\\s*if\\s+slow\\s*==\\s*slow2:\\s*return\\s+slow$",
+                    "hint": "Use a second slow pointer to find the start of the cycle.",
+                    "solutionCode": "    slow2 = 0\n    while True:\n        slow = nums[slow]\n        slow2 = nums[slow2]\n        if slow == slow2:\n            return slow"
+                }
+            ]
+        }
+    }
+}

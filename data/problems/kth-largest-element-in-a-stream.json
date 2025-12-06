@@ -1,0 +1,70 @@
+{
+    "id": "kth-largest-element-in-a-stream",
+    "title": "Kth Largest Element in a Stream",
+    "description": "Design a class to find the kth largest element in a stream. Note that it is the kth largest element in the sorted order, not the kth distinct element. Implement KthLargest class: KthLargest(int k, int[] nums) Initializes the object with the integer k and the stream of integers nums. int add(int val) Appends the integer val to the stream and returns the element representing the kth largest element in the stream.",
+    "examples": [
+        {
+            "input": "[\"KthLargest\", \"add\", \"add\", \"add\", \"add\", \"add\"]\n[[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]]",
+            "output": "[null, 4, 5, 5, 8, 8]",
+            "explanation": "KthLargest kthLargest = new KthLargest(3, [4, 5, 8, 2]);\nkthLargest.add(3);   // return 4\nkthLargest.add(5);   // return 5\nkthLargest.add(10);  // return 5\nkthLargest.add(9);   // return 8\nkthLargest.add(4);   // return 8"
+        }
+    ],
+    "constraints": [
+        "1 <= k <= 10^4",
+        "0 <= nums.length <= 10^4",
+        "-10^4 <= nums[i] <= 10^4",
+        "-10^4 <= val <= 10^4",
+        "At most 10^4 calls will be made to add.",
+        "It is guaranteed that there will be at least k elements in the array when you search for the kth element."
+    ],
+    "difficulty": "Easy",
+    "topic": "Heap / Priority Queue",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Sorting",
+            "description": "Sort the list every time add is called.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the KthLargest class.",
+                    "placeholderCode": "class KthLargest:\n    def __init__(self, k, nums):\n        self.k = k\n        self.nums = nums",
+                    "validationRegex": "^class\\s+KthLargest:\\s+def\\s+__init__\\(self,\\s*k,\\s*nums\\):\\s*self\\.k\\s*=\\s*k\\s*self\\.nums\\s*=\\s*nums$",
+                    "hint": "Initialize the class with k and the list of numbers.",
+                    "solutionCode": "class KthLargest:\n    def __init__(self, k, nums):\n        self.k = k\n        self.nums = nums"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Implement the add method.",
+                    "placeholderCode": "    def add(self, val):\n        self.nums.append(val)\n        self.nums.sort(reverse=True)\n        return self.nums[self.k - 1]",
+                    "validationRegex": "^\\s+def\\s+add\\(self,\\s*val\\):\\s*self\\.nums\\.append\\(val\\)\\s*self\\.nums\\.sort\\(reverse=True\\)\\s*return\\s+self\\.nums\\[self\\.k\\s*-\\s*1\\]$",
+                    "hint": "Append the new value, sort the list in descending order, and return the kth element.",
+                    "solutionCode": "    def add(self, val):\n        self.nums.append(val)\n        self.nums.sort(reverse=True)\n        return self.nums[self.k - 1]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Min Heap",
+            "description": "Maintain a min heap of size k.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the KthLargest class.",
+                    "placeholderCode": "class KthLargest:\n    def __init__(self, k, nums):\n        self.k = k\n        self.minHeap = nums\n        import heapq\n        heapq.heapify(self.minHeap)\n        while len(self.minHeap) > k:\n            heapq.heappop(self.minHeap)",
+                    "validationRegex": "^class\\s+KthLargest:\\s+def\\s+__init__\\(self,\\s*k,\\s*nums\\):\\s*self\\.k\\s*=\\s*k\\s*self\\.minHeap\\s*=\\s*nums\\s*import\\s+heapq\\s*heapq\\.heapify\\(self\\.minHeap\\)\\s*while\\s+len\\(self\\.minHeap\\)\\s*>\\s*k:\\s*heapq\\.heappop\\(self\\.minHeap\\)$",
+                    "hint": "Use a min heap to keep the k largest elements. The root will be the kth largest.",
+                    "solutionCode": "class KthLargest:\n    def __init__(self, k, nums):\n        self.k = k\n        self.minHeap = nums\n        import heapq\n        heapq.heapify(self.minHeap)\n        while len(self.minHeap) > k:\n            heapq.heappop(self.minHeap)"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Implement the add method.",
+                    "placeholderCode": "    def add(self, val):\n        import heapq\n        heapq.heappush(self.minHeap, val)\n        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)\n        return self.minHeap[0]",
+                    "validationRegex": "^\\s+def\\s+add\\(self,\\s*val\\):\\s*import\\s+heapq\\s*heapq\\.heappush\\(self\\.minHeap,\\s*val\\)\\s*if\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:\\s*heapq\\.heappop\\(self\\.minHeap\\)\\s*return\\s+self\\.minHeap\\[0\\]$",
+                    "hint": "Push the new value to the heap. If the heap size exceeds k, pop the smallest element.\\n\\nExample:\\nHeap=[4, 5, 8], k=3. Add 10.\\nHeap becomes [4, 5, 8, 10]. Pop smallest (4).\\nHeap=[5, 8, 10]. Return 5 (root).",
+                    "solutionCode": "    def add(self, val):\n        import heapq\n        heapq.heappush(self.minHeap, val)\n        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)\n        return self.minHeap[0]"
+                }
+            ]
+        }
+    }
+}

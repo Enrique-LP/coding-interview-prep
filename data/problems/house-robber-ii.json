@@ -1,0 +1,85 @@
+{
+    "id": "house-robber-ii",
+    "title": "House Robber II",
+    "description": "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night. Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.",
+    "examples": [
+        {
+            "input": "nums = [2,3,2]",
+            "output": "3"
+        },
+        {
+            "input": "nums = [1,2,3,1]",
+            "output": "4"
+        }
+    ],
+    "constraints": [
+        "1 <= nums.length <= 100",
+        "0 <= nums[i] <= 1000"
+    ],
+    "difficulty": "Medium",
+    "topic": "1-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Run House Robber I twice: excluding first or excluding last.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function rob that takes nums.",
+                    "placeholderCode": "def rob(nums):",
+                    "validationRegex": "^def\\s+rob\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def rob(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define helper for linear house robber.",
+                    "placeholderCode": "    def helper(nums):\n        rob1, rob2 = 0, 0\n        for n in nums:\n            newRob = max(rob1 + n, rob2)\n            rob1 = rob2\n            rob2 = newRob\n        return rob2",
+                    "validationRegex": "^\\s+def\\s+helper\\(nums\\):\\s*rob1,\\s*rob2\\s*=\\s*0,\\s*0\\s*for\\s+n\\s+in\\s+nums:\\s*newRob\\s*=\\s*max\\(rob1\\s*\\+\\s*n,\\s*rob2\\)\\s*rob1\\s*=\\s*rob2\\s*rob2\\s*=\\s*newRob\\s*return\\s+rob2$",
+                    "hint": "Helper function implements House Robber I (linear).",
+                    "solutionCode": "    def helper(nums):\n        rob1, rob2 = 0, 0\n        for n in nums:\n            newRob = max(rob1 + n, rob2)\n            rob1 = rob2\n            rob2 = newRob\n        return rob2"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return max of helper calls or nums[0].",
+                    "placeholderCode": "    return max(nums[0], helper(nums[1:]), helper(nums[:-1]))",
+                    "validationRegex": "^\\s+return\\s+max\\(nums\\[0\\],\\s*helper\\(nums\\[1:\\]\\),\\s*helper\\(nums\\[:-1\\]\\)\\)$",
+                    "hint": "Since houses are circular, we can't rob both first and last. So solve linear problem twice: once excluding first house, once excluding last. Also handle single house case.\\n\\nExample:\\nNums=[2, 3, 2].\\nCase 1 (Skip First): [3, 2] -> Max 3.\\nCase 2 (Skip Last): [2, 3] -> Max 3.\\nResult: Max(3, 3) = 3.",
+                    "solutionCode": "    return max(nums[0], helper(nums[1:]), helper(nums[:-1]))"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Same as brute force, O(n).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function rob that takes nums.",
+                    "placeholderCode": "def rob(nums):",
+                    "validationRegex": "^def\\s+rob\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def rob(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define helper for linear house robber.",
+                    "placeholderCode": "    def helper(nums):\n        rob1, rob2 = 0, 0\n        for n in nums:\n            newRob = max(rob1 + n, rob2)\n            rob1 = rob2\n            rob2 = newRob\n        return rob2",
+                    "validationRegex": "^\\s+def\\s+helper\\(nums\\):\\s*rob1,\\s*rob2\\s*=\\s*0,\\s*0\\s*for\\s+n\\s+in\\s+nums:\\s*newRob\\s*=\\s*max\\(rob1\\s*\\+\\s*n,\\s*rob2\\)\\s*rob1\\s*=\\s*rob2\\s*rob2\\s*=\\s*newRob\\s*return\\s+rob2$",
+                    "hint": "Helper function implements House Robber I (linear).",
+                    "solutionCode": "    def helper(nums):\n        rob1, rob2 = 0, 0\n        for n in nums:\n            newRob = max(rob1 + n, rob2)\n            rob1 = rob2\n            rob2 = newRob\n        return rob2"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return max of helper calls or nums[0].",
+                    "placeholderCode": "    return max(nums[0], helper(nums[1:]), helper(nums[:-1]))",
+                    "validationRegex": "^\\s+return\\s+max\\(nums\\[0\\],\\s*helper\\(nums\\[1:\\]\\),\\s*helper\\(nums\\[:-1\\]\\)\\)$",
+                    "hint": "Since houses are circular, we can't rob both first and last. So solve linear problem twice: once excluding first house, once excluding last. Also handle single house case.\\n\\nExample:\\nNums=[2, 3, 2].\\nCase 1 (Skip First): [3, 2] -> Max 3.\\nCase 2 (Skip Last): [2, 3] -> Max 3.\\nResult: Max(3, 3) = 3.",
+                    "solutionCode": "    return max(nums[0], helper(nums[1:]), helper(nums[:-1]))"
+                }
+            ]
+        }
+    }
+}

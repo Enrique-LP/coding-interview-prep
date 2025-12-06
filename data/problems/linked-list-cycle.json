@@ -1,0 +1,109 @@
+{
+    "id": "linked-list-cycle",
+    "title": "Linked List Cycle",
+    "description": "Given head, the head of a linked list, determine if the linked list has a cycle in it.",
+    "examples": [
+        {
+            "input": "head = [3,2,0,-4], pos = 1",
+            "output": "true",
+            "explanation": "There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed)."
+        },
+        {
+            "input": "head = [1,2], pos = 0",
+            "output": "true",
+            "explanation": "There is a cycle in the linked list, where the tail connects to the 0th node."
+        },
+        {
+            "input": "head = [1], pos = -1",
+            "output": "false",
+            "explanation": "There is no cycle in the linked list."
+        }
+    ],
+    "constraints": [
+        "The number of the nodes in the list is in the range [0, 10^4].",
+        "-10^5 <= Node.val <= 10^5",
+        "pos is -1 or a valid index in the linked-list."
+    ],
+    "difficulty": "Easy",
+    "topic": "Linked List",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "HashSet",
+            "description": "Store visited nodes in a set.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function has_cycle that takes head.",
+                    "placeholderCode": "def has_cycle(head):",
+                    "validationRegex": "^def\\s+has_cycle\\(head\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def has_cycle(head):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize set.",
+                    "placeholderCode": "    visited = set()\n    cur = head",
+                    "validationRegex": "^\\s+visited\\s*=\\s*set\\(\\)\\s*cur\\s*=\\s*head$",
+                    "hint": "Init `visited` set.",
+                    "solutionCode": "    visited = set()\n    cur = head"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Traverse and check.",
+                    "placeholderCode": "    while cur:\n        if cur in visited:\n            return True\n        visited.add(cur)\n        cur = cur.next",
+                    "validationRegex": "^\\s+while\\s+cur:\\s*if\\s+cur\\s+in\\s+visited:\\s*return\\s+True\\s*visited\\.add\\(cur\\)\\s*cur\\s*=\\s*cur\\.next$",
+                    "hint": "If node in set, return True. Else add to set.",
+                    "solutionCode": "    while cur:\n        if cur in visited:\n            return True\n        visited.add(cur)\n        cur = cur.next"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return False.",
+                    "placeholderCode": "    return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "Return False if loop finishes.",
+                    "solutionCode": "    return False"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Floyd's Cycle-Finding",
+            "description": "Use slow and fast pointers.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function has_cycle that takes head.",
+                    "placeholderCode": "def has_cycle(head):",
+                    "validationRegex": "^def\\s+has_cycle\\(head\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def has_cycle(head):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize pointers.",
+                    "placeholderCode": "    slow, fast = head, head",
+                    "validationRegex": "^\\s+slow,\\s*fast\\s*=\\s*head,\\s*head$",
+                    "hint": "Init `slow` and `fast` pointers.",
+                    "solutionCode": "    slow, fast = head, head"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Traverse.",
+                    "placeholderCode": "    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n        if slow == fast:\n            return True",
+                    "validationRegex": "^\\s+while\\s+fast\\s+and\\s+fast\\.next:\\s*slow\\s*=\\s*slow\\.next\\s*fast\\s*=\\s*fast\\.next\\.next\\s*if\\s+slow\\s*==\\s*fast:\\s*return\\s+True$",
+                    "hint": "Move slow by 1, fast by 2. If they meet, return True.\\n\\nExample:\\nCycle: 1->2->3->1...\\nS=1, F=1. S=2, F=3. S=3, F=2 (wrap). S=1, F=1. Meet!",
+                    "solutionCode": "    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n        if slow == fast:\n            return True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return False.",
+                    "placeholderCode": "    return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "Return False if fast reaches end.",
+                    "solutionCode": "    return False"
+                }
+            ]
+        }
+    }
+}

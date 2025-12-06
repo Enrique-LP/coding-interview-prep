@@ -1,0 +1,107 @@
+{
+    "id": "add-two-numbers",
+    "title": "Add Two Numbers",
+    "description": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list. You may assume the two numbers do not contain any leading zero, except the number 0 itself.",
+    "examples": [
+        {
+            "input": "l1 = [2,4,3], l2 = [5,6,4]",
+            "output": "[7,0,8]",
+            "explanation": "342 + 465 = 807."
+        },
+        {
+            "input": "l1 = [0], l2 = [0]",
+            "output": "[0]"
+        },
+        {
+            "input": "l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]",
+            "output": "[8,9,9,9,0,0,0,1]"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in each linked list is in the range [1, 100].",
+        "0 <= Node.val <= 9",
+        "It is guaranteed that the list represents a number that does not have leading zeros."
+    ],
+    "difficulty": "Medium",
+    "topic": "Linked List",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Math Simulation",
+            "description": "Simulate addition digit by digit.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function add_two_numbers that takes l1 and l2.",
+                    "placeholderCode": "def add_two_numbers(l1, l2):",
+                    "validationRegex": "^def\\s+add_two_numbers\\(l1,\\s*l2\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def add_two_numbers(l1, l2):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize dummy head and carry.",
+                    "placeholderCode": "    dummy = ListNode()\n    cur = dummy\n    carry = 0",
+                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(\\)\\s*cur\\s*=\\s*dummy\\s*carry\\s*=\\s*0$",
+                    "hint": "Init `dummy`, `cur`, and `carry`.",
+                    "solutionCode": "    dummy = ListNode()\n    cur = dummy\n    carry = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop through lists.",
+                    "placeholderCode": "    while l1 or l2 or carry:\n        v1 = l1.val if l1 else 0\n        v2 = l2.val if l2 else 0\n        val = v1 + v2 + carry\n        carry = val // 10\n        val = val % 10\n        cur.next = ListNode(val)\n        cur = cur.next\n        l1 = l1.next if l1 else None\n        l2 = l2.next if l2 else None",
+                    "validationRegex": "^\\s+while\\s+l1\\s+or\\s+l2\\s+or\\s+carry:\\s*v1\\s*=\\s*l1\\.val\\s+if\\s+l1\\s+else\\s+0\\s*v2\\s*=\\s*l2\\.val\\s+if\\s+l2\\s+else\\s+0\\s*val\\s*=\\s*v1\\s*\\+\\s*v2\\s*\\+\\s*carry\\s*carry\\s*=\\s*val\\s*//\\s*10\\s*val\\s*=\\s*val\\s*%\\s*10\\s*cur\\.next\\s*=\\s*ListNode\\(val\\)\\s*cur\\s*=\\s*cur\\.next\\s*l1\\s*=\\s*l1\\.next\\s+if\\s+l1\\s+else\\s+None\\s*l2\\s*=\\s*l2\\.next\\s+if\\s+l2\\s+else\\s+None$",
+                    "hint": "Add values and carry. Update carry. Create new node.\\n\\nExample:\\nL1=2, L2=5, Carry=0. Sum=7. Node(7). Carry=0.\\nL1=4, L2=6, Carry=0. Sum=10. Node(0). Carry=1.",
+                    "solutionCode": "    while l1 or l2 or carry:\n        v1 = l1.val if l1 else 0\n        v2 = l2.val if l2 else 0\n        val = v1 + v2 + carry\n        carry = val // 10\n        val = val % 10\n        cur.next = ListNode(val)\n        cur = cur.next\n        l1 = l1.next if l1 else None\n        l2 = l2.next if l2 else None"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return dummy.next",
+                    "validationRegex": "^\\s+return\\s+dummy\\.next$",
+                    "hint": "Return `dummy.next`.",
+                    "solutionCode": "    return dummy.next"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Math Simulation",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function add_two_numbers that takes l1 and l2.",
+                    "placeholderCode": "def add_two_numbers(l1, l2):",
+                    "validationRegex": "^def\\s+add_two_numbers\\(l1,\\s*l2\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def add_two_numbers(l1, l2):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize dummy head and carry.",
+                    "placeholderCode": "    dummy = ListNode()\n    cur = dummy\n    carry = 0",
+                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(\\)\\s*cur\\s*=\\s*dummy\\s*carry\\s*=\\s*0$",
+                    "hint": "Init `dummy`, `cur`, and `carry`.",
+                    "solutionCode": "    dummy = ListNode()\n    cur = dummy\n    carry = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop through lists.",
+                    "placeholderCode": "    while l1 or l2 or carry:\n        v1 = l1.val if l1 else 0\n        v2 = l2.val if l2 else 0\n        val = v1 + v2 + carry\n        carry = val // 10\n        val = val % 10\n        cur.next = ListNode(val)\n        cur = cur.next\n        l1 = l1.next if l1 else None\n        l2 = l2.next if l2 else None",
+                    "validationRegex": "^\\s+while\\s+l1\\s+or\\s+l2\\s+or\\s+carry:\\s*v1\\s*=\\s*l1\\.val\\s+if\\s+l1\\s+else\\s+0\\s*v2\\s*=\\s*l2\\.val\\s+if\\s+l2\\s+else\\s+0\\s*val\\s*=\\s*v1\\s*\\+\\s*v2\\s*\\+\\s*carry\\s*carry\\s*=\\s*val\\s*//\\s*10\\s*val\\s*=\\s*val\\s*%\\s*10\\s*cur\\.next\\s*=\\s*ListNode\\(val\\)\\s*cur\\s*=\\s*cur\\.next\\s*l1\\s*=\\s*l1\\.next\\s+if\\s+l1\\s+else\\s+None\\s*l2\\s*=\\s*l2\\.next\\s+if\\s+l2\\s+else\\s+None$",
+                    "hint": "Add values and carry. Update carry. Create new node.",
+                    "solutionCode": "    while l1 or l2 or carry:\n        v1 = l1.val if l1 else 0\n        v2 = l2.val if l2 else 0\n        val = v1 + v2 + carry\n        carry = val // 10\n        val = val % 10\n        cur.next = ListNode(val)\n        cur = cur.next\n        l1 = l1.next if l1 else None\n        l2 = l2.next if l2 else None"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return dummy.next",
+                    "validationRegex": "^\\s+return\\s+dummy\\.next$",
+                    "hint": "Return `dummy.next`.",
+                    "solutionCode": "    return dummy.next"
+                }
+            ]
+        }
+    }
+}

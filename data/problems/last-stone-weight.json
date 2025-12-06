@@ -1,0 +1,118 @@
+{
+    "id": "last-stone-weight",
+    "title": "Last Stone Weight",
+    "description": "You are given an array of integers stones where stones[i] is the weight of the ith stone. We are playing a game with the stones. On each turn, we choose the heaviest two stones and smash them together. Suppose the heaviest two stones have weights x and y with x <= y. The result of this smash is: If x == y, both stones are destroyed, and If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x. At the end of the game, there is at most one stone left. Return the weight of the last remaining stone. If there are no stones left, return 0.",
+    "examples": [
+        {
+            "input": "stones = [2,7,4,1,8,1]",
+            "output": "1",
+            "explanation": "We combine 7 and 8 to get 1 so the array converts to [2,4,1,1,1] then, we combine 2 and 4 to get 2 so the array converts to [2,1,1,1] then, we combine 2 and 1 to get 1 so the array converts to [1,1,1] then, we combine 1 and 1 to get 0 so the array converts to [1] then that's the value of the last stone."
+        },
+        {
+            "input": "stones = [1]",
+            "output": "1"
+        }
+    ],
+    "constraints": [
+        "1 <= stones.length <= 30",
+        "1 <= stones[i] <= 1000"
+    ],
+    "difficulty": "Easy",
+    "topic": "Heap / Priority Queue",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Sorting Loop",
+            "description": "Sort in every iteration to find heaviest stones.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function last_stone_weight that takes stones.",
+                    "placeholderCode": "def last_stone_weight(stones):",
+                    "validationRegex": "^def\\s+last_stone_weight\\(stones\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def last_stone_weight(stones):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Loop while more than 1 stone exists.",
+                    "placeholderCode": "    while len(stones) > 1:\n        stones.sort()",
+                    "validationRegex": "^\\s+while\\s+len\\(stones\\)\\s*>\\s*1:\\s*stones\\.sort\\(\\)$",
+                    "hint": "Sort the stones to easily access the heaviest ones.",
+                    "solutionCode": "    while len(stones) > 1:\n        stones.sort()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Pop the two heaviest stones.",
+                    "placeholderCode": "        y = stones.pop()\n        x = stones.pop()",
+                    "validationRegex": "^\\s+y\\s*=\\s*stones\\.pop\\(\\)\\s*x\\s*=\\s*stones\\.pop\\(\\)$",
+                    "hint": "Remove the two largest stones from the end of the sorted list.",
+                    "solutionCode": "        y = stones.pop()\n        x = stones.pop()"
+                },
+                {
+                    "id": 4,
+                    "instruction": "If they differ, add the difference back.",
+                    "placeholderCode": "        if x != y:\n            stones.append(y - x)",
+                    "validationRegex": "^\\s+if\\s+x\\s*!=\\s*y:\\s*stones\\.append\\(y\\s*-\\s*x\\)$",
+                    "hint": "If the stones are not equal, push the difference back into the list.",
+                    "solutionCode": "        if x != y:\n            stones.append(y - x)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return the last stone or 0.",
+                    "placeholderCode": "    return stones[0] if stones else 0",
+                    "validationRegex": "^\\s+return\\s+stones\\[0\\]\\s+if\\s+stones\\s+else\\s+0$",
+                    "hint": "Return the remaining stone or 0 if none are left.",
+                    "solutionCode": "    return stones[0] if stones else 0"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Max Heap",
+            "description": "Use a max heap (simulated with negative values) for efficiency.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function last_stone_weight that takes stones.",
+                    "placeholderCode": "def last_stone_weight(stones):",
+                    "validationRegex": "^def\\s+last_stone_weight\\(stones\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def last_stone_weight(stones):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Create a max heap using negative values.",
+                    "placeholderCode": "    import heapq\n    stones = [-s for s in stones]\n    heapq.heapify(stones)",
+                    "validationRegex": "^\\s+import\\s+heapq\\s*stones\\s*=\\s*\\[-s\\s+for\\s+s\\s+in\\s+stones\\]\\s*heapq\\.heapify\\(stones\\)$",
+                    "hint": "Python's heapq is a min-heap, so negate values to simulate a max-heap.",
+                    "solutionCode": "    import heapq\n    stones = [-s for s in stones]\n    heapq.heapify(stones)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while more than 1 stone exists.",
+                    "placeholderCode": "    while len(stones) > 1:\n        first = heapq.heappop(stones)\n        second = heapq.heappop(stones)",
+                    "validationRegex": "^\\s+while\\s+len\\(stones\\)\\s*>\\s*1:\\s*first\\s*=\\s*heapq\\.heappop\\(stones\\)\\s*second\\s*=\\s*heapq\\.heappop\\(stones\\)$",
+                    "hint": "Pop the two largest (most negative) stones.",
+                    "solutionCode": "    while len(stones) > 1:\n        first = heapq.heappop(stones)\n        second = heapq.heappop(stones)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "If second > first (since negative), push difference.",
+                    "placeholderCode": "        if second > first:\n            heapq.heappush(stones, first - second)",
+                    "validationRegex": "^\\s+if\\s+second\\s*>\\s+first:\\s*heapq\\.heappush\\(stones,\\s*first\\s*-\\s*second\\)$",
+                    "hint": "Calculate the difference and push it back if non-zero.\\n\\nExample:\\nStones=[-8, -7, -4]. Pop -8 (8) and -7 (7).\\n8 > 7. Diff = 1. Push -1.\\nStones=[-4, -1].",
+                    "solutionCode": "        if second > first:\n            heapq.heappush(stones, first - second)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return the absolute value of the last stone or 0.",
+                    "placeholderCode": "    stones.append(0)\n    return abs(stones[0])",
+                    "validationRegex": "^\\s+stones\\.append\\(0\\)\\s*return\\s+abs\\(stones\\[0\\]\\)$",
+                    "hint": "Return the absolute value of the remaining stone.",
+                    "solutionCode": "    stones.append(0)\n    return abs(stones[0])"
+                }
+            ]
+        }
+    }
+}

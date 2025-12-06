@@ -1,0 +1,103 @@
+{
+    "id": "evaluate-reverse-polish-notation",
+    "title": "Evaluate Reverse Polish Notation",
+    "description": "Evaluate the value of an arithmetic expression in Reverse Polish Notation. Valid operators are +, -, *, and /. Each operand may be an integer or another expression. Note that division between two integers should truncate toward zero.",
+    "examples": [
+        {
+            "input": "tokens = [\"2\",\"1\",\"+\",\"3\",\"*\"]",
+            "output": "9",
+            "explanation": "((2 + 1) * 3) = 9"
+        },
+        {
+            "input": "tokens = [\"4\",\"13\",\"5\",\"/\",\"+\"]",
+            "output": "6",
+            "explanation": "(4 + (13 / 5)) = 6"
+        }
+    ],
+    "constraints": [
+        "1 <= tokens.length <= 10^4",
+        "tokens[i] is either an operator: \"+\", \"-\", \"*\", or \"/\", or an integer in the range [-200, 200]."
+    ],
+    "difficulty": "Medium",
+    "topic": "Stack",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Stack",
+            "description": "Use a stack to process operands and operators.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function eval_rpn that takes tokens.",
+                    "placeholderCode": "def eval_rpn(tokens):",
+                    "validationRegex": "^def\\s+eval_rpn\\(tokens\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def eval_rpn(tokens):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize stack.",
+                    "placeholderCode": "    stack = []",
+                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]$",
+                    "hint": "Initialize an empty stack.",
+                    "solutionCode": "    stack = []"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Process tokens.",
+                    "placeholderCode": "    for t in tokens:\n        if t == \"+\":\n            stack.append(stack.pop() + stack.pop())\n        elif t == \"-\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(b - a)\n        elif t == \"*\":\n            stack.append(stack.pop() * stack.pop())\n        elif t == \"/\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(int(b / a))\n        else:\n            stack.append(int(t))",
+                    "validationRegex": "^\\s+for\\s+t\\s+in\\s+tokens:\\s*if\\s+t\\s*==\\s*\"\\+\":\\s*stack\\.append\\(stack\\.pop\\(\\)\\s*\\+\\s*stack\\.pop\\(\\)\\)\\s*elif\\s+t\\s*==\\s*\"-\":\\s*a,\\s*b\\s*=\\s*stack\\.pop\\(\\),\\s*stack\\.pop\\(\\)\\s*stack\\.append\\(b\\s*-\\s*a\\)\\s*elif\\s+t\\s*==\\s*\"\\*\":\\s*stack\\.append\\(stack\\.pop\\(\\)\\s*\\*\\s*stack\\.pop\\(\\)\\)\\s*elif\\s+t\\s*==\\s*\"/\":\\s*a,\\s*b\\s*=\\s*stack\\.pop\\(\\),\\s*stack\\.pop\\(\\)\\s*stack\\.append\\(int\\(b\\s*/\\s*a\\)\\)\\s*else:\\s*stack\\.append\\(int\\(t\\)\\)$",
+                    "hint": "Iterate tokens. If operator, pop two operands and apply. Else push operand.\\n\\nExample:\\nTokens=['2', '1', '+'].\\nPush 2, Push 1. Stack=[2, 1].\\nOp '+'. Pop 1, Pop 2. 2+1=3. Push 3. Stack=[3].",
+                    "solutionCode": "    for t in tokens:\n        if t == \"+\":\n            stack.append(stack.pop() + stack.pop())\n        elif t == \"-\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(b - a)\n        elif t == \"*\":\n            stack.append(stack.pop() * stack.pop())\n        elif t == \"/\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(int(b / a))\n        else:\n            stack.append(int(t))"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return stack[0]",
+                    "validationRegex": "^\\s+return\\s+stack\\[0\\]$",
+                    "hint": "Return the single element remaining in stack.",
+                    "solutionCode": "    return stack[0]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Stack",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function eval_rpn that takes tokens.",
+                    "placeholderCode": "def eval_rpn(tokens):",
+                    "validationRegex": "^def\\s+eval_rpn\\(tokens\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def eval_rpn(tokens):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize stack.",
+                    "placeholderCode": "    stack = []",
+                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]$",
+                    "hint": "Initialize an empty stack.",
+                    "solutionCode": "    stack = []"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Process tokens.",
+                    "placeholderCode": "    for t in tokens:\n        if t == \"+\":\n            stack.append(stack.pop() + stack.pop())\n        elif t == \"-\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(b - a)\n        elif t == \"*\":\n            stack.append(stack.pop() * stack.pop())\n        elif t == \"/\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(int(b / a))\n        else:\n            stack.append(int(t))",
+                    "validationRegex": "^\\s+for\\s+t\\s+in\\s+tokens:\\s*if\\s+t\\s*==\\s*\"\\+\":\\s*stack\\.append\\(stack\\.pop\\(\\)\\s*\\+\\s*stack\\.pop\\(\\)\\)\\s*elif\\s+t\\s*==\\s*\"-\":\\s*a,\\s*b\\s*=\\s*stack\\.pop\\(\\),\\s*stack\\.pop\\(\\)\\s*stack\\.append\\(b\\s*-\\s*a\\)\\s*elif\\s+t\\s*==\\s*\"\\*\":\\s*stack\\.append\\(stack\\.pop\\(\\)\\s*\\*\\s*stack\\.pop\\(\\)\\)\\s*elif\\s+t\\s*==\\s*\"/\":\\s*a,\\s*b\\s*=\\s*stack\\.pop\\(\\),\\s*stack\\.pop\\(\\)\\s*stack\\.append\\(int\\(b\\s*/\\s*a\\)\\)\\s*else:\\s*stack\\.append\\(int\\(t\\)\\)$",
+                    "hint": "Iterate tokens. If operator, pop two operands and apply. Else push operand.",
+                    "solutionCode": "    for t in tokens:\n        if t == \"+\":\n            stack.append(stack.pop() + stack.pop())\n        elif t == \"-\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(b - a)\n        elif t == \"*\":\n            stack.append(stack.pop() * stack.pop())\n        elif t == \"/\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(int(b / a))\n        else:\n            stack.append(int(t))"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return stack[0]",
+                    "validationRegex": "^\\s+return\\s+stack\\[0\\]$",
+                    "hint": "Return the single element remaining in stack.",
+                    "solutionCode": "    return stack[0]"
+                }
+            ]
+        }
+    }
+}

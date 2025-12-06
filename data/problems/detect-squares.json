@@ -1,0 +1,82 @@
+{
+    "id": "detect-squares",
+    "title": "Detect Squares",
+    "description": "You are given a stream of points on the X-Y plane. Design an algorithm that: Adds new points from the stream into a data structure. Duplicate points are allowed and should be treated as different points. Given a query point, counts the number of ways to choose three points from the data structure such that the three points and the query point form an axis-aligned square with positive area. An axis-aligned square is a square whose edges are all the same length and are either parallel or perpendicular to the x-axis and y-axis.",
+    "examples": [
+        {
+            "input": "[\"DetectSquares\", \"add\", \"add\", \"add\", \"count\", \"count\", \"add\", \"count\"]\n[[], [[3, 10]], [[11, 2]], [[3, 2]], [[11, 10]], [[14, 8]], [[11, 2]], [[11, 10]]]",
+            "output": "[null, null, null, null, 1, 0, null, 2]"
+        }
+    ],
+    "constraints": [
+        "point.length == 2",
+        "0 <= x, y <= 1000",
+        "At most 3000 calls in total will be made to add and count."
+    ],
+    "difficulty": "Medium",
+    "topic": "Math & Geometry",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "HashMap",
+            "description": "Store points in a map and check diagonals.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the class DetectSquares.",
+                    "placeholderCode": "class DetectSquares:\n    def __init__(self):\n        self.ptsCount = defaultdict(int)\n        self.pts = []",
+                    "validationRegex": "^class\\s+DetectSquares:\\s*def\\s+__init__\\(self\\):\\s*self\\.ptsCount\\s*=\\s*defaultdict\\(int\\)\\s*self\\.pts\\s*=\\s*\\[\\]$",
+                    "hint": "Initialize a dictionary to count points and a list to store them.",
+                    "solutionCode": "class DetectSquares:\n    def __init__(self):\n        self.ptsCount = defaultdict(int)\n        self.pts = []"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Implement add method.",
+                    "placeholderCode": "    def add(self, point):\n        self.ptsCount[tuple(point)] += 1\n        self.pts.append(point)",
+                    "validationRegex": "^\\s+def\\s+add\\(self,\\s*point\\):\\s*self\\.ptsCount\\[tuple\\(point\\)\\]\\s*\\+=\\s*1\\s*self\\.pts\\.append\\(point\\)$",
+                    "hint": "Add the point to the dictionary and the list.",
+                    "solutionCode": "    def add(self, point):\n        self.ptsCount[tuple(point)] += 1\n        self.pts.append(point)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Implement count method.",
+                    "placeholderCode": "    def count(self, point):\n        res = 0\n        px, py = point\n        for x, y in self.pts:\n            if (abs(py - y) != abs(px - x)) or x == px or y == py:\n                continue\n            res += self.ptsCount[(x, py)] * self.ptsCount[(px, y)]\n        return res",
+                    "validationRegex": "^\\s+def\\s+count\\(self,\\s*point\\):\\s*res\\s*=\\s*0\\s*px,\\s*py\\s*=\\s*point\\s*for\\s+x,\\s*y\\s+in\\s+self\\.pts:\\s*if\\s*\\(abs\\(py\\s*-\\s*y\\)\\s*!=\\s*abs\\(px\\s*-\\s*x\\)\\)\\s+or\\s+x\\s*==\\s*px\\s+or\\s+y\\s*==\\s*py:\\s*continue\\s*res\\s*\\+=\\s*self\\.ptsCount\\[\\(x,\\s*py\\)\\]\\s*\\*\\s*self\\.ptsCount\\[\\(px,\\s*y\\)\\]\\s*return\\s+res$",
+                    "hint": "Iterate through stored points. Check if a point forms a diagonal of a square with the query point. If so, check if the other two corners exist using the dictionary.",
+                    "solutionCode": "    def count(self, point):\n        res = 0\n        px, py = point\n        for x, y in self.pts:\n            if (abs(py - y) != abs(px - x)) or x == px or y == py:\n                continue\n            res += self.ptsCount[(x, py)] * self.ptsCount[(px, y)]\n        return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "HashMap",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the class DetectSquares.",
+                    "placeholderCode": "class DetectSquares:\n    def __init__(self):\n        self.ptsCount = defaultdict(int)\n        self.pts = []",
+                    "validationRegex": "^class\\s+DetectSquares:\\s*def\\s+__init__\\(self\\):\\s*self\\.ptsCount\\s*=\\s*defaultdict\\(int\\)\\s*self\\.pts\\s*=\\s*\\[\\]$",
+                    "hint": "Initialize data structures.",
+                    "solutionCode": "class DetectSquares:\n    def __init__(self):\n        self.ptsCount = defaultdict(int)\n        self.pts = []"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Implement add method.",
+                    "placeholderCode": "    def add(self, point):\n        self.ptsCount[tuple(point)] += 1\n        self.pts.append(point)",
+                    "validationRegex": "^\\s+def\\s+add\\(self,\\s*point\\):\\s*self\\.ptsCount\\[tuple\\(point\\)\\]\\s*\\+=\\s*1\\s*self\\.pts\\.append\\(point\\)$",
+                    "hint": "Add point.",
+                    "solutionCode": "    def add(self, point):\n        self.ptsCount[tuple(point)] += 1\n        self.pts.append(point)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Implement count method.",
+                    "placeholderCode": "    def count(self, point):\n        res = 0\n        px, py = point\n        for x, y in self.pts:\n            if (abs(py - y) != abs(px - x)) or x == px or y == py:\n                continue\n            res += self.ptsCount[(x, py)] * self.ptsCount[(px, y)]\n        return res",
+                    "validationRegex": "^\\s+def\\s+count\\(self,\\s*point\\):\\s*res\\s*=\\s*0\\s*px,\\s*py\\s*=\\s*point\\s*for\\s+x,\\s*y\\s+in\\s+self\\.pts:\\s*if\\s*\\(abs\\(py\\s*-\\s*y\\)\\s*!=\\s*abs\\(px\\s*-\\s*x\\)\\)\\s+or\\s+x\\s*==\\s*px\\s+or\\s+y\\s*==\\s*py:\\s*continue\\s*res\\s*\\+=\\s*self\\.ptsCount\\[\\(x,\\s*py\\)\\]\\s*\\*\\s*self\\.ptsCount\\[\\(px,\\s*y\\)\\]\\s*return\\s+res$",
+                    "hint": "Count squares.",
+                    "solutionCode": "    def count(self, point):\n        res = 0\n        px, py = point\n        for x, y in self.pts:\n            if (abs(py - y) != abs(px - x)) or x == px or y == py:\n                continue\n            res += self.ptsCount[(x, py)] * self.ptsCount[(px, y)]\n        return res"
+                }
+            ]
+        }
+    }
+}

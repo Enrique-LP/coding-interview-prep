@@ -1,0 +1,74 @@
+{
+    "id": "count-good-nodes-in-binary-tree",
+    "title": "Count Good Nodes in Binary Tree",
+    "description": "Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X. Return the number of good nodes in the binary tree.",
+    "examples": [
+        {
+            "input": "root = [3,1,4,3,null,1,5]",
+            "output": "4",
+            "explanation": "Nodes in blue are good.\nRoot Node (3) is always a good node.\nNode 4 -> (3,4) is the maximum value in the path starting from the root.\nNode 5 -> (3,4,5) is the maximum value in the path\nNode 3 -> (3,1,3) is the maximum value in the path."
+        },
+        {
+            "input": "root = [3,3,null,4,2]",
+            "output": "3"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the binary tree is in the range [1, 10^5].",
+        "Each node's value is between [-10^4, 10^4]."
+    ],
+    "difficulty": "Medium",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "DFS",
+            "description": "Traverse tree tracking max value.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function good_nodes that takes root.",
+                    "placeholderCode": "def good_nodes(root):",
+                    "validationRegex": "^def\\s+good_nodes\\(root\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define DFS helper.",
+                    "placeholderCode": "    def dfs(node, maxVal):\n        if not node: return 0\n        res = 1 if node.val >= maxVal else 0\n        maxVal = max(maxVal, node.val)\n        res += dfs(node.left, maxVal)\n        res += dfs(node.right, maxVal)\n        return res",
+                    "validationRegex": "^\\s+def\\s+dfs\\(node,\\s*maxVal\\):\\s*if\\s+not\\s+node:\\s*return\\s*0\\s*res\\s*=\\s*1\\s+if\\s+node\\.val\\s*>=\\s*maxVal\\s+else\\s*0\\s*maxVal\\s*=\\s*max\\(maxVal,\\s*node\\.val\\)\\s*res\\s*\\+=\\s*dfs\\(node\\.left,\\s*maxVal\\)\\s*res\\s*\\+=\\s*dfs\\(node\\.right,\\s*maxVal\\)\\s*return\\s+res$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Call DFS.",
+                    "placeholderCode": "    return dfs(root, root.val)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(root,\\s*root\\.val\\)$"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DFS",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function good_nodes that takes root.",
+                    "placeholderCode": "def good_nodes(root):",
+                    "validationRegex": "^def\\s+good_nodes\\(root\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define DFS helper.",
+                    "placeholderCode": "    def dfs(node, maxVal):\n        if not node: return 0\n        res = 1 if node.val >= maxVal else 0\n        maxVal = max(maxVal, node.val)\n        res += dfs(node.left, maxVal)\n        res += dfs(node.right, maxVal)\n        return res",
+                    "validationRegex": "^\\s+def\\s+dfs\\(node,\\s*maxVal\\):\\s*if\\s+not\\s+node:\\s*return\\s*0\\s*res\\s*=\\s*1\\s+if\\s+node\\.val\\s*>=\\s*maxVal\\s+else\\s*0\\s*maxVal\\s*=\\s*max\\(maxVal,\\s*node\\.val\\)\\s*res\\s*\\+=\\s*dfs\\(node\\.left,\\s*maxVal\\)\\s*res\\s*\\+=\\s*dfs\\(node\\.right,\\s*maxVal\\)\\s*return\\s+res$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Call DFS.",
+                    "placeholderCode": "    return dfs(root, root.val)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(root,\\s*root\\.val\\)$"
+                }
+            ]
+        }
+    }
+}

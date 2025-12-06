@@ -1,0 +1,133 @@
+{
+    "id": "balanced-binary-tree",
+    "title": "Balanced Binary Tree",
+    "description": "Given a binary tree, determine if it is height-balanced. A height-balanced binary tree is a binary tree in which the depth of the two subtrees of every node never differs by more than one.",
+    "examples": [
+        {
+            "input": "root = [3,9,20,null,null,15,7]",
+            "output": "true"
+        },
+        {
+            "input": "root = [1,2,2,3,3,null,null,4,4]",
+            "output": "false"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the tree is in the range [0, 5000].",
+        "-10^4 <= Node.val <= 10^4"
+    ],
+    "difficulty": "Easy",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive DFS",
+            "description": "Check balance at each node.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_balanced that takes root.",
+                    "placeholderCode": "def is_balanced(root):",
+                    "validationRegex": "^def\\s+is_balanced\\(root\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_balanced(root):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define a helper dfs function that returns [balanced, height].",
+                    "placeholderCode": "    def dfs(root):\n        if not root: return [True, 0]",
+                    "validationRegex": "^\\s+def\\s+dfs\\(root\\):\\s*if\\s+not\\s+root:\\s*return\\s+\\[True,\\s*0\\]$",
+                    "hint": "Return [True, 0] for empty tree.",
+                    "solutionCode": "    def dfs(root):\n        if not root: return [True, 0]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Recursively check left and right subtrees.",
+                    "placeholderCode": "        left, right = dfs(root.left), dfs(root.right)",
+                    "validationRegex": "^\\s+left,\\s*right\\s*=\\s*dfs\\(root\\.left\\),\\s*dfs\\(root\\.right\\)$",
+                    "hint": "Get balance status and height of children.",
+                    "solutionCode": "        left, right = dfs(root.left), dfs(root.right)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Check if current node is balanced.",
+                    "placeholderCode": "        balanced = left[0] and right[0] and abs(left[1] - right[1]) <= 1",
+                    "validationRegex": "^\\s+balanced\\s*=\\s*left\\[0\\]\\s+and\\s+right\\[0\\]\\s+and\\s+abs\\(left\\[1\\]\\s*-\\s*right\\[1\\]\\)\\s*<=\\s*1$",
+                    "hint": "Check if children are balanced and height diff <= 1.\\n\\nExample:\\nNode=1. Left Height=2. Right Height=0.\\nDiff = |2 - 0| = 2. 2 > 1. Not Balanced.",
+                    "solutionCode": "        balanced = left[0] and right[0] and abs(left[1] - right[1]) <= 1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return balance status and height.",
+                    "placeholderCode": "        return [balanced, 1 + max(left[1], right[1])]",
+                    "validationRegex": "^\\s+return\\s+\\[balanced,\\s*1\\s*\\+\\s*max\\(left\\[1\\],\\s*right\\[1\\]\\)\\]$",
+                    "hint": "Return updated status and height.",
+                    "solutionCode": "        return [balanced, 1 + max(left[1], right[1])]"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return the result from dfs.",
+                    "placeholderCode": "    return dfs(root)[0]",
+                    "validationRegex": "^\\s+return\\s+dfs\\(root\\)\\[0\\]$",
+                    "hint": "Call dfs and return the boolean result.",
+                    "solutionCode": "    return dfs(root)[0]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Recursive DFS",
+            "description": "Same as brute force, O(n) is optimal.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_balanced that takes root.",
+                    "placeholderCode": "def is_balanced(root):",
+                    "validationRegex": "^def\\s+is_balanced\\(root\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_balanced(root):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define a helper dfs function that returns [balanced, height].",
+                    "placeholderCode": "    def dfs(root):\n        if not root: return [True, 0]",
+                    "validationRegex": "^\\s+def\\s+dfs\\(root\\):\\s*if\\s+not\\s+root:\\s*return\\s+\\[True,\\s*0\\]$",
+                    "hint": "Return [True, 0] for empty tree.",
+                    "solutionCode": "    def dfs(root):\n        if not root: return [True, 0]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Recursively check left and right subtrees.",
+                    "placeholderCode": "        left, right = dfs(root.left), dfs(root.right)",
+                    "validationRegex": "^\\s+left,\\s*right\\s*=\\s*dfs\\(root\\.left\\),\\s*dfs\\(root\\.right\\)$",
+                    "hint": "Get balance status and height of children.",
+                    "solutionCode": "        left, right = dfs(root.left), dfs(root.right)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Check if current node is balanced.",
+                    "placeholderCode": "        balanced = left[0] and right[0] and abs(left[1] - right[1]) <= 1",
+                    "validationRegex": "^\\s+balanced\\s*=\\s*left\\[0\\]\\s+and\\s+right\\[0\\]\\s+and\\s+abs\\(left\\[1\\]\\s*-\\s*right\\[1\\]\\)\\s*<=\\s*1$",
+                    "hint": "Check if children are balanced and height diff <= 1.",
+                    "solutionCode": "        balanced = left[0] and right[0] and abs(left[1] - right[1]) <= 1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return balance status and height.",
+                    "placeholderCode": "        return [balanced, 1 + max(left[1], right[1])]",
+                    "validationRegex": "^\\s+return\\s+\\[balanced,\\s*1\\s*\\+\\s*max\\(left\\[1\\],\\s*right\\[1\\]\\)\\]$",
+                    "hint": "Return updated status and height.",
+                    "solutionCode": "        return [balanced, 1 + max(left[1], right[1])]"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return the result from dfs.",
+                    "placeholderCode": "    return dfs(root)[0]",
+                    "validationRegex": "^\\s+return\\s+dfs\\(root\\)\\[0\\]$",
+                    "hint": "Call dfs and return the boolean result.",
+                    "solutionCode": "    return dfs(root)[0]"
+                }
+            ]
+        }
+    }
+}

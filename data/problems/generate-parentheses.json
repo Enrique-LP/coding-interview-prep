@@ -1,0 +1,84 @@
+{
+    "id": "generate-parentheses",
+    "title": "Generate Parentheses",
+    "description": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
+    "examples": [
+        {
+            "input": "n = 3",
+            "output": "[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]"
+        },
+        {
+            "input": "n = 1",
+            "output": "[\"()\"]"
+        }
+    ],
+    "constraints": [
+        "1 <= n <= 8"
+    ],
+    "difficulty": "Medium",
+    "topic": "Stack",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Backtracking",
+            "description": "Generate all combinations and check validity.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function generate_parenthesis that takes n.",
+                    "placeholderCode": "def generate_parenthesis(n):",
+                    "validationRegex": "^def\\s+generate_parenthesis\\(n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def generate_parenthesis(n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define backtrack function.",
+                    "placeholderCode": "    stack = []\n    res = []\n    def backtrack(openN, closedN):\n        if openN == closedN == n:\n            res.append(\"\".join(stack))\n            return\n        if openN < n:\n            stack.append(\"(\")\n            backtrack(openN + 1, closedN)\n            stack.pop()\n        if closedN < openN:\n            stack.append(\")\")\n            backtrack(openN, closedN + 1)\n            stack.pop()",
+                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]\\s*res\\s*=\\s*\\[\\]\\s*def\\s+backtrack\\(openN,\\s*closedN\\):\\s*if\\s+openN\\s*==\\s*closedN\\s*==\\s*n:\\s*res\\.append\\(\"\"\\.join\\(stack\\)\\)\\s*return\\s*if\\s+openN\\s*<\\s*n:\\s*stack\\.append\\(\"\\(\"\\)\\s*backtrack\\(openN\\s*\\+\\s*1,\\s*closedN\\)\\s*stack\\.pop\\(\\)\\s*if\\s+closedN\\s*<\\s+openN:\\s*stack\\.append\\(\"\\)\"\\)\\s*backtrack\\(openN,\\s*closedN\\s*\\+\\s*1\\)\\s*stack\\.pop\\(\\)$",
+                    "hint": "Use recursion. Track open and closed count. Add '(' if `open < n`. Add ')' if `closed < open`.",
+                    "solutionCode": "    stack = []\n    res = []\n    def backtrack(openN, closedN):\n        if openN == closedN == n:\n            res.append(\"\".join(stack))\n            return\n        if openN < n:\n            stack.append(\"(\")\n            backtrack(openN + 1, closedN)\n            stack.pop()\n        if closedN < openN:\n            stack.append(\")\")\n            backtrack(openN, closedN + 1)\n            stack.pop()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Call backtrack.",
+                    "placeholderCode": "    backtrack(0, 0)\n    return res",
+                    "validationRegex": "^\\s+backtrack\\(0,\\s*0\\)\\s*return\\s+res$",
+                    "hint": "Start backtracking with 0 open and 0 closed.",
+                    "solutionCode": "    backtrack(0, 0)\n    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Backtracking",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function generate_parenthesis that takes n.",
+                    "placeholderCode": "def generate_parenthesis(n):",
+                    "validationRegex": "^def\\s+generate_parenthesis\\(n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def generate_parenthesis(n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define backtrack function.",
+                    "placeholderCode": "    stack = []\n    res = []\n    def backtrack(openN, closedN):\n        if openN == closedN == n:\n            res.append(\"\".join(stack))\n            return\n        if openN < n:\n            stack.append(\"(\")\n            backtrack(openN + 1, closedN)\n            stack.pop()\n        if closedN < openN:\n            stack.append(\")\")\n            backtrack(openN, closedN + 1)\n            stack.pop()",
+                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]\\s*res\\s*=\\s*\\[\\]\\s*def\\s+backtrack\\(openN,\\s*closedN\\):\\s*if\\s+openN\\s*==\\s*closedN\\s*==\\s*n:\\s*res\\.append\\(\"\"\\.join\\(stack\\)\\)\\s*return\\s*if\\s+openN\\s*<\\s*n:\\s*stack\\.append\\(\"\\(\"\\)\\s*backtrack\\(openN\\s*\\+\\s*1,\\s*closedN\\)\\s*stack\\.pop\\(\\)\\s*if\\s+closedN\\s*<\\s+openN:\\s*stack\\.append\\(\"\\)\"\\)\\s*backtrack\\(openN,\\s*closedN\\s*\\+\\s*1\\)\\s*stack\\.pop\\(\\)$",
+                    "hint": "Use recursion. Track open and closed count. Add '(' if `open < n`. Add ')' if `closed < open`.",
+                    "solutionCode": "    stack = []\n    res = []\n    def backtrack(openN, closedN):\n        if openN == closedN == n:\n            res.append(\"\".join(stack))\n            return\n        if openN < n:\n            stack.append(\"(\")\n            backtrack(openN + 1, closedN)\n            stack.pop()\n        if closedN < openN:\n            stack.append(\")\")\n            backtrack(openN, closedN + 1)\n            stack.pop()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Call backtrack.",
+                    "placeholderCode": "    backtrack(0, 0)\n    return res",
+                    "validationRegex": "^\\s+backtrack\\(0,\\s*0\\)\\s*return\\s+res$",
+                    "hint": "Start backtracking with 0 open and 0 closed.",
+                    "solutionCode": "    backtrack(0, 0)\n    return res"
+                }
+            ]
+        }
+    }
+}

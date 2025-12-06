@@ -1,0 +1,118 @@
+{
+    "id": "longest-common-subsequence",
+    "title": "Longest Common Subsequence",
+    "description": "Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.",
+    "examples": [
+        {
+            "input": "text1 = \"abcde\", text2 = \"ace\"",
+            "output": "3",
+            "explanation": "The longest common subsequence is \"ace\" and its length is 3."
+        },
+        {
+            "input": "text1 = \"abc\", text2 = \"abc\"",
+            "output": "3"
+        }
+    ],
+    "constraints": [
+        "1 <= text1.length, text2.length <= 1000",
+        "text1 and text2 consist of only lowercase English characters."
+    ],
+    "difficulty": "Medium",
+    "topic": "2-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively check matching characters.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function longest_common_subsequence that takes text1 and text2.",
+                    "placeholderCode": "def longest_common_subsequence(text1, text2):",
+                    "validationRegex": "^def\\s+longest_common_subsequence\\(text1,\\s*text2\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def longest_common_subsequence(text1, text2):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper with memoization.",
+                    "placeholderCode": "    memo = {}\n    def dfs(i, j):\n        if i == len(text1) or j == len(text2): return 0\n        if (i, j) in memo: return memo[(i, j)]",
+                    "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*j\\):\\s*if\\s+i\\s*==\\s*len\\(text1\\)\\s+or\\s+j\\s*==\\s*len\\(text2\\):\\s*return\\s+0\\s*if\\s*\\(i,\\s*j\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*j\\)\\]$",
+                    "hint": "Recursive function `dfs(i, j)` returns LCS of text1[i:] and text2[j:]. Base case: end of either string -> 0. Check memo.\\n\\nExample:\\nT1=\"abc\", T2=\"ac\".\\nDFS(0,0): 'a'=='a'. 1 + DFS(1,1).\\n  DFS(1,1): 'b'!='c'. Max(DFS(2,1), DFS(1,2)).\\n    DFS(2,1): 'c'=='c'. 1 + DFS(3,2) -> 1 + 0 = 1.\\n    DFS(1,2): 'b'!=''. 0.",
+                    "solutionCode": "    memo = {}\n    def dfs(i, j):\n        if i == len(text1) or j == len(text2): return 0\n        if (i, j) in memo: return memo[(i, j)]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "If match, add 1 and recurse diagonals.",
+                    "placeholderCode": "        if text1[i] == text2[j]:\n            res = 1 + dfs(i + 1, j + 1)",
+                    "validationRegex": "^\\s+if\\s+text1\\[i\\]\\s*==\\s+text2\\[j\\]:\\s*res\\s*=\\s*1\\s*\\+\\s*dfs\\(i\\s*\\+\\s*1,\\s*j\\s*\\+\\s*1\\)$",
+                    "hint": "If characters match, they are part of LCS. Add 1 and move both pointers.",
+                    "solutionCode": "        if text1[i] == text2[j]:\n            res = 1 + dfs(i + 1, j + 1)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "If no match, take max of skipping one char from either string.",
+                    "placeholderCode": "        else:\n            res = max(dfs(i + 1, j), dfs(i, j + 1))",
+                    "validationRegex": "^\\s+else:\\s*res\\s*=\\s*max\\(dfs\\(i\\s*\\+\\s*1,\\s*j\\),\\s*dfs\\(i,\\s*j\\s*\\+\\s*1\\)\\)$",
+                    "hint": "If characters don't match, either skip char from text1 or text2. Take max result.",
+                    "solutionCode": "        else:\n            res = max(dfs(i + 1, j), dfs(i, j + 1))"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Memoize and return.",
+                    "placeholderCode": "        memo[(i, j)] = res\n        return res",
+                    "validationRegex": "^\\s+memo\\[\\(i,\\s*j\\)\\]\\s*=\\s*res\\s*return\\s+res$",
+                    "hint": "Store result in memo and return.",
+                    "solutionCode": "        memo[(i, j)] = res\n        return res"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Call helper.",
+                    "placeholderCode": "    return dfs(0, 0)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*0\\)$",
+                    "hint": "Start recursion from beginning of both strings.",
+                    "solutionCode": "    return dfs(0, 0)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Use 2D grid to build solution bottom-up.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function longest_common_subsequence that takes text1 and text2.",
+                    "placeholderCode": "def longest_common_subsequence(text1, text2):",
+                    "validationRegex": "^def\\s+longest_common_subsequence\\(text1,\\s*text2\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def longest_common_subsequence(text1, text2):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize DP grid.",
+                    "placeholderCode": "    dp = [[0 for j in range(len(text2) + 1)] for i in range(len(text1) + 1)]",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\[\\[0\\s+for\\s+j\\s+in\\s+range\\(len\\(text2\\)\\s*\\+\\s*1\\)\\]\\s+for\\s+i\\s+in\\s+range\\(len\\(text1\\)\\s*\\+\\s*1\\)\\]$",
+                    "hint": "Create a 2D grid of size (len(text1)+1) x (len(text2)+1) initialized with 0s.",
+                    "solutionCode": "    dp = [[0 for j in range(len(text2) + 1)] for i in range(len(text1) + 1)]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate backwards through strings.",
+                    "placeholderCode": "    for i in range(len(text1) - 1, -1, -1):\n        for j in range(len(text2) - 1, -1, -1):\n            if text1[i] == text2[j]:\n                dp[i][j] = 1 + dp[i + 1][j + 1]\n            else:\n                dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(text1\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(text2\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+text1\\[i\\]\\s*==\\s+text2\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*1\\s*\\+\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\s*else:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*max\\(dp\\[i\\]\\[j\\s*\\+\\s*1\\],\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\]\\)$",
+                    "hint": "Iterate backwards. If chars match, dp[i][j] = 1 + diagonal. Else, max of right or down.\\n\\nExample:\\nT1=\"abc\", T2=\"ac\". DP 4x3 grid.\\ni=2 ('c'), j=1 ('c'): Match. DP[2][1] = 1 + DP[3][2] = 1.\\ni=1 ('b'), j=1 ('c'): No match. Max(DP[1][2], DP[2][1]) = 1.\\ni=0 ('a'), j=0 ('a'): Match. DP[0][0] = 1 + DP[1][1] = 2.",
+                    "solutionCode": "    for i in range(len(text1) - 1, -1, -1):\n        for j in range(len(text2) - 1, -1, -1):\n            if text1[i] == text2[j]:\n                dp[i][j] = 1 + dp[i + 1][j + 1]\n            else:\n                dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return dp[0][0]",
+                    "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
+                    "hint": "The result is at dp[0][0].",
+                    "solutionCode": "    return dp[0][0]"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,106 @@
+{
+    "id": "alien-dictionary",
+    "title": "Alien Dictionary",
+    "description": "There is a new alien language that uses the English alphabet. However, the order among the letters is unknown to you. You are given a list of strings words from the alien language's dictionary, where the strings in words are sorted lexicographically by the rules of this new language. Return a string of the unique letters in the new alien language sorted in lexicographically increasing order by the new rules. If there is no solution, return \"\". If there are multiple solutions, return any of them.",
+    "examples": [
+        {
+            "input": "words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]",
+            "output": "\"wertf\""
+        },
+        {
+            "input": "words = [\"z\",\"x\"]",
+            "output": "\"zx\""
+        },
+        {
+            "input": "words = [\"z\",\"x\",\"z\"]",
+            "output": "\"\""
+        }
+    ],
+    "constraints": [
+        "1 <= words.length <= 100",
+        "1 <= words[i].length <= 100",
+        "words[i] consists of only lowercase English letters."
+    ],
+    "difficulty": "Hard",
+    "topic": "Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Topological Sort",
+            "description": "Build graph and topological sort.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define alienOrder.",
+                    "placeholderCode": "def alienOrder(words):",
+                    "validationRegex": "^def\\s+alienOrder\\(words\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def alienOrder(words):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Build adjacency list.",
+                    "placeholderCode": "    adj = {c: set() for w in words for c in w}\n    for i in range(len(words) - 1):\n        w1, w2 = words[i], words[i + 1]\n        minLen = min(len(w1), len(w2))\n        if len(w1) > len(w2) and w1[:minLen] == w2[:minLen]:\n            return \"\"\n        for j in range(minLen):\n            if w1[j] != w2[j]:\n                adj[w1[j]].add(w2[j])\n                break",
+                    "validationRegex": "^\\s+adj\\s*=\\s*{c:\\s*set\\(\\)\\s+for\\s+w\\s+in\\s+words\\s+for\\s+c\\s+in\\s+w}\\s*for\\s+i\\s+in\\s+range\\(len\\(words\\)\\s*-\\s*1\\):\\s*w1,\\s*w2\\s*=\\s*words\\[i\\],\\s*words\\[i\\s*\\+\\s*1\\]\\s*minLen\\s*=\\s*min\\(len\\(w1\\),\\s*len\\(w2\\)\\)\\s*if\\s+len\\(w1\\)\\s*>\\s+len\\(w2\\)\\s+and\\s+w1\\[:minLen\\]\\s*==\\s*w2\\[:minLen\\]:\\s*return\\s*\"\"\\s*for\\s+j\\s+in\\s+range\\(minLen\\):\\s*if\\s+w1\\[j\\]\\s*!=\\s*w2\\[j\\]:\\s*adj\\[w1\\[j\\]\\]\\.add\\(w2\\[j\\]\\)\\s*break$",
+                    "hint": "Compare adjacent words. The first differing character determines the order. If a word is a prefix of the next word but longer, it's invalid.\\n\\nExample:\\nWords=[\"wrt\", \"wrf\", \"er\"].\\nCompare \"wrt\", \"wrf\": 't' != 'f'. Edge t->f.\\nCompare \"wrf\", \"er\": 'w' != 'e'. Edge w->e.",
+                    "solutionCode": "    adj = {c: set() for w in words for c in w}\n    for i in range(len(words) - 1):\n        w1, w2 = words[i], words[i + 1]\n        minLen = min(len(w1), len(w2))\n        if len(w1) > len(w2) and w1[:minLen] == w2[:minLen]:\n            return \"\"\n        for j in range(minLen):\n            if w1[j] != w2[j]:\n                adj[w1[j]].add(w2[j])\n                break"
+                },
+                {
+                    "id": 3,
+                    "instruction": "DFS for topological sort.",
+                    "placeholderCode": "    visit = {}\n    res = []\n    def dfs(c):\n        if c in visit:\n            return visit[c]\n        visit[c] = True\n        for nei in adj[c]:\n            if dfs(nei):\n                return True\n        visit[c] = False\n        res.append(c)\n        return False",
+                    "validationRegex": "^\\s+visit\\s*=\\s*{}\\s*res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(c\\):\\s*if\\s+c\\s+in\\s+visit:\\s*return\\s+visit\\[c\\]\\s*visit\\[c\\]\\s*=\\s*True\\s*for\\s+nei\\s+in\\s+adj\\[c\\]:\\s*if\\s+dfs\\(nei\\):\\s*return\\s+True\\s*visit\\[c\\]\\s*=\\s*False\\s*res\\.append\\(c\\)\\s*return\\s+False$",
+                    "hint": "Use DFS to detect cycles and build the topological sort. `visit` stores state: True (visiting/current path), False (visited/fully processed).\\n\\nExample:\\nDFS('w'): Mark 'w' Visiting.\\nDFS('e'): Visiting... Visited. Add 'e' to Res.\\nBack to 'w': Mark 'w' Visited. Add 'w' to Res.\\nResult (reversed later): ['e', 'w'].",
+                    "solutionCode": "    visit = {}\n    res = []\n    def dfs(c):\n        if c in visit:\n            return visit[c]\n        visit[c] = True\n        for nei in adj[c]:\n            if dfs(nei):\n                return True\n        visit[c] = False\n        res.append(c)\n        return False"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call DFS.",
+                    "placeholderCode": "    for c in adj:\n        if dfs(c):\n            return \"\"\n    res.reverse()\n    return \"\".join(res)",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+adj:\\s*if\\s+dfs\\(c\\):\\s*return\\s*\"\"\\s*res\\.reverse\\(\\)\\s*return\\s*\"\"\\.join\\(res\\)$",
+                    "hint": "Run DFS on all nodes. If a cycle is detected, return \"\". Otherwise, reverse the result list to get the correct order.",
+                    "solutionCode": "    for c in adj:\n        if dfs(c):\n            return \"\"\n    res.reverse()\n    return \"\".join(res)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Topological Sort",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define alienOrder.",
+                    "placeholderCode": "def alienOrder(words):",
+                    "validationRegex": "^def\\s+alienOrder\\(words\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def alienOrder(words):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Build adjacency list.",
+                    "placeholderCode": "    adj = {c: set() for w in words for c in w}\n    for i in range(len(words) - 1):\n        w1, w2 = words[i], words[i + 1]\n        minLen = min(len(w1), len(w2))\n        if len(w1) > len(w2) and w1[:minLen] == w2[:minLen]:\n            return \"\"\n        for j in range(minLen):\n            if w1[j] != w2[j]:\n                adj[w1[j]].add(w2[j])\n                break",
+                    "validationRegex": "^\\s+adj\\s*=\\s*{c:\\s*set\\(\\)\\s+for\\s+w\\s+in\\s+words\\s+for\\s+c\\s+in\\s+w}\\s*for\\s+i\\s+in\\s+range\\(len\\(words\\)\\s*-\\s*1\\):\\s*w1,\\s*w2\\s*=\\s*words\\[i\\],\\s*words\\[i\\s*\\+\\s*1\\]\\s*minLen\\s*=\\s*min\\(len\\(w1\\),\\s*len\\(w2\\)\\)\\s*if\\s+len\\(w1\\)\\s*>\\s+len\\(w2\\)\\s+and\\s+w1\\[:minLen\\]\\s*==\\s*w2\\[:minLen\\]:\\s*return\\s*\"\"\\s*for\\s+j\\s+in\\s+range\\(minLen\\):\\s*if\\s+w1\\[j\\]\\s*!=\\s*w2\\[j\\]:\\s*adj\\[w1\\[j\\]\\]\\.add\\(w2\\[j\\]\\)\\s*break$",
+                    "hint": "Compare adjacent words. The first differing character determines the order. If a word is a prefix of the next word but longer, it's invalid.\\n\\nExample:\\nWords=[\"wrt\", \"wrf\", \"er\"].\\nCompare \"wrt\", \"wrf\": 't' != 'f'. Edge t->f.\\nCompare \"wrf\", \"er\": 'w' != 'e'. Edge w->e.",
+                    "solutionCode": "    adj = {c: set() for w in words for c in w}\n    for i in range(len(words) - 1):\n        w1, w2 = words[i], words[i + 1]\n        minLen = min(len(w1), len(w2))\n        if len(w1) > len(w2) and w1[:minLen] == w2[:minLen]:\n            return \"\"\n        for j in range(minLen):\n            if w1[j] != w2[j]:\n                adj[w1[j]].add(w2[j])\n                break"
+                },
+                {
+                    "id": 3,
+                    "instruction": "DFS for topological sort.",
+                    "placeholderCode": "    visit = {}\n    res = []\n    def dfs(c):\n        if c in visit:\n            return visit[c]\n        visit[c] = True\n        for nei in adj[c]:\n            if dfs(nei):\n                return True\n        visit[c] = False\n        res.append(c)\n        return False",
+                    "validationRegex": "^\\s+visit\\s*=\\s*{}\\s*res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(c\\):\\s*if\\s+c\\s+in\\s+visit:\\s*return\\s+visit\\[c\\]\\s*visit\\[c\\]\\s*=\\s*True\\s*for\\s+nei\\s+in\\s+adj\\[c\\]:\\s*if\\s+dfs\\(nei\\):\\s*return\\s+True\\s*visit\\[c\\]\\s*=\\s*False\\s*res\\.append\\(c\\)\\s*return\\s+False$",
+                    "hint": "Use DFS to detect cycles and build the topological sort. `visit` stores state: True (visiting/current path), False (visited/fully processed).\\n\\nExample:\\nDFS('w'): Mark 'w' Visiting.\\nDFS('e'): Visiting... Visited. Add 'e' to Res.\\nBack to 'w': Mark 'w' Visited. Add 'w' to Res.\\nResult (reversed later): ['e', 'w'].",
+                    "solutionCode": "    visit = {}\n    res = []\n    def dfs(c):\n        if c in visit:\n            return visit[c]\n        visit[c] = True\n        for nei in adj[c]:\n            if dfs(nei):\n                return True\n        visit[c] = False\n        res.append(c)\n        return False"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call DFS.",
+                    "placeholderCode": "    for c in adj:\n        if dfs(c):\n            return \"\"\n    res.reverse()\n    return \"\".join(res)",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+adj:\\s*if\\s+dfs\\(c\\):\\s*return\\s*\"\"\\s*res\\.reverse\\(\\)\\s*return\\s*\"\"\\.join\\(res\\)$",
+                    "hint": "Run DFS on all nodes. If a cycle is detected, return \"\". Otherwise, reverse the result list to get the correct order.",
+                    "solutionCode": "    for c in adj:\n        if dfs(c):\n            return \"\"\n    res.reverse()\n    return \"\".join(res)"
+                }
+            ]
+        }
+    }
+}

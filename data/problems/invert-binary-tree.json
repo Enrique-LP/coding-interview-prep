@@ -1,0 +1,141 @@
+{
+    "id": "invert-binary-tree",
+    "title": "Invert Binary Tree",
+    "description": "Given the root of a binary tree, invert the tree, and return its root.",
+    "examples": [
+        {
+            "input": "root = [4,2,7,1,3,6,9]",
+            "output": "[4,7,2,9,6,3,1]"
+        },
+        {
+            "input": "root = [2,1,3]",
+            "output": "[2,3,1]"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the tree is in the range [0, 100].",
+        "-100 <= Node.val <= 100"
+    ],
+    "difficulty": "Easy",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Swap children recursively.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function invert_tree that takes root.",
+                    "placeholderCode": "def invert_tree(root):",
+                    "validationRegex": "^def\\s+invert_tree\\(root\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def invert_tree(root):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Base case: if root is None, return None.",
+                    "placeholderCode": "    if not root:\n        return None",
+                    "validationRegex": "^\\s+if\\s+not\\s+root:\\s*return\\s+None$",
+                    "hint": "Return None if root is None.",
+                    "solutionCode": "    if not root:\n        return None"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Swap the left and right children.",
+                    "placeholderCode": "    root.left, root.right = root.right, root.left",
+                    "validationRegex": "^\\s+root\\.left,\\s*root\\.right\\s*=\\s*root\\.right,\\s*root\\.left$",
+                    "hint": "Swap `root.left` and `root.right`.\\n\\nExample:\\nRoot=4. Left=2, Right=7.\\nSwap: Left becomes 7, Right becomes 2.\\nTree: 4 -> (7, 2).",
+                    "solutionCode": "    root.left, root.right = root.right, root.left"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Recursively invert the left subtree.",
+                    "placeholderCode": "    invert_tree(root.left)",
+                    "validationRegex": "^\\s+invert_tree\\(root\\.left\\)$",
+                    "hint": "Call invert_tree on left child.",
+                    "solutionCode": "    invert_tree(root.left)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Recursively invert the right subtree.",
+                    "placeholderCode": "    invert_tree(root.right)",
+                    "validationRegex": "^\\s+invert_tree\\(root\\.right\\)$",
+                    "hint": "Call invert_tree on right child.",
+                    "solutionCode": "    invert_tree(root.right)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return the root.",
+                    "placeholderCode": "    return root",
+                    "validationRegex": "^\\s+return\\s+root$",
+                    "hint": "Return the root.",
+                    "solutionCode": "    return root"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Iterative (BFS)",
+            "description": "Use a queue to swap children level by level.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function invert_tree that takes root.",
+                    "placeholderCode": "def invert_tree(root):",
+                    "validationRegex": "^def\\s+invert_tree\\(root\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def invert_tree(root):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "If root is None, return None.",
+                    "placeholderCode": "    if not root:\n        return None",
+                    "validationRegex": "^\\s+if\\s+not\\s+root:\\s*return\\s+None$",
+                    "hint": "Return None if root is None.",
+                    "solutionCode": "    if not root:\n        return None"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize a queue with the root.",
+                    "placeholderCode": "    queue = [root]",
+                    "validationRegex": "^\\s+queue\\s*=\\s*\\[root\\]$",
+                    "hint": "Init queue with root.",
+                    "solutionCode": "    queue = [root]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Loop while the queue is not empty.",
+                    "placeholderCode": "    while queue:",
+                    "validationRegex": "^\\s+while\\s+queue:$",
+                    "hint": "Loop while queue has elements.",
+                    "solutionCode": "    while queue:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Pop the current node and swap its children.",
+                    "placeholderCode": "        node = queue.pop(0)\n        node.left, node.right = node.right, node.left",
+                    "validationRegex": "^\\s+node\\s*=\\s*queue\\.pop\\(0\\)\\s*node\\.left,\\s*node\\.right\\s*=\\s*node\\.right,\\s*node\\.left$",
+                    "hint": "Pop node and swap children.",
+                    "solutionCode": "        node = queue.pop(0)\n        node.left, node.right = node.right, node.left"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Add children to the queue if they exist.",
+                    "placeholderCode": "        if node.left: queue.append(node.left)\n        if node.right: queue.append(node.right)",
+                    "validationRegex": "^\\s+if\\s+node\\.left:\\s*queue\\.append\\(node\\.left\\)\\s*if\\s+node\\.right:\\s*queue\\.append\\(node\\.right\\)$",
+                    "hint": "Add children to queue.",
+                    "solutionCode": "        if node.left: queue.append(node.left)\n        if node.right: queue.append(node.right)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return the root.",
+                    "placeholderCode": "    return root",
+                    "validationRegex": "^\\s+return\\s+root$",
+                    "hint": "Return root.",
+                    "solutionCode": "    return root"
+                }
+            ]
+        }
+    }
+}

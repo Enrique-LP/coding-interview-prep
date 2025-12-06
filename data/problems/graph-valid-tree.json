@@ -1,0 +1,121 @@
+{
+    "id": "graph-valid-tree",
+    "title": "Graph Valid Tree",
+    "description": "You have a graph of n nodes labeled from 0 to n - 1. You are given an integer n and a list of edges where edges[i] = [ai, bi] indicates that there is an undirected edge between nodes ai and bi in the graph. Return true if the edges of the given graph make up a valid tree, and false otherwise.",
+    "examples": [
+        {
+            "input": "n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]",
+            "output": "true"
+        },
+        {
+            "input": "n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]",
+            "output": "false"
+        }
+    ],
+    "constraints": [
+        "1 <= n <= 2000",
+        "0 <= edges.length <= 5000",
+        "edges[i].length == 2",
+        "0 <= ai, bi < n",
+        "ai != bi",
+        "There are no self-loops or repeated edges."
+    ],
+    "difficulty": "Medium",
+    "topic": "Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "DFS",
+            "description": "Check for cycles and connectivity.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define validTree.",
+                    "placeholderCode": "def validTree(n, edges):",
+                    "validationRegex": "^def\\s+validTree\\(n,\\s*edges\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def validTree(n, edges):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Check empty.",
+                    "placeholderCode": "    if not n:\n        return True",
+                    "validationRegex": "^\\s+if\\s+not\\s+n:\\s*return\\s+True$",
+                    "hint": "If n is 0, it's a valid tree (empty).",
+                    "solutionCode": "    if not n:\n        return True"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Build graph.",
+                    "placeholderCode": "    adj = {i: [] for i in range(n)}\n    for n1, n2 in edges:\n        adj[n1].append(n2)\n        adj[n2].append(n1)",
+                    "validationRegex": "^\\s+adj\\s*=\\s*{i:\\s*\\[\\]\\s+for\\s+i\\s+in\\s+range\\(n\\)}\\s*for\\s+n1,\\s*n2\\s+in\\s+edges:\\s*adj\\[n1\\]\\.append\\(n2\\)\\s*adj\\[n2\\]\\.append\\(n1\\)$",
+                    "hint": "Create an adjacency list to represent the graph.",
+                    "solutionCode": "    adj = {i: [] for i in range(n)}\n    for n1, n2 in edges:\n        adj[n1].append(n2)\n        adj[n2].append(n1)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define DFS.",
+                    "placeholderCode": "    visit = set()\n    def dfs(i, prev):\n        if i in visit:\n            return False\n        visit.add(i)\n        for j in adj[i]:\n            if j == prev:\n                continue\n            if not dfs(j, i):\n                return False\n        return True",
+                    "validationRegex": "^\\s+visit\\s*=\\s*set\\(\\)\\s*def\\s+dfs\\(i,\\s*prev\\):\\s*if\\s+i\\s+in\\s+visit:\\s*return\\s+False\\s*visit\\.add\\(i\\)\\s*for\\s+j\\s+in\\s+adj\\[i\\]:\\s*if\\s+j\\s*==\\s*prev:\\s*continue\\s*if\\s+not\\s+dfs\\(j,\\s*i\\):\\s*return\\s+False\\s*return\\s+True$",
+                    "hint": "Recursive DFS. If node visited, cycle detected (return False). Visit node. Recurse on neighbors (skip parent). If any recursion returns False, propagate it.\\n\\nExample:\\n0-1, 1-2, 2-0 (Cycle).\\nDFS(0, -1): Visit 0. Recurse(1, 0).\\n  DFS(1, 0): Visit 1. Recurse(2, 1).\\n    DFS(2, 1): Visit 2. Recurse(0, 2).\\n      DFS(0, 2): 0 Visited. Cycle! Return False.",
+                    "solutionCode": "    visit = set()\n    def dfs(i, prev):\n        if i in visit:\n            return False\n        visit.add(i)\n        for j in adj[i]:\n            if j == prev:\n                continue\n            if not dfs(j, i):\n                return False\n        return True"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Call DFS.",
+                    "placeholderCode": "    return dfs(0, -1) and n == len(visit)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*-1\\)\\s+and\\s+n\\s*==\\s*len\\(visit\\)$",
+                    "hint": "Start DFS from node 0. Return True if no cycles found AND all nodes were visited (connected).",
+                    "solutionCode": "    return dfs(0, -1) and n == len(visit)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DFS",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define validTree.",
+                    "placeholderCode": "def validTree(n, edges):",
+                    "validationRegex": "^def\\s+validTree\\(n,\\s*edges\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def validTree(n, edges):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Check empty.",
+                    "placeholderCode": "    if not n:\n        return True",
+                    "validationRegex": "^\\s+if\\s+not\\s+n:\\s*return\\s+True$",
+                    "hint": "If n is 0, it's a valid tree (empty).",
+                    "solutionCode": "    if not n:\n        return True"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Build graph.",
+                    "placeholderCode": "    adj = {i: [] for i in range(n)}\n    for n1, n2 in edges:\n        adj[n1].append(n2)\n        adj[n2].append(n1)",
+                    "validationRegex": "^\\s+adj\\s*=\\s*{i:\\s*\\[\\]\\s+for\\s+i\\s+in\\s+range\\(n\\)}\\s*for\\s+n1,\\s*n2\\s+in\\s+edges:\\s*adj\\[n1\\]\\.append\\(n2\\)\\s*adj\\[n2\\]\\.append\\(n1\\)$",
+                    "hint": "Create an adjacency list to represent the graph.",
+                    "solutionCode": "    adj = {i: [] for i in range(n)}\n    for n1, n2 in edges:\n        adj[n1].append(n2)\n        adj[n2].append(n1)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define DFS.",
+                    "placeholderCode": "    visit = set()\n    def dfs(i, prev):\n        if i in visit:\n            return False\n        visit.add(i)\n        for j in adj[i]:\n            if j == prev:\n                continue\n            if not dfs(j, i):\n                return False\n        return True",
+                    "validationRegex": "^\\s+visit\\s*=\\s*set\\(\\)\\s*def\\s+dfs\\(i,\\s*prev\\):\\s*if\\s+i\\s+in\\s+visit:\\s*return\\s+False\\s*visit\\.add\\(i\\)\\s*for\\s+j\\s+in\\s+adj\\[i\\]:\\s*if\\s+j\\s*==\\s*prev:\\s*continue\\s*if\\s+not\\s+dfs\\(j,\\s*i\\):\\s*return\\s+False\\s*return\\s+True$",
+                    "hint": "Recursive DFS. If node visited, cycle detected (return False). Visit node. Recurse on neighbors (skip parent). If any recursion returns False, propagate it.\\n\\nExample:\\n0-1, 1-2, 2-0 (Cycle).\\nDFS(0, -1): Visit 0. Recurse(1, 0).\\n  DFS(1, 0): Visit 1. Recurse(2, 1).\\n    DFS(2, 1): Visit 2. Recurse(0, 2).\\n      DFS(0, 2): 0 Visited. Cycle! Return False.",
+                    "solutionCode": "    visit = set()\n    def dfs(i, prev):\n        if i in visit:\n            return False\n        visit.add(i)\n        for j in adj[i]:\n            if j == prev:\n                continue\n            if not dfs(j, i):\n                return False\n        return True"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Call DFS.",
+                    "placeholderCode": "    return dfs(0, -1) and n == len(visit)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*-1\\)\\s+and\\s+n\\s*==\\s*len\\(visit\\)$",
+                    "hint": "Start DFS from node 0. Return True if no cycles found AND all nodes were visited (connected).",
+                    "solutionCode": "    return dfs(0, -1) and n == len(visit)"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,112 @@
+{
+    "id": "cheapest-flights-within-k-stops",
+    "title": "Cheapest Flights Within K Stops",
+    "description": "There are n cities connected by some number of flights. You are given an array flights where flights[i] = [from_i, to_i, price_i] indicates that there is a flight from city from_i to city to_i with cost price_i. You are also given three integers src, dst, and k, return the cheapest price from src to dst with at most k stops. If there is no such route, return -1.",
+    "examples": [
+        {
+            "input": "n = 4, flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], src = 0, dst = 3, k = 1",
+            "output": "700"
+        },
+        {
+            "input": "n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 1",
+            "output": "200"
+        },
+        {
+            "input": "n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 0",
+            "output": "500"
+        }
+    ],
+    "constraints": [
+        "1 <= n <= 100",
+        "0 <= flights.length <= (n * (n - 1) / 2)",
+        "flights[i].length == 3",
+        "0 <= from_i, to_i < n",
+        "from_i != to_i",
+        "1 <= price_i <= 10^4",
+        "There will not be any multiple flights between two cities.",
+        "0 <= src, dst, k < n",
+        "src != dst"
+    ],
+    "difficulty": "Medium",
+    "topic": "Advanced Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Bellman-Ford",
+            "description": "Use Bellman-Ford algorithm.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define findCheapestPrice.",
+                    "placeholderCode": "def findCheapestPrice(n, flights, src, dst, k):",
+                    "validationRegex": "^def\\s+findCheapestPrice\\(n,\\s*flights,\\s*src,\\s*dst,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def findCheapestPrice(n, flights, src, dst, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize prices.",
+                    "placeholderCode": "    prices = [float(\"inf\")] * n\n    prices[src] = 0",
+                    "validationRegex": "^\\s+prices\\s*=\\s*\\[float\\(\"inf\"\\)\\]\\s*\\*\\s*n\\s*prices\\[src\\]\\s*=\\s*0$",
+                    "hint": "Initialize an array to store the minimum price to reach each city. Set the source city's price to 0 and others to infinity.",
+                    "solutionCode": "    prices = [float(\"inf\")] * n\n    prices[src] = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Run Bellman-Ford.",
+                    "placeholderCode": "    for i in range(k + 1):\n        tmpPrices = prices.copy()\n        for s, d, p in flights:\n            if prices[s] == float(\"inf\"):\n                continue\n            if prices[s] + p < tmpPrices[d]:\n                tmpPrices[d] = prices[s] + p\n        prices = tmpPrices",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(k\\s*\\+\\s*1\\):\\s*tmpPrices\\s*=\\s*prices\\.copy\\(\\)\\s*for\\s+s,\\s*d,\\s*p\\s+in\\s+flights:\\s*if\\s+prices\\[s\\]\\s*==\\s*float\\(\"inf\"\\):\\s*continue\\s*if\\s+prices\\[s\\]\\s*\\+\\s*p\\s*<\\s*tmpPrices\\[d\\]:\\s*tmpPrices\\[d\\]\\s*=\\s*prices\\[s\\]\\s*\\+\\s*p\\s*prices\\s*=\\s*tmpPrices$",
+                    "hint": "Relax edges k+1 times. Use a temporary array to store updates for the current iteration to ensure we only use values from the previous iteration (limiting stops).\\n\\nExample:\\nFlights=[[0,1,100], [1,2,100], [0,2,500]]. Src=0, K=1.\\nInit: Prices=[0, inf, inf].\\nIter 1 (K=0 stops): Relax 0->1. Prices=[0, 100, 500].\\nIter 2 (K=1 stop): Relax 1->2. Prices=[0, 100, 200].\\nResult: 200.",
+                    "solutionCode": "    for i in range(k + 1):\n        tmpPrices = prices.copy()\n        for s, d, p in flights:\n            if prices[s] == float(\"inf\"):\n                continue\n            if prices[s] + p < tmpPrices[d]:\n                tmpPrices[d] = prices[s] + p\n        prices = tmpPrices"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return -1 if prices[dst] == float(\"inf\") else prices[dst]",
+                    "validationRegex": "^\\s+return\\s*-1\\s+if\\s+prices\\[dst\\]\\s*==\\s*float\\(\"inf\"\\)\\s+else\\s+prices\\[dst\\]$",
+                    "hint": "If the destination price is still infinity, return -1. Otherwise, return the price.",
+                    "solutionCode": "    return -1 if prices[dst] == float(\"inf\") else prices[dst]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Bellman-Ford",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define findCheapestPrice.",
+                    "placeholderCode": "def findCheapestPrice(n, flights, src, dst, k):",
+                    "validationRegex": "^def\\s+findCheapestPrice\\(n,\\s*flights,\\s*src,\\s*dst,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def findCheapestPrice(n, flights, src, dst, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize prices.",
+                    "placeholderCode": "    prices = [float(\"inf\")] * n\n    prices[src] = 0",
+                    "validationRegex": "^\\s+prices\\s*=\\s*\\[float\\(\"inf\"\\)\\]\\s*\\*\\s*n\\s*prices\\[src\\]\\s*=\\s*0$",
+                    "hint": "Initialize an array to store the minimum price to reach each city. Set the source city's price to 0 and others to infinity.",
+                    "solutionCode": "    prices = [float(\"inf\")] * n\n    prices[src] = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Run Bellman-Ford.",
+                    "placeholderCode": "    for i in range(k + 1):\n        tmpPrices = prices.copy()\n        for s, d, p in flights:\n            if prices[s] == float(\"inf\"):\n                continue\n            if prices[s] + p < tmpPrices[d]:\n                tmpPrices[d] = prices[s] + p\n        prices = tmpPrices",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(k\\s*\\+\\s*1\\):\\s*tmpPrices\\s*=\\s*prices\\.copy\\(\\)\\s*for\\s+s,\\s*d,\\s*p\\s+in\\s+flights:\\s*if\\s+prices\\[s\\]\\s*==\\s*float\\(\"inf\"\\):\\s*continue\\s*if\\s+prices\\[s\\]\\s*\\+\\s*p\\s*<\\s*tmpPrices\\[d\\]:\\s*tmpPrices\\[d\\]\\s*=\\s*prices\\[s\\]\\s*\\+\\s*p\\s*prices\\s*=\\s*tmpPrices$",
+                    "hint": "Relax edges k+1 times. Use a temporary array to store updates for the current iteration to ensure we only use values from the previous iteration (limiting stops).\\n\\nExample:\\nFlights=[[0,1,100], [1,2,100], [0,2,500]]. Src=0, K=1.\\nInit: Prices=[0, inf, inf].\\nIter 1 (K=0 stops): Relax 0->1. Prices=[0, 100, 500].\\nIter 2 (K=1 stop): Relax 1->2. Prices=[0, 100, 200].\\nResult: 200.",
+                    "solutionCode": "    for i in range(k + 1):\n        tmpPrices = prices.copy()\n        for s, d, p in flights:\n            if prices[s] == float(\"inf\"):\n                continue\n            if prices[s] + p < tmpPrices[d]:\n                tmpPrices[d] = prices[s] + p\n        prices = tmpPrices"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return -1 if prices[dst] == float(\"inf\") else prices[dst]",
+                    "validationRegex": "^\\s+return\\s*-1\\s+if\\s+prices\\[dst\\]\\s*==\\s*float\\(\"inf\"\\)\\s+else\\s+prices\\[dst\\]$",
+                    "hint": "If the destination price is still infinity, return -1. Otherwise, return the price.",
+                    "solutionCode": "    return -1 if prices[dst] == float(\"inf\") else prices[dst]"
+                }
+            ]
+        }
+    }
+}

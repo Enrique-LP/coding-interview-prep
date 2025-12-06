@@ -1,0 +1,103 @@
+{
+    "id": "coin-change-ii",
+    "title": "Coin Change II",
+    "description": "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the number of combinations that make up that amount. If that amount of money cannot be made up by any combination of the coins, return 0. You may assume that you have an infinite number of each kind of coin.",
+    "examples": [
+        {
+            "input": "amount = 5, coins = [1,2,5]",
+            "output": "4",
+            "explanation": "there are four ways to make up the amount: 5=5, 5=2+2+1, 5=2+1+1+1, 5=1+1+1+1+1"
+        },
+        {
+            "input": "amount = 3, coins = [2]",
+            "output": "0"
+        }
+    ],
+    "constraints": [
+        "1 <= coins.length <= 300",
+        "1 <= coins[i] <= 5000",
+        "0 <= amount <= 5000"
+    ],
+    "difficulty": "Medium",
+    "topic": "2-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively check combinations.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function change that takes amount and coins.",
+                    "placeholderCode": "def change(amount, coins):",
+                    "validationRegex": "^def\\s+change\\(amount,\\s*coins\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def change(amount, coins):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper with memoization.",
+                    "placeholderCode": "    memo = {}\n    def dfs(i, a):\n        if a == amount: return 1\n        if a > amount or i == len(coins): return 0\n        if (i, a) in memo: return memo[(i, a)]",
+                    "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*a\\):\\s*if\\s+a\\s*==\\s*amount:\\s*return\\s+1\\s*if\\s+a\\s*>\\s+amount\\s+or\\s+i\\s*==\\s*len\\(coins\\):\\s*return\\s+0\\s*if\\s*\\(i,\\s*a\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*a\\)\\]$",
+                    "hint": "Recursive function `dfs(i, a)` returns ways to make amount `a` using coins starting from index `i`. Base cases: a == amount -> 1, a > amount or no coins left -> 0. Check memo.\\n\\nExample:\\nAmount=3, Coins=[2].\\nDFS(0, 0): Use 2 -> DFS(0, 2) + Skip -> DFS(1, 0).\\n  DFS(0, 2): Use 2 -> DFS(0, 4) (0) + Skip -> DFS(1, 2) (0).",
+                    "solutionCode": "    memo = {}\n    def dfs(i, a):\n        if a == amount: return 1\n        if a > amount or i == len(coins): return 0\n        if (i, a) in memo: return memo[(i, a)]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Sum results of including or excluding coin.",
+                    "placeholderCode": "        res = dfs(i, a + coins[i]) + dfs(i + 1, a)\n        memo[(i, a)] = res\n        return res",
+                    "validationRegex": "^\\s+res\\s*=\\s*dfs\\(i,\\s*a\\s*\\+\\s*coins\\[i\\]\\)\\s*\\+\\s*dfs\\(i\\s*\\+\\s*1,\\s*a\\)\\s*memo\\[\\(i,\\s*a\\)\\]\\s*=\\s*res\\s*return\\s+res$",
+                    "hint": "Either use current coin (stay at index `i`, increase amount) or skip current coin (move to `i+1`, amount stays same). Sum both possibilities.",
+                    "solutionCode": "        res = dfs(i, a + coins[i]) + dfs(i + 1, a)\n        memo[(i, a)] = res\n        return res"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call helper.",
+                    "placeholderCode": "    return dfs(0, 0)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*0\\)$",
+                    "hint": "Start recursion from first coin and 0 amount.",
+                    "solutionCode": "    return dfs(0, 0)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Unbounded knapsack approach.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function change that takes amount and coins.",
+                    "placeholderCode": "def change(amount, coins):",
+                    "validationRegex": "^def\\s+change\\(amount,\\s*coins\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def change(amount, coins):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize DP array.",
+                    "placeholderCode": "    dp = [0] * (amount + 1)\n    dp[0] = 1",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\[0\\]\\s*\\*\\s*\\(amount\\s*\\+\\s*1\\)\\s*dp\\[0\\]\\s*=\\s*1$",
+                    "hint": "Initialize DP array of size amount+1 with 0s. dp[0] = 1 (one way to make 0 amount).",
+                    "solutionCode": "    dp = [0] * (amount + 1)\n    dp[0] = 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through coins and amounts.",
+                    "placeholderCode": "    for c in coins:\n        for a in range(c, amount + 1):\n            dp[a] += dp[a - c]",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+coins:\\s*for\\s+a\\s+in\\s+range\\(c,\\s*amount\\s*\\+\\s*1\\):\\s*dp\\[a\\]\\s*\\+=\\s*dp\\[a\\s*-\\s*c\\]$",
+                    "hint": "For each coin, update dp array. For each amount `a` from `c` to `amount`, add `dp[a-c]` to `dp[a]`.\\n\\nExample:\\nAmount=3, Coins=[2]. DP=[1, 0, 0, 0].\\nCoin 2:\\n  a=2: DP[2] += DP[0] (1) -> 1.\\n  a=3: DP[3] += DP[1] (0) -> 0.\\nResult: DP[3] = 0.",
+                    "solutionCode": "    for c in coins:\n        for a in range(c, amount + 1):\n            dp[a] += dp[a - c]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return dp[amount]",
+                    "validationRegex": "^\\s+return\\s+dp\\[amount\\]$",
+                    "hint": "Return the total combinations for the target amount.",
+                    "solutionCode": "    return dp[amount]"
+                }
+            ]
+        }
+    }
+}

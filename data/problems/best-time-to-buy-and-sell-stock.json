@@ -1,0 +1,135 @@
+{
+    "id": "best-time-to-buy-and-sell-stock",
+    "title": "Best Time to Buy and Sell Stock",
+    "description": "You are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.",
+    "examples": [
+        {
+            "input": "prices = [7,1,5,3,6,4]",
+            "output": "5",
+            "explanation": "Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5."
+        },
+        {
+            "input": "prices = [7,6,4,3,1]",
+            "output": "0",
+            "explanation": "In this case, no transactions are done and the max profit = 0."
+        }
+    ],
+    "constraints": [
+        "1 <= prices.length <= 10^5",
+        "0 <= prices[i] <= 10^4"
+    ],
+    "difficulty": "Easy",
+    "topic": "Sliding Window",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Nested Loops",
+            "description": "Check every pair of buy and sell days.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function max_profit that takes a list of prices.",
+                    "placeholderCode": "def max_profit(prices):",
+                    "validationRegex": "^def\\s+max_profit\\(prices\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def max_profit(prices):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize max_profit to 0.",
+                    "placeholderCode": "    max_p = 0",
+                    "validationRegex": "^\\s+max_p\\s*=\\s*0$",
+                    "hint": "Initialize a variable to store max profit.",
+                    "solutionCode": "    max_p = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through each day as a potential buy day.",
+                    "placeholderCode": "    for i in range(len(prices)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(prices\\)\\):$",
+                    "hint": "Outer loop iterates through all days.",
+                    "solutionCode": "    for i in range(len(prices)):"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Iterate through future days as potential sell days.",
+                    "placeholderCode": "        for j in range(i + 1, len(prices)):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(i\\s*\\+\\s*1,\\s*len\\(prices\\)\\):$",
+                    "hint": "Inner loop iterates from `i + 1`.",
+                    "solutionCode": "        for j in range(i + 1, len(prices)):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Update max_profit if the current profit is higher.",
+                    "placeholderCode": "            profit = prices[j] - prices[i]\n            if profit > max_p: max_p = profit",
+                    "validationRegex": "^\\s+profit\\s*=\\s*prices\\[j\\]\\s*-\\s*prices\\[i\\]\\s*if\\s+profit\\s*>\\s+max_p:\\s*max_p\\s*=\\s*profit$",
+                    "hint": "Calculate profit and update max.",
+                    "solutionCode": "            profit = prices[j] - prices[i]\n            if profit > max_p: max_p = profit"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return the maximum profit.",
+                    "placeholderCode": "    return max_p",
+                    "validationRegex": "^\\s+return\\s+max_p$",
+                    "hint": "Return the result.",
+                    "solutionCode": "    return max_p"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "One Pass",
+            "description": "Track the minimum price so far and calculate profit.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function max_profit that takes a list of prices.",
+                    "placeholderCode": "def max_profit(prices):",
+                    "validationRegex": "^def\\s+max_profit\\(prices\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def max_profit(prices):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize min_price to infinity and max_profit to 0.",
+                    "placeholderCode": "    min_price = float('inf')\n    max_p = 0",
+                    "validationRegex": "^\\s+min_price\\s*=\\s*float\\('inf'\\)\\s*max_p\\s*=\\s*0$",
+                    "hint": "Set `min_price` to infinity.",
+                    "solutionCode": "    min_price = float('inf')\n    max_p = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through each price in the array.",
+                    "placeholderCode": "    for price in prices:",
+                    "validationRegex": "^\\s+for\\s+price\\s+in\\s+prices:$",
+                    "hint": "Iterate through `prices`.",
+                    "solutionCode": "    for price in prices:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Update min_price if the current price is lower.",
+                    "placeholderCode": "        if price < min_price:\n            min_price = price",
+                    "validationRegex": "^\\s+if\\s+price\\s*<\\s+min_price:\\s*min_price\\s*=\\s*price$",
+                    "hint": "If current price is lower than `min_price`, update `min_price`.\\n\\nExample:\\nprices=[7, 1, 5, 3, 6, 4]. min_price=inf.\\nDay 1 (7): min_price=7.\\nDay 2 (1): min_price=1.",
+                    "solutionCode": "        if price < min_price:\n            min_price = price"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Otherwise, update max_profit if the current profit is higher.",
+                    "placeholderCode": "        elif price - min_price > max_p:\n            max_p = price - min_price",
+                    "validationRegex": "^\\s+elif\\s+price\\s*-\\s*min_price\\s*>\\s+max_p:\\s*max_p\\s*=\\s*price\\s*-\\s*min_price$",
+                    "hint": "Else check if profit is greater than `max_p`.",
+                    "solutionCode": "        elif price - min_price > max_p:\n            max_p = price - min_price"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return the maximum profit.",
+                    "placeholderCode": "    return max_p",
+                    "validationRegex": "^\\s+return\\s+max_p$",
+                    "hint": "Return the result.",
+                    "solutionCode": "    return max_p"
+                }
+            ]
+        }
+    }
+}

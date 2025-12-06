@@ -1,0 +1,89 @@
+{
+    "id": "binary-tree-right-side-view",
+    "title": "Binary Tree Right Side View",
+    "description": "Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.",
+    "examples": [
+        {
+            "input": "root = [1,2,3,null,5,null,4]",
+            "output": "[1,3,4]"
+        },
+        {
+            "input": "root = [1,null,3]",
+            "output": "[1,3]"
+        },
+        {
+            "input": "root = []",
+            "output": "[]"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the tree is in the range [0, 100].",
+        "-100 <= Node.val <= 100"
+    ],
+    "difficulty": "Medium",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "BFS",
+            "description": "Level order traversal, take last element.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function right_side_view that takes root.",
+                    "placeholderCode": "def right_side_view(root):",
+                    "validationRegex": "^def\\s+right_side_view\\(root\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize queue and result.",
+                    "placeholderCode": "    res = []\n    q = collections.deque([root])",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*q\\s*=\\s*collections\\.deque\\(\\[root\\]\\)$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Process levels.",
+                    "placeholderCode": "    while q:\n        rightSide = None\n        qLen = len(q)\n        for i in range(qLen):\n            node = q.popleft()\n            if node:\n                rightSide = node\n                q.append(node.left)\n                q.append(node.right)\n        if rightSide:\n            res.append(rightSide.val)",
+                    "validationRegex": "^\\s+while\\s+q:\\s*rightSide\\s*=\\s*None\\s*qLen\\s*=\\s*len\\(q\\)\\s*for\\s+i\\s+in\\s+range\\(qLen\\):\\s*node\\s*=\\s*q\\.popleft\\(\\)\\s*if\\s+node:\\s*rightSide\\s*=\\s*node\\s*q\\.append\\(node\\.left\\)\\s*q\\.append\\(node\\.right\\)\\s*if\\s+rightSide:\\s*res\\.append\\(rightSide\\.val\\)$"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "BFS",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function right_side_view that takes root.",
+                    "placeholderCode": "def right_side_view(root):",
+                    "validationRegex": "^def\\s+right_side_view\\(root\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize queue and result.",
+                    "placeholderCode": "    res = []\n    q = collections.deque([root])",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*q\\s*=\\s*collections\\.deque\\(\\[root\\]\\)$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Process levels.",
+                    "placeholderCode": "    while q:\n        rightSide = None\n        qLen = len(q)\n        for i in range(qLen):\n            node = q.popleft()\n            if node:\n                rightSide = node\n                q.append(node.left)\n                q.append(node.right)\n        if rightSide:\n            res.append(rightSide.val)",
+                    "validationRegex": "^\\s+while\\s+q:\\s*rightSide\\s*=\\s*None\\s*qLen\\s*=\\s*len\\(q\\)\\s*for\\s+i\\s+in\\s+range\\(qLen\\):\\s*node\\s*=\\s*q\\.popleft\\(\\)\\s*if\\s+node:\\s*rightSide\\s*=\\s*node\\s*q\\.append\\(node\\.left\\)\\s*q\\.append\\(node\\.right\\)\\s*if\\s+rightSide:\\s*res\\.append\\(rightSide\\.val\\)$"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$"
+                }
+            ]
+        }
+    }
+}

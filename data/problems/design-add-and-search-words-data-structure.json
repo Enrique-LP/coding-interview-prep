@@ -1,0 +1,100 @@
+{
+    "id": "design-add-and-search-words-data-structure",
+    "title": "Design Add and Search Words Data Structure",
+    "description": "Design a data structure that supports adding new words and finding if a string matches any previously added string. Implement the WordDictionary class.",
+    "examples": [
+        {
+            "input": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]\n[[],[\"bad\"],[\"dad\"],[\"mad\"],[\"pad\"],[\"bad\"],[\".ad\"],[\"b..\"]]",
+            "output": "[null,null,null,null,false,true,true,true]"
+        }
+    ],
+    "constraints": [
+        "1 <= word.length <= 25",
+        "word in addWord consists of lowercase English letters.",
+        "word in search consist of '.' or lowercase English letters.",
+        "There will be at most 2 dots in word for search queries.",
+        "At most 10^4 calls will be made to addWord and search."
+    ],
+    "difficulty": "Medium",
+    "topic": "Tries",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Trie with DFS",
+            "description": "Use Trie, handle '.' with DFS.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define TrieNode.",
+                    "placeholderCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.word = False",
+                    "validationRegex": "^class\\s+TrieNode:\\s*def\\s+__init__\\(self\\):\\s*self\\.children\\s*=\\s*{}\\s*self\\.word\\s*=\\s*False$",
+                    "hint": "Create a node class with children map and word flag.",
+                    "solutionCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.word = False"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define WordDictionary.",
+                    "placeholderCode": "class WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()",
+                    "validationRegex": "^class\\s+WordDictionary:\\s*def\\s+__init__\\(self\\):\\s*self\\.root\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Initialize with a root node.",
+                    "solutionCode": "class WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Implement addWord.",
+                    "placeholderCode": "    def addWord(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.word = True",
+                    "validationRegex": "^\\s+def\\s+addWord\\(self,\\s*word\\):\\s*cur\\s*=\\s*self\\.root\\s*for\\s+c\\s+in\\s+word:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*cur\\.word\\s*=\\s*True$",
+                    "hint": "Standard Trie insertion.",
+                    "solutionCode": "    def addWord(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.word = True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Implement search.",
+                    "placeholderCode": "    def search(self, word):\n        def dfs(j, root):\n            cur = root\n            for i in range(j, len(word)):\n                c = word[i]\n                if c == \".\":\n                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True\n                    return False\n                else:\n                    if c not in cur.children:\n                        return False\n                    cur = cur.children[c]\n            return cur.word\n        return dfs(0, self.root)",
+                    "validationRegex": "^\\s+def\\s+search\\(self,\\s*word\\):\\s*def\\s+dfs\\(j,\\s*root\\):\\s*cur\\s*=\\s*root\\s*for\\s+i\\s+in\\s+range\\(j,\\s*len\\(word\\)\\):\\s*c\\s*=\\s*word\\[i\\]\\s*if\\s+c\\s*==\\s*\"\\.\":\\s*for\\s+child\\s+in\\s+cur\\.children\\.values\\(\\):\\s*if\\s+dfs\\(i\\s*\\+\\s*1,\\s*child\\):\\s*return\\s+True\\s*return\\s+False\\s*else:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*return\\s+cur\\.word\\s*return\\s+dfs\\(0,\\s*self\\.root\\)$",
+                    "hint": "Use DFS to handle '.' wildcard by checking all children.\\n\\nExample:\\nSearch \"b.d\".\\n'b' matches? Yes. Next is '.'.\\nCheck all children of 'b' (e.g., 'a', 'o').\\nIf 'a' leads to 'd' (end), return True.",
+                    "solutionCode": "    def search(self, word):\n        def dfs(j, root):\n            cur = root\n            for i in range(j, len(word)):\n                c = word[i]\n                if c == \".\":\n                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True\n                    return False\n                else:\n                    if c not in cur.children:\n                        return False\n                    cur = cur.children[c]\n            return cur.word\n        return dfs(0, self.root)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Trie with DFS",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define TrieNode.",
+                    "placeholderCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.word = False",
+                    "validationRegex": "^class\\s+TrieNode:\\s*def\\s+__init__\\(self\\):\\s*self\\.children\\s*=\\s*{}\\s*self\\.word\\s*=\\s*False$",
+                    "hint": "Create a node class with children map and word flag.",
+                    "solutionCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.word = False"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define WordDictionary.",
+                    "placeholderCode": "class WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()",
+                    "validationRegex": "^class\\s+WordDictionary:\\s*def\\s+__init__\\(self\\):\\s*self\\.root\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Initialize with a root node.",
+                    "solutionCode": "class WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Implement addWord.",
+                    "placeholderCode": "    def addWord(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.word = True",
+                    "validationRegex": "^\\s+def\\s+addWord\\(self,\\s*word\\):\\s*cur\\s*=\\s*self\\.root\\s*for\\s+c\\s+in\\s+word:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*cur\\.word\\s*=\\s*True$",
+                    "hint": "Standard Trie insertion.",
+                    "solutionCode": "    def addWord(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.word = True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Implement search.",
+                    "placeholderCode": "    def search(self, word):\n        def dfs(j, root):\n            cur = root\n            for i in range(j, len(word)):\n                c = word[i]\n                if c == \".\":\n                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True\n                    return False\n                else:\n                    if c not in cur.children:\n                        return False\n                    cur = cur.children[c]\n            return cur.word\n        return dfs(0, self.root)",
+                    "validationRegex": "^\\s+def\\s+search\\(self,\\s*word\\):\\s*def\\s+dfs\\(j,\\s*root\\):\\s*cur\\s*=\\s*root\\s*for\\s+i\\s+in\\s+range\\(j,\\s*len\\(word\\)\\):\\s*c\\s*=\\s*word\\[i\\]\\s*if\\s+c\\s*==\\s*\"\\.\":\\s*for\\s+child\\s+in\\s+cur\\.children\\.values\\(\\):\\s*if\\s+dfs\\(i\\s*\\+\\s*1,\\s*child\\):\\s*return\\s+True\\s*return\\s+False\\s*else:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*return\\s+cur\\.word\\s*return\\s+dfs\\(0,\\s*self\\.root\\)$",
+                    "hint": "Use DFS to handle '.' wildcard by checking all children.",
+                    "solutionCode": "    def search(self, word):\n        def dfs(j, root):\n            cur = root\n            for i in range(j, len(word)):\n                c = word[i]\n                if c == \".\":\n                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True\n                    return False\n                else:\n                    if c not in cur.children:\n                        return False\n                    cur = cur.children[c]\n            return cur.word\n        return dfs(0, self.root)"
+                }
+            ]
+        }
+    }
+}

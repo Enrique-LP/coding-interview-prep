@@ -1,0 +1,85 @@
+{
+    "id": "kth-largest-element-in-an-array",
+    "title": "Kth Largest Element in an Array",
+    "description": "Given an integer array nums and an integer k, return the kth largest element in the array. Note that it is the kth largest element in the sorted order, not the kth distinct element.",
+    "examples": [
+        {
+            "input": "nums = [3,2,1,5,6,4], k = 2",
+            "output": "5"
+        },
+        {
+            "input": "nums = [3,2,3,1,2,4,5,5,6], k = 4",
+            "output": "4"
+        }
+    ],
+    "constraints": [
+        "1 <= k <= nums.length <= 10^5",
+        "-10^4 <= nums[i] <= 10^4"
+    ],
+    "difficulty": "Medium",
+    "topic": "Heap / Priority Queue",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Sorting",
+            "description": "Sort and pick kth element.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function find_kth_largest that takes nums and k.",
+                    "placeholderCode": "def find_kth_largest(nums, k):",
+                    "validationRegex": "^def\\s+find_kth_largest\\(nums,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def find_kth_largest(nums, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Sort and return.",
+                    "placeholderCode": "    nums.sort()\n    return nums[len(nums) - k]",
+                    "validationRegex": "^\\s+nums\\.sort\\(\\)\\s*return\\s+nums\\[len\\(nums\\)\\s*-\\s*k\\]$",
+                    "hint": "Sort the array and return the element at index len(nums) - k.",
+                    "solutionCode": "    nums.sort()\n    return nums[len(nums) - k]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "QuickSelect",
+            "description": "Use QuickSelect algorithm (average O(n)).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function find_kth_largest that takes nums and k.",
+                    "placeholderCode": "def find_kth_largest(nums, k):",
+                    "validationRegex": "^def\\s+find_kth_largest\\(nums,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def find_kth_largest(nums, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Set target index.",
+                    "placeholderCode": "    k = len(nums) - k",
+                    "validationRegex": "^\\s+k\\s*=\\s*len\\(nums\\)\\s*-\\s*k$",
+                    "hint": "Convert kth largest to index in sorted array.",
+                    "solutionCode": "    k = len(nums) - k"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define QuickSelect.",
+                    "placeholderCode": "    def quickSelect(l, r):\n        pivot, p = nums[r], l\n        for i in range(l, r):\n            if nums[i] <= pivot:\n                nums[p], nums[i] = nums[i], nums[p]\n                p += 1\n        nums[p], nums[r] = nums[r], nums[p]\n        if p > k: return quickSelect(l, p - 1)\n        elif p < k: return quickSelect(p + 1, r)\n        else: return nums[p]",
+                    "validationRegex": "^\\s+def\\s+quickSelect\\(l,\\s*r\\):\\s*pivot,\\s*p\\s*=\\s*nums\\[r\\],\\s*l\\s*for\\s+i\\s+in\\s+range\\(l,\\s*r\\):\\s*if\\s+nums\\[i\\]\\s*<=\\s*pivot:\\s*nums\\[p\\],\\s*nums\\[i\\]\\s*=\\s*nums\\[i\\],\\s*nums\\[p\\]\\s*p\\s*\\+=\\s*1\\s*nums\\[p\\],\\s*nums\\[r\\]\\s*=\\s*nums\\[r\\],\\s*nums\\[p\\]\\s*if\\s+p\\s*>\\s*k:\\s*return\\s+quickSelect\\(l,\\s*p\\s*-\\s*1\\)\\s*elif\\s+p\\s*<\\s*k:\\s*return\\s+quickSelect\\(p\\s*\\+\\s*1,\\s*r\\)\\s*else:\\s*return\\s+nums\\[p\\]$",
+                    "hint": "Implement the partition logic similar to QuickSort.\\n\\nExample:\\nPivot=4. Array=[3, 2, 1, 5, 6, 4].\\nMove smaller elements (3, 2, 1) to left.\\nArray becomes [3, 2, 1, 4, 6, 5]. Pivot index is 3.",
+                    "solutionCode": "    def quickSelect(l, r):\n        pivot, p = nums[r], l\n        for i in range(l, r):\n            if nums[i] <= pivot:\n                nums[p], nums[i] = nums[i], nums[p]\n                p += 1\n        nums[p], nums[r] = nums[r], nums[p]\n        if p > k: return quickSelect(l, p - 1)\n        elif p < k: return quickSelect(p + 1, r)\n        else: return nums[p]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call QuickSelect.",
+                    "placeholderCode": "    return quickSelect(0, len(nums) - 1)",
+                    "validationRegex": "^\\s+return\\s+quickSelect\\(0,\\s*len\\(nums\\)\\s*-\\s*1\\)$",
+                    "hint": "Start QuickSelect on the entire array.",
+                    "solutionCode": "    return quickSelect(0, len(nums) - 1)"
+                }
+            ]
+        }
+    }
+}

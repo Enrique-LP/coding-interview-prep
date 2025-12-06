@@ -1,0 +1,122 @@
+{
+    "id": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+    "description": "Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.",
+    "examples": [
+        {
+            "input": "preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]",
+            "output": "[3,9,20,null,null,15,7]"
+        },
+        {
+            "input": "preorder = [-1], inorder = [-1]",
+            "output": "[-1]"
+        }
+    ],
+    "constraints": [
+        "1 <= preorder.length <= 3000",
+        "inorder.length == preorder.length",
+        "-3000 <= preorder[i], inorder[i] <= 3000",
+        "preorder and inorder consist of unique values.",
+        "Each value of inorder also appears in preorder.",
+        "preorder is guaranteed to be the preorder traversal of the tree.",
+        "inorder is guaranteed to be the inorder traversal of the tree."
+    ],
+    "difficulty": "Medium",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively build tree using list slicing.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function build_tree that takes preorder and inorder.",
+                    "placeholderCode": "def build_tree(preorder, inorder):",
+                    "validationRegex": "^def\\s+build_tree\\(preorder,\\s*inorder\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def build_tree(preorder, inorder):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Base case.",
+                    "placeholderCode": "    if not preorder or not inorder:\n        return None",
+                    "validationRegex": "^\\s+if\\s+not\\s+preorder\\s+or\\s+not\\s+inorder:\\s*return\\s+None$",
+                    "hint": "Return None if lists are empty.",
+                    "solutionCode": "    if not preorder or not inorder:\n        return None"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Create root.",
+                    "placeholderCode": "    root = TreeNode(preorder[0])\n    mid = inorder.index(preorder[0])",
+                    "validationRegex": "^\\s+root\\s*=\\s*TreeNode\\(preorder\\[0\\]\\)\\s*mid\\s*=\\s*inorder\\.index\\(preorder\\[0\\]\\)$",
+                    "hint": "First element of preorder is root. Find its index in inorder.\\n\\nExample:\\nPre=[3,9,20...], In=[9,3,15...].\\nRoot=3. Index of 3 in In is 1. Left Subtree Size = 1.",
+                    "solutionCode": "    root = TreeNode(preorder[0])\n    mid = inorder.index(preorder[0])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Recursively build subtrees.",
+                    "placeholderCode": "    root.left = self.build_tree(preorder[1 : mid + 1], inorder[:mid])\n    root.right = self.build_tree(preorder[mid + 1 :], inorder[mid + 1 :])",
+                    "validationRegex": "^\\s+root\\.left\\s*=\\s*self\\.build_tree\\(preorder\\[1\\s*:\\s*mid\\s*\\+\\s*1\\],\\s*inorder\\[:mid\\]\\)\\s*root\\.right\\s*=\\s*self\\.build_tree\\(preorder\\[mid\\s*\\+\\s*1\\s*:\\],\\s*inorder\\[mid\\s*\\+\\s*1\\s*:\\]\\)$",
+                    "hint": "Slice lists for left and right subtrees.",
+                    "solutionCode": "    root.left = self.build_tree(preorder[1 : mid + 1], inorder[:mid])\n    root.right = self.build_tree(preorder[mid + 1 :], inorder[mid + 1 :])"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return root.",
+                    "placeholderCode": "    return root",
+                    "validationRegex": "^\\s+return\\s+root$",
+                    "hint": "Return the constructed root.",
+                    "solutionCode": "    return root"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Recursive",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function build_tree that takes preorder and inorder.",
+                    "placeholderCode": "def build_tree(preorder, inorder):",
+                    "validationRegex": "^def\\s+build_tree\\(preorder,\\s*inorder\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def build_tree(preorder, inorder):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Base case.",
+                    "placeholderCode": "    if not preorder or not inorder:\n        return None",
+                    "validationRegex": "^\\s+if\\s+not\\s+preorder\\s+or\\s+not\\s+inorder:\\s*return\\s+None$",
+                    "hint": "Return None if lists are empty.",
+                    "solutionCode": "    if not preorder or not inorder:\n        return None"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Create root.",
+                    "placeholderCode": "    root = TreeNode(preorder[0])\n    mid = inorder.index(preorder[0])",
+                    "validationRegex": "^\\s+root\\s*=\\s*TreeNode\\(preorder\\[0\\]\\)\\s*mid\\s*=\\s*inorder\\.index\\(preorder\\[0\\]\\)$",
+                    "hint": "First element of preorder is root. Find its index in inorder.",
+                    "solutionCode": "    root = TreeNode(preorder[0])\n    mid = inorder.index(preorder[0])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Recursively build subtrees.",
+                    "placeholderCode": "    root.left = self.build_tree(preorder[1 : mid + 1], inorder[:mid])\n    root.right = self.build_tree(preorder[mid + 1 :], inorder[mid + 1 :])",
+                    "validationRegex": "^\\s+root\\.left\\s*=\\s*self\\.build_tree\\(preorder\\[1\\s*:\\s*mid\\s*\\+\\s*1\\],\\s*inorder\\[:mid\\]\\)\\s*root\\.right\\s*=\\s*self\\.build_tree\\(preorder\\[mid\\s*\\+\\s*1\\s*:\\],\\s*inorder\\[mid\\s*\\+\\s*1\\s*:\\]\\)$",
+                    "hint": "Slice lists for left and right subtrees.",
+                    "solutionCode": "    root.left = self.build_tree(preorder[1 : mid + 1], inorder[:mid])\n    root.right = self.build_tree(preorder[mid + 1 :], inorder[mid + 1 :])"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return root.",
+                    "placeholderCode": "    return root",
+                    "validationRegex": "^\\s+return\\s+root$",
+                    "hint": "Return the constructed root.",
+                    "solutionCode": "    return root"
+                }
+            ]
+        }
+    }
+}

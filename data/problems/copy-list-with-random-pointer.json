@@ -1,0 +1,114 @@
+{
+    "id": "copy-list-with-random-pointer",
+    "title": "Copy List with Random Pointer",
+    "description": "A linked list of length n is given such that each node contains an additional random pointer, which could point to any node in the list, or null. Construct a deep copy of the list.",
+    "examples": [
+        {
+            "input": "head = [[7,null],[13,0],[11,4],[10,2],[1,0]]",
+            "output": "[[7,null],[13,0],[11,4],[10,2],[1,0]]"
+        }
+    ],
+    "constraints": [
+        "0 <= n <= 1000",
+        "-10^4 <= Node.val <= 10^4",
+        "Node.random is null or is pointing to some node in the linked list."
+    ],
+    "difficulty": "Medium",
+    "topic": "Linked List",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "HashMap",
+            "description": "Use a hash map to map old nodes to new nodes.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function copy_random_list that takes head.",
+                    "placeholderCode": "def copy_random_list(head):",
+                    "validationRegex": "^def\\s+copy_random_list\\(head\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def copy_random_list(head):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize map.",
+                    "placeholderCode": "    oldToCopy = {None: None}\n    cur = head",
+                    "validationRegex": "^\\s+oldToCopy\\s*=\\s*{None:\\s*None}\\s*cur\\s*=\\s*head$",
+                    "hint": "Create a dictionary `oldToCopy`.",
+                    "solutionCode": "    oldToCopy = {None: None}\n    cur = head"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Create copies.",
+                    "placeholderCode": "    while cur:\n        copy = Node(cur.val)\n        oldToCopy[cur] = copy\n        cur = cur.next",
+                    "validationRegex": "^\\s+while\\s+cur:\\s*copy\\s*=\\s*Node\\(cur\\.val\\)\\s*oldToCopy\\[cur\\]\\s*=\\s*copy\\s*cur\\s*=\\s*cur\\.next$",
+                    "hint": "Iterate and create new nodes, storing them in the map.",
+                    "solutionCode": "    while cur:\n        copy = Node(cur.val)\n        oldToCopy[cur] = copy\n        cur = cur.next"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Link pointers.",
+                    "placeholderCode": "    cur = head\n    while cur:\n        copy = oldToCopy[cur]\n        copy.next = oldToCopy[cur.next]\n        copy.random = oldToCopy[cur.random]\n        cur = cur.next",
+                    "validationRegex": "^\\s+cur\\s*=\\s*head\\s*while\\s+cur:\\s*copy\\s*=\\s*oldToCopy\\[cur\\]\\s*copy\\.next\\s*=\\s*oldToCopy\\[cur\\.next\\]\\s*copy\\.random\\s*=\\s*oldToCopy\\[cur\\.random\\]\\s*cur\\s*=\\s*cur\\.next$",
+                    "hint": "Iterate again to set `next` and `random` pointers using the map.",
+                    "solutionCode": "    cur = head\n    while cur:\n        copy = oldToCopy[cur]\n        copy.next = oldToCopy[cur.next]\n        copy.random = oldToCopy[cur.random]\n        cur = cur.next"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return head copy.",
+                    "placeholderCode": "    return oldToCopy[head]",
+                    "validationRegex": "^\\s+return\\s+oldToCopy\\[head\\]$",
+                    "hint": "Return the copy of the head.",
+                    "solutionCode": "    return oldToCopy[head]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Interweaving",
+            "description": "Interweave new nodes with old nodes to avoid extra space.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function copy_random_list that takes head.",
+                    "placeholderCode": "def copy_random_list(head):",
+                    "validationRegex": "^def\\s+copy_random_list\\(head\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def copy_random_list(head):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Interweave nodes.",
+                    "placeholderCode": "    if not head: return None\n    cur = head\n    while cur:\n        new_node = Node(cur.val, cur.next)\n        cur.next = new_node\n        cur = new_node.next",
+                    "validationRegex": "^\\s+if\\s+not\\s+head:\\s*return\\s+None\\s*cur\\s*=\\s*head\\s*while\\s+cur:\\s*new_node\\s*=\\s*Node\\(cur\\.val,\\s*cur\\.next\\)\\s*cur\\.next\\s*=\\s*new_node\\s*cur\\s*=\\s*new_node\\.next$",
+                    "hint": "Insert copied nodes directly after original nodes.\\n\\nExample:\\nOriginal: A -> B.\\nCreate A'. Link A -> A' -> B.\\nCreate B'. Link A -> A' -> B -> B'.",
+                    "solutionCode": "    if not head: return None\n    cur = head\n    while cur:\n        new_node = Node(cur.val, cur.next)\n        cur.next = new_node\n        cur = new_node.next"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Assign random pointers.",
+                    "placeholderCode": "    cur = head\n    while cur:\n        if cur.random:\n            cur.next.random = cur.random.next\n        cur = cur.next.next",
+                    "validationRegex": "^\\s+cur\\s*=\\s*head\\s*while\\s+cur:\\s*if\\s+cur\\.random:\\s*cur\\.next\\.random\\s*=\\s*cur\\.random\\.next\\s*cur\\s*=\\s*cur\\.next\\.next$",
+                    "hint": "Set random pointers for new nodes.",
+                    "solutionCode": "    cur = head\n    while cur:\n        if cur.random:\n            cur.next.random = cur.random.next\n        cur = cur.next.next"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Separate lists.",
+                    "placeholderCode": "    cur = head\n    new_head = head.next\n    while cur:\n        temp = cur.next\n        cur.next = temp.next\n        if temp.next:\n            temp.next = temp.next.next\n        cur = cur.next",
+                    "validationRegex": "^\\s+cur\\s*=\\s*head\\s*new_head\\s*=\\s*head\\.next\\s*while\\s+cur:\\s*temp\\s*=\\s*cur\\.next\\s*cur\\.next\\s*=\\s*temp\\.next\\s*if\\s+temp\\.next:\\s*temp\\.next\\s*=\\s*temp\\.next\\.next\\s*cur\\s*=\\s*cur\\.next$",
+                    "hint": "Restore original list and extract copied list.",
+                    "solutionCode": "    cur = head\n    new_head = head.next\n    while cur:\n        temp = cur.next\n        cur.next = temp.next\n        if temp.next:\n            temp.next = temp.next.next\n        cur = cur.next"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return new head.",
+                    "placeholderCode": "    return new_head",
+                    "validationRegex": "^\\s+return\\s+new_head$",
+                    "hint": "Return the head of the copied list.",
+                    "solutionCode": "    return new_head"
+                }
+            ]
+        }
+    }
+}

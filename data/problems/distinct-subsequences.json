@@ -1,0 +1,119 @@
+{
+    "id": "distinct-subsequences",
+    "title": "Distinct Subsequences",
+    "description": "Given two strings s and t, return the number of distinct subsequences of s which equals t. The test cases are generated so that the answer fits on a 32-bit signed integer.",
+    "examples": [
+        {
+            "input": "s = \"rabbbit\", t = \"rabbit\"",
+            "output": "3",
+            "explanation": "As shown below, there are 3 ways you can generate \"rabbit\" from s.\nrabbbit\nrabbbit\nrabbbit"
+        },
+        {
+            "input": "s = \"babgbag\", t = \"bag\"",
+            "output": "5",
+            "explanation": "As shown below, there are 5 ways you can generate \"bag\" from s.\nbabgbag\nbabgbag\nbabgbag\nbabgbag\nbabgbag"
+        }
+    ],
+    "constraints": [
+        "1 <= s.length, t.length <= 1000",
+        "s and t consist of English letters."
+    ],
+    "difficulty": "Hard",
+    "topic": "2-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively check matching characters.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function num_distinct that takes s and t.",
+                    "placeholderCode": "def num_distinct(s, t):",
+                    "validationRegex": "^def\\s+num_distinct\\(s,\\s*t\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def num_distinct(s, t):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper with memoization.",
+                    "placeholderCode": "    memo = {}\n    def dfs(i, j):\n        if j == len(t): return 1\n        if i == len(s): return 0\n        if (i, j) in memo: return memo[(i, j)]",
+                    "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*j\\):\\s*if\\s+j\\s*==\\s*len\\(t\\):\\s*return\\s+1\\s*if\\s+i\\s*==\\s*len\\(s\\):\\s*return\\s+0\\s*if\\s*\\(i,\\s*j\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*j\\)\\]$",
+                    "hint": "Recursive function `dfs(i, j)` returns ways to form t[j:] from s[i:]. Base cases: t consumed -> 1, s consumed -> 0. Check memo.\\n\\nExample:\\nS=\"bab\", T=\"ba\".\\nDFS(0,0): 'b'=='b'. DFS(1,1) + DFS(1,0).\\n  DFS(1,1): 'a'=='a'. DFS(2,2) + DFS(2,1).\\n    DFS(2,2): T done. Ret 1.\\n    DFS(2,1): 'b'!='a'. Ret DFS(3,1) -> 0.\\n  DFS(1,0): 'a'!='b'. Ret DFS(2,0).\\n    DFS(2,0): 'b'=='b'. DFS(3,1) + DFS(3,0) -> 0 + 0 = 0.",
+                    "solutionCode": "    memo = {}\n    def dfs(i, j):\n        if j == len(t): return 1\n        if i == len(s): return 0\n        if (i, j) in memo: return memo[(i, j)]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "If match, sum results of including or excluding char.",
+                    "placeholderCode": "        if s[i] == t[j]:\n            res = dfs(i + 1, j + 1) + dfs(i + 1, j)",
+                    "validationRegex": "^\\s+if\\s+s\\[i\\]\\s*==\\s+t\\[j\\]:\\s*res\\s*=\\s*dfs\\(i\\s*\\+\\s*1,\\s*j\\s*\\+\\s*1\\)\\s*\\+\\s*dfs\\(i\\s*\\+\\s*1,\\s*j\\)$",
+                    "hint": "If characters match, we can either use s[i] (move both pointers) or skip s[i] (move only i). Sum both possibilities.",
+                    "solutionCode": "        if s[i] == t[j]:\n            res = dfs(i + 1, j + 1) + dfs(i + 1, j)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "If no match, exclude char.",
+                    "placeholderCode": "        else:\n            res = dfs(i + 1, j)",
+                    "validationRegex": "^\\s+else:\\s*res\\s*=\\s*dfs\\(i\\s*\\+\\s*1,\\s*j\\)$",
+                    "hint": "If characters don't match, we must skip s[i].",
+                    "solutionCode": "        else:\n            res = dfs(i + 1, j)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Memoize and return.",
+                    "placeholderCode": "        memo[(i, j)] = res\n        return res",
+                    "validationRegex": "^\\s+memo\\[\\(i,\\s*j\\)\\]\\s*=\\s*res\\s*return\\s+res$",
+                    "hint": "Store result in memo and return.",
+                    "solutionCode": "        memo[(i, j)] = res\n        return res"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Call helper.",
+                    "placeholderCode": "    return dfs(0, 0)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*0\\)$",
+                    "hint": "Start recursion from beginning of both strings.",
+                    "solutionCode": "    return dfs(0, 0)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Use 2D grid to build solution bottom-up.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function num_distinct that takes s and t.",
+                    "placeholderCode": "def num_distinct(s, t):",
+                    "validationRegex": "^def\\s+num_distinct\\(s,\\s*t\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def num_distinct(s, t):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize DP grid.",
+                    "placeholderCode": "    dp = [[0 for j in range(len(t) + 1)] for i in range(len(s) + 1)]\n    for i in range(len(s) + 1):\n        dp[i][len(t)] = 1",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\[\\[0\\s+for\\s+j\\s+in\\s+range\\(len\\(t\\)\\s*\\+\\s*1\\)\\]\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\s*\\+\\s*1\\)\\]\\s*for\\s+i\\s+in\\s+range\\(len\\(s\\)\\s*\\+\\s*1\\):\\s*dp\\[i\\]\\[len\\(t\\)\\]\\s*=\\s*1$",
+                    "hint": "Initialize DP grid. dp[i][j] means distinct subsequences of s[i:] matching t[j:]. Base case: t is empty (j=len(t)) -> 1 way (empty subsequence).",
+                    "solutionCode": "    dp = [[0 for j in range(len(t) + 1)] for i in range(len(s) + 1)]\n    for i in range(len(s) + 1):\n        dp[i][len(t)] = 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate backwards through strings.",
+                    "placeholderCode": "    for i in range(len(s) - 1, -1, -1):\n        for j in range(len(t) - 1, -1, -1):\n            if s[i] == t[j]:\n                dp[i][j] = dp[i + 1][j + 1] + dp[i + 1][j]\n            else:\n                dp[i][j] = dp[i + 1][j]",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(t\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+s\\[i\\]\\s*==\\s+t\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\s*\\+\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\]\\s*else:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\]$",
+                    "hint": "Iterate backwards. If match, add ways using char (diagonal) + ways skipping char (down). If no match, take ways skipping char.\\n\\nExample:\\nS=\"bab\", T=\"ba\".\\nDP 4x3. Base col 2 = 1.\\ni=2 ('b'), j=1 ('a'): No match. DP[2][1]=DP[3][1]=0.\\ni=1 ('a'), j=1 ('a'): Match. DP[1][1]=DP[2][2](1) + DP[2][1](0) = 1.\\ni=0 ('b'), j=0 ('b'): Match. DP[0][0]=DP[1][1](1) + DP[1][0](1) = 2.",
+                    "solutionCode": "    for i in range(len(s) - 1, -1, -1):\n        for j in range(len(t) - 1, -1, -1):\n            if s[i] == t[j]:\n                dp[i][j] = dp[i + 1][j + 1] + dp[i + 1][j]\n            else:\n                dp[i][j] = dp[i + 1][j]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return dp[0][0]",
+                    "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
+                    "hint": "Return result for start of strings.",
+                    "solutionCode": "    return dp[0][0]"
+                }
+            ]
+        }
+    }
+}

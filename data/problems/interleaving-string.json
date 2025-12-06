@@ -1,0 +1,134 @@
+{
+    "id": "interleaving-string",
+    "title": "Interleaving String",
+    "description": "Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.",
+    "examples": [
+        {
+            "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"",
+            "output": "true"
+        },
+        {
+            "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbbaccc\"",
+            "output": "false"
+        }
+    ],
+    "constraints": [
+        "0 <= s1.length, s2.length <= 100",
+        "0 <= s3.length <= 200",
+        "s1, s2, and s3 consist of lowercase English letters."
+    ],
+    "difficulty": "Medium",
+    "topic": "2-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively check if characters match s3.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_interleave that takes s1, s2, and s3.",
+                    "placeholderCode": "def is_interleave(s1, s2, s3):",
+                    "validationRegex": "^def\\s+is_interleave\\(s1,\\s*s2,\\s*s3\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_interleave(s1, s2, s3):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Check length constraint.",
+                    "placeholderCode": "    if len(s1) + len(s2) != len(s3): return False",
+                    "validationRegex": "^\\s+if\\s+len\\(s1\\)\\s*\\+\\s*len\\(s2\\)\\s*!=\\s*len\\(s3\\):\\s*return\\s+False$",
+                    "hint": "If lengths don't match, it's impossible.",
+                    "solutionCode": "    if len(s1) + len(s2) != len(s3): return False"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define recursive helper with memoization.",
+                    "placeholderCode": "    memo = {}\n    def dfs(i, j):\n        if i == len(s1) and j == len(s2): return True\n        if (i, j) in memo: return memo[(i, j)]",
+                    "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*j\\):\\s*if\\s+i\\s*==\\s*len\\(s1\\)\\s+and\\s+j\\s*==\\s*len\\(s2\\):\\s*return\\s+True\\s*if\\s*\\(i,\\s*j\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*j\\)\\]$",
+                    "hint": "Recursive function `dfs(i, j)` checks if s1[i:] and s2[j:] can form s3[i+j:]. Base case: both strings consumed -> True. Check memo.\\n\\nExample:\\nS1=\"a\", S2=\"b\", S3=\"ab\".\\nDFS(0,0): S1[0]='a'==S3[0]. Recurse DFS(1,0).\\n  DFS(1,0): S2[0]='b'==S3[1]. Recurse DFS(1,1).\\n    DFS(1,1): Both consumed. Return True.",
+                    "solutionCode": "    memo = {}\n    def dfs(i, j):\n        if i == len(s1) and j == len(s2): return True\n        if (i, j) in memo: return memo[(i, j)]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Check match with s1.",
+                    "placeholderCode": "        if i < len(s1) and s1[i] == s3[i + j] and dfs(i + 1, j):\n            return True",
+                    "validationRegex": "^\\s+if\\s+i\\s*<\\s+len\\(s1\\)\\s+and\\s+s1\\[i\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dfs\\(i\\s*\\+\\s*1,\\s*j\\):\\s*return\\s+True$",
+                    "hint": "If s1[i] matches s3[i+j], recurse incrementing i.",
+                    "solutionCode": "        if i < len(s1) and s1[i] == s3[i + j] and dfs(i + 1, j):\n            return True"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check match with s2.",
+                    "placeholderCode": "        if j < len(s2) and s2[j] == s3[i + j] and dfs(i, j + 1):\n            return True",
+                    "validationRegex": "^\\s+if\\s+j\\s*<\\s+len\\(s2\\)\\s+and\\s+s2\\[j\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dfs\\(i,\\s*j\\s*\\+\\s*1\\):\\s*return\\s+True$",
+                    "hint": "If s2[j] matches s3[i+j], recurse incrementing j.",
+                    "solutionCode": "        if j < len(s2) and s2[j] == s3[i + j] and dfs(i, j + 1):\n            return True"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Memoize and return.",
+                    "placeholderCode": "        memo[(i, j)] = False\n        return False",
+                    "validationRegex": "^\\s+memo\\[\\(i,\\s*j\\)\\]\\s*=\\s*False\\s*return\\s+False$",
+                    "hint": "If neither path works, return False.",
+                    "solutionCode": "        memo[(i, j)] = False\n        return False"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Call helper.",
+                    "placeholderCode": "    return dfs(0, 0)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*0\\)$",
+                    "hint": "Start recursion from beginning.",
+                    "solutionCode": "    return dfs(0, 0)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "2D grid to track reachable states.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_interleave that takes s1, s2, and s3.",
+                    "placeholderCode": "def is_interleave(s1, s2, s3):",
+                    "validationRegex": "^def\\s+is_interleave\\(s1,\\s*s2,\\s*s3\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_interleave(s1, s2, s3):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Check length constraint.",
+                    "placeholderCode": "    if len(s1) + len(s2) != len(s3): return False",
+                    "validationRegex": "^\\s+if\\s+len\\(s1\\)\\s*\\+\\s*len\\(s2\\)\\s*!=\\s*len\\(s3\\):\\s*return\\s+False$",
+                    "hint": "If lengths don't match, it's impossible.",
+                    "solutionCode": "    if len(s1) + len(s2) != len(s3): return False"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize DP grid.",
+                    "placeholderCode": "    dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]\n    dp[len(s1)][len(s2)] = True",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\[\\[False\\]\\s*\\*\\s*\\(len\\(s2\\)\\s*\\+\\s*1\\)\\s+for\\s+_\\s+in\\s+range\\(len\\(s1\\)\\s*\\+\\s*1\\)\\]\\s*dp\\[len\\(s1\\)\\]\\[len\\(s2\\)\\]\\s*=\\s*True$",
+                    "hint": "Initialize DP grid. dp[i][j] means s1[i:] and s2[j:] can interleave to form s3[i+j:]. Base case: end of both strings is True.",
+                    "solutionCode": "    dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]\n    dp[len(s1)][len(s2)] = True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Iterate backwards.",
+                    "placeholderCode": "    for i in range(len(s1), -1, -1):\n        for j in range(len(s2), -1, -1):\n            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:\n                dp[i][j] = True\n            if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:\n                dp[i][j] = True",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s1\\),\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(s2\\),\\s*-1,\\s*-1\\):\\s*if\\s+i\\s*<\\s+len\\(s1\\)\\s+and\\s+s1\\[i\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*True\\s*if\\s+j\\s*<\\s+len\\(s2\\)\\s+and\\s+s2\\[j\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dp\\[i\\]\\[j\\s*\\+\\s*1\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*True$",
+                    "hint": "Iterate backwards. Check if current char of s1 or s2 matches s3 and if the subsequent state is valid.\\n\\nExample:\\nS1=\"a\", S2=\"b\", S3=\"ab\".\\nDP[1][1]=True (Base).\\ni=1, j=0 ('b' matches 'b'): DP[1][0] = DP[1][1] = True.\\ni=0, j=1 ('a' matches 'a'): DP[0][1] = DP[1][1] = True.\\ni=0, j=0 ('a' matches 'a'): DP[0][0] = DP[1][0] = True.",
+                    "solutionCode": "    for i in range(len(s1), -1, -1):\n        for j in range(len(s2), -1, -1):\n            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:\n                dp[i][j] = True\n            if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:\n                dp[i][j] = True"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return dp[0][0]",
+                    "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
+                    "hint": "Return result for start of strings.",
+                    "solutionCode": "    return dp[0][0]"
+                }
+            ]
+        }
+    }
+}

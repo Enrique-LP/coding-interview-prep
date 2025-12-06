@@ -1,0 +1,102 @@
+{
+    "id": "combination-sum-ii",
+    "title": "Combination Sum II",
+    "description": "Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target. Each number in candidates may only be used once in the combination. Note: The solution set must not contain duplicate combinations.",
+    "examples": [
+        {
+            "input": "candidates = [10,1,2,7,6,1,5], target = 8",
+            "output": "[[1,1,6],[1,2,5],[1,7],[2,6]]"
+        },
+        {
+            "input": "candidates = [2,5,2,1,2], target = 5",
+            "output": "[[1,2,2],[5]]"
+        }
+    ],
+    "constraints": [
+        "1 <= candidates.length <= 100",
+        "1 <= candidates[i] <= 50",
+        "1 <= target <= 30"
+    ],
+    "difficulty": "Medium",
+    "topic": "Backtracking",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Backtracking",
+            "description": "Sort and backtrack, skipping duplicates.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function combination_sum2 that takes candidates and target.",
+                    "placeholderCode": "def combination_sum2(candidates, target):",
+                    "validationRegex": "^def\\s+combination_sum2\\(candidates,\\s*target\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def combination_sum2(candidates, target):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Sort candidates.",
+                    "placeholderCode": "    candidates.sort()",
+                    "validationRegex": "^\\s+candidates\\.sort\\(\\)$",
+                    "hint": "Sort the candidates to handle duplicates and optimize.",
+                    "solutionCode": "    candidates.sort()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define backtrack.",
+                    "placeholderCode": "    res = []\n    def backtrack(cur, pos, target):\n        if target == 0:\n            res.append(cur.copy())\n            return\n        if target <= 0:\n            return\n        prev = -1\n        for i in range(pos, len(candidates)):\n            if candidates[i] == prev:\n                continue\n            cur.append(candidates[i])\n            backtrack(cur, i + 1, target - candidates[i])\n            cur.pop()\n            prev = candidates[i]",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*def\\s+backtrack\\(cur,\\s*pos,\\s*target\\):\\s*if\\s+target\\s*==\\s*0:\\s*res\\.append\\(cur\\.copy\\(\\)\\)\\s*return\\s*if\\s+target\\s*<=\\s*0:\\s*return\\s*prev\\s*=\\s*-1\\s*for\\s+i\\s+in\\s+range\\(pos,\\s*len\\(candidates\\)\\):\\s*if\\s+candidates\\[i\\]\\s*==\\s*prev:\\s*continue\\s*cur\\.append\\(candidates\\[i\\]\\)\\s*backtrack\\(cur,\\s*i\\s*\\+\\s*1,\\s*target\\s*-\\s*candidates\\[i\\]\\)\\s*cur\\.pop\\(\\)\\s*prev\\s*=\\s*candidates\\[i\\]$",
+                    "hint": "Implement backtracking. Iterate through candidates, skip duplicates, and recurse with updated target.\\n\\nExample:\\nCands=[1, 1, 2], Target=3.\\nUse first 1. Rem=2. Recurse.\\nUse second 1. Rem=1. Recurse.\\nBacktrack. Skip second 1 (duplicate) in loop.",
+                    "solutionCode": "    res = []\n    def backtrack(cur, pos, target):\n        if target == 0:\n            res.append(cur.copy())\n            return\n        if target <= 0:\n            return\n        prev = -1\n        for i in range(pos, len(candidates)):\n            if candidates[i] == prev:\n                continue\n            cur.append(candidates[i])\n            backtrack(cur, i + 1, target - candidates[i])\n            cur.pop()\n            prev = candidates[i]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call backtrack.",
+                    "placeholderCode": "    backtrack([], 0, target)\n    return res",
+                    "validationRegex": "^\\s+backtrack\\(\\[\\],\\s*0,\\s*target\\)\\s*return\\s+res$",
+                    "hint": "Start backtracking from the beginning.",
+                    "solutionCode": "    backtrack([], 0, target)\n    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Backtracking",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function combination_sum2 that takes candidates and target.",
+                    "placeholderCode": "def combination_sum2(candidates, target):",
+                    "validationRegex": "^def\\s+combination_sum2\\(candidates,\\s*target\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def combination_sum2(candidates, target):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Sort candidates.",
+                    "placeholderCode": "    candidates.sort()",
+                    "validationRegex": "^\\s+candidates\\.sort\\(\\)$",
+                    "hint": "Sort the candidates to handle duplicates and optimize.",
+                    "solutionCode": "    candidates.sort()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define backtrack.",
+                    "placeholderCode": "    res = []\n    def backtrack(cur, pos, target):\n        if target == 0:\n            res.append(cur.copy())\n            return\n        if target <= 0:\n            return\n        prev = -1\n        for i in range(pos, len(candidates)):\n            if candidates[i] == prev:\n                continue\n            cur.append(candidates[i])\n            backtrack(cur, i + 1, target - candidates[i])\n            cur.pop()\n            prev = candidates[i]",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*def\\s+backtrack\\(cur,\\s*pos,\\s*target\\):\\s*if\\s+target\\s*==\\s*0:\\s*res\\.append\\(cur\\.copy\\(\\)\\)\\s*return\\s*if\\s+target\\s*<=\\s*0:\\s*return\\s*prev\\s*=\\s*-1\\s*for\\s+i\\s+in\\s+range\\(pos,\\s*len\\(candidates\\)\\):\\s*if\\s+candidates\\[i\\]\\s*==\\s*prev:\\s*continue\\s*cur\\.append\\(candidates\\[i\\]\\)\\s*backtrack\\(cur,\\s*i\\s*\\+\\s*1,\\s*target\\s*-\\s*candidates\\[i\\]\\)\\s*cur\\.pop\\(\\)\\s*prev\\s*=\\s*candidates\\[i\\]$",
+                    "hint": "Implement backtracking. Iterate through candidates, skip duplicates, and recurse with updated target.\\n\\nExample:\\nCands=[1, 1, 2], Target=3.\\nUse first 1. Rem=2. Recurse.\\nUse second 1. Rem=1. Recurse.\\nBacktrack. Skip second 1 (duplicate) in loop.",
+                    "solutionCode": "    res = []\n    def backtrack(cur, pos, target):\n        if target == 0:\n            res.append(cur.copy())\n            return\n        if target <= 0:\n            return\n        prev = -1\n        for i in range(pos, len(candidates)):\n            if candidates[i] == prev:\n                continue\n            cur.append(candidates[i])\n            backtrack(cur, i + 1, target - candidates[i])\n            cur.pop()\n            prev = candidates[i]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call backtrack.",
+                    "placeholderCode": "    backtrack([], 0, target)\n    return res",
+                    "validationRegex": "^\\s+backtrack\\(\\[\\],\\s*0,\\s*target\\)\\s*return\\s+res$",
+                    "hint": "Start backtracking from the beginning.",
+                    "solutionCode": "    backtrack([], 0, target)\n    return res"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,128 @@
+{
+    "id": "hand-of-straights",
+    "title": "Hand of Straights",
+    "description": "Alice has some number of cards and she wants to rearrange the cards into groups so that each group is of size groupSize, and consists of groupSize consecutive cards. Given an integer array hand where hand[i] is the value written on the ith card and an integer groupSize, return true if she can rearrange the cards, or false otherwise.",
+    "examples": [
+        {
+            "input": "hand = [1,2,3,6,2,3,4,7,8], groupSize = 3",
+            "output": "true",
+            "explanation": "Alice's hand can be rearranged as [1,2,3],[2,3,4],[6,7,8]"
+        },
+        {
+            "input": "hand = [1,2,3,4,5], groupSize = 4",
+            "output": "false",
+            "explanation": "Alice's hand can not be rearranged into groups of 4."
+        }
+    ],
+    "constraints": [
+        "1 <= hand.length <= 10^4",
+        "0 <= hand[i] <= 10^9",
+        "1 <= groupSize <= hand.length"
+    ],
+    "difficulty": "Medium",
+    "topic": "Greedy",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Simulation with Sorting",
+            "description": "Sort and try to form groups.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_n_straight_hand that takes hand and groupSize.",
+                    "placeholderCode": "def is_n_straight_hand(hand, groupSize):",
+                    "validationRegex": "^def\\s+is_n_straight_hand\\(hand,\\s*groupSize\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_n_straight_hand(hand, groupSize):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Check divisibility.",
+                    "placeholderCode": "    if len(hand) % groupSize: return False",
+                    "validationRegex": "^\\s+if\\s+len\\(hand\\)\\s*%\\s*groupSize:\\s*return\\s+False$",
+                    "hint": "If the total number of cards is not divisible by groupSize, it's impossible.",
+                    "solutionCode": "    if len(hand) % groupSize: return False"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Count frequencies.",
+                    "placeholderCode": "    count = {}\n    for n in hand:\n        count[n] = count.get(n, 0) + 1",
+                    "validationRegex": "^\\s+count\\s*=\\s*\\{\\}\\s*for\\s+n\\s+in\\s+hand:\\s*count\\[n\\]\\s*=\\s*count\\.get\\(n,\\s*0\\)\\s*\\+\\s*1$",
+                    "hint": "Count the frequency of each card using a hash map.",
+                    "solutionCode": "    count = {}\n    for n in hand:\n        count[n] = count.get(n, 0) + 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Sort keys.",
+                    "placeholderCode": "    hand.sort()",
+                    "validationRegex": "^\\s+hand\\.sort\\(\\)$",
+                    "hint": "Sort the hand to process cards in order.",
+                    "solutionCode": "    hand.sort()"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate and form groups.",
+                    "placeholderCode": "    for i in hand:\n        if count[i] == 0: continue\n        for j in range(groupSize):\n            if count.get(i + j, 0) == 0: return False\n            count[i + j] -= 1",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+hand:\\s*if\\s+count\\[i\\]\\s*==\\s*0:\\s*continue\\s*for\\s+j\\s+in\\s+range\\(groupSize\\):\\s*if\\s+count\\.get\\(i\\s*\\+\\s*j,\\s*0\\)\\s*==\\s*0:\\s*return\\s+False\\s*count\\[i\\s*\\+\\s*j\\]\\s*-=\\s*1$",
+                    "hint": "Iterate through sorted cards. If a card is available, try to form a group starting from it. Decrement counts.\\n\\nExample:\\nHand=[1, 2, 2, 3], Size=3. Sorted.\\ni=1: Need [1, 2, 3]. All available. Count {1:0, 2:1, 3:0}.\\ni=2: Need [2, 3, 4]. 3 is missing (count 0). Fail.",
+                    "solutionCode": "    for i in hand:\n        if count[i] == 0: continue\n        for j in range(groupSize):\n            if count.get(i + j, 0) == 0: return False\n            count[i + j] -= 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return True.",
+                    "placeholderCode": "    return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "If all groups are formed successfully, return True.",
+                    "solutionCode": "    return True"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Min-Heap",
+            "description": "Use min-heap to process smallest cards first.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_n_straight_hand that takes hand and groupSize.",
+                    "placeholderCode": "def is_n_straight_hand(hand, groupSize):",
+                    "validationRegex": "^def\\s+is_n_straight_hand\\(hand,\\s*groupSize\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_n_straight_hand(hand, groupSize):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Check divisibility.",
+                    "placeholderCode": "    if len(hand) % groupSize: return False",
+                    "validationRegex": "^\\s+if\\s+len\\(hand\\)\\s*%\\s*groupSize:\\s*return\\s+False$",
+                    "hint": "If the total number of cards is not divisible by groupSize, it's impossible.",
+                    "solutionCode": "    if len(hand) % groupSize: return False"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Count frequencies and build min-heap.",
+                    "placeholderCode": "    count = {}\n    for n in hand:\n        count[n] = count.get(n, 0) + 1\n    minH = list(count.keys())\n    import heapq\n    heapq.heapify(minH)",
+                    "validationRegex": "^\\s+count\\s*=\\s*\\{\\}\\s*for\\s+n\\s+in\\s+hand:\\s*count\\[n\\]\\s*=\\s*count\\.get\\(n,\\s*0\\)\\s*\\+\\s*1\\s*minH\\s*=\\s*list\\(count\\.keys\\(\\)\\)\\s*import\\s+heapq\\s*heapq\\.heapify\\(minH\\)$",
+                    "hint": "Count frequencies. Use a min-heap to store unique card values to always process the smallest available card.",
+                    "solutionCode": "    count = {}\n    for n in hand:\n        count[n] = count.get(n, 0) + 1\n    minH = list(count.keys())\n    import heapq\n    heapq.heapify(minH)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Process heap.",
+                    "placeholderCode": "    while minH:\n        first = minH[0]\n        for i in range(first, first + groupSize):\n            if i not in count: return False\n            count[i] -= 1\n            if count[i] == 0:\n                if i != minH[0]: return False\n                heapq.heappop(minH)",
+                    "validationRegex": "^\\s+while\\s+minH:\\s*first\\s*=\\s*minH\\[0\\]\\s*for\\s+i\\s+in\\s+range\\(first,\\s*first\\s*\\+\\s*groupSize\\):\\s*if\\s+i\\s+not\\s+in\\s+count:\\s*return\\s+False\\s*count\\[i\\]\\s*-=\\s*1\\s*if\\s+count\\[i\\]\\s*==\\s*0:\\s*if\\s+i\\s*!=\\s*minH\\[0\\]:\\s*return\\s+False\\s*heapq\\.heappop\\(minH\\)$",
+                    "hint": "While heap is not empty, take the smallest card `first`. Try to form a group `[first, first+1, ..., first+groupSize-1]`. Decrement counts. If a count reaches 0, remove from heap (must be the min element).\\n\\nExample:\\nHand=[1, 2, 3, 6, 2, 3, 4, 7, 8], Size=3.\\nCount={1:1, 2:2, 3:2, 4:1, 6:1, 7:1, 8:1}. Heap=[1, 2, 3, 4, 6, 7, 8].\\nPop 1. Need [1, 2, 3].\\n  Use 1 (Count 0, Pop). Use 2 (Count 1). Use 3 (Count 1).\\nNext Min is 2. Need [2, 3, 4].\\n  Use 2 (Count 0, Pop). Use 3 (Count 0, Pop). Use 4 (Count 0, Pop).\\nNext Min is 6. Need [6, 7, 8].\\n  Use 6, 7, 8. All counts 0. Success.",
+                    "solutionCode": "    while minH:\n        first = minH[0]\n        for i in range(first, first + groupSize):\n            if i not in count: return False\n            count[i] -= 1\n            if count[i] == 0:\n                if i != minH[0]: return False\n                heapq.heappop(minH)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return True.",
+                    "placeholderCode": "    return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "If all groups formed, return True.",
+                    "solutionCode": "    return True"
+                }
+            ]
+        }
+    }
+}

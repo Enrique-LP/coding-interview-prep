@@ -1,0 +1,114 @@
+{
+    "id": "implement-trie-prefix-tree",
+    "title": "Implement Trie (Prefix Tree)",
+    "description": "A trie (pronounced as \"try\") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker. Implement the Trie class.",
+    "examples": [
+        {
+            "input": "[\"Trie\", \"insert\", \"search\", \"search\", \"startsWith\", \"insert\", \"search\"]\n[[], [\"apple\"], [\"apple\"], [\"app\"], [\"app\"], [\"app\"], [\"app\"]]",
+            "output": "[null, null, true, false, true, null, true]"
+        }
+    ],
+    "constraints": [
+        "1 <= word.length, prefix.length <= 2000",
+        "word and prefix consist only of lowercase English letters.",
+        "At most 3 * 10^4 calls in total will be made to insert, search, and startsWith."
+    ],
+    "difficulty": "Medium",
+    "topic": "Tries",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Trie Node",
+            "description": "Use a tree of nodes with 26 children.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define TrieNode.",
+                    "placeholderCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.endOfWord = False",
+                    "validationRegex": "^class\\s+TrieNode:\\s*def\\s+__init__\\(self\\):\\s*self\\.children\\s*=\\s*{}\\s*self\\.endOfWord\\s*=\\s*False$",
+                    "hint": "Create a node class with children map and endOfWord flag.",
+                    "solutionCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.endOfWord = False"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define Trie class.",
+                    "placeholderCode": "class Trie:\n    def __init__(self):\n        self.root = TrieNode()",
+                    "validationRegex": "^class\\s+Trie:\\s*def\\s+__init__\\(self\\):\\s*self\\.root\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Initialize the Trie with a root node.",
+                    "solutionCode": "class Trie:\n    def __init__(self):\n        self.root = TrieNode()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Implement insert.",
+                    "placeholderCode": "    def insert(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.endOfWord = True",
+                    "validationRegex": "^\\s+def\\s+insert\\(self,\\s*word\\):\\s*cur\\s*=\\s*self\\.root\\s*for\\s+c\\s+in\\s+word:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*cur\\.endOfWord\\s*=\\s*True$",
+                    "hint": "Traverse/create nodes for each character and mark end.\\n\\nExample:\\nInsert \"apple\".\\nRoot -> 'a' -> 'p' -> 'p' -> 'l' -> 'e' (mark end).",
+                    "solutionCode": "    def insert(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.endOfWord = True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Implement search.",
+                    "placeholderCode": "    def search(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                return False\n            cur = cur.children[c]\n        return cur.endOfWord",
+                    "validationRegex": "^\\s+def\\s+search\\(self,\\s*word\\):\\s*cur\\s*=\\s*self\\.root\\s*for\\s+c\\s+in\\s+word:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*return\\s+cur\\.endOfWord$",
+                    "hint": "Traverse nodes; if char missing return False, else check endOfWord.",
+                    "solutionCode": "    def search(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                return False\n            cur = cur.children[c]\n        return cur.endOfWord"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Implement startsWith.",
+                    "placeholderCode": "    def startsWith(self, prefix):\n        cur = self.root\n        for c in prefix:\n            if c not in cur.children:\n                return False\n            cur = cur.children[c]\n        return True",
+                    "validationRegex": "^\\s+def\\s+startsWith\\(self,\\s*prefix\\):\\s*cur\\s*=\\s*self\\.root\\s*for\\s+c\\s+in\\s+prefix:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*return\\s+True$",
+                    "hint": "Traverse nodes; if char missing return False, else return True.",
+                    "solutionCode": "    def startsWith(self, prefix):\n        cur = self.root\n        for c in prefix:\n            if c not in cur.children:\n                return False\n            cur = cur.children[c]\n        return True"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Trie Node",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define TrieNode.",
+                    "placeholderCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.endOfWord = False",
+                    "validationRegex": "^class\\s+TrieNode:\\s*def\\s+__init__\\(self\\):\\s*self\\.children\\s*=\\s*{}\\s*self\\.endOfWord\\s*=\\s*False$",
+                    "hint": "Create a node class with children map and endOfWord flag.",
+                    "solutionCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.endOfWord = False"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define Trie class.",
+                    "placeholderCode": "class Trie:\n    def __init__(self):\n        self.root = TrieNode()",
+                    "validationRegex": "^class\\s+Trie:\\s*def\\s+__init__\\(self\\):\\s*self\\.root\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Initialize the Trie with a root node.",
+                    "solutionCode": "class Trie:\n    def __init__(self):\n        self.root = TrieNode()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Implement insert.",
+                    "placeholderCode": "    def insert(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.endOfWord = True",
+                    "validationRegex": "^\\s+def\\s+insert\\(self,\\s*word\\):\\s*cur\\s*=\\s*self\\.root\\s*for\\s+c\\s+in\\s+word:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*cur\\.endOfWord\\s*=\\s*True$",
+                    "hint": "Traverse/create nodes for each character and mark end.",
+                    "solutionCode": "    def insert(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.endOfWord = True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Implement search.",
+                    "placeholderCode": "    def search(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                return False\n            cur = cur.children[c]\n        return cur.endOfWord",
+                    "validationRegex": "^\\s+def\\s+search\\(self,\\s*word\\):\\s*cur\\s*=\\s*self\\.root\\s*for\\s+c\\s+in\\s+word:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*return\\s+cur\\.endOfWord$",
+                    "hint": "Traverse nodes; if char missing return False, else check endOfWord.",
+                    "solutionCode": "    def search(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                return False\n            cur = cur.children[c]\n        return cur.endOfWord"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Implement startsWith.",
+                    "placeholderCode": "    def startsWith(self, prefix):\n        cur = self.root\n        for c in prefix:\n            if c not in cur.children:\n                return False\n            cur = cur.children[c]\n        return True",
+                    "validationRegex": "^\\s+def\\s+startsWith\\(self,\\s*prefix\\):\\s*cur\\s*=\\s*self\\.root\\s*for\\s+c\\s+in\\s+prefix:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*return\\s+True$",
+                    "hint": "Traverse nodes; if char missing return False, else return True.",
+                    "solutionCode": "    def startsWith(self, prefix):\n        cur = self.root\n        for c in prefix:\n            if c not in cur.children:\n                return False\n            cur = cur.children[c]\n        return True"
+                }
+            ]
+        }
+    }
+}

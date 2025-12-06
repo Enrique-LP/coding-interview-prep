@@ -1,0 +1,150 @@
+{
+    "id": "diameter-of-binary-tree",
+    "title": "Diameter of Binary Tree",
+    "description": "Given the root of a binary tree, return the length of the diameter of the tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.",
+    "examples": [
+        {
+            "input": "root = [1,2,3,4,5]",
+            "output": "3",
+            "explanation": "3 is the length of the path [4,2,1,3] or [5,2,1,3]."
+        },
+        {
+            "input": "root = [1,2]",
+            "output": "1"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the tree is in the range [1, 10^4].",
+        "-100 <= Node.val <= 100"
+    ],
+    "difficulty": "Easy",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive DFS",
+            "description": "Calculate height and update diameter at each node.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function diameter_of_binary_tree that takes root.",
+                    "placeholderCode": "def diameter_of_binary_tree(root):",
+                    "validationRegex": "^def\\s+diameter_of_binary_tree\\(root\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def diameter_of_binary_tree(root):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize a variable to store the maximum diameter.",
+                    "placeholderCode": "    res = [0]",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[0\\]$",
+                    "hint": "Use a list to store the result by reference.",
+                    "solutionCode": "    res = [0]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define a helper dfs function to calculate height.",
+                    "placeholderCode": "    def dfs(root):\n        if not root: return -1",
+                    "validationRegex": "^\\s+def\\s+dfs\\(root\\):\\s*if\\s+not\\s+root:\\s*return\\s+-1$",
+                    "hint": "Return -1 for null nodes (height of empty tree).",
+                    "solutionCode": "    def dfs(root):\n        if not root: return -1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Recursively find height of left and right subtrees.",
+                    "placeholderCode": "        left = dfs(root.left)\n        right = dfs(root.right)",
+                    "validationRegex": "^\\s+left\\s*=\\s*dfs\\(root\\.left\\)\\s*right\\s*=\\s*dfs\\(root\\.right\\)$",
+                    "hint": "Get heights of children.",
+                    "solutionCode": "        left = dfs(root.left)\n        right = dfs(root.right)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Update the diameter (left height + right height + 2).",
+                    "placeholderCode": "        res[0] = max(res[0], left + right + 2)",
+                    "validationRegex": "^\\s+res\\[0\\]\\s*=\\s*max\\(res\\[0\\],\\s*left\\s*\\+\\s*right\\s*\\+\\s*2\\)$",
+                    "hint": "Diameter through this node is left + right + 2.\\n\\nExample:\\nNode=1. Left Height=1 (Node 2). Right Height=1 (Node 3).\\nPath: 2 -> 1 -> 3. Length = 1 + 1 = 2 edges (or 3 nodes).",
+                    "solutionCode": "        res[0] = max(res[0], left + right + 2)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return height of current node.",
+                    "placeholderCode": "        return 1 + max(left, right)",
+                    "validationRegex": "^\\s+return\\s+1\\s*\\+\\s*max\\(left,\\s*right\\)$",
+                    "hint": "Return 1 + max height of children.",
+                    "solutionCode": "        return 1 + max(left, right)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Call dfs and return result.",
+                    "placeholderCode": "    dfs(root)\n    return res[0]",
+                    "validationRegex": "^\\s+dfs\\(root\\)\\s*return\\s+res\\[0\\]$",
+                    "hint": "Start DFS and return the max diameter found.",
+                    "solutionCode": "    dfs(root)\n    return res[0]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Recursive DFS",
+            "description": "Same as brute force, O(n) is optimal.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function diameter_of_binary_tree that takes root.",
+                    "placeholderCode": "def diameter_of_binary_tree(root):",
+                    "validationRegex": "^def\\s+diameter_of_binary_tree\\(root\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def diameter_of_binary_tree(root):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize a variable to store the maximum diameter.",
+                    "placeholderCode": "    res = [0]",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[0\\]$",
+                    "hint": "Use a list to store the result by reference.",
+                    "solutionCode": "    res = [0]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define a helper dfs function to calculate height.",
+                    "placeholderCode": "    def dfs(root):\n        if not root: return -1",
+                    "validationRegex": "^\\s+def\\s+dfs\\(root\\):\\s*if\\s+not\\s+root:\\s*return\\s+-1$",
+                    "hint": "Return -1 for null nodes.",
+                    "solutionCode": "    def dfs(root):\n        if not root: return -1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Recursively find height of left and right subtrees.",
+                    "placeholderCode": "        left = dfs(root.left)\n        right = dfs(root.right)",
+                    "validationRegex": "^\\s+left\\s*=\\s*dfs\\(root\\.left\\)\\s*right\\s*=\\s*dfs\\(root\\.right\\)$",
+                    "hint": "Get heights of children.",
+                    "solutionCode": "        left = dfs(root.left)\n        right = dfs(root.right)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Update the diameter (left height + right height + 2).",
+                    "placeholderCode": "        res[0] = max(res[0], left + right + 2)",
+                    "validationRegex": "^\\s+res\\[0\\]\\s*=\\s*max\\(res\\[0\\],\\s*left\\s*\\+\\s*right\\s*\\+\\s*2\\)$",
+                    "hint": "Diameter through this node is left + right + 2.",
+                    "solutionCode": "        res[0] = max(res[0], left + right + 2)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return height of current node.",
+                    "placeholderCode": "        return 1 + max(left, right)",
+                    "validationRegex": "^\\s+return\\s+1\\s*\\+\\s*max\\(left,\\s*right\\)$",
+                    "hint": "Return 1 + max height of children.",
+                    "solutionCode": "        return 1 + max(left, right)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Call dfs and return result.",
+                    "placeholderCode": "    dfs(root)\n    return res[0]",
+                    "validationRegex": "^\\s+dfs\\(root\\)\\s*return\\s+res\\[0\\]$",
+                    "hint": "Start DFS and return the max diameter found.",
+                    "solutionCode": "    dfs(root)\n    return res[0]"
+                }
+            ]
+        }
+    }
+}

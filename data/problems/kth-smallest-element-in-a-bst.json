@@ -1,0 +1,134 @@
+{
+    "id": "kth-smallest-element-in-a-bst",
+    "title": "Kth Smallest Element in a BST",
+    "description": "Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.",
+    "examples": [
+        {
+            "input": "root = [3,1,4,null,2], k = 1",
+            "output": "1"
+        },
+        {
+            "input": "root = [5,3,6,2,4,null,null,1], k = 3",
+            "output": "3"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the tree is n.",
+        "1 <= k <= n <= 10^4",
+        "0 <= Node.val <= 10^4"
+    ],
+    "difficulty": "Medium",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive In-order",
+            "description": "Traverse in-order to get sorted elements.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function kth_smallest that takes root and k.",
+                    "placeholderCode": "def kth_smallest(root, k):",
+                    "validationRegex": "^def\\s+kth_smallest\\(root,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def kth_smallest(root, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize list to store sorted elements.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "Use a list to collect values.",
+                    "solutionCode": "    res = []"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define helper for in-order traversal.",
+                    "placeholderCode": "    def inorder(node):\n        if not node: return",
+                    "validationRegex": "^\\s+def\\s+inorder\\(node\\):\\s*if\\s+not\\s+node:\\s*return$",
+                    "hint": "Helper function for recursion.",
+                    "solutionCode": "    def inorder(node):\n        if not node: return"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Traverse left, append value, traverse right.",
+                    "placeholderCode": "        inorder(node.left)\n        res.append(node.val)\n        inorder(node.right)",
+                    "validationRegex": "^\\s+inorder\\(node\\.left\\)\\s*res\\.append\\(node\\.val\\)\\s*inorder\\(node\\.right\\)$",
+                    "hint": "Standard in-order traversal: Left -> Root -> Right.",
+                    "solutionCode": "        inorder(node.left)\n        res.append(node.val)\n        inorder(node.right)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Call helper and return kth element (k-1 index).",
+                    "placeholderCode": "    inorder(root)\n    return res[k - 1]",
+                    "validationRegex": "^\\s+inorder\\(root\\)\\s*return\\s+res\\[k\\s*-\\s*1\\]$",
+                    "hint": "Execute traversal and return the element at index k-1.\\n\\nExample:\\nBST: 3, 1, 4, 2. In-order: [1, 2, 3, 4].\\nk=3. Index k-1 = 2. Result = 3.",
+                    "solutionCode": "    inorder(root)\n    return res[k - 1]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Iterative In-order",
+            "description": "Use a stack to stop early once kth element is found.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function kth_smallest that takes root and k.",
+                    "placeholderCode": "def kth_smallest(root, k):",
+                    "validationRegex": "^def\\s+kth_smallest\\(root,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def kth_smallest(root, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize stack and current node.",
+                    "placeholderCode": "    stack = []\n    curr = root",
+                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]\\s*curr\\s*=\\s*root$",
+                    "hint": "Use a stack for iterative traversal.",
+                    "solutionCode": "    stack = []\n    curr = root"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while stack or curr is not None.",
+                    "placeholderCode": "    while stack or curr:",
+                    "validationRegex": "^\\s+while\\s+stack\\s+or\\s+curr:$",
+                    "hint": "Continue until all nodes are processed.",
+                    "solutionCode": "    while stack or curr:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Go as left as possible.",
+                    "placeholderCode": "        while curr:\n            stack.append(curr)\n            curr = curr.left",
+                    "validationRegex": "^\\s+while\\s+curr:\\s*stack\\.append\\(curr\\)\\s*curr\\s*=\\s*curr\\.left$",
+                    "hint": "Push nodes to stack while moving left.",
+                    "solutionCode": "        while curr:\n            stack.append(curr)\n            curr = curr.left"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Pop node, decrement k.",
+                    "placeholderCode": "        curr = stack.pop()\n        k -= 1",
+                    "validationRegex": "^\\s+curr\\s*=\\s*stack\\.pop\\(\\)\\s*k\\s*-=\\s*1$",
+                    "hint": "Process the node and decrease k.",
+                    "solutionCode": "        curr = stack.pop()\n        k -= 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "If k is 0, return current value.",
+                    "placeholderCode": "        if k == 0:\n            return curr.val",
+                    "validationRegex": "^\\s+if\\s+k\\s*==\\s*0:\\s*return\\s+curr\\.val$",
+                    "hint": "If k reaches 0, we found the kth smallest element.",
+                    "solutionCode": "        if k == 0:\n            return curr.val"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Move right.",
+                    "placeholderCode": "        curr = curr.right",
+                    "validationRegex": "^\\s+curr\\s*=\\s*curr\\.right$",
+                    "hint": "Move to the right child.",
+                    "solutionCode": "        curr = curr.right"
+                }
+            ]
+        }
+    }
+}

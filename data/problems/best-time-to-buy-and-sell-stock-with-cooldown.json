@@ -1,0 +1,118 @@
+{
+    "id": "best-time-to-buy-and-sell-stock-with-cooldown",
+    "title": "Best Time to Buy and Sell Stock with Cooldown",
+    "description": "You are given an array prices where prices[i] is the price of a given stock on the ith day. Find the maximum profit you can achieve. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times) with the following restrictions: After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day). Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).",
+    "examples": [
+        {
+            "input": "prices = [1,2,3,0,2]",
+            "output": "3",
+            "explanation": "transactions = [buy, sell, cooldown, buy, sell]"
+        },
+        {
+            "input": "prices = [1]",
+            "output": "0"
+        }
+    ],
+    "constraints": [
+        "1 <= prices.length <= 5000",
+        "0 <= prices[i] <= 1000"
+    ],
+    "difficulty": "Medium",
+    "topic": "2-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively check buy/sell decisions.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function max_profit that takes prices.",
+                    "placeholderCode": "def max_profit(prices):",
+                    "validationRegex": "^def\\s+max_profit\\(prices\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def max_profit(prices):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper with memoization.",
+                    "placeholderCode": "    memo = {}\n    def dfs(i, buying):\n        if i >= len(prices): return 0\n        if (i, buying) in memo: return memo[(i, buying)]",
+                    "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*buying\\):\\s*if\\s+i\\s*>=\\s+len\\(prices\\):\\s*return\\s+0\\s*if\\s*\\(i,\\s*buying\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*buying\\)\\]$",
+                    "hint": "Recursive function `dfs(i, buying)` returns max profit from day `i`. `buying` is boolean indicating if we can buy. Base case: i out of bounds -> 0. Check memo.\\n\\nExample:\\nPrices=[1, 2].\\nDFS(0, Buy): Max(Buy->DFS(1, Sell)-1, Cooldown->DFS(1, Buy)).\\n  DFS(1, Sell): Max(Sell->DFS(3, Buy)+2, Cooldown->DFS(2, Sell)).",
+                    "solutionCode": "    memo = {}\n    def dfs(i, buying):\n        if i >= len(prices): return 0\n        if (i, buying) in memo: return memo[(i, buying)]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "If buying, choose max of buy or cooldown.",
+                    "placeholderCode": "        if buying:\n            buy = dfs(i + 1, not buying) - prices[i]\n            cooldown = dfs(i + 1, buying)\n            memo[(i, buying)] = max(buy, cooldown)",
+                    "validationRegex": "^\\s+if\\s+buying:\\s*buy\\s*=\\s*dfs\\(i\\s*\\+\\s*1,\\s*not\\s+buying\\)\\s*-\\s*prices\\[i\\]\\s*cooldown\\s*=\\s*dfs\\(i\\s*\\+\\s*1,\\s*buying\\)\\s*memo\\[\\(i,\\s*buying\\)\\]\\s*=\\s*max\\(buy,\\s*cooldown\\)$",
+                    "hint": "If allowed to buy: either buy (subtract price, next state is selling) or cooldown (skip day, state remains buying).",
+                    "solutionCode": "        if buying:\n            buy = dfs(i + 1, not buying) - prices[i]\n            cooldown = dfs(i + 1, buying)\n            memo[(i, buying)] = max(buy, cooldown)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "If selling, choose max of sell (skip 1 day) or cooldown.",
+                    "placeholderCode": "        else:\n            sell = dfs(i + 2, not buying) + prices[i]\n            cooldown = dfs(i + 1, buying)\n            memo[(i, buying)] = max(sell, cooldown)",
+                    "validationRegex": "^\\s+else:\\s*sell\\s*=\\s*dfs\\(i\\s*\\+\\s*2,\\s*not\\s+buying\\)\\s*\\+\\s*prices\\[i\\]\\s*cooldown\\s*=\\s*dfs\\(i\\s*\\+\\s*1,\\s*buying\\)\\s*memo\\[\\(i,\\s*buying\\)\\]\\s*=\\s*max\\(sell,\\s*cooldown\\)$",
+                    "hint": "If allowed to sell: either sell (add price, skip next day for cooldown, next state is buying) or cooldown (skip day, state remains selling).",
+                    "solutionCode": "        else:\n            sell = dfs(i + 2, not buying) + prices[i]\n            cooldown = dfs(i + 1, buying)\n            memo[(i, buying)] = max(sell, cooldown)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return result.",
+                    "placeholderCode": "        return memo[(i, buying)]",
+                    "validationRegex": "^\\s+return\\s+memo\\[\\(i,\\s*buying\\)\\]$",
+                    "hint": "Return memoized result.",
+                    "solutionCode": "        return memo[(i, buying)]"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Call helper.",
+                    "placeholderCode": "    return dfs(0, True)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*True\\)$",
+                    "hint": "Start recursion from day 0, allowed to buy.",
+                    "solutionCode": "    return dfs(0, True)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Use state variables to track profit.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function max_profit that takes prices.",
+                    "placeholderCode": "def max_profit(prices):",
+                    "validationRegex": "^def\\s+max_profit\\(prices\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def max_profit(prices):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize states.",
+                    "placeholderCode": "    sold, held, reset = float('-inf'), float('-inf'), 0",
+                    "validationRegex": "^\\s+sold,\\s*held,\\s*reset\\s*=\\s*float\\('-inf'\\),\\s*float\\('-inf'\\),\\s*0$",
+                    "hint": "Initialize states: `sold` (just sold), `held` (holding stock), `reset` (cooldown/ready to buy). `sold` and `held` start at -inf.",
+                    "solutionCode": "    sold, held, reset = float('-inf'), float('-inf'), 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through prices.",
+                    "placeholderCode": "    for price in prices:\n        pre_sold = sold\n        sold = held + price\n        held = max(held, reset - price)\n        reset = max(reset, pre_sold)",
+                    "validationRegex": "^\\s+for\\s+price\\s+in\\s+prices:\\s*pre_sold\\s*=\\s*sold\\s*sold\\s*=\\s*held\\s*\\+\\s*price\\s*held\\s*=\\s*max\\(held,\\s*reset\\s*-\\s*price\\)\\s*reset\\s*=\\s*max\\(reset,\\s*pre_sold\\)$",
+                    "hint": "Update states. `sold` comes from `held`. `held` comes from `reset` (buying) or keeping `held`. `reset` comes from `sold` (cooldown) or keeping `reset`.\\n\\nExample:\\nPrices=[1, 2].\\nInit: Sold=-inf, Held=-inf, Reset=0.\\nDay 1 (P=1):\\n  Sold = -inf + 1 (impossible).\\n  Held = max(-inf, 0 - 1) = -1.\\n  Reset = max(0, -inf) = 0.\\nDay 2 (P=2):\\n  Sold = -1 + 2 = 1.\\n  Held = max(-1, 0 - 2) = -1.\\n  Reset = max(0, -inf) = 0.\\nResult: Max(1, 0) = 1.",
+                    "solutionCode": "    for price in prices:\n        pre_sold = sold\n        sold = held + price\n        held = max(held, reset - price)\n        reset = max(reset, pre_sold)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return max of sold and reset.",
+                    "placeholderCode": "    return max(sold, reset)",
+                    "validationRegex": "^\\s+return\\s+max\\(sold,\\s*reset\\)$",
+                    "hint": "Max profit is either from having just sold or being in reset state.",
+                    "solutionCode": "    return max(sold, reset)"
+                }
+            ]
+        }
+    }
+}

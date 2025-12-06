@@ -1,0 +1,121 @@
+{
+    "id": "find-minimum-in-rotated-sorted-array",
+    "title": "Find Minimum in Rotated Sorted Array",
+    "description": "Suppose an array of length n sorted in ascending order is rotated between 1 and n times. Given the sorted rotated array nums of unique elements, return the minimum element of this array. You must write an algorithm that runs in O(log n) time.",
+    "examples": [
+        {
+            "input": "nums = [3,4,5,1,2]",
+            "output": "1",
+            "explanation": "The original array was [1,2,3,4,5] rotated 3 times."
+        },
+        {
+            "input": "nums = [4,5,6,7,0,1,2]",
+            "output": "0",
+            "explanation": "The original array was [0,1,2,4,5,6,7] and it was rotated 4 times."
+        }
+    ],
+    "constraints": [
+        "n == nums.length",
+        "1 <= n <= 5000",
+        "-5000 <= nums[i] <= 5000",
+        "All the integers of nums are unique."
+    ],
+    "difficulty": "Medium",
+    "topic": "Binary Search",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Linear Search",
+            "description": "Find the minimum element by checking all. (O(n))",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function find_min that takes nums.",
+                    "placeholderCode": "def find_min(nums):",
+                    "validationRegex": "^def\\s+find_min\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def find_min(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Return the minimum of nums using built-in min.",
+                    "placeholderCode": "    return min(nums)",
+                    "validationRegex": "^\\s+return\\s+min\\(nums\\)$",
+                    "hint": "Use `min()` function.",
+                    "solutionCode": "    return min(nums)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Binary Search",
+            "description": "Use binary search to find the pivot point. (O(log n))",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function find_min that takes nums.",
+                    "placeholderCode": "def find_min(nums):",
+                    "validationRegex": "^def\\s+find_min\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def find_min(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize result with first element, and pointers.",
+                    "placeholderCode": "    res = nums[0]\n    l, r = 0, len(nums) - 1",
+                    "validationRegex": "^\\s+res\\s*=\\s*nums\\[0\\]\\s*l,\\s*r\\s*=\\s*0,\\s*len\\(nums\\)\\s*-\\s*1$",
+                    "hint": "Init `res` with first element, `l=0`, `r=len-1`.",
+                    "solutionCode": "    res = nums[0]\n    l, r = 0, len(nums) - 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while l <= r.",
+                    "placeholderCode": "    while l <= r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<=\\s*r:$",
+                    "hint": "Binary search loop.",
+                    "solutionCode": "    while l <= r:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "If subarray is sorted, update res and break.",
+                    "placeholderCode": "        if nums[l] < nums[r]:\n            res = min(res, nums[l])\n            break",
+                    "validationRegex": "^\\s+if\\s+nums\\[l\\]\\s*<\\s+nums\\[r\\]:\\s*res\\s*=\\s*min\\(res,\\s*nums\\[l\\]\\)\\s*break$",
+                    "hint": "If `nums[l] < nums[r]`, the subarray is sorted. Min is `nums[l]`.",
+                    "solutionCode": "        if nums[l] < nums[r]:\n            res = min(res, nums[l])\n            break"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Calculate mid and update res.",
+                    "placeholderCode": "        m = (l + r) // 2\n        res = min(res, nums[m])",
+                    "validationRegex": "^\\s+m\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*res\\s*=\\s*min\\(res,\\s*nums\\[m\\]\\)$",
+                    "hint": "Update `res` with `nums[m]`.",
+                    "solutionCode": "        m = (l + r) // 2\n        res = min(res, nums[m])"
+                },
+                {
+                    "id": 6,
+                    "instruction": "If left half is sorted, search right.",
+                    "placeholderCode": "        if nums[m] >= nums[l]:\n            l = m + 1",
+                    "validationRegex": "^\\s+if\\s+nums\\[m\\]\\s*>=\\s+nums\\[l\\]:\\s*l\\s*=\\s*m\\s*\\+\\s*1$",
+                    "hint": "If `nums[m] >= nums[l]`, left half is sorted, min must be in right half.\\n\\nExample:\\nnums=[3, 4, 5, 1, 2]. l=0(3), r=4(2), m=2(5).\\n3 <= 5. Left sorted. Min is in right [1, 2]. l = m + 1.",
+                    "solutionCode": "        if nums[m] >= nums[l]:\n            l = m + 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Else search left.",
+                    "placeholderCode": "        else:\n            r = m - 1",
+                    "validationRegex": "^\\s+else:\\s*r\\s*=\\s*m\\s*-\\s*1$",
+                    "hint": "Else min is in left half.",
+                    "solutionCode": "        else:\n            r = m - 1"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the minimum element found.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        }
+    }
+}

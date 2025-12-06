@@ -1,0 +1,111 @@
+{
+    "id": "coin-change",
+    "title": "Coin Change",
+    "description": "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. You may assume that you have an infinite number of each kind of coin.",
+    "examples": [
+        {
+            "input": "coins = [1,2,5], amount = 11",
+            "output": "3",
+            "explanation": "11 = 5 + 5 + 1"
+        },
+        {
+            "input": "coins = [2], amount = 3",
+            "output": "-1"
+        }
+    ],
+    "constraints": [
+        "1 <= coins.length <= 12",
+        "1 <= coins[i] <= 2^31 - 1",
+        "0 <= amount <= 10^4"
+    ],
+    "difficulty": "Medium",
+    "topic": "1-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively try all coins.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function coin_change that takes coins and amount.",
+                    "placeholderCode": "def coin_change(coins, amount):",
+                    "validationRegex": "^def\\s+coin_change\\(coins,\\s*amount\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def coin_change(coins, amount):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper with memoization.",
+                    "placeholderCode": "    memo = {}\n    def dfs(rem):\n        if rem < 0: return -1\n        if rem == 0: return 0\n        if rem in memo: return memo[rem]",
+                    "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(rem\\):\\s*if\\s+rem\\s*<\\s*0:\\s*return\\s+-1\\s*if\\s+rem\\s*==\\s*0:\\s*return\\s+0\\s*if\\s+rem\\s+in\\s+memo:\\s*return\\s+memo\\[rem\\]$",
+                    "hint": "Recursive function `dfs(rem)` returns min coins for remaining amount `rem`. Base cases: rem < 0 -> -1, rem == 0 -> 0. Check memo.",
+                    "solutionCode": "    memo = {}\n    def dfs(rem):\n        if rem < 0: return -1\n        if rem == 0: return 0\n        if rem in memo: return memo[rem]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Try all coins and find min.",
+                    "placeholderCode": "        min_cost = float('inf')\n        for coin in coins:\n            res = dfs(rem - coin)\n            if res != -1:\n                min_cost = min(min_cost, res + 1)",
+                    "validationRegex": "^\\s+min_cost\\s*=\\s*float\\('inf'\\)\\s*for\\s+coin\\s+in\\s+coins:\\s*res\\s*=\\s*dfs\\(rem\\s*-\\s*coin\\)\\s*if\\s+res\\s*!=\\s*-1:\\s*min_cost\\s*=\\s*min\\(min_cost,\\s*res\\s*\\+\\s*1\\)$",
+                    "hint": "Iterate through coins. Recurse with `rem - coin`. If valid result, update `min_cost`.\\n\\nExample:\\nCoins=[1], Amount=2.\\nDFS(2):\\n  Coin 1: DFS(1) -> Coin 1: DFS(0) -> 0. Ret 1.\\n  Ret 1+1=2.",
+                    "solutionCode": "        min_cost = float('inf')\n        for coin in coins:\n            res = dfs(rem - coin)\n            if res != -1:\n                min_cost = min(min_cost, res + 1)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Memoize and return.",
+                    "placeholderCode": "        memo[rem] = min_cost if min_cost != float('inf') else -1\n        return memo[rem]",
+                    "validationRegex": "^\\s+memo\\[rem\\]\\s*=\\s*min_cost\\s+if\\s+min_cost\\s*!=\\s*float\\('inf'\\)\\s+else\\s+-1\\s*return\\s+memo\\[rem\\]$",
+                    "hint": "Store result in memo. If min_cost is still infinity, store -1.",
+                    "solutionCode": "        memo[rem] = min_cost if min_cost != float('inf') else -1\n        return memo[rem]"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Call helper.",
+                    "placeholderCode": "    return dfs(amount)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(amount\\)$",
+                    "hint": "Start recursion with full amount.",
+                    "solutionCode": "    return dfs(amount)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Build up min coins for each amount from 1 to amount.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function coin_change that takes coins and amount.",
+                    "placeholderCode": "def coin_change(coins, amount):",
+                    "validationRegex": "^def\\s+coin_change\\(coins,\\s*amount\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def coin_change(coins, amount):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize DP array with amount + 1 (infinity).",
+                    "placeholderCode": "    dp = [amount + 1] * (amount + 1)\n    dp[0] = 0",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\[amount\\s*\\+\\s*1\\]\\s*\\*\\s*\\(amount\\s*\\+\\s*1\\)\\s*dp\\[0\\]\\s*=\\s*0$",
+                    "hint": "Initialize DP array of size amount+1. Fill with value > amount (representing infinity). dp[0] = 0.",
+                    "solutionCode": "    dp = [amount + 1] * (amount + 1)\n    dp[0] = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through amounts and coins.",
+                    "placeholderCode": "    for a in range(1, amount + 1):\n        for c in coins:\n            if a - c >= 0:\n                dp[a] = min(dp[a], 1 + dp[a - c])",
+                    "validationRegex": "^\\s+for\\s+a\\s+in\\s+range\\(1,\\s*amount\\s*\\+\\s*1\\):\\s*for\\s+c\\s+in\\s+coins:\\s*if\\s+a\\s*-\\s*c\\s*>=\\s*0:\\s*dp\\[a\\]\\s*=\\s*min\\(dp\\[a\\],\\s*1\\s*\\+\\s*dp\\[a\\s*-\\s*c\\]\\)$",
+                    "hint": "For each amount `a` from 1 to `amount`, try every coin `c`. If `a >= c`, update `dp[a]` with `min(dp[a], 1 + dp[a-c])`.\\n\\nExample:\\nCoins=[1,2], Amount=3. DP=[0, inf, inf, inf].\\na=1: Coin 1 -> DP[1]=min(inf, 1+0)=1.\\na=2: Coin 1 -> DP[2]=min(inf, 1+1)=2. Coin 2 -> DP[2]=min(2, 1+0)=1.\\na=3: Coin 1 -> DP[3]=min(inf, 1+1)=2. Coin 2 -> DP[3]=min(2, 1+1)=2.",
+                    "solutionCode": "    for a in range(1, amount + 1):\n        for c in coins:\n            if a - c >= 0:\n                dp[a] = min(dp[a], 1 + dp[a - c])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result or -1.",
+                    "placeholderCode": "    return dp[amount] if dp[amount] != amount + 1 else -1",
+                    "validationRegex": "^\\s+return\\s+dp\\[amount\\]\\s+if\\s+dp\\[amount\\]\\s*!=\\s*amount\\s*\\+\\s*1\\s+else\\s+-1$",
+                    "hint": "If dp[amount] is still the initial large value, return -1. Else return dp[amount].",
+                    "solutionCode": "    return dp[amount] if dp[amount] != amount + 1 else -1"
+                }
+            ]
+        }
+    }
+}

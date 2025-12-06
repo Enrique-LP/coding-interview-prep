@@ -1,0 +1,151 @@
+{
+    "id": "3sum",
+    "title": "3Sum",
+    "description": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate triplets.",
+    "examples": [
+        {
+            "input": "nums = [-1,0,1,2,-1,-4]",
+            "output": "[[-1,-1,2],[-1,0,1]]",
+            "explanation": "Distinct triplets are [-1,0,1] and [-1,-1,2]."
+        },
+        {
+            "input": "nums = [0,1,1]",
+            "output": "[]",
+            "explanation": "The only possible triplet does not sum to 0."
+        }
+    ],
+    "constraints": [
+        "3 <= nums.length <= 3000",
+        "-10^5 <= nums[i] <= 10^5"
+    ],
+    "difficulty": "Medium",
+    "topic": "Two Pointers",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Triple Loop",
+            "description": "Check every triplet. (Very slow O(n^3))",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function three_sum that takes nums.",
+                    "placeholderCode": "def three_sum(nums):",
+                    "validationRegex": "^def\\s+three_sum\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def three_sum(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize a set to store unique triplets.",
+                    "placeholderCode": "    res = set()",
+                    "validationRegex": "^\\s+res\\s*=\\s*set\\(\\)$",
+                    "hint": "Use a set to avoid duplicates.",
+                    "solutionCode": "    res = set()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Sort the array to make duplicate handling easier.",
+                    "placeholderCode": "    nums.sort()",
+                    "validationRegex": "^\\s+nums\\.sort\\(\\)$",
+                    "hint": "Sort the input array.",
+                    "solutionCode": "    nums.sort()"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Iterate with three nested loops.",
+                    "placeholderCode": "    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            for k in range(j + 1, len(nums)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):\\s*for\\s+j\\s+in\\s+range\\(i\\s*\\+\\s*1,\\s*len\\(nums\\)\\):\\s*for\\s+k\\s+in\\s+range\\(j\\s*\\+\\s*1,\\s*len\\(nums\\)\\):$",
+                    "hint": "Use three nested loops to find triplets.",
+                    "solutionCode": "    for i in range(len(nums)):\n        for j in range(i + 1, len(nums)):\n            for k in range(j + 1, len(nums)):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if sum is 0 and add to result set.",
+                    "placeholderCode": "                if nums[i] + nums[j] + nums[k] == 0:\n                    res.add((nums[i], nums[j], nums[k]))",
+                    "validationRegex": "^\\s+if\\s+nums\\[i\\]\\s*\\+\\s*nums\\[j\\]\\s*\\+\\s*nums\\[k\\]\\s*==\\s*0:\\s*res\\.add\\(\\(nums\\[i\\],\\s*nums\\[j\\],\\s*nums\\[k\\]\\)\\)$",
+                    "hint": "If sum is 0, add tuple to set.",
+                    "solutionCode": "                if nums[i] + nums[j] + nums[k] == 0:\n                    res.add((nums[i], nums[j], nums[k]))"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return the result as a list of lists.",
+                    "placeholderCode": "    return [list(x) for x in res]",
+                    "validationRegex": "^\\s+return\\s+\\[list\\(x\\)\\s+for\\s+x\\s+in\\s+res\\]$",
+                    "hint": "Convert set of tuples to list of lists.",
+                    "solutionCode": "    return [list(x) for x in res]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Sorting + Two Pointers",
+            "description": "Fix one number and use two pointers for the other two.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function three_sum that takes nums.",
+                    "placeholderCode": "def three_sum(nums):",
+                    "validationRegex": "^def\\s+three_sum\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def three_sum(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize result list and sort the input array.",
+                    "placeholderCode": "    res = []\n    nums.sort()",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*nums\\.sort\\(\\)$",
+                    "hint": "Sort `nums` and initialize `res`.",
+                    "solutionCode": "    res = []\n    nums.sort()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through the array, using i as the first element.",
+                    "placeholderCode": "    for i, a in enumerate(nums):",
+                    "validationRegex": "^\\s+for\\s+i,\\s*a\\s+in\\s+enumerate\\(nums\\):$",
+                    "hint": "Iterate with index and value.",
+                    "solutionCode": "    for i, a in enumerate(nums):"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Skip duplicates for the first element.",
+                    "placeholderCode": "        if i > 0 and a == nums[i - 1]:\n            continue",
+                    "validationRegex": "^\\s+if\\s+i\\s*>\\s+0\\s+and\\s+a\\s*==\\s*nums\\[i\\s*-\\s*1\\]:\\s*continue$",
+                    "hint": "If current value equals previous, continue.",
+                    "solutionCode": "        if i > 0 and a == nums[i - 1]:\n            continue"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Initialize two pointers for the remaining part of the array.",
+                    "placeholderCode": "        l, r = i + 1, len(nums) - 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i\\s*\\+\\s*1,\\s*len\\(nums\\)\\s*-\\s*1$",
+                    "hint": "Set `l` to `i + 1` and `r` to end.",
+                    "solutionCode": "        l, r = i + 1, len(nums) - 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Loop while l < r to find pairs that sum to -a.",
+                    "placeholderCode": "        while l < r:\n            threeSum = a + nums[l] + nums[r]",
+                    "validationRegex": "^\\s+while\\s+l\\s*<\\s*r:\\s*threeSum\\s*=\\s*a\\s*\\+\\s*nums\\[l\\]\\s*\\+\\s*nums\\[r\\]$",
+                    "hint": "Calculate sum of triplet.",
+                    "solutionCode": "        while l < r:\n            threeSum = a + nums[l] + nums[r]"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Adjust pointers based on the sum.",
+                    "placeholderCode": "            if threeSum > 0:\n                r -= 1\n            elif threeSum < 0:\n                l += 1",
+                    "validationRegex": "^\\s+if\\s+threeSum\\s*>\\s+0:\\s*r\\s*-=\\s*1\\s*elif\\s+threeSum\\s*<\\s+0:\\s*l\\s*\\+=\\s*1$",
+                    "hint": "Move pointers to adjust sum.",
+                    "solutionCode": "            if threeSum > 0:\n                r -= 1\n            elif threeSum < 0:\n                l += 1"
+                },
+                {
+                    "id": 8,
+                    "instruction": "If sum is 0, add to result and skip duplicates for the left pointer.",
+                    "placeholderCode": "            else:\n                res.append([a, nums[l], nums[r]])\n                l += 1\n                while nums[l] == nums[l - 1] and l < r:\n                    l += 1",
+                    "validationRegex": "^\\s+else:\\s*res\\.append\\(\\[a,\\s*nums\\[l\\],\\s*nums\\[r\\]\\]\\)\\s*l\\s*\\+=\\s*1\\s*while\\s+nums\\[l\\s*==\\s*nums\\[l\\s*-\\s*1\\]\\s+and\\s+l\\s*<\\s*r:\\s*l\\s*\\+=\\s*1$",
+                    "hint": "Add to result. Increment `l` and skip duplicates.\\n\\nExample:\\nFound triplet [-1, -1, 2]. Add to res.\\nIncrement l. If next nums[l] is also -1, skip it to avoid duplicate triplet [-1, -1, 2].",
+                    "solutionCode": "            else:\n                res.append([a, nums[l], nums[r]])\n                l += 1\n                while nums[l] == nums[l - 1] and l < r:\n                    l += 1"
+                }
+            ]
+        }
+    }
+}

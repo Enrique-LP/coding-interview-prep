@@ -1,0 +1,70 @@
+{
+    "id": "encode-and-decode-strings",
+    "title": "Encode and Decode Strings",
+    "description": "Design an algorithm to encode a list of strings to a string. The encoded string is then sent to the other person who is called to decode it to the original list of strings.",
+    "examples": [
+        {
+            "input": "[\"lint\",\"code\",\"love\",\"you\"]",
+            "output": "[\"lint\",\"code\",\"love\",\"you\"]",
+            "explanation": "One possible encoding is \"4#lint4#code4#love3#you\"."
+        },
+        {
+            "input": "[\"we\", \"say\", \":\", \"yes\"]",
+            "output": "[\"we\", \"say\", \":\", \"yes\"]"
+        }
+    ],
+    "constraints": [
+        "0 <= strs.length <= 200",
+        "strs[i] contains any possible characters out of 256 valid ascii characters."
+    ],
+    "difficulty": "Medium",
+    "topic": "Arrays & Hashing",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Delimiter",
+            "description": "Use a non-ascii delimiter. (Might fail if delimiter is in string)",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define encode function.",
+                    "placeholderCode": "def encode(strs):\n    return \"π\".join(strs)",
+                    "validationRegex": "^def\\s+encode\\(strs\\):\\s*return\\s+\"π\"\\.join\\(strs\\)$",
+                    "hint": "Use a special character like 'π' to join strings.",
+                    "solutionCode": "def encode(strs):\n    return \"π\".join(strs)"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define decode function.",
+                    "placeholderCode": "def decode(s):\n    return s.split(\"π\")",
+                    "validationRegex": "^def\\s+decode\\(s\\):\\s*return\\s+s\\.split\\(\"π\"\\)$",
+                    "hint": "Split the string by the same special character.",
+                    "solutionCode": "def decode(s):\n    return s.split(\"π\")"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Length Prefix",
+            "description": "Prefix each string with its length and a delimiter.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define encode function.",
+                    "placeholderCode": "def encode(strs):\n    res = \"\"\n    for s in strs:\n        res += str(len(s)) + \"#\" + s\n    return res",
+                    "validationRegex": "^def\\s+encode\\(strs\\):\\s*res\\s*=\\s*\"\"\\s*for\\s+s\\s+in\\s+strs:\\s*res\\s*\\+=\\s*str\\(len\\(s\\)\\)\\s*\\+\\s*\"#\"\\s*\\+\\s*s\\s*return\\s+res$",
+                    "hint": "Iterate through strings, adding `len(s) + '#' + s` to result.",
+                    "solutionCode": "def encode(strs):\n    res = \"\"\n    for s in strs:\n        res += str(len(s)) + \"#\" + s\n    return res"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define decode function.",
+                    "placeholderCode": "def decode(s):\n    res, i = [], 0\n    while i < len(s):\n        j = i\n        while s[j] != \"#\":\n            j += 1\n        length = int(s[i:j])\n        res.append(s[j + 1 : j + 1 + length])\n        i = j + 1 + length\n    return res",
+                    "validationRegex": "^def\\s+decode\\(s\\):\\s*res,\\s*i\\s*=\\s*\\[\\],\\s*0\\s*while\\s+i\\s*<\\s+len\\(s\\):\\s*j\\s*=\\s*i\\s*while\\s+s\\[j\\]\\s*!=\\s*\"#\":\\s*j\\s*\\+=\\s*1\\s*length\\s*=\\s*int\\(s\\[i:j\\]\\)\\s*res\\.append\\(s\\[j\\s*\\+\\s*1\\s*:\\s*j\\s*\\+\\s*1\\s*\\+\\s*length\\]\\)\\s*i\\s*=\\s*j\\s*\\+\\s*1\\s*\\+\\s*length\\s*return\\s+res$",
+                    "hint": "Parse the length prefix until '#', then extract the substring of that length.",
+                    "solutionCode": "def decode(s):\n    res, i = [], 0\n    while i < len(s):\n        j = i\n        while s[j] != \"#\":\n            j += 1\n        length = int(s[i:j])\n        res.append(s[j + 1 : j + 1 + length])\n        i = j + 1 + length\n    return res"
+                }
+            ]
+        }
+    }
+}

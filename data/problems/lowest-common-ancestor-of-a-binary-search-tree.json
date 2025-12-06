@@ -1,0 +1,112 @@
+{
+    "id": "lowest-common-ancestor-of-a-binary-search-tree",
+    "title": "Lowest Common Ancestor of a Binary Search Tree",
+    "description": "Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST.",
+    "examples": [
+        {
+            "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8",
+            "output": "6"
+        },
+        {
+            "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4",
+            "output": "2"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the tree is in the range [2, 10^5].",
+        "-10^9 <= Node.val <= 10^9",
+        "All Node.val are unique.",
+        "p != q",
+        "p and q will exist in the BST."
+    ],
+    "difficulty": "Medium",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Use BST property to guide search.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function lowest_common_ancestor that takes root, p, and q.",
+                    "placeholderCode": "def lowest_common_ancestor(root, p, q):",
+                    "validationRegex": "^def\\s+lowest_common_ancestor\\(root,\\s*p,\\s*q\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def lowest_common_ancestor(root, p, q):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "If both p and q are smaller than root, search left.",
+                    "placeholderCode": "    if p.val < root.val and q.val < root.val:\n        return lowest_common_ancestor(root.left, p, q)",
+                    "validationRegex": "^\\s+if\\s+p\\.val\\s*<\\s+root\\.val\\s+and\\s+q\\.val\\s*<\\s+root\\.val:\\s*return\\s+lowest_common_ancestor\\(root\\.left,\\s*p,\\s*q\\)$",
+                    "hint": "If both values are less than root, LCA is in left subtree.",
+                    "solutionCode": "    if p.val < root.val and q.val < root.val:\n        return lowest_common_ancestor(root.left, p, q)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "If both p and q are larger than root, search right.",
+                    "placeholderCode": "    elif p.val > root.val and q.val > root.val:\n        return lowest_common_ancestor(root.right, p, q)",
+                    "validationRegex": "^\\s+elif\\s+p\\.val\\s*>\\s+root\\.val\\s+and\\s+q\\.val\\s*>\\s+root\\.val:\\s*return\\s+lowest_common_ancestor\\(root\\.right,\\s*p,\\s*q\\)$",
+                    "hint": "If both values are greater than root, LCA is in right subtree.",
+                    "solutionCode": "    elif p.val > root.val and q.val > root.val:\n        return lowest_common_ancestor(root.right, p, q)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Otherwise, root is the split point (LCA).",
+                    "placeholderCode": "    else:\n        return root",
+                    "validationRegex": "^\\s+else:\\s*return\\s+root$",
+                    "hint": "If split occurs, current node is LCA.\\n\\nExample:\\nRoot=6. p=2, q=8.\\n2 < 6 and 8 > 6. Split! 6 is the LCA.",
+                    "solutionCode": "    else:\n        return root"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Iterative",
+            "description": "Iteratively traverse down the tree.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function lowest_common_ancestor that takes root, p, and q.",
+                    "placeholderCode": "def lowest_common_ancestor(root, p, q):",
+                    "validationRegex": "^def\\s+lowest_common_ancestor\\(root,\\s*p,\\s*q\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def lowest_common_ancestor(root, p, q):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Loop while root is not None.",
+                    "placeholderCode": "    while root:",
+                    "validationRegex": "^\\s+while\\s+root:$",
+                    "hint": "Traverse the tree iteratively.",
+                    "solutionCode": "    while root:"
+                },
+                {
+                    "id": 3,
+                    "instruction": "If both p and q are smaller than root, move left.",
+                    "placeholderCode": "        if p.val < root.val and q.val < root.val:\n            root = root.left",
+                    "validationRegex": "^\\s+if\\s+p\\.val\\s*<\\s+root\\.val\\s+and\\s+q\\.val\\s*<\\s+root\\.val:\\s*root\\s*=\\s*root\\.left$",
+                    "hint": "Move to left child if both values are smaller.",
+                    "solutionCode": "        if p.val < root.val and q.val < root.val:\n            root = root.left"
+                },
+                {
+                    "id": 4,
+                    "instruction": "If both p and q are larger than root, move right.",
+                    "placeholderCode": "        elif p.val > root.val and q.val > root.val:\n            root = root.right",
+                    "validationRegex": "^\\s+elif\\s+p\\.val\\s*>\\s+root\\.val\\s+and\\s+q\\.val\\s*>\\s+root\\.val:\\s*root\\s*=\\s*root\\.right$",
+                    "hint": "Move to right child if both values are larger.",
+                    "solutionCode": "        elif p.val > root.val and q.val > root.val:\n            root = root.right"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Otherwise, return root.",
+                    "placeholderCode": "        else:\n            return root",
+                    "validationRegex": "^\\s+else:\\s*return\\s+root$",
+                    "hint": "Found the split point, return current node.",
+                    "solutionCode": "        else:\n            return root"
+                }
+            ]
+        }
+    }
+}

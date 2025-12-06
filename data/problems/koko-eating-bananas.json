@@ -1,0 +1,126 @@
+{
+    "id": "koko-eating-bananas",
+    "title": "Koko Eating Bananas",
+    "description": "Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours. Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour. Return the minimum integer k such that she can eat all the bananas within h hours.",
+    "examples": [
+        {
+            "input": "piles = [3,6,7,11], h = 8",
+            "output": "4"
+        },
+        {
+            "input": "piles = [30,11,23,4,20], h = 5",
+            "output": "30"
+        }
+    ],
+    "constraints": [
+        "1 <= piles.length <= 10^4",
+        "piles.length <= h <= 10^9",
+        "1 <= piles[i] <= 10^9"
+    ],
+    "difficulty": "Medium",
+    "topic": "Binary Search",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Linear Search",
+            "description": "Try every speed from 1 to max(piles).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function min_eating_speed that takes piles and h.",
+                    "placeholderCode": "def min_eating_speed(piles, h):",
+                    "validationRegex": "^def\\s+min_eating_speed\\(piles,\\s*h\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def min_eating_speed(piles, h):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Iterate through speeds from 1 to max(piles).",
+                    "placeholderCode": "    import math\n    for k in range(1, max(piles) + 1):",
+                    "validationRegex": "^\\s+import\\s+math\\s+for\\s+k\\s+in\\s+range\\(1,\\s*max\\(piles\\)\\s*\\+\\s*1\\):$",
+                    "hint": "Loop `k` from 1 to max pile size.",
+                    "solutionCode": "    import math\n    for k in range(1, max(piles) + 1):"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Calculate total hours needed for current speed k.",
+                    "placeholderCode": "        total_time = 0\n        for p in piles:\n            total_time += math.ceil(p / k)",
+                    "validationRegex": "^\\s+total_time\\s*=\\s*0\\s*for\\s+p\\s+in\\s+piles:\\s*total_time\\s*\\+=\\s*math\\.ceil\\(p\\s*/\\s*k\\)$",
+                    "hint": "Sum `ceil(p / k)` for all piles.",
+                    "solutionCode": "        total_time = 0\n        for p in piles:\n            total_time += math.ceil(p / k)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return k if total_time <= h.",
+                    "placeholderCode": "        if total_time <= h:\n            return k",
+                    "validationRegex": "^\\s+if\\s+total_time\\s*<=\\s*h:\\s*return\\s+k$",
+                    "hint": "If total time is within `h`, return `k`.",
+                    "solutionCode": "        if total_time <= h:\n            return k"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Binary Search",
+            "description": "Binary search for the minimum speed k.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function min_eating_speed that takes piles and h.",
+                    "placeholderCode": "def min_eating_speed(piles, h):",
+                    "validationRegex": "^def\\s+min_eating_speed\\(piles,\\s*h\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def min_eating_speed(piles, h):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize binary search range [1, max(piles)].",
+                    "placeholderCode": "    import math\n    l, r = 1, max(piles)\n    res = r",
+                    "validationRegex": "^\\s+import\\s+math\\s+l,\\s*r\\s*=\\s*1,\\s*max\\(piles\\)\\s*res\\s*=\\s*r$",
+                    "hint": "Init `l=1`, `r=max(piles)`, `res=r`.",
+                    "solutionCode": "    import math\n    l, r = 1, max(piles)\n    res = r"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while l <= r.",
+                    "placeholderCode": "    while l <= r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<=\\s*r:$",
+                    "hint": "Binary search loop.",
+                    "solutionCode": "    while l <= r:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Calculate mid speed k and total hours.",
+                    "placeholderCode": "        k = (l + r) // 2\n        hours = 0\n        for p in piles:\n            hours += math.ceil(p / k)",
+                    "validationRegex": "^\\s+k\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*hours\\s*=\\s*0\\s*for\\s+p\\s+in\\s+piles:\\s*hours\\s*\\+=\\s*math\\.ceil\\(p\\s*/\\s*k\\)$",
+                    "hint": "Calculate hours needed for speed `k`.\\n\\nExample:\\nPiles=[3, 6, 7, 11], k=4.\\n3/4 -> 1 hr. 6/4 -> 2 hrs. 7/4 -> 2 hrs. 11/4 -> 3 hrs.\\nTotal = 1+2+2+3 = 8 hours.",
+                    "solutionCode": "        k = (l + r) // 2\n        hours = 0\n        for p in piles:\n            hours += math.ceil(p / k)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "If hours <= h, update result and try smaller speed.",
+                    "placeholderCode": "        if hours <= h:\n            res = min(res, k)\n            r = k - 1",
+                    "validationRegex": "^\\s+if\\s+hours\\s*<=\\s*h:\\s*res\\s*=\\s*min\\(res,\\s*k\\)\\s*r\\s*=\\s*k\\s*-\\s*1$",
+                    "hint": "If valid, update `res` and try smaller `k`.",
+                    "solutionCode": "        if hours <= h:\n            res = min(res, k)\n            r = k - 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "If hours > h, try larger speed.",
+                    "placeholderCode": "        else:\n            l = k + 1",
+                    "validationRegex": "^\\s+else:\\s*l\\s*=\\s*k\\s*\\+\\s*1$",
+                    "hint": "If too slow, try larger `k`.",
+                    "solutionCode": "        else:\n            l = k + 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the minimum speed found.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        }
+    }
+}

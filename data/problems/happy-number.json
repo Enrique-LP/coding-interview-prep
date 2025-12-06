@@ -1,0 +1,109 @@
+{
+    "id": "happy-number",
+    "title": "Happy Number",
+    "description": "Write an algorithm to determine if a number n is happy. A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits. Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy. Return true if n is a happy number, and false if not.",
+    "examples": [
+        {
+            "input": "n = 19",
+            "output": "true",
+            "explanation": "1^2 + 9^2 = 82\n8^2 + 2^2 = 68\n6^2 + 8^2 = 100\n1^2 + 0^2 + 0^2 = 1"
+        },
+        {
+            "input": "n = 2",
+            "output": "false"
+        }
+    ],
+    "constraints": [
+        "1 <= n <= 2^31 - 1"
+    ],
+    "difficulty": "Easy",
+    "topic": "Math & Geometry",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "HashSet",
+            "description": "Detect cycle using a hash set.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_happy that takes n.",
+                    "placeholderCode": "def is_happy(n):",
+                    "validationRegex": "^def\\s+is_happy\\(n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_happy(n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize set.",
+                    "placeholderCode": "    visit = set()",
+                    "validationRegex": "^\\s+visit\\s*=\\s*set\\(\\)$",
+                    "hint": "Initialize a set to keep track of visited numbers.",
+                    "solutionCode": "    visit = set()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while n not in visit.",
+                    "placeholderCode": "    while n not in visit:\n        visit.add(n)\n        n = sum([int(x) ** 2 for x in str(n)])\n        if n == 1: return True",
+                    "validationRegex": "^\\s+while\\s+n\\s+not\\s+in\\s+visit:\\s*visit\\.add\\(n\\)\\s*n\\s*=\\s*sum\\(\\[int\\(x\\)\\s*\\*\\*\\s*2\\s+for\\s+x\\s+in\\s+str\\(n\\)\\]\\)\\s*if\\s+n\\s*==\\s*1:\\s*return\\s+True$",
+                    "hint": "Loop until `n` is in `visit`. Add `n` to `visit`, calculate the sum of squares of digits, and update `n`. If `n` becomes 1, return True.",
+                    "solutionCode": "    while n not in visit:\n        visit.add(n)\n        n = sum([int(x) ** 2 for x in str(n)])\n        if n == 1: return True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return False if loop detected.",
+                    "placeholderCode": "    return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "Return False.",
+                    "solutionCode": "    return False"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Floyd's Cycle-Finding",
+            "description": "Use slow and fast pointers to detect cycle.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_happy that takes n.",
+                    "placeholderCode": "def is_happy(n):",
+                    "validationRegex": "^def\\s+is_happy\\(n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_happy(n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define helper for sum of squares.",
+                    "placeholderCode": "    def sum_sq(num):\n        output = 0\n        while num:\n            output += (num % 10) ** 2\n            num //= 10\n        return output",
+                    "validationRegex": "^\\s+def\\s+sum_sq\\(num\\):\\s*output\\s*=\\s*0\\s*while\\s+num:\\s*output\\s*\\+=\\s*\\(num\\s*%\\s*10\\)\\s*\\*\\*\\s*2\\s*num\\s*//=\\s*10\\s*return\\s+output$",
+                    "hint": "Helper function to calculate sum of squares of digits.",
+                    "solutionCode": "    def sum_sq(num):\n        output = 0\n        while num:\n            output += (num % 10) ** 2\n            num //= 10\n        return output"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize pointers.",
+                    "placeholderCode": "    slow, fast = n, sum_sq(n)",
+                    "validationRegex": "^\\s+slow,\\s*fast\\s*=\\s*n,\\s*sum_sq\\(n\\)$",
+                    "hint": "Initialize slow and fast pointers.",
+                    "solutionCode": "    slow, fast = n, sum_sq(n)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Loop until pointers meet.",
+                    "placeholderCode": "    while slow != fast:\n        fast = sum_sq(sum_sq(fast))\n        slow = sum_sq(slow)",
+                    "validationRegex": "^\\s+while\\s+slow\\s*!=\\s*fast:\\s*fast\\s*=\\s*sum_sq\\(sum_sq\\(fast\\)\\)\\s*slow\\s*=\\s*sum_sq\\(slow\\)$",
+                    "hint": "Move slow pointer by one step and fast pointer by two steps until they meet.",
+                    "solutionCode": "    while slow != fast:\n        fast = sum_sq(sum_sq(fast))\n        slow = sum_sq(slow)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return True if fast is 1.",
+                    "placeholderCode": "    return fast == 1",
+                    "validationRegex": "^\\s+return\\s+fast\\s*==\\s*1$",
+                    "hint": "Check if the cycle ends at 1.",
+                    "solutionCode": "    return fast == 1"
+                }
+            ]
+        }
+    }
+}

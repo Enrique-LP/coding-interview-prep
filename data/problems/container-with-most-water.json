@@ -1,0 +1,95 @@
+{
+    "id": "container-with-most-water",
+    "title": "Container With Most Water",
+    "description": "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]). Find two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store.",
+    "examples": [
+        {
+            "input": "height = [1,8,6,2,5,4,8,3,7]",
+            "output": "49",
+            "explanation": "The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49."
+        },
+        {
+            "input": "height = [1,1]",
+            "output": "1"
+        }
+    ],
+    "constraints": [
+        "n == height.length",
+        "2 <= n <= 10^5",
+        "0 <= height[i] <= 10^4"
+    ],
+    "difficulty": "Medium",
+    "topic": "Two Pointers",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Nested Loops",
+            "description": "Check all pairs of lines.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function max_area that takes height.",
+                    "placeholderCode": "def max_area(height):",
+                    "validationRegex": "^def\\s+max_area\\(height\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def max_area(height):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Iterate through all pairs.",
+                    "placeholderCode": "    res = 0\n    for l in range(len(height)):\n        for r in range(l + 1, len(height)):\n            area = (r - l) * min(height[l], height[r])\n            res = max(res, area)",
+                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*for\\s+l\\s+in\\s+range\\(len\\(height\\)\\):\\s*for\\s+r\\s+in\\s+range\\(l\\s*\\+\\s*1,\\s*len\\(height\\)\\):\\s*area\\s*=\\s*\\(r\\s*-\\s*l\\)\\s*\\*\\s*min\\(height\\[l\\],\\s*height\\[r\\]\\)\\s*res\\s*=\\s*max\\(res,\\s*area\\)$",
+                    "hint": "Use nested loops to calculate area for every pair `(l, r)`.",
+                    "solutionCode": "    res = 0\n    for l in range(len(height)):\n        for r in range(l + 1, len(height)):\n            area = (r - l) * min(height[l], height[r])\n            res = max(res, area)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the maximum area found.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Two Pointers",
+            "description": "Move pointers inward from ends.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function max_area that takes height.",
+                    "placeholderCode": "def max_area(height):",
+                    "validationRegex": "^def\\s+max_area\\(height\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def max_area(height):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize pointers.",
+                    "placeholderCode": "    l, r = 0, len(height) - 1\n    res = 0",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*0,\\s*len\\(height\\)\\s*-\\s*1\\s*res\\s*=\\s*0$",
+                    "hint": "Set `l` to 0 and `r` to `len(height) - 1`.",
+                    "solutionCode": "    l, r = 0, len(height) - 1\n    res = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while l < r.",
+                    "placeholderCode": "    while l < r:\n        area = (r - l) * min(height[l], height[r])\n        res = max(res, area)\n        if height[l] < height[r]:\n            l += 1\n        else:\n            r -= 1",
+                    "validationRegex": "^\\s+while\\s+l\\s*<\\s+r:\\s*area\\s*=\\s*\\(r\\s*-\\s*l\\)\\s*\\*\\s*min\\(height\\[l\\],\\s*height\\[r\\]\\)\\s*res\\s*=\\s*max\\(res,\\s*area\\)\\s*if\\s+height\\[l\\],\\s*<\\s+height\\[r\\]:\\s*l\\s*\\+=\\s*1\\s*else:\\s*r\\s*-=\\s*1$",
+                    "hint": "Calculate area. Move the pointer pointing to the shorter line inward.\\n\\nExample:\\nheight=[1, 8, 6, 2, 5, 4, 8, 3, 7]. l=0(1), r=8(7).\\nArea = (8-0) * min(1, 7) = 8 * 1 = 8.\\nSince height[l] < height[r] (1 < 7), move l to 1.",
+                    "solutionCode": "    while l < r:\n        area = (r - l) * min(height[l], height[r])\n        res = max(res, area)\n        if height[l] < height[r]:\n            l += 1\n        else:\n            r -= 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the maximum area.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        }
+    }
+}

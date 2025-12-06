@@ -1,0 +1,93 @@
+{
+    "id": "house-robber",
+    "title": "House Robber",
+    "description": "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from to robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night. Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.",
+    "examples": [
+        {
+            "input": "nums = [1,2,3,1]",
+            "output": "4"
+        },
+        {
+            "input": "nums = [2,7,9,3,1]",
+            "output": "12"
+        }
+    ],
+    "constraints": [
+        "1 <= nums.length <= 100",
+        "0 <= nums[i] <= 400"
+    ],
+    "difficulty": "Medium",
+    "topic": "1-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively choose to rob or skip.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function rob that takes nums.",
+                    "placeholderCode": "def rob(nums):",
+                    "validationRegex": "^def\\s+rob\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def rob(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper.",
+                    "placeholderCode": "    def dfs(i):\n        if i >= len(nums): return 0\n        return max(nums[i] + dfs(i + 2), dfs(i + 1))",
+                    "validationRegex": "^\\s+def\\s+dfs\\(i\\):\\s*if\\s+i\\s*>=\\s+len\\(nums\\):\\s*return\\s+0\\s*return\\s+max\\(nums\\[i\\]\\s*\\+\\s*dfs\\(i\\s*\\+\\s*2\\),\\s*dfs\\(i\\s*\\+\\s*1\\)\\)$",
+                    "hint": "Recursive function. At each house, either rob it (and skip next) or skip it. Return max.\\n\\nExample:\\nNums=[1, 2].\\ni=0: Max(1 + DFS(2), DFS(1))\\n  DFS(2): 0.\\n  DFS(1): Max(2 + DFS(3), DFS(2)) = 2.\\nMax(1, 2) = 2.",
+                    "solutionCode": "    def dfs(i):\n        if i >= len(nums): return 0\n        return max(nums[i] + dfs(i + 2), dfs(i + 1))"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return result starting at 0.",
+                    "placeholderCode": "    return dfs(0)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0\\)$",
+                    "hint": "Start recursion from index 0.",
+                    "solutionCode": "    return dfs(0)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Maintain max loot for previous two houses.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function rob that takes nums.",
+                    "placeholderCode": "def rob(nums):",
+                    "validationRegex": "^def\\s+rob\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def rob(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize rob1 and rob2.",
+                    "placeholderCode": "    rob1, rob2 = 0, 0",
+                    "validationRegex": "^\\s+rob1,\\s*rob2\\s*=\\s*0,\\s*0$",
+                    "hint": "Initialize two variables to keep track of the max loot ending at the previous two houses.",
+                    "solutionCode": "    rob1, rob2 = 0, 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through nums.",
+                    "placeholderCode": "    for n in nums:\n        temp = max(n + rob1, rob2)\n        rob1 = rob2\n        rob2 = temp",
+                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:\\s*temp\\s*=\\s*max\\(n\\s*\\+\\s*rob1,\\s*rob2\\)\\s*rob1\\s*=\\s*rob2\\s*rob2\\s*=\\s*temp$",
+                    "hint": "Iterate. `temp` is max of robbing current house + loot from 2 houses ago (`rob1`) OR skipping current house (`rob2`). Update `rob1` and `rob2`.\\n\\nExample:\\nNums=[1, 2, 3, 1]. Init: Rob1=0, Rob2=0.\\nHouse 1: Max(1+0, 0) = 1. Rob1=0, Rob2=1.\\nHouse 2: Max(2+0, 1) = 2. Rob1=1, Rob2=2.\\nHouse 3: Max(3+1, 2) = 4. Rob1=2, Rob2=4.\\nHouse 1: Max(1+2, 4) = 4. Rob1=4, Rob2=4.",
+                    "solutionCode": "    for n in nums:\n        temp = max(n + rob1, rob2)\n        rob1 = rob2\n        rob2 = temp"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return rob2.",
+                    "placeholderCode": "    return rob2",
+                    "validationRegex": "^\\s+return\\s+rob2$",
+                    "hint": "Return the final accumulated max loot.",
+                    "solutionCode": "    return rob2"
+                }
+            ]
+        }
+    }
+}

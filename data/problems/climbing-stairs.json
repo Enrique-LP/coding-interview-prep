@@ -1,0 +1,92 @@
+{
+    "id": "climbing-stairs",
+    "title": "Climbing Stairs",
+    "description": "You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
+    "examples": [
+        {
+            "input": "n = 2",
+            "output": "2"
+        },
+        {
+            "input": "n = 3",
+            "output": "3"
+        }
+    ],
+    "constraints": [
+        "1 <= n <= 45"
+    ],
+    "difficulty": "Easy",
+    "topic": "1-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively calculate steps.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function climb_stairs that takes n.",
+                    "placeholderCode": "def climb_stairs(n):",
+                    "validationRegex": "^def\\s+climb_stairs\\(n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def climb_stairs(n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Base cases.",
+                    "placeholderCode": "    if n <= 2:\n        return n",
+                    "validationRegex": "^\\s+if\\s+n\\s*<=\\s*2:\\s*return\\s+n$",
+                    "hint": "If n is 1 or 2, return n.",
+                    "solutionCode": "    if n <= 2:\n        return n"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Recursive step.",
+                    "placeholderCode": "    return climb_stairs(n - 1) + climb_stairs(n - 2)",
+                    "validationRegex": "^\\s+return\\s+climb_stairs\\(n\\s*-\\s*1\\)\\s*\\+\\s*climb_stairs\\(n\\s*-\\s*2\\)$",
+                    "hint": "Return the sum of ways to reach n-1 and n-2.",
+                    "solutionCode": "    return climb_stairs(n - 1) + climb_stairs(n - 2)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Use two variables to store previous results.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function climb_stairs that takes n.",
+                    "placeholderCode": "def climb_stairs(n):",
+                    "validationRegex": "^def\\s+climb_stairs\\(n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def climb_stairs(n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize one and two.",
+                    "placeholderCode": "    one, two = 1, 1",
+                    "validationRegex": "^\\s+one,\\s*two\\s*=\\s*1,\\s*1$",
+                    "hint": "Initialize two variables to represent the last two steps. `one` is n-1, `two` is n-2.",
+                    "solutionCode": "    one, two = 1, 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate n-1 times.",
+                    "placeholderCode": "    for i in range(n - 1):\n        temp = one\n        one = one + two\n        two = temp",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(n\\s*-\\s*1\\):\\s*temp\\s*=\\s*one\\s*one\\s*=\\s*one\\s*\\+\\s*two\\s*two\\s*=\\s*temp$",
+                    "hint": "Update `one` to be the sum of `one` and `two`, and `two` to be the old `one`.\\n\\nExample:\\nN=4. Init: One=1 (Step 3), Two=1 (Step 2).\\nIter 1 (i=0): Temp=1. One=1+1=2 (Step 2). Two=1 (Step 3).\\nIter 2 (i=1): Temp=2. One=2+1=3 (Step 1). Two=2 (Step 2).\\nIter 3 (i=2): Temp=3. One=3+2=5 (Step 0). Two=3 (Step 1).\\nResult: 5 ways.",
+                    "solutionCode": "    for i in range(n - 1):\n        temp = one\n        one = one + two\n        two = temp"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return one.",
+                    "placeholderCode": "    return one",
+                    "validationRegex": "^\\s+return\\s+one$",
+                    "hint": "Return the result stored in `one`.",
+                    "solutionCode": "    return one"
+                }
+            ]
+        }
+    }
+}

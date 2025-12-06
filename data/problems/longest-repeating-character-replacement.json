@@ -1,0 +1,136 @@
+{
+    "id": "longest-repeating-character-replacement",
+    "title": "Longest Repeating Character Replacement",
+    "description": "You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times. Return the length of the longest substring containing the same letter you can get after performing the above operations.",
+    "examples": [
+        {
+            "input": "s = \"ABAB\", k = 2",
+            "output": "4",
+            "explanation": "Replace the two 'A's with two 'B's or vice versa."
+        },
+        {
+            "input": "s = \"AABABBA\", k = 1",
+            "output": "4",
+            "explanation": "Replace the one 'A' in the middle with 'B' and form \"AABBBBA\". The substring \"BBBB\" has length 4."
+        }
+    ],
+    "constraints": [
+        "1 <= s.length <= 10^5",
+        "s consists of only uppercase English letters.",
+        "0 <= k <= s.length"
+    ],
+    "difficulty": "Medium",
+    "topic": "Sliding Window",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Nested Loops",
+            "description": "Check every substring validity.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function character_replacement that takes s and k.",
+                    "placeholderCode": "def character_replacement(s, k):",
+                    "validationRegex": "^def\\s+character_replacement\\(s,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def character_replacement(s, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize res to 0.",
+                    "placeholderCode": "    res = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*0$",
+                    "hint": "Initialize `res`.",
+                    "solutionCode": "    res = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through all substrings.",
+                    "placeholderCode": "    for i in range(len(s)):\n        count = {}\n        max_f = 0\n        for j in range(i, len(s)):\n            count[s[j]] = 1 + count.get(s[j], 0)\n            max_f = max(max_f, count[s[j]])",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\):\\s*count\\s*=\\s*\\{\\}\\s*max_f\\s*=\\s*0\\s*for\\s+j\\s+in\\s+range\\(i,\\s*len\\(s\\)\\):\\s*count\\[s\\[j\\]\\]\\s*=\\s*1\\s*\\+\\s*count\\.get\\(s\\[j\\],\\s*0\\)\\s*max_f\\s*=\\s*max\\(max_f,\\s*count\\[s\\[j\\]\\]\\)$",
+                    "hint": "Use nested loops. Track count and max frequency in current substring.",
+                    "solutionCode": "    for i in range(len(s)):\n        count = {}\n        max_f = 0\n        for j in range(i, len(s)):\n            count[s[j]] = 1 + count.get(s[j], 0)\n            max_f = max(max_f, count[s[j]])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Check if replacements needed <= k.",
+                    "placeholderCode": "            if (j - i + 1) - max_f <= k:\n                res = max(res, j - i + 1)",
+                    "validationRegex": "^\\s+if\\s+\\(j\\s*-\\s*i\\s*\\+\\s*1\\)\\s*-\\s*max_f\\s*<=\\s*k:\\s*res\\s*=\\s*max\\(res,\\s*j\\s*-\\s*i\\s*\\+\\s*1\\)$",
+                    "hint": "Replacements needed = length - max_freq. If <= k, update `res`.",
+                    "solutionCode": "            if (j - i + 1) - max_f <= k:\n                res = max(res, j - i + 1)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the result.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Sliding Window",
+            "description": "Efficiently manage window size based on max frequency.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function character_replacement that takes s and k.",
+                    "placeholderCode": "def character_replacement(s, k):",
+                    "validationRegex": "^def\\s+character_replacement\\(s,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def character_replacement(s, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize count dict, left pointer, max_f, and res.",
+                    "placeholderCode": "    count = {}\n    l = 0\n    max_f = 0\n    res = 0",
+                    "validationRegex": "^\\s+count\\s*=\\s*\\{\\}\\s*l\\s*=\\s*0\\s*max_f\\s*=\\s*0\\s*res\\s*=\\s*0$",
+                    "hint": "Initialize variables.",
+                    "solutionCode": "    count = {}\n    l = 0\n    max_f = 0\n    res = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate with right pointer r.",
+                    "placeholderCode": "    for r in range(len(s)):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(len\\(s\\)\\):$",
+                    "hint": "Iterate `r` from 0 to `len(s)`.",
+                    "solutionCode": "    for r in range(len(s)):"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Update count and max frequency.",
+                    "placeholderCode": "        count[s[r]] = 1 + count.get(s[r], 0)\n        max_f = max(max_f, count[s[r]])",
+                    "validationRegex": "^\\s+count\\[s\\[r\\]\\]\\s*=\\s*1\\s*\\+\\s*count\\.get\\(s\\[r\\],\\s*0\\)\\s*max_f\\s*=\\s*max\\(max_f,\\s*count\\[s\\[r\\]\\]\\)$",
+                    "hint": "Update count for `s[r]` and `max_f`.",
+                    "solutionCode": "        count[s[r]] = 1 + count.get(s[r], 0)\n        max_f = max(max_f, count[s[r]])"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Shrink window if invalid.",
+                    "placeholderCode": "        while (r - l + 1) - max_f > k:\n            count[s[l]] -= 1\n            l += 1",
+                    "validationRegex": "^\\s+while\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*-\\s*max_f\\s*>\\s*k:\\s*count\\[s\\[l\\]\\]\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
+                    "hint": "If window length - max_f > k, shrink window from left.",
+                    "solutionCode": "        while (r - l + 1) - max_f > k:\n            count[s[l]] -= 1\n            l += 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update result.",
+                    "placeholderCode": "        res = max(res, r - l + 1)",
+                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*r\\s*-\\s*l\\s*\\+\\s*1\\)$",
+                    "hint": "Update `res` with current window size.",
+                    "solutionCode": "        res = max(res, r - l + 1)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the result.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        }
+    }
+}

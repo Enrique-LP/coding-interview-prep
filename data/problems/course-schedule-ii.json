@@ -1,0 +1,137 @@
+{
+    "id": "course-schedule-ii",
+    "title": "Course Schedule II",
+    "description": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai. Return the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.",
+    "examples": [
+        {
+            "input": "numCourses = 2, prerequisites = [[1,0]]",
+            "output": "[0,1]"
+        },
+        {
+            "input": "numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]",
+            "output": "[0,2,1,3]"
+        }
+    ],
+    "constraints": [
+        "1 <= numCourses <= 2000",
+        "0 <= prerequisites.length <= numCourses * (numCourses - 1)",
+        "prerequisites[i].length == 2",
+        "0 <= ai, bi < numCourses",
+        "ai != bi",
+        "All the pairs prerequisites[i] are unique."
+    ],
+    "difficulty": "Medium",
+    "topic": "Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Topological Sort (DFS)",
+            "description": "Use DFS to find topological order.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function find_order that takes numCourses and prerequisites.",
+                    "placeholderCode": "def find_order(numCourses, prerequisites):",
+                    "validationRegex": "^def\\s+find_order\\(numCourses,\\s*prerequisites\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def find_order(numCourses, prerequisites):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Build adjacency list.",
+                    "placeholderCode": "    preMap = {i: [] for i in range(numCourses)}\n    for crs, pre in prerequisites:\n        preMap[crs].append(pre)",
+                    "validationRegex": "^\\s+preMap\\s*=\\s*\\{i:\\s*\\[\\]\\s+for\\s+i\\s+in\\s+range\\(numCourses\\)\\}\\s*for\\s+crs,\\s*pre\\s+in\\s+prerequisites:\\s*preMap\\[crs\\]\\.append\\(pre\\)$",
+                    "hint": "Create a dictionary mapping each course to its prerequisites.",
+                    "solutionCode": "    preMap = {i: [] for i in range(numCourses)}\n    for crs, pre in prerequisites:\n        preMap[crs].append(pre)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize sets for cycle detection and visited nodes.",
+                    "placeholderCode": "    output = []\n    visit, cycle = set(), set()",
+                    "validationRegex": "^\\s+output\\s*=\\s*\\[\\]\\s*visit,\\s*cycle\\s*=\\s*set\\(\\),\\s*set\\(\\)$",
+                    "hint": "Initialize an output list, a visit set for completed courses, and a cycle set for the current path.",
+                    "solutionCode": "    output = []\n    visit, cycle = set(), set()"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define DFS helper.",
+                    "placeholderCode": "    def dfs(crs):\n        if crs in cycle: return False\n        if crs in visit: return True\n        cycle.add(crs)\n        for pre in preMap[crs]:\n            if not dfs(pre): return False\n        cycle.remove(crs)\n        visit.add(crs)\n        output.append(crs)\n        return True",
+                    "validationRegex": "^\\s+def\\s+dfs\\(crs\\):\\s*if\\s+crs\\s+in\\s+cycle:\\s*return\\s+False\\s*if\\s+crs\\s+in\\s+visit:\\s*return\\s+True\\s*cycle\\.add\\(crs\\)\\s*for\\s+pre\\s+in\\s+preMap\\[crs\\]:\\s*if\\s+not\\s+dfs\\(pre\\):\\s*return\\s+False\\s*cycle\\.remove\\(crs\\)\\s*visit\\.add\\(crs\\)\\s*output\\.append\\(crs\\)\\s*return\\s+True$",
+                    "hint": "Recursive DFS. If cycle detected, return False. If visited, return True. Add to cycle set, recurse on neighbors, remove from cycle set, add to visit set and output list.\\n\\nExample:\\n0->1. DFS(0): Path={0}. Recurse(1).\\n  DFS(1): No neighbors. Add 1 to Output. Visit={1}. Return True.\\nBack at 0. Add 0 to Output. Visit={1, 0}. Output=[1, 0].",
+                    "solutionCode": "    def dfs(crs):\n        if crs in cycle: return False\n        if crs in visit: return True\n        cycle.add(crs)\n        for pre in preMap[crs]:\n            if not dfs(pre): return False\n        cycle.remove(crs)\n        visit.add(crs)\n        output.append(crs)\n        return True"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Run DFS on all courses.",
+                    "placeholderCode": "    for c in range(numCourses):\n        if not dfs(c): return []",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(numCourses\\):\\s*if\\s+not\\s+dfs\\(c\\):\\s*return\\s*\\[\\]$",
+                    "hint": "Iterate through all courses. If DFS returns False (cycle), return empty list.",
+                    "solutionCode": "    for c in range(numCourses):\n        if not dfs(c): return []"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return output.",
+                    "placeholderCode": "    return output",
+                    "validationRegex": "^\\s+return\\s+output$",
+                    "hint": "Return the topologically sorted order.",
+                    "solutionCode": "    return output"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Topological Sort (DFS)",
+            "description": "Same as brute force, O(V+E).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function find_order that takes numCourses and prerequisites.",
+                    "placeholderCode": "def find_order(numCourses, prerequisites):",
+                    "validationRegex": "^def\\s+find_order\\(numCourses,\\s*prerequisites\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def find_order(numCourses, prerequisites):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Build adjacency list.",
+                    "placeholderCode": "    preMap = {i: [] for i in range(numCourses)}\n    for crs, pre in prerequisites:\n        preMap[crs].append(pre)",
+                    "validationRegex": "^\\s+preMap\\s*=\\s*\\{i:\\s*\\[\\]\\s+for\\s+i\\s+in\\s+range\\(numCourses\\)\\}\\s*for\\s+crs,\\s*pre\\s+in\\s+prerequisites:\\s*preMap\\[crs\\]\\.append\\(pre\\)$",
+                    "hint": "Create a dictionary mapping each course to its prerequisites.",
+                    "solutionCode": "    preMap = {i: [] for i in range(numCourses)}\n    for crs, pre in prerequisites:\n        preMap[crs].append(pre)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize sets for cycle detection and visited nodes.",
+                    "placeholderCode": "    output = []\n    visit, cycle = set(), set()",
+                    "validationRegex": "^\\s+output\\s*=\\s*\\[\\]\\s*visit,\\s*cycle\\s*=\\s*set\\(\\),\\s*set\\(\\)$",
+                    "hint": "Initialize an output list, a visit set for completed courses, and a cycle set for the current path.",
+                    "solutionCode": "    output = []\n    visit, cycle = set(), set()"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define DFS helper.",
+                    "placeholderCode": "    def dfs(crs):\n        if crs in cycle: return False\n        if crs in visit: return True\n        cycle.add(crs)\n        for pre in preMap[crs]:\n            if not dfs(pre): return False\n        cycle.remove(crs)\n        visit.add(crs)\n        output.append(crs)\n        return True",
+                    "validationRegex": "^\\s+def\\s+dfs\\(crs\\):\\s*if\\s+crs\\s+in\\s+cycle:\\s*return\\s+False\\s*if\\s+crs\\s+in\\s+visit:\\s*return\\s+True\\s*cycle\\.add\\(crs\\)\\s*for\\s+pre\\s+in\\s+preMap\\[crs\\]:\\s*if\\s+not\\s+dfs\\(pre\\):\\s*return\\s+False\\s*cycle\\.remove\\(crs\\)\\s*visit\\.add\\(crs\\)\\s*output\\.append\\(crs\\)\\s*return\\s+True$",
+                    "hint": "Recursive DFS. If cycle detected, return False. If visited, return True. Add to cycle set, recurse on neighbors, remove from cycle set, add to visit set and output list.\\n\\nExample:\\n0->1. DFS(0): Path={0}. Recurse(1).\\n  DFS(1): No neighbors. Add 1 to Output. Visit={1}. Return True.\\nBack at 0. Add 0 to Output. Visit={1, 0}. Output=[1, 0].",
+                    "solutionCode": "    def dfs(crs):\n        if crs in cycle: return False\n        if crs in visit: return True\n        cycle.add(crs)\n        for pre in preMap[crs]:\n            if not dfs(pre): return False\n        cycle.remove(crs)\n        visit.add(crs)\n        output.append(crs)\n        return True"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Run DFS on all courses.",
+                    "placeholderCode": "    for c in range(numCourses):\n        if not dfs(c): return []",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(numCourses\\):\\s*if\\s+not\\s+dfs\\(c\\):\\s*return\\s*\\[\\]$",
+                    "hint": "Iterate through all courses. If DFS returns False (cycle), return empty list.",
+                    "solutionCode": "    for c in range(numCourses):\n        if not dfs(c): return []"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return output.",
+                    "placeholderCode": "    return output",
+                    "validationRegex": "^\\s+return\\s+output$",
+                    "hint": "Return the topologically sorted order.",
+                    "solutionCode": "    return output"
+                }
+            ]
+        }
+    }
+}
