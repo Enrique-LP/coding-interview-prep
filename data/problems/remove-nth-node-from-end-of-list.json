@@ -1,0 +1,135 @@
+{
+    "id": "remove-nth-node-from-end-of-list",
+    "title": "Remove Nth Node From End of List",
+    "description": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
+    "examples": [
+        {
+            "input": "head = [1,2,3,4,5], n = 2",
+            "output": "[1,2,3,5]"
+        },
+        {
+            "input": "head = [1], n = 1",
+            "output": "[]"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the list is sz.",
+        "1 <= sz <= 30",
+        "0 <= Node.val <= 100",
+        "1 <= n <= sz"
+    ],
+    "difficulty": "Medium",
+    "topic": "Linked List",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Two Pass",
+            "description": "Calculate length first, then remove node.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function remove_nth_from_end that takes head and n.",
+                    "placeholderCode": "def remove_nth_from_end(head, n):",
+                    "validationRegex": "^def\\s+remove_nth_from_end\\(head,\\s*n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def remove_nth_from_end(head, n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Calculate the length of the list.",
+                    "placeholderCode": "    length = 0\n    curr = head\n    while curr:\n        length += 1\n        curr = curr.next",
+                    "validationRegex": "^\\s+length\\s*=\\s*0\\s*curr\\s*=\\s*head\\s*while\\s+curr:\\s*length\\s*\\+=\\s*1\\s*curr\\s*=\\s*curr\\.next$",
+                    "hint": "Traverse list to count nodes.",
+                    "solutionCode": "    length = 0\n    curr = head\n    while curr:\n        length += 1\n        curr = curr.next"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Handle edge case: removing the head.",
+                    "placeholderCode": "    if length == n:\n        return head.next",
+                    "validationRegex": "^\\s+if\\s+length\\s*==\\s*n:\\s*return\\s+head\\.next$",
+                    "hint": "If `length == n`, remove the first node.",
+                    "solutionCode": "    if length == n:\n        return head.next"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Iterate to the node before the one to remove.",
+                    "placeholderCode": "    curr = head\n    for _ in range(length - n - 1):\n        curr = curr.next",
+                    "validationRegex": "^\\s+curr\\s*=\\s*head\\s*for\\s+_\\s+in\\s+range\\(length\\s*-\\s*n\\s*-\\s*1\\):\\s*curr\\s*=\\s*curr\\.next$",
+                    "hint": "Move `curr` to `length - n - 1` position.",
+                    "solutionCode": "    curr = head\n    for _ in range(length - n - 1):\n        curr = curr.next"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Remove the node.",
+                    "placeholderCode": "    curr.next = curr.next.next",
+                    "validationRegex": "^\\s+curr\\.next\\s*=\\s*curr\\.next\\.next$",
+                    "hint": "Skip the next node.",
+                    "solutionCode": "    curr.next = curr.next.next"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return head.",
+                    "placeholderCode": "    return head",
+                    "validationRegex": "^\\s+return\\s+head$",
+                    "hint": "Return the head of the modified list.",
+                    "solutionCode": "    return head"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "One Pass",
+            "description": "Use two pointers separated by n nodes.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function remove_nth_from_end that takes head and n.",
+                    "placeholderCode": "def remove_nth_from_end(head, n):",
+                    "validationRegex": "^def\\s+remove_nth_from_end\\(head,\\s*n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def remove_nth_from_end(head, n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Use a dummy node to handle edge cases.",
+                    "placeholderCode": "    dummy = ListNode(0, head)\n    left = dummy\n    right = head",
+                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(0,\\s*head\\)\\s*left\\s*=\\s*dummy\\s*right\\s*=\\s*head$",
+                    "hint": "Create a dummy node pointing to head. Init `left` at dummy, `right` at head.",
+                    "solutionCode": "    dummy = ListNode(0, head)\n    left = dummy\n    right = head"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Move right pointer n steps ahead.",
+                    "placeholderCode": "    while n > 0 and right:\n        right = right.next\n        n -= 1",
+                    "validationRegex": "^\\s+while\\s+n\\s*>\\s+0\\s+and\\s+right:\\s*right\\s*=\\s*right\\.next\\s*n\\s*-=\\s*1$",
+                    "hint": "Advance `right` by `n` steps.\\n\\nExample:\\nList: 1->2->3->4->5, n=2.\\nRight starts at 1. Move 2 steps -> Right at 3.\\nGap between Left (Dummy) and Right is now n+1 nodes effectively.",
+                    "solutionCode": "    while n > 0 and right:\n        right = right.next\n        n -= 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Move both pointers until right reaches the end.",
+                    "placeholderCode": "    while right:\n        left = left.next\n        right = right.next",
+                    "validationRegex": "^\\s+while\\s+right:\\s*left\\s*=\\s*left\\.next\\s*right\\s*=\\s*right\\.next$",
+                    "hint": "Move `left` and `right` together until `right` is null.",
+                    "solutionCode": "    while right:\n        left = left.next\n        right = right.next"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Remove the nth node.",
+                    "placeholderCode": "    left.next = left.next.next",
+                    "validationRegex": "^\\s+left\\.next\\s*=\\s*left\\.next\\.next$",
+                    "hint": "Set `left.next` to `left.next.next`.",
+                    "solutionCode": "    left.next = left.next.next"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return dummy.next.",
+                    "placeholderCode": "    return dummy.next",
+                    "validationRegex": "^\\s+return\\s+dummy\\.next$",
+                    "hint": "Return `dummy.next`.",
+                    "solutionCode": "    return dummy.next"
+                }
+            ]
+        }
+    }
+}

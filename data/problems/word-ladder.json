@@ -1,0 +1,107 @@
+{
+    "id": "word-ladder",
+    "title": "Word Ladder",
+    "description": "A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that: Every adjacent pair of words differs by a single letter. Every si for 1 <= i <= k is in wordList. Note that beginWord does not need to be in wordList. sk == endWord. Given two words, beginWord and endWord, and a dictionary wordList, return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if no such sequence exists.",
+    "examples": [
+        {
+            "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+            "output": "5",
+            "explanation": "One shortest transformation sequence is \"hit\" -> \"hot\" -> \"dot\" -> \"dog\" -> \"cog\", which is 5 words long."
+        },
+        {
+            "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]",
+            "output": "0"
+        }
+    ],
+    "constraints": [
+        "1 <= beginWord.length <= 10",
+        "endWord.length == beginWord.length",
+        "1 <= wordList.length <= 5000",
+        "wordList[i].length == beginWord.length",
+        "beginWord, endWord, and wordList[i] consist of lowercase English letters.",
+        "beginWord != endWord",
+        "All the words in wordList are unique."
+    ],
+    "difficulty": "Hard",
+    "topic": "Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "BFS",
+            "description": "BFS to find shortest path.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define ladderLength.",
+                    "placeholderCode": "def ladderLength(beginWord, endWord, wordList):",
+                    "validationRegex": "^def\\s+ladderLength\\(beginWord,\\s*endWord,\\s*wordList\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def ladderLength(beginWord, endWord, wordList):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize queue and set.",
+                    "placeholderCode": "    if endWord not in wordList:\n        return 0\n    nei = collections.defaultdict(list)\n    wordList.append(beginWord)\n    for word in wordList:\n        for j in range(len(word)):\n            pattern = word[:j] + \"*\" + word[j + 1 :]\n            nei[pattern].append(word)\n    visit = set([beginWord])\n    q = collections.deque([beginWord])\n    res = 1",
+                    "validationRegex": "^\\s+if\\s+endWord\\s+not\\s+in\\s+wordList:\\s*return\\s*0\\s*nei\\s*=\\s*collections\\.defaultdict\\(list\\)\\s*wordList\\.append\\(beginWord\\)\\s*for\\s+word\\s+in\\s+wordList:\\s*for\\s+j\\s+in\\s+range\\(len\\(word\\)\\):\\s*pattern\\s*=\\s*word\\[:j\\]\\s*\\+\\s*\"\\*\"\\s*\\+\\s*word\\[j\\s*\\+\\s*1\\s*:\\]\\s*nei\\[pattern\\]\\.append\\(word\\)\\s*visit\\s*=\\s*set\\(\\[beginWord\\]\\)\\s*q\\s*=\\s*collections\\.deque\\(\\[beginWord\\]\\)\\s*res\\s*=\\s*1$",
+                    "hint": "Preprocess words into patterns to quickly find neighbors. Initialize BFS queue with beginWord.\\n\\nExample:\\nWord 'hot' generates patterns: '*ot', 'h*t', 'ho*'.\\nMap: {'*ot': ['hot', 'dot', 'lot'], ...}.\\nThis allows O(1) lookup of neighbors.",
+                    "solutionCode": "    if endWord not in wordList:\n        return 0\n    nei = collections.defaultdict(list)\n    wordList.append(beginWord)\n    for word in wordList:\n        for j in range(len(word)):\n            pattern = word[:j] + \"*\" + word[j + 1 :]\n            nei[pattern].append(word)\n    visit = set([beginWord])\n    q = collections.deque([beginWord])\n    res = 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "BFS loop.",
+                    "placeholderCode": "    while q:\n        for i in range(len(q)):\n            word = q.popleft()\n            if word == endWord:\n                return res\n            for j in range(len(word)):\n                pattern = word[:j] + \"*\" + word[j + 1 :]\n                for neighbor in nei[pattern]:\n                    if neighbor not in visit:\n                        visit.add(neighbor)\n                        q.append(neighbor)\n        res += 1",
+                    "validationRegex": "^\\s+while\\s+q:\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*word\\s*=\\s*q\\.popleft\\(\\)\\s*if\\s+word\\s*==\\s*endWord:\\s*return\\s+res\\s*for\\s+j\\s+in\\s+range\\(len\\(word\\)\\):\\s*pattern\\s*=\\s*word\\[:j\\]\\s*\\+\\s*\"\\*\"\\s*\\+\\s*word\\[j\\s*\\+\\s*1\\s*:\\]\\s*for\\s+neighbor\\s+in\\s+nei\\[pattern\\]:\\s*if\\s+neighbor\\s+not\\s+in\\s+visit:\\s*visit\\.add\\(neighbor\\)\\s*q\\.append\\(neighbor\\)\\s*res\\s*\\+=\\s*1$",
+                    "hint": "Standard BFS. For each word, generate patterns, find neighbors, and add unvisited ones to queue. Increment result level by level.",
+                    "solutionCode": "    while q:\n        for i in range(len(q)):\n            word = q.popleft()\n            if word == endWord:\n                return res\n            for j in range(len(word)):\n                pattern = word[:j] + \"*\" + word[j + 1 :]\n                for neighbor in nei[pattern]:\n                    if neighbor not in visit:\n                        visit.add(neighbor)\n                        q.append(neighbor)\n        res += 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return 0.",
+                    "placeholderCode": "    return 0",
+                    "validationRegex": "^\\s+return\\s+0$",
+                    "hint": "If queue empty and endWord not found, return 0.",
+                    "solutionCode": "    return 0"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "BFS",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define ladderLength.",
+                    "placeholderCode": "def ladderLength(beginWord, endWord, wordList):",
+                    "validationRegex": "^def\\s+ladderLength\\(beginWord,\\s*endWord,\\s*wordList\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def ladderLength(beginWord, endWord, wordList):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize queue and set.",
+                    "placeholderCode": "    if endWord not in wordList:\n        return 0\n    nei = collections.defaultdict(list)\n    wordList.append(beginWord)\n    for word in wordList:\n        for j in range(len(word)):\n            pattern = word[:j] + \"*\" + word[j + 1 :]\n            nei[pattern].append(word)\n    visit = set([beginWord])\n    q = collections.deque([beginWord])\n    res = 1",
+                    "validationRegex": "^\\s+if\\s+endWord\\s+not\\s+in\\s+wordList:\\s*return\\s*0\\s*nei\\s*=\\s*collections\\.defaultdict\\(list\\)\\s*wordList\\.append\\(beginWord\\)\\s*for\\s+word\\s+in\\s+wordList:\\s*for\\s+j\\s+in\\s+range\\(len\\(word\\)\\):\\s*pattern\\s*=\\s*word\\[:j\\]\\s*\\+\\s*\"\\*\"\\s*\\+\\s*word\\[j\\s*\\+\\s*1\\s*:\\]\\s*nei\\[pattern\\]\\.append\\(word\\)\\s*visit\\s*=\\s*set\\(\\[beginWord\\]\\)\\s*q\\s*=\\s*collections\\.deque\\(\\[beginWord\\]\\)\\s*res\\s*=\\s*1$",
+                    "hint": "Preprocess words into patterns (e.g., 'hot' -> '*ot', 'h*t', 'ho*') to quickly find neighbors. Initialize BFS queue with beginWord.\\n\\nExample:\\nWord 'hot' generates patterns: '*ot', 'h*t', 'ho*'.\\nMap: {'*ot': ['hot', 'dot', 'lot'], ...}.\\nThis allows O(1) lookup of neighbors.",
+                    "solutionCode": "    if endWord not in wordList:\n        return 0\n    nei = collections.defaultdict(list)\n    wordList.append(beginWord)\n    for word in wordList:\n        for j in range(len(word)):\n            pattern = word[:j] + \"*\" + word[j + 1 :]\n            nei[pattern].append(word)\n    visit = set([beginWord])\n    q = collections.deque([beginWord])\n    res = 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "BFS loop.",
+                    "placeholderCode": "    while q:\n        for i in range(len(q)):\n            word = q.popleft()\n            if word == endWord:\n                return res\n            for j in range(len(word)):\n                pattern = word[:j] + \"*\" + word[j + 1 :]\n                for neighbor in nei[pattern]:\n                    if neighbor not in visit:\n                        visit.add(neighbor)\n                        q.append(neighbor)\n        res += 1",
+                    "validationRegex": "^\\s+while\\s+q:\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*word\\s*=\\s*q\\.popleft\\(\\)\\s*if\\s+word\\s*==\\s*endWord:\\s*return\\s+res\\s*for\\s+j\\s+in\\s+range\\(len\\(word\\)\\):\\s*pattern\\s*=\\s*word\\[:j\\]\\s*\\+\\s*\"\\*\"\\s*\\+\\s*word\\[j\\s*\\+\\s*1\\s*:\\]\\s*for\\s+neighbor\\s+in\\s+nei\\[pattern\\]:\\s*if\\s+neighbor\\s+not\\s+in\\s+visit:\\s*visit\\.add\\(neighbor\\)\\s*q\\.append\\(neighbor\\)\\s*res\\s*\\+=\\s*1$",
+                    "hint": "Standard BFS. For each word, generate patterns, find neighbors, and add unvisited ones to queue. Increment result level by level.",
+                    "solutionCode": "    while q:\n        for i in range(len(q)):\n            word = q.popleft()\n            if word == endWord:\n                return res\n            for j in range(len(word)):\n                pattern = word[:j] + \"*\" + word[j + 1 :]\n                for neighbor in nei[pattern]:\n                    if neighbor not in visit:\n                        visit.add(neighbor)\n                        q.append(neighbor)\n        res += 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return 0.",
+                    "placeholderCode": "    return 0",
+                    "validationRegex": "^\\s+return\\s+0$",
+                    "hint": "If queue empty and endWord not found, return 0.",
+                    "solutionCode": "    return 0"
+                }
+            ]
+        }
+    }
+}

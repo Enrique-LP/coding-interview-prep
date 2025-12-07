@@ -1,0 +1,145 @@
+{
+    "id": "valid-parentheses",
+    "title": "Valid Parentheses",
+    "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. An input string is valid if: Open brackets must be closed by the same type of brackets. Open brackets must be closed in the correct order. Every close bracket has a corresponding open bracket of the same type.",
+    "examples": [
+        {
+            "input": "s = \"()\"",
+            "output": "true"
+        },
+        {
+            "input": "s = \"()[]{}\"",
+            "output": "true"
+        },
+        {
+            "input": "s = \"(]\"",
+            "output": "false"
+        }
+    ],
+    "constraints": [
+        "1 <= s.length <= 10^4",
+        "s consists of parentheses only '()[]{}'."
+    ],
+    "difficulty": "Easy",
+    "topic": "Stack",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Replace Strings",
+            "description": "Repeatedly replace matching pairs with empty string.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_valid that takes a string s.",
+                    "placeholderCode": "def is_valid(s):",
+                    "validationRegex": "^def\\s+is_valid\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_valid(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Loop while '()', '{}', or '[]' are in the string.",
+                    "placeholderCode": "    while '()' in s or '{}' in s or '[]' in s:",
+                    "validationRegex": "^\\s+while\\s+'\\(\\)'\\s+in\\s+s\\s+or\\s+'\\{\\}'\\s+in\\s+s\\s+or\\s+'\\[\\]'\\s+in\\s+s:$",
+                    "hint": "Loop while any pair exists in `s`.",
+                    "solutionCode": "    while '()' in s or '{}' in s or '[]' in s:"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Replace occurrences of '()' with empty string.",
+                    "placeholderCode": "        s = s.replace('()', '')",
+                    "validationRegex": "^\\s+s\\s*=\\s*s\\.replace\\('\\(\\)',\\s*''\\)$",
+                    "hint": "Replace '()'.",
+                    "solutionCode": "        s = s.replace('()', '')"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Replace occurrences of '{}' with empty string.",
+                    "placeholderCode": "        s = s.replace('{}', '')",
+                    "validationRegex": "^\\s+s\\s*=\\s*s\\.replace\\('\\{\\}',\\s*''\\)$",
+                    "hint": "Replace '{}'.",
+                    "solutionCode": "        s = s.replace('{}', '')"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Replace occurrences of '[]' with empty string.",
+                    "placeholderCode": "        s = s.replace('[]', '')",
+                    "validationRegex": "^\\s+s\\s*=\\s*s\\.replace\\('\\[\\]',\\s*''\\)$",
+                    "hint": "Replace '[]'.",
+                    "solutionCode": "        s = s.replace('[]', '')"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return True if the string is empty.",
+                    "placeholderCode": "    return s == ''",
+                    "validationRegex": "^\\s+return\\s+s\\s*==\\s*''$",
+                    "hint": "Return True if `s` is empty.",
+                    "solutionCode": "    return s == ''"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Stack",
+            "description": "Use a stack to track open brackets.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_valid that takes a string s.",
+                    "placeholderCode": "def is_valid(s):",
+                    "validationRegex": "^def\\s+is_valid\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_valid(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize an empty stack and a map for closing to opening brackets.",
+                    "placeholderCode": "    stack = []\n    closeToOpen = { \")\": \"(\", \"]\": \"[\", \"}\": \"{\" }",
+                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]\\s*closeToOpen\\s*=\\s*\\{\\s*\"\\)\":\\s*\"\\(\",\\s*\"\\]\":\\s*\"\\[\",\\s*\"\\}\":\\s*\"\\{\"\\s*\\}$",
+                    "hint": "Create a stack and a mapping dict.",
+                    "solutionCode": "    stack = []\n    closeToOpen = { \")\": \"(\", \"]\": \"[\", \"}\": \"{\" }"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through each character in the string.",
+                    "placeholderCode": "    for c in s:",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+s:$",
+                    "hint": "Iterate through `s`.",
+                    "solutionCode": "    for c in s:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "If it's a closing bracket, check if stack is not empty and matches.",
+                    "placeholderCode": "        if c in closeToOpen:\n            if stack and stack[-1] == closeToOpen[c]:\n                stack.pop()",
+                    "validationRegex": "^\\s+if\\s+c\\s+in\\s+closeToOpen:\\s*if\\s+stack\\s+and\\s+stack\\[-1\\]\\s*==\\s*closeToOpen\\[c\\]:\\s*stack\\.pop\\(\\)$",
+                    "hint": "If closing bracket, check stack top. Pop if matches.\\n\\nExample:\\ns='()'. Stack=['(']. c=')'.\\n')' matches '('. Pop '('. Stack=[].",
+                    "solutionCode": "        if c in closeToOpen:\n            if stack and stack[-1] == closeToOpen[c]:\n                stack.pop()"
+                },
+                {
+                    "id": 5,
+                    "instruction": "If it's a closing bracket but doesn't match, return False.",
+                    "placeholderCode": "            else:\n                return False",
+                    "validationRegex": "^\\s+else:\\s*return\\s+False$",
+                    "hint": "Return `False` if mismatch or empty stack.",
+                    "solutionCode": "            else:\n                return False"
+                },
+                {
+                    "id": 6,
+                    "instruction": "If it's an open bracket, push it onto the stack.",
+                    "placeholderCode": "        else:\n            stack.append(c)",
+                    "validationRegex": "^\\s+else:\\s*stack\\.append\\(c\\)$",
+                    "hint": "Push open bracket to stack.",
+                    "solutionCode": "        else:\n            stack.append(c)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return True if the stack is empty.",
+                    "placeholderCode": "    return True if not stack else False",
+                    "validationRegex": "^\\s+return\\s+True\\s+if\\s+not\\s+stack\\s+else\\s+False$",
+                    "hint": "Return `True` if stack is empty.",
+                    "solutionCode": "    return True if not stack else False"
+                }
+            ]
+        }
+    }
+}

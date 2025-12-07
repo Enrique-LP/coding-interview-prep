@@ -1,0 +1,82 @@
+{
+    "id": "reverse-integer",
+    "title": "Reverse Integer",
+    "description": "Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.",
+    "examples": [
+        {
+            "input": "x = 123",
+            "output": "321"
+        },
+        {
+            "input": "x = -123",
+            "output": "-321"
+        },
+        {
+            "input": "x = 120",
+            "output": "21"
+        }
+    ],
+    "constraints": [
+        "-2^31 <= x <= 2^31 - 1"
+    ],
+    "difficulty": "Medium",
+    "topic": "Bit Manipulation",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "String Manipulation",
+            "description": "Convert to string, reverse, handle sign.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function reverse that takes x.",
+                    "placeholderCode": "def reverse(x):",
+                    "validationRegex": "^def\\s+reverse\\(x\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Handle sign and reverse.",
+                    "placeholderCode": "    sign = -1 if x < 0 else 1\n    res = int(str(abs(x))[::-1]) * sign",
+                    "validationRegex": "^\\s+sign\\s*=\\s*-1\\s+if\\s+x\\s*<\\s*0\\s+else\\s+1\\s*res\\s*=\\s*int\\(str\\(abs\\(x\\)\\)\\[::-1\\]\\)\\s*\\*\\s*sign$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Check overflow.",
+                    "placeholderCode": "    if res < -2**31 or res > 2**31 - 1: return 0\n    return res",
+                    "validationRegex": "^\\s+if\\s+res\\s*<\\s*-2\\*\\*31\\s+or\\s+res\\s*>\\s*2\\*\\*31\\s*-\\s*1:\\s*return\\s+0\\s*return\\s+res$"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Math",
+            "description": "Pop and push digits.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function reverse that takes x.",
+                    "placeholderCode": "def reverse(x):",
+                    "validationRegex": "^def\\s+reverse\\(x\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize result.",
+                    "placeholderCode": "    res = 0\n    sign = -1 if x < 0 else 1\n    x = abs(x)",
+                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*sign\\s*=\\s*-1\\s+if\\s+x\\s*<\\s*0\\s+else\\s+1\\s*x\\s*=\\s*abs\\(x\\)$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop and reverse.",
+                    "placeholderCode": "    while x:\n        digit = x % 10\n        x //= 10\n        if res > (2**31 - 1) // 10: return 0\n        res = res * 10 + digit",
+                    "validationRegex": "^\\s+while\\s+x:\\s*digit\\s*=\\s*x\\s*%\\s*10\\s*x\\s*//=\\s*10\\s*if\\s+res\\s*>\\s*\\(2\\*\\*31\\s*-\\s*1\\)\\s*//\\s*10:\\s*return\\s+0\\s*res\\s*=\\s*res\\s*\\*\\s*10\\s*\\+\\s*digit$"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result with sign.",
+                    "placeholderCode": "    return res * sign",
+                    "validationRegex": "^\\s+return\\s+res\\s*\\*\\s*sign$"
+                }
+            ]
+        }
+    }
+}

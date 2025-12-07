@@ -1,0 +1,93 @@
+{
+    "id": "min-cost-climbing-stairs",
+    "title": "Min Cost Climbing Stairs",
+    "description": "You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps. You can either start from the step with index 0, or the step with index 1. Return the minimum cost to reach the top of the floor.",
+    "examples": [
+        {
+            "input": "cost = [10,15,20]",
+            "output": "15"
+        },
+        {
+            "input": "cost = [1,100,1,1,1,100,1,1,100,1]",
+            "output": "6"
+        }
+    ],
+    "constraints": [
+        "2 <= cost.length <= 1000",
+        "0 <= cost[i] <= 999"
+    ],
+    "difficulty": "Easy",
+    "topic": "1-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Calculate min cost recursively.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function min_cost_climbing_stairs that takes cost.",
+                    "placeholderCode": "def min_cost_climbing_stairs(cost):",
+                    "validationRegex": "^def\\s+min_cost_climbing_stairs\\(cost\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def min_cost_climbing_stairs(cost):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper.",
+                    "placeholderCode": "    def dfs(i):\n        if i >= len(cost): return 0\n        return cost[i] + min(dfs(i + 1), dfs(i + 2))",
+                    "validationRegex": "^\\s+def\\s+dfs\\(i\\):\\s*if\\s+i\\s*>=\\s+len\\(cost\\):\\s*return\\s+0\\s*return\\s+cost\\[i\\]\\s*\\+\\s*min\\(dfs\\(i\\s*\\+\\s*1\\),\\s*dfs\\(i\\s*\\+\\s*2\\)\\)$",
+                    "hint": "Recursive function. If index out of bounds, return 0. Else return cost[i] + min(dfs(i+1), dfs(i+2)).\\n\\nExample:\\nCost=[10, 15].\\nDFS(0): 10 + Min(DFS(1), DFS(2))\\n  DFS(1): 15 + Min(DFS(2), DFS(3)) -> 15 + 0 = 15.\\n  DFS(2): 0.\\n  Min(15, 0) = 0. -> 10 + 0 = 10.",
+                    "solutionCode": "    def dfs(i):\n        if i >= len(cost): return 0\n        return cost[i] + min(dfs(i + 1), dfs(i + 2))"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return min of starting at 0 or 1.",
+                    "placeholderCode": "    return min(dfs(0), dfs(1))",
+                    "validationRegex": "^\\s+return\\s+min\\(dfs\\(0\\),\\s*dfs\\(1\\)\\)$",
+                    "hint": "We can start at step 0 or step 1. Return the minimum of both.",
+                    "solutionCode": "    return min(dfs(0), dfs(1))"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Iterate backwards to find min cost.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function min_cost_climbing_stairs that takes cost.",
+                    "placeholderCode": "def min_cost_climbing_stairs(cost):",
+                    "validationRegex": "^def\\s+min_cost_climbing_stairs\\(cost\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def min_cost_climbing_stairs(cost):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Append 0 to cost for top floor.",
+                    "placeholderCode": "    cost.append(0)",
+                    "validationRegex": "^\\s+cost\\.append\\(0\\)$",
+                    "hint": "Append 0 to the cost array to represent the top of the floor (destination).",
+                    "solutionCode": "    cost.append(0)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate backwards from third to last element.",
+                    "placeholderCode": "    for i in range(len(cost) - 3, -1, -1):\n        cost[i] += min(cost[i + 1], cost[i + 2])",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(cost\\)\\s*-\\s*3,\\s*-1,\\s*-1\\):\\s*cost\\[i\\]\\s*\\+=\\s*min\\(cost\\[i\\s*\\+\\s*1\\],\\s*cost\\[i\\s*\\+\\s*2\\]\\)$",
+                    "hint": "Iterate backwards. Update cost[i] to be cost[i] + min(cost[i+1], cost[i+2]). This builds the solution from the top down.\\n\\nExample:\\nCost=[10, 15, 20]. Append 0 -> [10, 15, 20, 0].\\ni=1 (Val 15): 15 + min(20, 0) = 15.\\ni=0 (Val 10): 10 + min(15, 15) = 25.\\nResult: min(25, 15) = 15.",
+                    "solutionCode": "    for i in range(len(cost) - 3, -1, -1):\n        cost[i] += min(cost[i + 1], cost[i + 2])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return min of first two costs.",
+                    "placeholderCode": "    return min(cost[0], cost[1])",
+                    "validationRegex": "^\\s+return\\s+min\\(cost\\[0\\],\\s*cost\\[1\\]\\)$",
+                    "hint": "The answer is the minimum cost to start at step 0 or step 1.",
+                    "solutionCode": "    return min(cost[0], cost[1])"
+                }
+            ]
+        }
+    }
+}

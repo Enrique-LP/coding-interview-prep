@@ -1,0 +1,117 @@
+{
+    "id": "validate-binary-search-tree",
+    "title": "Validate Binary Search Tree",
+    "description": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).",
+    "examples": [
+        {
+            "input": "root = [2,1,3]",
+            "output": "true"
+        },
+        {
+            "input": "root = [5,1,4,null,null,3,6]",
+            "output": "false"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the tree is in the range [1, 10^4].",
+        "-2^31 <= Node.val <= 2^31 - 1"
+    ],
+    "difficulty": "Medium",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Pass valid range down the tree.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_valid_bst that takes root.",
+                    "placeholderCode": "def is_valid_bst(root):",
+                    "validationRegex": "^def\\s+is_valid_bst\\(root\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_valid_bst(root):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define helper valid that takes node, left boundary, and right boundary.",
+                    "placeholderCode": "    def valid(node, left, right):\n        if not node: return True",
+                    "validationRegex": "^\\s+def\\s+valid\\(node,\\s*left,\\s*right\\):\\s*if\\s+not\\s+node:\\s*return\\s+True$",
+                    "hint": "Helper function to check if node value is within (left, right).",
+                    "solutionCode": "    def valid(node, left, right):\n        if not node: return True"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Check if node value is within boundaries.",
+                    "placeholderCode": "        if not (left < node.val < right):\n            return False",
+                    "validationRegex": "^\\s+if\\s+not\\s*\\(left\\s*<\\s+node\\.val\\s*<\\s+right\\):\\s*return\\s+False$",
+                    "hint": "Return False if value is not strictly between left and right.",
+                    "solutionCode": "        if not (left < node.val < right):\n            return False"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Recursively check left and right subtrees with updated boundaries.",
+                    "placeholderCode": "        return valid(node.left, left, node.val) and valid(node.right, node.val, right)",
+                    "validationRegex": "^\\s+return\\s+valid\\(node\\.left,\\s*left,\\s*node\\.val\\)\\s+and\\s+valid\\(node\\.right,\\s*node\\.val,\\s*right\\)$",
+                    "hint": "Update right boundary for left child, left boundary for right child.",
+                    "solutionCode": "        return valid(node.left, left, node.val) and valid(node.right, node.val, right)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Call helper with initial infinite boundaries.",
+                    "placeholderCode": "    return valid(root, float(\"-inf\"), float(\"inf\"))",
+                    "validationRegex": "^\\s+return\\s+valid\\(root,\\s*float\\(\"-inf\"\\),\\s*float\\(\"inf\"\\)\\)$",
+                    "hint": "Start with range (-inf, inf).",
+                    "solutionCode": "    return valid(root, float(\"-inf\"), float(\"inf\"))"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Recursive",
+            "description": "Same as brute force, O(n) is optimal.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_valid_bst that takes root.",
+                    "placeholderCode": "def is_valid_bst(root):",
+                    "validationRegex": "^def\\s+is_valid_bst\\(root\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_valid_bst(root):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define helper valid that takes node, left boundary, and right boundary.",
+                    "placeholderCode": "    def valid(node, left, right):\n        if not node: return True",
+                    "validationRegex": "^\\s+def\\s+valid\\(node,\\s*left,\\s*right\\):\\s*if\\s+not\\s+node:\\s*return\\s+True$",
+                    "hint": "Helper function to check if node value is within (left, right).",
+                    "solutionCode": "    def valid(node, left, right):\n        if not node: return True"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Check if node value is within boundaries.",
+                    "placeholderCode": "        if not (left < node.val < right):\n            return False",
+                    "validationRegex": "^\\s+if\\s+not\\s*\\(left\\s*<\\s+node\\.val\\s*<\\s+right\\):\\s*return\\s+False$",
+                    "hint": "Return False if value is not strictly between left and right.\\n\\nExample:\\nNode=5. Range (3, 7). 3 < 5 < 7. Valid.\\nNode=2. Range (3, 7). 2 < 3? False. Invalid BST.",
+                    "solutionCode": "        if not (left < node.val < right):\n            return False"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Recursively check left and right subtrees with updated boundaries.",
+                    "placeholderCode": "        return valid(node.left, left, node.val) and valid(node.right, node.val, right)",
+                    "validationRegex": "^\\s+return\\s+valid\\(node\\.left,\\s*left,\\s*node\\.val\\)\\s+and\\s+valid\\(node\\.right,\\s*node\\.val,\\s*right\\)$",
+                    "hint": "Update right boundary for left child, left boundary for right child.",
+                    "solutionCode": "        return valid(node.left, left, node.val) and valid(node.right, node.val, right)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Call helper with initial infinite boundaries.",
+                    "placeholderCode": "    return valid(root, float(\"-inf\"), float(\"inf\"))",
+                    "validationRegex": "^\\s+return\\s+valid\\(root,\\s*float\\(\"-inf\"\\),\\s*float\\(\"inf\"\\)\\)$",
+                    "hint": "Start with range (-inf, inf).",
+                    "solutionCode": "    return valid(root, float(\"-inf\"), float(\"inf\"))"
+                }
+            ]
+        }
+    }
+}

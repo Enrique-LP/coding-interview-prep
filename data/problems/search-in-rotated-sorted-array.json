@@ -1,0 +1,135 @@
+{
+    "id": "search-in-rotated-sorted-array",
+    "title": "Search in Rotated Sorted Array",
+    "description": "There is an integer array nums sorted in ascending order (with distinct values). Prior to being passed to your function, nums is possibly rotated at an unknown pivot index. Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums. You must write an algorithm with O(log n) runtime complexity.",
+    "examples": [
+        {
+            "input": "nums = [4,5,6,7,0,1,2], target = 0",
+            "output": "4"
+        },
+        {
+            "input": "nums = [4,5,6,7,0,1,2], target = 3",
+            "output": "-1"
+        }
+    ],
+    "constraints": [
+        "1 <= nums.length <= 5000",
+        "-10^4 <= nums[i] <= 10^4",
+        "All values of nums are unique.",
+        "nums is an ascending array that is possibly rotated."
+    ],
+    "difficulty": "Medium",
+    "topic": "Binary Search",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Linear Search",
+            "description": "Check every element. (O(n))",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function search that takes nums and target.",
+                    "placeholderCode": "def search(nums, target):",
+                    "validationRegex": "^def\\s+search\\(nums,\\s*target\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def search(nums, target):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Iterate through the array.",
+                    "placeholderCode": "    for i, n in enumerate(nums):",
+                    "validationRegex": "^\\s+for\\s+i,\\s*n\\s+in\\s+enumerate\\(nums\\):$",
+                    "hint": "Iterate using `enumerate`.",
+                    "solutionCode": "    for i, n in enumerate(nums):"
+                },
+                {
+                    "id": 3,
+                    "instruction": "If element equals target, return index.",
+                    "placeholderCode": "        if n == target:\n            return i",
+                    "validationRegex": "^\\s+if\\s+n\\s*==\\s*target:\\s*return\\s+i$",
+                    "hint": "Check if current element matches target.",
+                    "solutionCode": "        if n == target:\n            return i"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return -1 if not found.",
+                    "placeholderCode": "    return -1",
+                    "validationRegex": "^\\s+return\\s+-1$",
+                    "hint": "Return -1 if not found.",
+                    "solutionCode": "    return -1"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Binary Search",
+            "description": "Handle the two sorted halves. (O(log n))",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function search that takes nums and target.",
+                    "placeholderCode": "def search(nums, target):",
+                    "validationRegex": "^def\\s+search\\(nums,\\s*target\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def search(nums, target):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize pointers.",
+                    "placeholderCode": "    l, r = 0, len(nums) - 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*0,\\s*len\\(nums\\)\\s*-\\s*1$",
+                    "hint": "Init `l` and `r`.",
+                    "solutionCode": "    l, r = 0, len(nums) - 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while l <= r.",
+                    "placeholderCode": "    while l <= r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<=\\s*r:$",
+                    "hint": "Binary search loop.",
+                    "solutionCode": "    while l <= r:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Calculate mid and check if it matches target.",
+                    "placeholderCode": "        mid = (l + r) // 2\n        if nums[mid] == target:\n            return mid",
+                    "validationRegex": "^\\s+mid\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*if\\s+nums\\[mid\\]\\s*==\\s*target:\\s*return\\s+mid$",
+                    "hint": "Calc mid. Return if matches target.",
+                    "solutionCode": "        mid = (l + r) // 2\n        if nums[mid] == target:\n            return mid"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if left half is sorted.",
+                    "placeholderCode": "        if nums[l] <= nums[mid]:",
+                    "validationRegex": "^\\s+if\\s+nums\\[l\\]\\s*<=\\s+nums\\[mid\\]:$",
+                    "hint": "Check if left half `nums[l] <= nums[mid]` is sorted.",
+                    "solutionCode": "        if nums[l] <= nums[mid]:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "If target is in left half range, move right pointer.",
+                    "placeholderCode": "            if target > nums[mid] or target < nums[l]:\n                l = mid + 1\n            else:\n                r = mid - 1",
+                    "validationRegex": "^\\s+if\\s+target\\s*>\\s+nums\\[mid\\]\\s+or\\s+target\\s*<\\s+nums\\[l\\]:\\s*l\\s*=\\s*mid\\s*\\+\\s*1\\s*else:\\s*r\\s*=\\s*mid\\s*-\\s*1$",
+                    "hint": "If target is outside left sorted range, search right. Else search left.\\n\\nExample:\\nnums=[4,5,6,7,0,1,2], target=0. l=0(4), m=3(7).\\nLeft [4,5,6,7] sorted. 0 is not in [4, 7]. Search right.",
+                    "solutionCode": "            if target > nums[mid] or target < nums[l]:\n                l = mid + 1\n            else:\n                r = mid - 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Else (right half is sorted), check if target is in right half range.",
+                    "placeholderCode": "        else:\n            if target < nums[mid] or target > nums[r]:\n                r = mid - 1\n            else:\n                l = mid + 1",
+                    "validationRegex": "^\\s+else:\\s*if\\s+target\\s*<\\s+nums\\[mid\\]\\s+or\\s+target\\s*>\\s+nums\\[r\\]:\\s*r\\s*=\\s*mid\\s*-\\s*1\\s*else:\\s*l\\s*=\\s*mid\\s*\\+\\s*1$",
+                    "hint": "If target is outside right sorted range, search left. Else search right.",
+                    "solutionCode": "        else:\n            if target < nums[mid] or target > nums[r]:\n                r = mid - 1\n            else:\n                l = mid + 1"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return -1 if not found.",
+                    "placeholderCode": "    return -1",
+                    "validationRegex": "^\\s+return\\s+-1$",
+                    "hint": "Return -1 if not found.",
+                    "solutionCode": "    return -1"
+                }
+            ]
+        }
+    }
+}

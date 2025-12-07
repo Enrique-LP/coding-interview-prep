@@ -1,0 +1,89 @@
+{
+    "id": "reverse-string",
+    "title": "Reverse String",
+    "description": "Write a function that reverses a string. The input string is given as an array of characters s.",
+    "examples": [
+        {
+            "input": "s = [\"h\",\"e\",\"l\",\"l\",\"o\"]",
+            "output": "[\"o\",\"l\",\"l\",\"e\",\"h\"]"
+        },
+        {
+            "input": "s = [\"H\",\"a\",\"n\",\"n\",\"a\",\"h\"]",
+            "output": "[\"h\",\"a\",\"n\",\"n\",\"a\",\"H\"]"
+        }
+    ],
+    "difficulty": "Easy",
+    "topic": "String",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Two Pointers",
+            "description": "Swap characters from start and end moving towards center.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function reverse_string that takes a list of characters s.",
+                    "placeholderCode": "def reverse_string(s):",
+                    "validationRegex": "^def\\s+reverse_string\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def reverse_string(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize two pointers, left at the start and right at the end of the array.",
+                    "placeholderCode": "    left, right = 0, len(s) - 1",
+                    "validationRegex": "^\\s+left,\\s*right\\s*=\\s*0,\\s*len\\(s\\)\\s*-\\s*1$",
+                    "hint": "Use `len(s) - 1` for the right index.",
+                    "solutionCode": "    left, right = 0, len(s) - 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while the left pointer is less than the right pointer.",
+                    "placeholderCode": "    while left < right:",
+                    "validationRegex": "^\\s+while\\s+left\\s*<\\s*right:$",
+                    "hint": "Use a `while` loop.",
+                    "solutionCode": "    while left < right:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Swap the characters at the left and right pointers.",
+                    "placeholderCode": "        s[left], s[right] = s[right], s[left]",
+                    "validationRegex": "^\\s+s\\[left\\],\\s*s\\[right\\]\\s*=\\s*s\\[right\\],\\s*s\\[left\\]$",
+                    "hint": "Use tuple unpacking to swap values in one line.",
+                    "solutionCode": "        s[left], s[right] = s[right], s[left]"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Move the left pointer forward and the right pointer backward.",
+                    "placeholderCode": "        left, right = left + 1, right - 1",
+                    "validationRegex": "^\\s+left,\\s*right\\s*=\\s*left\\s*\\+\\s*1,\\s*right\\s*-\\s*1$",
+                    "hint": "Increment `left` and decrement `right`.",
+                    "solutionCode": "        left, right = left + 1, right - 1"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Pythonic",
+            "description": "Use Python's built-in list methods.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function reverse_string that takes a list of characters s.",
+                    "placeholderCode": "def reverse_string(s):",
+                    "validationRegex": "^def\\s+reverse_string\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def reverse_string(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Use the reverse() method to reverse the list in-place.",
+                    "placeholderCode": "    s.reverse()",
+                    "validationRegex": "^\\s+s\\.reverse\\(\\)$",
+                    "hint": "Use the built-in `.reverse()` method.",
+                    "solutionCode": "    s.reverse()"
+                }
+            ]
+        }
+    }
+}

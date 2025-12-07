@@ -1,0 +1,103 @@
+{
+    "id": "valid-sudoku",
+    "title": "Valid Sudoku",
+    "description": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules: Each row must contain the digits 1-9 without repetition. Each column must contain the digits 1-9 without repetition. Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition. Note: A Sudoku board (partially filled) could be valid but is not necessarily solvable. Only the filled cells need to be validated.",
+    "examples": [
+        {
+            "input": "board = \n[[\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"],\n[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"],\n[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"],\n[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"],\n[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"],\n[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"],\n[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"],\n[\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"],\n[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]",
+            "output": "true"
+        },
+        {
+            "input": "board = \n[[\"8\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"],\n[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"],\n[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"],\n[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"],\n[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"],\n[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"],\n[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"],\n[\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"],\n[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]",
+            "output": "false",
+            "explanation": "Same as Example 1, except with the 5 in the top left corner being modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid."
+        }
+    ],
+    "constraints": [
+        "board.length == 9",
+        "board[i].length == 9",
+        "board[i][j] is a digit 1-9 or '.'."
+    ],
+    "difficulty": "Medium",
+    "topic": "Arrays & Hashing",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "HashSet",
+            "description": "Use sets to track seen numbers in rows, cols, and boxes.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_valid_sudoku that takes board.",
+                    "placeholderCode": "def is_valid_sudoku(board):",
+                    "validationRegex": "^def\\s+is_valid_sudoku\\(board\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_valid_sudoku(board):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize sets.",
+                    "placeholderCode": "    cols = collections.defaultdict(set)\n    rows = collections.defaultdict(set)\n    squares = collections.defaultdict(set)",
+                    "validationRegex": "^\\s+cols\\s*=\\s*collections\\.defaultdict\\(set\\)\\s*rows\\s*=\\s*collections\\.defaultdict\\(set\\)\\s*squares\\s*=\\s*collections\\.defaultdict\\(set\\)$",
+                    "hint": "Use `collections.defaultdict(set)` for rows, cols, and squares.",
+                    "solutionCode": "    cols = collections.defaultdict(set)\n    rows = collections.defaultdict(set)\n    squares = collections.defaultdict(set)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through board.",
+                    "placeholderCode": "    for r in range(9):\n        for c in range(9):\n            if board[r][c] == \".\":\n                continue\n            if (board[r][c] in rows[r] or\n                board[r][c] in cols[c] or\n                board[r][c] in squares[(r // 3, c // 3)]):\n                return False\n            cols[c].add(board[r][c])\n            rows[r].add(board[r][c])\n            squares[(r // 3, c // 3)].add(board[r][c])",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(9\\):\\s*for\\s+c\\s+in\\s+range\\(9\\):\\s*if\\s+board\\[r\\]\\[c\\]\\s*==\\s*\".\":\\s*continue\\s*if\\s*\\(board\\[r\\]\\[c\\]\\s+in\\s+rows\\[r\\]\\s+or\\s*board\\[r\\]\\[c\\]\\s+in\\s+cols\\[c\\]\\s+or\\s*board\\[r\\]\\[c\\]\\s+in\\s+squares\\[\\(r\\s*//\\s*3,\\s*c\\s*//\\s*3\\)\\]\\):\\s*return\\s+False\\s*cols\\[c\\]\\.add\\(board\\[r\\]\\[c\\]\\)\\s*rows\\[r\\]\\.add\\(board\\[r\\]\\[c\\]\\)\\s*squares\\[\\(r\\s*//\\s*3,\\s*c\\s*//\\s*3\\)\\]\\.add\\(board\\[r\\]\\[c\\]\\)$",
+                    "hint": "Check if current number is already in respective row, col, or square set. Use `(r // 3, c // 3)` for square key.",
+                    "solutionCode": "    for r in range(9):\n        for c in range(9):\n            if board[r][c] == \".\":\n                continue\n            if (board[r][c] in rows[r] or\n                board[r][c] in cols[c] or\n                board[r][c] in squares[(r // 3, c // 3)]):\n                return False\n            cols[c].add(board[r][c])\n            rows[r].add(board[r][c])\n            squares[(r // 3, c // 3)].add(board[r][c])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return True.",
+                    "placeholderCode": "    return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "Return `True` if no conflicts found.",
+                    "solutionCode": "    return True"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "HashSet",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_valid_sudoku that takes board.",
+                    "placeholderCode": "def is_valid_sudoku(board):",
+                    "validationRegex": "^def\\s+is_valid_sudoku\\(board\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_valid_sudoku(board):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize sets.",
+                    "placeholderCode": "    cols = collections.defaultdict(set)\n    rows = collections.defaultdict(set)\n    squares = collections.defaultdict(set)",
+                    "validationRegex": "^\\s+cols\\s*=\\s*collections\\.defaultdict\\(set\\)\\s*rows\\s*=\\s*collections\\.defaultdict\\(set\\)\\s*squares\\s*=\\s*collections\\.defaultdict\\(set\\)$",
+                    "hint": "Use `collections.defaultdict(set)`.",
+                    "solutionCode": "    cols = collections.defaultdict(set)\n    rows = collections.defaultdict(set)\n    squares = collections.defaultdict(set)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through board.",
+                    "placeholderCode": "    for r in range(9):\n        for c in range(9):\n            if board[r][c] == \".\":\n                continue\n            if (board[r][c] in rows[r] or\n                board[r][c] in cols[c] or\n                board[r][c] in squares[(r // 3, c // 3)]):\n                return False\n            cols[c].add(board[r][c])\n            rows[r].add(board[r][c])\n            squares[(r // 3, c // 3)].add(board[r][c])",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(9\\):\\s*for\\s+c\\s+in\\s+range\\(9\\):\\s*if\\s+board\\[r\\]\\[c\\]\\s*==\\s*\".\":\\s*continue\\s*if\\s*\\(board\\[r\\]\\[c\\]\\s+in\\s+rows\\[r\\]\\s+or\\s*board\\[r\\]\\[c\\]\\s+in\\s+cols\\[c\\]\\s+or\\s*board\\[r\\]\\[c\\]\\s+in\\s+squares\\[\\(r\\s*//\\s*3,\\s*c\\s*//\\s*3\\)\\]\\):\\s*return\\s+False\\s*cols\\[c\\]\\.add\\(board\\[r\\]\\[c\\]\\)\\s*rows\\[r\\]\\.add\\(board\\[r\\]\\[c\\]\\)\\s*squares\\[\\(r\\s*//\\s*3,\\s*c\\s*//\\s*3\\)\\]\\.add\\(board\\[r\\]\\[c\\]\\)$",
+                    "hint": "Check for duplicates in row, col, and square.",
+                    "solutionCode": "    for r in range(9):\n        for c in range(9):\n            if board[r][c] == \".\":\n                continue\n            if (board[r][c] in rows[r] or\n                board[r][c] in cols[c] or\n                board[r][c] in squares[(r // 3, c // 3)]):\n                return False\n            cols[c].add(board[r][c])\n            rows[r].add(board[r][c])\n            squares[(r // 3, c // 3)].add(board[r][c])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return True.",
+                    "placeholderCode": "    return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "Return `True`.",
+                    "solutionCode": "    return True"
+                }
+            ]
+        }
+    }
+}

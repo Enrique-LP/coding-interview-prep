@@ -1,0 +1,83 @@
+{
+    "id": "permutation-in-string",
+    "title": "Permutation in String",
+    "description": "Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise. In other words, return true if one of s1's permutations is the substring of s2.",
+    "examples": [
+        {
+            "input": "s1 = \"ab\", s2 = \"eidbaooo\"",
+            "output": "true",
+            "explanation": "s2 contains one permutation of s1 (\"ba\")."
+        },
+        {
+            "input": "s1 = \"ab\", s2 = \"eidboaoo\"",
+            "output": "false"
+        }
+    ],
+    "constraints": [
+        "1 <= s1.length, s2.length <= 10^4",
+        "s1 and s2 consist of lowercase English letters."
+    ],
+    "difficulty": "Medium",
+    "topic": "Sliding Window",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Sorting",
+            "description": "Sort s1 and every substring of s2.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function check_inclusion that takes s1 and s2.",
+                    "placeholderCode": "def check_inclusion(s1, s2):",
+                    "validationRegex": "^def\\s+check_inclusion\\(s1,\\s*s2\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def check_inclusion(s1, s2):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Sort s1.",
+                    "placeholderCode": "    s1 = sorted(s1)",
+                    "validationRegex": "^\\s+s1\\s*=\\s*sorted\\(s1\\)$",
+                    "hint": "Sort `s1` to compare with sorted substrings.",
+                    "solutionCode": "    s1 = sorted(s1)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through s2 substrings.",
+                    "placeholderCode": "    for i in range(len(s2) - len(s1) + 1):\n        if sorted(s2[i : i + len(s1)]) == s1:\n            return True",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s2\\)\\s*-\\s*len\\(s1\\)\\s*\\+\\s*1\\):\\s*if\\s+sorted\\(s2\\[i\\s*:\\s*i\\s*\\+\\s*len\\(s1\\)\\]\\)\\s*==\\s*s1:\\s*return\\s+True$",
+                    "hint": "Iterate and sort each substring of length `len(s1)`.",
+                    "solutionCode": "    for i in range(len(s2) - len(s1) + 1):\n        if sorted(s2[i : i + len(s1)]) == s1:\n            return True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return False.",
+                    "placeholderCode": "    return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "Return `False` if no match found.",
+                    "solutionCode": "    return False"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Sliding Window with Array",
+            "description": "Use frequency arrays to compare window.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function check_inclusion that takes s1 and s2.",
+                    "placeholderCode": "def check_inclusion(s1, s2):",
+                    "validationRegex": "^def\\s+check_inclusion\\(s1,\\s*s2\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def check_inclusion(s1, s2):"
+                },
+                {
+                    "validationRegex": "^\\s+return\\s+matches\\s*==\\s*26$",
+                    "hint": "Check if final window matches.",
+                    "solutionCode": "    return matches == 26"
+                }
+            ]
+        }
+    }
+}

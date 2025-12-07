@@ -1,0 +1,129 @@
+{
+    "id": "two-sum-ii",
+    "title": "Two Sum II - Input Array Is Sorted",
+    "description": "Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number. Return the indices of the two numbers, index1 and index2, added by one as an integer array [index1, index2] of length 2.",
+    "examples": [
+        {
+            "input": "numbers = [2,7,11,15], target = 9",
+            "output": "[1,2]",
+            "explanation": "The sum of 2 and 7 is 9. Therefore, index1 = 1, index2 = 2. We return [1, 2]."
+        },
+        {
+            "input": "numbers = [2,3,4], target = 6",
+            "output": "[1,3]"
+        }
+    ],
+    "constraints": [
+        "2 <= numbers.length <= 3 * 10^4",
+        "-1000 <= numbers[i] <= 1000",
+        "numbers is sorted in non-decreasing order.",
+        "-1000 <= target <= 1000",
+        "The tests are generated such that there is exactly one solution."
+    ],
+    "difficulty": "Medium",
+    "topic": "Two Pointers",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Nested Loops",
+            "description": "Check every pair. (Time Limit Exceeded usually, but good for understanding)",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function two_sum that takes numbers and target.",
+                    "placeholderCode": "def two_sum(numbers, target):",
+                    "validationRegex": "^def\\s+two_sum\\(numbers,\\s*target\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def two_sum(numbers, target):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Iterate with index i from 0 to length of numbers.",
+                    "placeholderCode": "    for i in range(len(numbers)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(numbers\\)\\):$",
+                    "hint": "Outer loop from 0 to `len(numbers)`.",
+                    "solutionCode": "    for i in range(len(numbers)):"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate with index j from i + 1 to length of numbers.",
+                    "placeholderCode": "        for j in range(i + 1, len(numbers)):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(i\\s*\\+\\s*1,\\s*len\\(numbers\\)\\):$",
+                    "hint": "Inner loop from `i + 1` to `len(numbers)`.",
+                    "solutionCode": "        for j in range(i + 1, len(numbers)):"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Check if sum equals target and return 1-based indices.",
+                    "placeholderCode": "            if numbers[i] + numbers[j] == target:\n                return [i + 1, j + 1]",
+                    "validationRegex": "^\\s+if\\s+numbers\\[i\\]\\s*\\+\\s*numbers\\[j\\]\\s*==\\s*target:\\s*return\\s+\\[i\\s*\\+\\s*1,\\s*j\\s*\\+\\s*1\\]$",
+                    "hint": "Check sum. Return `[i + 1, j + 1]`.",
+                    "solutionCode": "            if numbers[i] + numbers[j] == target:\n                return [i + 1, j + 1]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Two Pointers",
+            "description": "Use sorted property to shrink search space from ends.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function two_sum that takes numbers and target.",
+                    "placeholderCode": "def two_sum(numbers, target):",
+                    "validationRegex": "^def\\s+two_sum\\(numbers,\\s*target\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def two_sum(numbers, target):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize left pointer at start and right pointer at end.",
+                    "placeholderCode": "    l, r = 0, len(numbers) - 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*0,\\s*len\\(numbers\\)\\s*-\\s*1$",
+                    "hint": "Set `l` to 0 and `r` to `len(numbers) - 1`.",
+                    "solutionCode": "    l, r = 0, len(numbers) - 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while l is less than r.",
+                    "placeholderCode": "    while l < r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<\\s*r:$",
+                    "hint": "Use a `while` loop.",
+                    "solutionCode": "    while l < r:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Calculate current sum.",
+                    "placeholderCode": "        curSum = numbers[l] + numbers[r]",
+                    "validationRegex": "^\\s+curSum\\s*=\\s*numbers\\[l\\]\\s*\\+\\s*numbers\\[r\\]$",
+                    "hint": "Add numbers at `l` and `r`.",
+                    "solutionCode": "        curSum = numbers[l] + numbers[r]"
+                },
+                {
+                    "id": 5,
+                    "instruction": "If current sum is greater than target, decrease right pointer.",
+                    "placeholderCode": "        if curSum > target:\n            r -= 1",
+                    "validationRegex": "^\\s+if\\s+curSum\\s*>\\s+target:\\s*r\\s*-=\\s*1$",
+                    "hint": "If sum is too big, move `r` left.\\n\\nExample:\\nnums=[2, 7, 11, 15], target=9.\\nl=0 (2), r=3 (15). Sum=17 > 9.\\nDecrement r to 2 (11).",
+                    "solutionCode": "        if curSum > target:\n            r -= 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "If current sum is less than target, increase left pointer.",
+                    "placeholderCode": "        elif curSum < target:\n            l += 1",
+                    "validationRegex": "^\\s+elif\\s+curSum\\s*<\\s+target:\\s*l\\s*\\+=\\s*1$",
+                    "hint": "If sum is too small, move `l` right.",
+                    "solutionCode": "        elif curSum < target:\n            l += 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "If sum matches, return 1-based indices.",
+                    "placeholderCode": "        else:\n            return [l + 1, r + 1]",
+                    "validationRegex": "^\\s+else:\\s*return\\s+\\[l\\s*\\+\\s*1,\\s*r\\s*\\+\\s*1\\]$",
+                    "hint": "Return 1-based indices.",
+                    "solutionCode": "        else:\n            return [l + 1, r + 1]"
+                }
+            ]
+        }
+    }
+}

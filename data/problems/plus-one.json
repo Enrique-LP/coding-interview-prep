@@ -1,0 +1,88 @@
+{
+    "id": "plus-one",
+    "title": "Plus One",
+    "description": "You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's. Increment the large integer by one and return the resulting array of digits.",
+    "examples": [
+        {
+            "input": "digits = [1,2,3]",
+            "output": "[1,2,4]",
+            "explanation": "The array represents the integer 123. Incrementing by one gives 123 + 1 = 124. Thus, the result should be [1,2,4]."
+        },
+        {
+            "input": "digits = [9]",
+            "output": "[1,0]",
+            "explanation": "The array represents the integer 9. Incrementing by one gives 9 + 1 = 10. Thus, the result should be [1,0]."
+        }
+    ],
+    "constraints": [
+        "1 <= digits.length <= 100",
+        "0 <= digits[i] <= 9",
+        "digits does not contain any leading 0's."
+    ],
+    "difficulty": "Easy",
+    "topic": "Math & Geometry",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Conversion",
+            "description": "Convert to int, add 1, convert back.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function plus_one that takes digits.",
+                    "placeholderCode": "def plus_one(digits):",
+                    "validationRegex": "^def\\s+plus_one\\(digits\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def plus_one(digits):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Convert to int.",
+                    "placeholderCode": "    num = int(\"\".join(map(str, digits)))",
+                    "validationRegex": "^\\s+num\\s*=\\s*int\\(\"\"\\.join\\(map\\(str,\\s*digits\\)\\)\\)$",
+                    "hint": "Convert the list of digits to a single integer.",
+                    "solutionCode": "    num = int(\"\".join(map(str, digits)))"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Add 1 and convert back.",
+                    "placeholderCode": "    num += 1\n    return [int(x) for x in str(num)]",
+                    "validationRegex": "^\\s+num\\s*\\+=\\s*1\\s*return\\s*\\[int\\(x\\)\\s+for\\s+x\\s+in\\s+str\\(num\\)\\]$",
+                    "hint": "Add 1 to the integer and convert it back to a list of digits.",
+                    "solutionCode": "    num += 1\n    return [int(x) for x in str(num)]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "In-place",
+            "description": "Iterate backwards and handle carry.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function plus_one that takes digits.",
+                    "placeholderCode": "def plus_one(digits):",
+                    "validationRegex": "^def\\s+plus_one\\(digits\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def plus_one(digits):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Iterate backwards.",
+                    "placeholderCode": "    for i in range(len(digits) - 1, -1, -1):\n        if digits[i] < 9:\n            digits[i] += 1\n            return digits\n        digits[i] = 0",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(digits\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+digits\\[i\\]\\s*<\\s*9:\\s*digits\\[i\\]\\s*\\+=\\s*1\\s*return\\s+digits\\s*digits\\[i\\]\\s*=\\s*0$",
+                    "hint": "Iterate from the last digit. If it's less than 9, increment it and return. If it's 9, set it to 0 and continue to the next digit.",
+                    "solutionCode": "    for i in range(len(digits) - 1, -1, -1):\n        if digits[i] < 9:\n            digits[i] += 1\n            return digits\n        digits[i] = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Handle overflow (e.g., 999 -> 1000).",
+                    "placeholderCode": "    return [1] + digits",
+                    "validationRegex": "^\\s+return\\s*\\[1\\]\\s*\\+\\s*digits$",
+                    "hint": "If all digits were 9, prepend 1 to the result.",
+                    "solutionCode": "    return [1] + digits"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,119 @@
+{
+    "id": "max-area-of-island",
+    "title": "Max Area of Island",
+    "description": "You are given an m x n binary matrix grid. An island is a group of 1s (representing land) connected 4-directionally (horizontal or vertical). You may assume all four edges of the grid are surrounded by water. The area of an island is the number of cells with a value 1 in the island. Return the maximum area of an island in grid. If there is no island, return 0.",
+    "examples": [
+        {
+            "input": "grid = [[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]",
+            "output": "6"
+        },
+        {
+            "input": "grid = [[0,0,0,0,0,0,0,0]]",
+            "output": "0"
+        }
+    ],
+    "constraints": [
+        "m == grid.length",
+        "n == grid[i].length",
+        "1 <= m, n <= 50",
+        "grid[i][j] is either 0 or 1."
+    ],
+    "difficulty": "Medium",
+    "topic": "Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "DFS",
+            "description": "DFS to calculate area of each island.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function max_area_of_island that takes grid.",
+                    "placeholderCode": "def max_area_of_island(grid):",
+                    "validationRegex": "^def\\s+max_area_of_island\\(grid\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def max_area_of_island(grid):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize dimensions and visit set.",
+                    "placeholderCode": "    rows, cols = len(grid), len(grid[0])\n    visit = set()",
+                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)\\s*visit\\s*=\\s*set\\(\\)$",
+                    "hint": "Get grid dimensions and create a set to track visited cells.",
+                    "solutionCode": "    rows, cols = len(grid), len(grid[0])\n    visit = set()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define DFS helper to return area.",
+                    "placeholderCode": "    def dfs(r, c):\n        if (r < 0 or r == rows or c < 0 or c == cols or\n            grid[r][c] == 0 or (r, c) in visit):\n            return 0\n        visit.add((r, c))\n        return (1 + dfs(r + 1, c) + dfs(r - 1, c) +\n                dfs(r, c + 1) + dfs(r, c - 1))",
+                    "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols\\s+or\\s+grid\\[r\\]\\[c\\]\\s*==\\s*0\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+visit\\):\\s*return\\s+0\\s*visit\\.add\\(\\(r,\\s*c\\)\\)\\s*return\\s*\\(1\\s*\\+\\s*dfs\\(r\\s*\\+\\s*1,\\s*c\\)\\s*\\+\\s*dfs\\(r\\s*-\\s*1,\\s*c\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*\\+\\s*1\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*-\\s*1\\)\\)$",
+                    "hint": "Recursive DFS. Return 0 if invalid or visited. Else, mark visited and return 1 + sum of DFS on neighbors.\\n\\nExample:\\nGrid=[[1, 1], [0, 1]].\\nDFS(0,0): Mark visited. 1 + DFS(0,1) + DFS(1,0)...\\n  DFS(0,1): Mark visited. 1 + DFS(1,1)...\\n    DFS(1,1): Mark visited. 1...\\nTotal Area = 1 + 1 + 1 = 3.",
+                    "solutionCode": "    def dfs(r, c):\n        if (r < 0 or r == rows or c < 0 or c == cols or\n            grid[r][c] == 0 or (r, c) in visit):\n            return 0\n        visit.add((r, c))\n        return (1 + dfs(r + 1, c) + dfs(r - 1, c) +\n                dfs(r, c + 1) + dfs(r, c - 1))"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Iterate through grid to find max area.",
+                    "placeholderCode": "    area = 0\n    for r in range(rows):\n        for c in range(cols):\n            area = max(area, dfs(r, c))",
+                    "validationRegex": "^\\s+area\\s*=\\s*0\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*area\\s*=\\s*max\\(area,\\s*dfs\\(r,\\s*c\\)\\)$",
+                    "hint": "Loop through all cells, update max area with result of DFS.",
+                    "solutionCode": "    area = 0\n    for r in range(rows):\n        for c in range(cols):\n            area = max(area, dfs(r, c))"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return max area.",
+                    "placeholderCode": "    return area",
+                    "validationRegex": "^\\s+return\\s+area$",
+                    "hint": "Return the maximum area found.",
+                    "solutionCode": "    return area"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DFS",
+            "description": "Same as brute force, O(m*n).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function max_area_of_island that takes grid.",
+                    "placeholderCode": "def max_area_of_island(grid):",
+                    "validationRegex": "^def\\s+max_area_of_island\\(grid\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def max_area_of_island(grid):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize dimensions and visit set.",
+                    "placeholderCode": "    rows, cols = len(grid), len(grid[0])\n    visit = set()",
+                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)\\s*visit\\s*=\\s*set\\(\\)$",
+                    "hint": "Get grid dimensions and create a set to track visited cells.",
+                    "solutionCode": "    rows, cols = len(grid), len(grid[0])\n    visit = set()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define DFS helper to return area.",
+                    "placeholderCode": "    def dfs(r, c):\n        if (r < 0 or r == rows or c < 0 or c == cols or\n            grid[r][c] == 0 or (r, c) in visit):\n            return 0\n        visit.add((r, c))\n        return (1 + dfs(r + 1, c) + dfs(r - 1, c) +\n                dfs(r, c + 1) + dfs(r, c - 1))",
+                    "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols\\s+or\\s+grid\\[r\\]\\[c\\]\\s*==\\s*0\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+visit\\):\\s*return\\s+0\\s*visit\\.add\\(\\(r,\\s*c\\)\\)\\s*return\\s*\\(1\\s*\\+\\s*dfs\\(r\\s*\\+\\s*1,\\s*c\\)\\s*\\+\\s*dfs\\(r\\s*-\\s*1,\\s*c\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*\\+\\s*1\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*-\\s*1\\)\\)$",
+                    "hint": "Recursive DFS. Return 0 if invalid or visited. Else, mark visited and return 1 + sum of DFS on neighbors.\\n\\nExample:\\nGrid=[[1, 1], [0, 1]].\\nDFS(0,0): Mark visited. 1 + DFS(0,1) + DFS(1,0)...\\n  DFS(0,1): Mark visited. 1 + DFS(1,1)...\\n    DFS(1,1): Mark visited. 1...\\nTotal Area = 1 + 1 + 1 = 3.",
+                    "solutionCode": "    def dfs(r, c):\n        if (r < 0 or r == rows or c < 0 or c == cols or\n            grid[r][c] == 0 or (r, c) in visit):\n            return 0\n        visit.add((r, c))\n        return (1 + dfs(r + 1, c) + dfs(r - 1, c) +\n                dfs(r, c + 1) + dfs(r, c - 1))"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Iterate through grid to find max area.",
+                    "placeholderCode": "    area = 0\n    for r in range(rows):\n        for c in range(cols):\n            area = max(area, dfs(r, c))",
+                    "validationRegex": "^\\s+area\\s*=\\s*0\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*area\\s*=\\s*max\\(area,\\s*dfs\\(r,\\s*c\\)\\)$",
+                    "hint": "Loop through all cells, update max area with result of DFS.",
+                    "solutionCode": "    area = 0\n    for r in range(rows):\n        for c in range(cols):\n            area = max(area, dfs(r, c))"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return max area.",
+                    "placeholderCode": "    return area",
+                    "validationRegex": "^\\s+return\\s+area$",
+                    "hint": "Return the maximum area found.",
+                    "solutionCode": "    return area"
+                }
+            ]
+        }
+    }
+}

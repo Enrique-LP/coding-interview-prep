@@ -1,0 +1,82 @@
+{
+    "id": "single-number",
+    "title": "Single Number",
+    "description": "Given a non-empty array of integers nums, every element appears twice except for one. Find that single one. You must implement a solution with a linear runtime complexity and use only constant extra space.",
+    "examples": [
+        {
+            "input": "nums = [2,2,1]",
+            "output": "1"
+        },
+        {
+            "input": "nums = [4,1,2,1,2]",
+            "output": "4"
+        },
+        {
+            "input": "nums = [1]",
+            "output": "1"
+        }
+    ],
+    "constraints": [
+        "1 <= nums.length <= 3 * 10^4",
+        "-3 * 10^4 <= nums[i] <= 3 * 10^4",
+        "Each element in the array appears twice except for one element which appears only once."
+    ],
+    "difficulty": "Easy",
+    "topic": "Bit Manipulation",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "HashSet",
+            "description": "Use set to track seen numbers.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function single_number that takes nums.",
+                    "placeholderCode": "def single_number(nums):",
+                    "validationRegex": "^def\\s+single_number\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def single_number(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Use set math.",
+                    "placeholderCode": "    return 2 * sum(set(nums)) - sum(nums)",
+                    "validationRegex": "^\\s+return\\s+2\\s*\\*\\s*sum\\(set\\(nums\\)\\)\\s*-\\s*sum\\(nums\\)$",
+                    "hint": "The sum of unique elements multiplied by 2 minus the sum of all elements gives the single number.",
+                    "solutionCode": "    return 2 * sum(set(nums)) - sum(nums)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "XOR",
+            "description": "XOR all numbers. Duplicates cancel out.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function single_number that takes nums.",
+                    "placeholderCode": "def single_number(nums):",
+                    "validationRegex": "^def\\s+single_number\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def single_number(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "XOR all elements.",
+                    "placeholderCode": "    res = 0\n    for n in nums:\n        res = n ^ res",
+                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*for\\s+n\\s+in\\s+nums:\\s*res\\s*=\\s*n\\s*\\^\\s*res$",
+                    "hint": "Initialize result to 0. Iterate through the array and XOR each element with the result.",
+                    "solutionCode": "    res = 0\n    for n in nums:\n        res = n ^ res"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the result.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        }
+    }
+}

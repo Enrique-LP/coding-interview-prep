@@ -1,0 +1,77 @@
+{
+    "id": "missing-number",
+    "title": "Missing Number",
+    "description": "Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.",
+    "examples": [
+        {
+            "input": "nums = [3,0,1]",
+            "output": "2",
+            "explanation": "n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums."
+        },
+        {
+            "input": "nums = [0,1]",
+            "output": "2",
+            "explanation": "n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums."
+        }
+    ],
+    "constraints": [
+        "n == nums.length",
+        "1 <= n <= 10^4",
+        "0 <= nums[i] <= n",
+        "All the numbers of nums are unique."
+    ],
+    "difficulty": "Easy",
+    "topic": "Bit Manipulation",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Math Sum",
+            "description": "Compare sum of range with sum of array.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function missing_number that takes nums.",
+                    "placeholderCode": "def missing_number(nums):",
+                    "validationRegex": "^def\\s+missing_number\\(nums\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Calculate expected sum.",
+                    "placeholderCode": "    n = len(nums)\n    expected_sum = n * (n + 1) // 2",
+                    "validationRegex": "^\\s+n\\s*=\\s*len\\(nums\\)\\s*expected_sum\\s*=\\s*n\\s*\\*\\s*\\(n\\s*\\+\\s*1\\)\\s*//\\s*2$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return difference.",
+                    "placeholderCode": "    return expected_sum - sum(nums)",
+                    "validationRegex": "^\\s+return\\s+expected_sum\\s*-\\s*sum\\(nums\\)$"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "XOR",
+            "description": "XOR index and value. Missing number remains.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function missing_number that takes nums.",
+                    "placeholderCode": "def missing_number(nums):",
+                    "validationRegex": "^def\\s+missing_number\\(nums\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "XOR all indices and values.",
+                    "placeholderCode": "    res = len(nums)\n    for i in range(len(nums)):\n        res += (i - nums[i])",
+                    "validationRegex": "^\\s+res\\s*=\\s*len\\(nums\\)\\s*for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):\\s*res\\s*\\+=\\s*\\(i\\s*-\\s*nums\\[i\\]\\)$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$"
+                }
+            ]
+        }
+    }
+}

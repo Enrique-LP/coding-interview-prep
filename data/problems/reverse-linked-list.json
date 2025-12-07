@@ -1,0 +1,125 @@
+{
+    "id": "reverse-linked-list",
+    "title": "Reverse Linked List",
+    "description": "Given the head of a singly linked list, reverse the list, and return the reversed list.",
+    "examples": [
+        {
+            "input": "head = [1,2,3,4,5]",
+            "output": "[5,4,3,2,1]"
+        },
+        {
+            "input": "head = [1,2]",
+            "output": "[2,1]"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the list is the range [0, 5000].",
+        "-5000 <= Node.val <= 5000"
+    ],
+    "difficulty": "Easy",
+    "topic": "Linked List",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Iterative",
+            "description": "Iterate through the list and reverse pointers.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function reverse_list that takes head.",
+                    "placeholderCode": "def reverse_list(head):",
+                    "validationRegex": "^def\\s+reverse_list\\(head\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def reverse_list(head):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize prev to None and curr to head.",
+                    "placeholderCode": "    prev, curr = None, head",
+                    "validationRegex": "^\\s+prev,\\s*curr\\s*=\\s*None,\\s*head$",
+                    "hint": "Init `prev` as None and `curr` as head.",
+                    "solutionCode": "    prev, curr = None, head"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while curr is not None.",
+                    "placeholderCode": "    while curr:",
+                    "validationRegex": "^\\s+while\\s+curr:$",
+                    "hint": "Loop until end of list.",
+                    "solutionCode": "    while curr:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Save next node, reverse pointer, move prev and curr.",
+                    "placeholderCode": "        nxt = curr.next\n        curr.next = prev\n        prev = curr\n        curr = nxt",
+                    "validationRegex": "^\\s+nxt\\s*=\\s*curr\\.next\\s*curr\\.next\\s*=\\s*prev\\s*prev\\s*=\\s*curr\\s*curr\\s*=\\s*nxt$",
+                    "hint": "Save `curr.next`, point `curr.next` to `prev`, update `prev` and `curr`.\\n\\nExample:\\nList: 1 -> 2 -> 3. prev=None, curr=1.\\nnxt=2. 1.next=None. prev=1. curr=2.\\nList now: None <- 1   2 -> 3.",
+                    "solutionCode": "        nxt = curr.next\n        curr.next = prev\n        prev = curr\n        curr = nxt"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return the new head (prev).",
+                    "placeholderCode": "    return prev",
+                    "validationRegex": "^\\s+return\\s+prev$",
+                    "hint": "Return `prev` which is the new head.",
+                    "solutionCode": "    return prev"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Recursive",
+            "description": "Recursively reverse the rest of the list.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function reverse_list that takes head.",
+                    "placeholderCode": "def reverse_list(head):",
+                    "validationRegex": "^def\\s+reverse_list\\(head\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def reverse_list(head):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Base case: if head is None or head.next is None, return head.",
+                    "placeholderCode": "    if not head or not head.next:\n        return head",
+                    "validationRegex": "^\\s+if\\s+not\\s+head\\s+or\\s+not\\s+head\\.next:\\s*return\\s+head$",
+                    "hint": "Return head if list is empty or has one node.",
+                    "solutionCode": "    if not head or not head.next:\n        return head"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Recursively reverse the rest of the list.",
+                    "placeholderCode": "    new_head = reverse_list(head.next)",
+                    "validationRegex": "^\\s+new_head\\s*=\\s*reverse_list\\(head\\.next\\)$",
+                    "hint": "Call reverse_list on `head.next`.",
+                    "solutionCode": "    new_head = reverse_list(head.next)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Reverse the link between head and head.next.",
+                    "placeholderCode": "    head.next.next = head",
+                    "validationRegex": "^\\s+head\\.next\\.next\\s*=\\s*head$",
+                    "hint": "Make the next node point back to head.",
+                    "solutionCode": "    head.next.next = head"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Set head.next to None.",
+                    "placeholderCode": "    head.next = None",
+                    "validationRegex": "^\\s+head\\.next\\s*=\\s*None$",
+                    "hint": "Set `head.next` to None (it becomes the tail).",
+                    "solutionCode": "    head.next = None"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return the new head.",
+                    "placeholderCode": "    return new_head",
+                    "validationRegex": "^\\s+return\\s+new_head$",
+                    "hint": "Return the new head returned by recursion.",
+                    "solutionCode": "    return new_head"
+                }
+            ]
+        }
+    }
+}

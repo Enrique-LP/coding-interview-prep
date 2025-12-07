@@ -1,0 +1,106 @@
+{
+    "id": "reconstruct-itinerary",
+    "title": "Reconstruct Itinerary",
+    "description": "You are given a list of airline tickets where tickets[i] = [from_i, to_i] represent the departure and the arrival airports of one flight. Reconstruct the itinerary in order and return it. All of the tickets belong to a man who departs from \"JFK\", thus, the itinerary must begin with \"JFK\". If there are multiple valid itineraries, you should return the itinerary that has the smallest lexical order when read as a single string. For example, the itinerary [\"JFK\", \"LGA\"] has a smaller lexical order than [\"JFK\", \"LGB\"]. You may assume all tickets form at least one valid itinerary. You must use all the tickets once and only once.",
+    "examples": [
+        {
+            "input": "tickets = [[\"MUC\",\"LHR\"],[\"JFK\",\"MUC\"],[\"SFO\",\"SJC\"],[\"LHR\",\"SFO\"]]",
+            "output": "[\"JFK\",\"MUC\",\"LHR\",\"SFO\",\"SJC\"]"
+        },
+        {
+            "input": "tickets = [[\"JFK\",\"SFO\"],[\"JFK\",\"ATL\"],[\"SFO\",\"ATL\"],[\"ATL\",\"JFK\"],[\"ATL\",\"SFO\"]]",
+            "output": "[\"JFK\",\"ATL\",\"JFK\",\"SFO\",\"ATL\",\"SFO\"]",
+            "explanation": "Another possible reconstruction is [\"JFK\",\"SFO\",\"ATL\",\"JFK\",\"ATL\",\"SFO\"] but it is larger in lexical order."
+        }
+    ],
+    "constraints": [
+        "1 <= tickets.length <= 300",
+        "tickets[i].length == 2",
+        "from_i.length == 3",
+        "to_i.length == 3",
+        "from_i and to_i consist of uppercase English letters.",
+        "from_i != to_i"
+    ],
+    "difficulty": "Hard",
+    "topic": "Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "DFS",
+            "description": "DFS with backtracking.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define findItinerary.",
+                    "placeholderCode": "def findItinerary(tickets):",
+                    "validationRegex": "^def\\s+findItinerary\\(tickets\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def findItinerary(tickets):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Build graph.",
+                    "placeholderCode": "    adj = collections.defaultdict(list)\n    for src, dst in sorted(tickets):\n        adj[src].append(dst)",
+                    "validationRegex": "^\\s+adj\\s*=\\s*collections\\.defaultdict\\(list\\)\\s*for\\s+src,\\s*dst\\s+in\\s+sorted\\(tickets\\):\\s*adj\\[src\\]\\.append\\(dst\\)$",
+                    "hint": "Create adjacency list. Sort tickets to ensure lexical order.",
+                    "solutionCode": "    adj = collections.defaultdict(list)\n    for src, dst in sorted(tickets):\n        adj[src].append(dst)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define DFS.",
+                    "placeholderCode": "    res = [\"JFK\"]\n    def dfs(src):\n        if len(res) == len(tickets) + 1:\n            return True\n        if src not in adj:\n            return False\n        temp = list(adj[src])\n        for i, v in enumerate(temp):\n            adj[src].pop(i)\n            res.append(v)\n            if dfs(v):\n                return True\n            adj[src].insert(i, v)\n            res.pop()\n        return False",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\"JFK\"\\]\\s*def\\s+dfs\\(src\\):\\s*if\\s+len\\(res\\)\\s*==\\s*len\\(tickets\\)\\s*\\+\\s*1:\\s*return\\s+True\\s*if\\s+src\\s+not\\s+in\\s+adj:\\s*return\\s+False\\s*temp\\s*=\\s*list\\(adj\\[src\\]\\)\\s*for\\s+i,\\s*v\\s+in\\s+enumerate\\(temp\\):\\s*adj\\[src\\]\\.pop\\(i\\)\\s*res\\.append\\(v\\)\\s*if\\s+dfs\\(v\\):\\s*return\\s+True\\s*adj\\[src\\]\\.insert\\(i,\\s*v\\)\\s*res\\.pop\\(\\)\\s*return\\s+False$",
+                    "hint": "Backtracking DFS. Try each edge, if it leads to solution return True. Else backtrack (restore edge).\\n\\nExample:\\nTickets=[[JFK, SFO], [JFK, ATL], [SFO, ATL], [ATL, JFK], [ATL, SFO]].\\nDFS(JFK). Try JFK->ATL. Recurse(ATL).\\n  Try ATL->JFK. Recurse(JFK).\\n    Try JFK->SFO. Recurse(SFO).\\n      Try SFO->ATL. Recurse(ATL).\\n        Try ATL->SFO. Recurse(SFO). Done.",
+                    "solutionCode": "    res = [\"JFK\"]\n    def dfs(src):\n        if len(res) == len(tickets) + 1:\n            return True\n        if src not in adj:\n            return False\n        temp = list(adj[src])\n        for i, v in enumerate(temp):\n            adj[src].pop(i)\n            res.append(v)\n            if dfs(v):\n                return True\n            adj[src].insert(i, v)\n            res.pop()\n        return False"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call DFS.",
+                    "placeholderCode": "    dfs(\"JFK\")\n    return res",
+                    "validationRegex": "^\\s+dfs\\(\"JFK\"\\)\\s*return\\s+res$",
+                    "hint": "Start DFS from JFK.",
+                    "solutionCode": "    dfs(\"JFK\")\n    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Hierholzer's Algorithm",
+            "description": "Find Eulerian path.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define findItinerary.",
+                    "placeholderCode": "def findItinerary(tickets):",
+                    "validationRegex": "^def\\s+findItinerary\\(tickets\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def findItinerary(tickets):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Build graph.",
+                    "placeholderCode": "    adj = collections.defaultdict(list)\n    for src, dst in sorted(tickets, reverse=True):\n        adj[src].append(dst)",
+                    "validationRegex": "^\\s+adj\\s*=\\s*collections\\.defaultdict\\(list\\)\\s*for\\s+src,\\s*dst\\s+in\\s+sorted\\(tickets,\\s*reverse=True\\):\\s*adj\\[src\\]\\.append\\(dst\\)$",
+                    "hint": "Sort tickets in reverse order so we can pop from end (O(1)) for lexical order.",
+                    "solutionCode": "    adj = collections.defaultdict(list)\n    for src, dst in sorted(tickets, reverse=True):\n        adj[src].append(dst)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define DFS.",
+                    "placeholderCode": "    res = []\n    def dfs(src):\n        while adj[src]:\n            dst = adj[src].pop()\n            dfs(dst)\n        res.append(src)",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(src\\):\\s*while\\s+adj\\[src\\]:\\s*dst\\s*=\\s*adj\\[src\\]\\.pop\\(\\)\\s*dfs\\(dst\\)\\s*res\\.append\\(src\\)$",
+                    "hint": "Hierholzer's algorithm. Visit edges until stuck, then add node to result. This builds the path in reverse.\\n\\nExample:\\nTickets=[[JFK, SFO], [JFK, ATL], [SFO, ATL], [ATL, JFK], [ATL, SFO]].\\nStart JFK. Path: JFK->ATL->JFK->SFO->ATL->SFO.\\nStuck at SFO. Add SFO to Res.\\nBacktrack to ATL. Stuck. Add ATL.\\n... Res=[SFO, ATL, SFO, JFK, ATL, JFK].",
+                    "solutionCode": "    res = []\n    def dfs(src):\n        while adj[src]:\n            dst = adj[src].pop()\n            dfs(dst)\n        res.append(src)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call DFS and reverse.",
+                    "placeholderCode": "    dfs(\"JFK\")\n    return res[::-1]",
+                    "validationRegex": "^\\s+dfs\\(\"JFK\"\\)\\s*return\\s+res\\[::-1\\]$",
+                    "hint": "Start from JFK. Reverse result to get correct order.",
+                    "solutionCode": "    dfs(\"JFK\")\n    return res[::-1]"
+                }
+            ]
+        }
+    }
+}

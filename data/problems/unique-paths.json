@@ -1,0 +1,100 @@
+{
+    "id": "unique-paths",
+    "title": "Unique Paths",
+    "description": "There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time. Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.",
+    "examples": [
+        {
+            "input": "m = 3, n = 7",
+            "output": "28"
+        },
+        {
+            "input": "m = 3, n = 2",
+            "output": "3"
+        }
+    ],
+    "constraints": [
+        "1 <= m, n <= 100"
+    ],
+    "difficulty": "Medium",
+    "topic": "2-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively sum paths from right and down moves.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function unique_paths that takes m and n.",
+                    "placeholderCode": "def unique_paths(m, n):",
+                    "validationRegex": "^def\\s+unique_paths\\(m,\\s*n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def unique_paths(m, n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper with memoization.",
+                    "placeholderCode": "    memo = {}\n    def dfs(r, c):\n        if r == m - 1 and c == n - 1: return 1\n        if r >= m or c >= n: return 0\n        if (r, c) in memo: return memo[(r, c)]",
+                    "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(r,\\s*c\\):\\s*if\\s+r\\s*==\\s*m\\s*-\\s*1\\s+and\\s+c\\s*==\\s*n\\s*-\\s*1:\\s*return\\s+1\\s*if\\s+r\\s*>=\\s*m\\s+or\\s+c\\s*>=\\s*n:\\s*return\\s+0\\s*if\\s*\\(r,\\s*c\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(r,\\s*c\\)\\]$",
+                    "hint": "Recursive function `dfs(r, c)` returns paths from (r, c) to bottom-right. Base cases: reached target -> 1, out of bounds -> 0. Check memo.\\n\\nExample:\\nM=3, N=2.\\nDFS(0,0) = DFS(1,0) + DFS(0,1).\\nDFS(2,1) (Target) -> Returns 1.\\nDFS(3,0) (Out) -> Returns 0.",
+                    "solutionCode": "    memo = {}\n    def dfs(r, c):\n        if r == m - 1 and c == n - 1: return 1\n        if r >= m or c >= n: return 0\n        if (r, c) in memo: return memo[(r, c)]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Sum paths from right and down.",
+                    "placeholderCode": "        res = dfs(r + 1, c) + dfs(r, c + 1)\n        memo[(r, c)] = res\n        return res",
+                    "validationRegex": "^\\s+res\\s*=\\s*dfs\\(r\\s*\\+\\s*1,\\s*c\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*\\+\\s*1\\)\\s*memo\\[\\(r,\\s*c\\)\\]\\s*=\\s*res\\s*return\\s+res$",
+                    "hint": "Paths from current cell = paths from cell below + paths from cell to the right.",
+                    "solutionCode": "        res = dfs(r + 1, c) + dfs(r, c + 1)\n        memo[(r, c)] = res\n        return res"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call helper.",
+                    "placeholderCode": "    return dfs(0, 0)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*0\\)$",
+                    "hint": "Start recursion from top-left corner (0, 0).",
+                    "solutionCode": "    return dfs(0, 0)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Fill bottom row and iterate upwards.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function unique_paths that takes m and n.",
+                    "placeholderCode": "def unique_paths(m, n):",
+                    "validationRegex": "^def\\s+unique_paths\\(m,\\s*n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def unique_paths(m, n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize row with 1s.",
+                    "placeholderCode": "    row = [1] * n",
+                    "validationRegex": "^\\s+row\\s*=\\s*\\[1\\]\\s*\\*\\s*n$",
+                    "hint": "Initialize a row of size n with 1s. This represents the bottom row where there is only 1 way to reach the target (move right).",
+                    "solutionCode": "    row = [1] * n"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through rows (except last one).",
+                    "placeholderCode": "    for i in range(m - 1):\n        newRow = [1] * n\n        for j in range(n - 2, -1, -1):\n            newRow[j] = newRow[j + 1] + row[j]\n        row = newRow",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(m\\s*-\\s*1\\):\\s*newRow\\s*=\\s*\\[1\\]\\s*\\*\\s*n\\s*for\\s+j\\s+in\\s+range\\(n\\s*-\\s*2,\\s*-1,\\s*-1\\):\\s*newRow\\[j\\]\\s*=\\s*newRow\\[j\\s*\\+\\s*1\\]\\s*\\+\\s*row\\[j\\]\\s*row\\s*=\\s*newRow$",
+                    "hint": "Iterate upwards from the second to last row. Compute new row values based on the row below and the value to the right.\\n\\nExample:\\nM=3, N=2. Init Row=[1, 1] (Bottom row).\\nIter 1 (Row 1): NewRow=[1, 1].\\n  j=0: NewRow[0] = NewRow[1] (1) + Row[0] (1) = 2.\\n  Row becomes [2, 1].\\nIter 2 (Row 0): NewRow=[1, 1].\\n  j=0: NewRow[0] = NewRow[1] (1) + Row[0] (2) = 3.\\nResult: 3.",
+                    "solutionCode": "    for i in range(m - 1):\n        newRow = [1] * n\n        for j in range(n - 2, -1, -1):\n            newRow[j] = newRow[j + 1] + row[j]\n        row = newRow"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return first element.",
+                    "placeholderCode": "    return row[0]",
+                    "validationRegex": "^\\s+return\\s+row\\[0\\]$",
+                    "hint": "The result is stored in the first element of the top row.",
+                    "solutionCode": "    return row[0]"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,103 @@
+{
+    "id": "trapping-rain-water",
+    "title": "Trapping Rain Water",
+    "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+    "examples": [
+        {
+            "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]",
+            "output": "6",
+            "explanation": "The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped."
+        },
+        {
+            "input": "height = [4,2,0,3,2,5]",
+            "output": "9"
+        }
+    ],
+    "constraints": [
+        "n == height.length",
+        "1 <= n <= 2 * 10^4",
+        "0 <= height[i] <= 10^5"
+    ],
+    "difficulty": "Hard",
+    "topic": "Two Pointers",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Dynamic Programming",
+            "description": "Precompute max left and max right for each position.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function trap that takes height.",
+                    "placeholderCode": "def trap(height):",
+                    "validationRegex": "^def\\s+trap\\(height\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def trap(height):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize max arrays.",
+                    "placeholderCode": "    n = len(height)\n    maxLeft = [0] * n\n    maxRight = [0] * n\n    leftVal = 0\n    for i in range(n):\n        maxLeft[i] = leftVal\n        leftVal = max(leftVal, height[i])\n    rightVal = 0\n    for i in range(n - 1, -1, -1):\n        maxRight[i] = rightVal\n        rightVal = max(rightVal, height[i])",
+                    "validationRegex": "^\\s+n\\s*=\\s*len\\(height\\)\\s*maxLeft\\s*=\\s*\\[0\\]\\s*\\*\\s*n\\s*maxRight\\s*=\\s*\\[0\\]\\s*\\*\\s*n\\s*leftVal\\s*=\\s*0\\s*for\\s+i\\s+in\\s+range\\(n\\):\\s*maxLeft\\[i\\]\\s*=\\s*leftVal\\s*leftVal\\s*=\\s*max\\(leftVal,\\s*height\\[i\\]\\)\\s*rightVal\\s*=\\s*0\\s*for\\s+i\\s+in\\s+range\\(n\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*maxRight\\[i\\]\\s*=\\s*rightVal\\s*rightVal\\s*=\\s*max\\(rightVal,\\s*height\\[i\\]\\)$",
+                    "hint": "Create `maxLeft` and `maxRight` arrays. Fill them by iterating forward and backward.",
+                    "solutionCode": "    n = len(height)\n    maxLeft = [0] * n\n    maxRight = [0] * n\n    leftVal = 0\n    for i in range(n):\n        maxLeft[i] = leftVal\n        leftVal = max(leftVal, height[i])\n    rightVal = 0\n    for i in range(n - 1, -1, -1):\n        maxRight[i] = rightVal\n        rightVal = max(rightVal, height[i])"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Calculate trapped water.",
+                    "placeholderCode": "    res = 0\n    for i in range(n):\n        val = min(maxLeft[i], maxRight[i]) - height[i]\n        if val > 0: res += val",
+                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*for\\s+i\\s+in\\s+range\\(n\\):\\s*val\\s*=\\s*min\\(maxLeft\\[i\\],\\s*maxRight\\[i\\],\\)\\s*-\\s*height\\[i\\]\\s*if\\s+val\\s*>\\s*0:\\s*res\\s*\\+=\\s*val$",
+                    "hint": "Water at `i` is `min(maxLeft[i], maxRight[i]) - height[i]`.",
+                    "solutionCode": "    res = 0\n    for i in range(n):\n        val = min(maxLeft[i], maxRight[i]) - height[i]\n        if val > 0: res += val"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the total accumulated water.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Two Pointers",
+            "description": "Move pointers inward, tracking max left and right.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function trap that takes height.",
+                    "placeholderCode": "def trap(height):",
+                    "validationRegex": "^def\\s+trap\\(height\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def trap(height):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize pointers and max values.",
+                    "placeholderCode": "    if not height: return 0\n    l, r = 0, len(height) - 1\n    leftMax, rightMax = height[l], height[r]\n    res = 0",
+                    "validationRegex": "^\\s+if\\s+not\\s+height:\\s*return\\s+0\\s*l,\\s*r\\s*=\\s*0,\\s*len\\(height\\)\\s*-\\s*1\\s*leftMax,\\s*rightMax\\s*=\\s*height\\[l\\],\\s*height\\[r\\]\\s*res\\s*=\\s*0$",
+                    "hint": "Initialize `l`, `r` at ends. `leftMax`, `rightMax` with initial heights.",
+                    "solutionCode": "    if not height: return 0\n    l, r = 0, len(height) - 1\n    leftMax, rightMax = height[l], height[r]\n    res = 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate while left pointer is less than right pointer.",
+                    "placeholderCode": "    while l < r:\n        if leftMax < rightMax:\n            l += 1\n            leftMax = max(leftMax, height[l])\n            res += leftMax - height[l]\n        else:\n            r -= 1\n            rightMax = max(rightMax, height[r])\n            res += rightMax - height[r]",
+                    "validationRegex": "while\\s+l\\s*<\\s*r:\\s*if\\s+leftMax\\s*<\\s*rightMax:\\s*l\\s*\\+=\\s*1\\s*leftMax\\s*=\\s*max\\(leftMax,\\s*height\\[l\\]\\)\\s*res\\s*\\+=\\s*leftMax\\s*-\\s*height\\[l\\]\\s*else:\\s*r\\s*-=\\s*1\\s*rightMax\\s*=\\s*max\\(rightMax,\\s*height\\[r\\]\\)\\s*res\\s*\\+=\\s*rightMax\\s*-\\s*height\\[r\\]",
+                    "hint": "Loop while `l < r`. Update the pointer with the smaller max value.",
+                    "solutionCode": "    while l < r:\n        if leftMax < rightMax:\n            l += 1\n            leftMax = max(leftMax, height[l])\n            res += leftMax - height[l]\n        else:\n            r -= 1\n            rightMax = max(rightMax, height[r])\n            res += rightMax - height[r]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return the result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the total trapped water.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        }
+    }
+}

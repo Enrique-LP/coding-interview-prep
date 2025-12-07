@@ -1,0 +1,101 @@
+{
+    "id": "palindrome-partitioning",
+    "title": "Palindrome Partitioning",
+    "description": "Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.",
+    "examples": [
+        {
+            "input": "s = \"aab\"",
+            "output": "[[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]]"
+        },
+        {
+            "input": "s = \"a\"",
+            "output": "[[\"a\"]]"
+        }
+    ],
+    "constraints": [
+        "1 <= s.length <= 16",
+        "s contains only lowercase English letters."
+    ],
+    "difficulty": "Medium",
+    "topic": "Backtracking",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Backtracking",
+            "description": "Generate all partitions and check if palindrome.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function partition that takes s.",
+                    "placeholderCode": "def partition(s):",
+                    "validationRegex": "^def\\s+partition\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def partition(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define backtrack.",
+                    "placeholderCode": "    res = []\n    part = []\n    def dfs(i):\n        if i >= len(s):\n            res.append(part.copy())\n            return\n        for j in range(i, len(s)):\n            if self.isPali(s, i, j):\n                part.append(s[i : j + 1])\n                dfs(j + 1)\n                part.pop()",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*part\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(i\\):\\s*if\\s+i\\s*>=\\s*len\\(s\\):\\s*res\\.append\\(part\\.copy\\(\\)\\)\\s*return\\s*for\\s+j\\s+in\\s+range\\(i,\\s*len\\(s\\)\\):\\s*if\\s+self\\.isPali\\(s,\\s*i,\\s*j\\):\\s*part\\.append\\(s\\[i\\s*:\\s*j\\s*\\+\\s*1\\]\\)\\s*dfs\\(j\\s*\\+\\s*1\\)\\s*part\\.pop\\(\\)$",
+                    "hint": "Implement DFS. Iterate through possible substrings starting at index i. If palindrome, add to current partition and recurse.\\n\\nExample:\\nS=\"aab\". i=0.\\nj=0: \"a\" (Pali). Part=[\"a\"]. Recurse(1).\\n  i=1. j=1: \"a\" (Pali). Part=[\"a\", \"a\"]. Recurse(2).\\n    i=2. j=2: \"b\" (Pali). Part=[\"a\", \"a\", \"b\"]. Done.",
+                    "solutionCode": "    res = []\n    part = []\n    def dfs(i):\n        if i >= len(s):\n            res.append(part.copy())\n            return\n        for j in range(i, len(s)):\n            if self.isPali(s, i, j):\n                part.append(s[i : j + 1])\n                dfs(j + 1)\n                part.pop()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define isPali.",
+                    "placeholderCode": "    def isPali(self, s, l, r):\n        while l < r:\n            if s[l] != s[r]:\n                return False\n            l, r = l + 1, r - 1\n        return True",
+                    "validationRegex": "^\\s+def\\s+isPali\\(self,\\s*s,\\s*l,\\s*r\\):\\s*while\\s+l\\s*<\\s+r:\\s*if\\s+s\\[l\\]\\s*!=\\s*s\\[r\\]:\\s*return\\s+False\\s*l,\\s*r\\s*=\\s*l\\s*\\+\\s*1,\\s*r\\s*-\\s*1\\s*return\\s+True$",
+                    "hint": "Helper function to check if a substring is a palindrome.",
+                    "solutionCode": "    def isPali(self, s, l, r):\n        while l < r:\n            if s[l] != s[r]:\n                return False\n            l, r = l + 1, r - 1\n        return True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call dfs.",
+                    "placeholderCode": "    dfs(0)\n    return res",
+                    "validationRegex": "^\\s+dfs\\(0\\)\\s*return\\s+res$",
+                    "hint": "Start DFS from index 0.",
+                    "solutionCode": "    dfs(0)\n    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Backtracking",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function partition that takes s.",
+                    "placeholderCode": "def partition(s):",
+                    "validationRegex": "^def\\s+partition\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def partition(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define backtrack.",
+                    "placeholderCode": "    res = []\n    part = []\n    def dfs(i):\n        if i >= len(s):\n            res.append(part.copy())\n            return\n        for j in range(i, len(s)):\n            if self.isPali(s, i, j):\n                part.append(s[i : j + 1])\n                dfs(j + 1)\n                part.pop()",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*part\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(i\\):\\s*if\\s+i\\s*>=\\s*len\\(s\\):\\s*res\\.append\\(part\\.copy\\(\\)\\)\\s*return\\s*for\\s+j\\s+in\\s+range\\(i,\\s*len\\(s\\)\\):\\s*if\\s+self\\.isPali\\(s,\\s*i,\\s*j\\):\\s*part\\.append\\(s\\[i\\s*:\\s*j\\s*\\+\\s*1\\]\\)\\s*dfs\\(j\\s*\\+\\s*1\\)\\s*part\\.pop\\(\\)$",
+                    "hint": "Implement DFS. Iterate through possible substrings starting at index i. If palindrome, add to current partition and recurse.\\n\\nExample:\\nS=\"aab\". i=0.\\nj=0: \"a\" (Pali). Part=[\"a\"]. Recurse(1).\\n  i=1. j=1: \"a\" (Pali). Part=[\"a\", \"a\"]. Recurse(2).\\n    i=2. j=2: \"b\" (Pali). Part=[\"a\", \"a\", \"b\"]. Done.",
+                    "solutionCode": "    res = []\n    part = []\n    def dfs(i):\n        if i >= len(s):\n            res.append(part.copy())\n            return\n        for j in range(i, len(s)):\n            if self.isPali(s, i, j):\n                part.append(s[i : j + 1])\n                dfs(j + 1)\n                part.pop()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define isPali.",
+                    "placeholderCode": "    def isPali(self, s, l, r):\n        while l < r:\n            if s[l] != s[r]:\n                return False\n            l, r = l + 1, r - 1\n        return True",
+                    "validationRegex": "^\\s+def\\s+isPali\\(self,\\s*s,\\s*l,\\s*r\\):\\s*while\\s+l\\s*<\\s+r:\\s*if\\s+s\\[l\\]\\s*!=\\s*s\\[r\\]:\\s*return\\s+False\\s*l,\\s*r\\s*=\\s*l\\s*\\+\\s*1,\\s*r\\s*-\\s*1\\s*return\\s+True$",
+                    "hint": "Helper function to check if a substring is a palindrome.",
+                    "solutionCode": "    def isPali(self, s, l, r):\n        while l < r:\n            if s[l] != s[r]:\n                return False\n            l, r = l + 1, r - 1\n        return True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call dfs.",
+                    "placeholderCode": "    dfs(0)\n    return res",
+                    "validationRegex": "^\\s+dfs\\(0\\)\\s*return\\s+res$",
+                    "hint": "Start DFS from index 0.",
+                    "solutionCode": "    dfs(0)\n    return res"
+                }
+            ]
+        }
+    }
+}

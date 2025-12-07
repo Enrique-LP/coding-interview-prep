@@ -1,0 +1,102 @@
+{
+    "id": "product-of-array-except-self",
+    "title": "Product of Array Except Self",
+    "description": "Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i]. The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer. You must write an algorithm that runs in O(n) time and without using the division operation.",
+    "examples": [
+        {
+            "input": "nums = [1,2,3,4]",
+            "output": "[24,12,8,6]"
+        },
+        {
+            "input": "nums = [-1,1,0,-3,3]",
+            "output": "[0,0,9,0,0]"
+        }
+    ],
+    "constraints": [
+        "2 <= nums.length <= 10^5",
+        "-30 <= nums[i] <= 30",
+        "The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer."
+    ],
+    "difficulty": "Medium",
+    "topic": "Arrays & Hashing",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Nested Loops",
+            "description": "Calculate product for each element.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function product_except_self that takes nums.",
+                    "placeholderCode": "def product_except_self(nums):",
+                    "validationRegex": "^def\\s+product_except_self\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def product_except_self(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Iterate and calculate product.",
+                    "placeholderCode": "    res = []\n    for i in range(len(nums)):\n        prod = 1\n        for j in range(len(nums)):\n            if i != j:\n                prod *= nums[j]\n        res.append(prod)",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):\\s*prod\\s*=\\s*1\\s*for\\s+j\\s+in\\s+range\\(len\\(nums\\)\\):\\s*if\\s+i\\s*!=\\s*j:\\s*prod\\s*\\*=\\s*nums\\[j\\]\\s*res\\.append\\(prod\\)$",
+                    "hint": "Use nested loops. Inner loop multiplies all `nums[j]` where `i != j`.",
+                    "solutionCode": "    res = []\n    for i in range(len(nums)):\n        prod = 1\n        for j in range(len(nums)):\n            if i != j:\n                prod *= nums[j]\n        res.append(prod)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the result list.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Prefix and Suffix Products",
+            "description": "Use prefix and suffix arrays (or single array) to store products.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function product_except_self that takes nums.",
+                    "placeholderCode": "def product_except_self(nums):",
+                    "validationRegex": "^def\\s+product_except_self\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def product_except_self(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize result array.",
+                    "placeholderCode": "    res = [1] * len(nums)",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[1\\]\\s*\\*\\s*len\\(nums\\)$",
+                    "hint": "Create a list of 1s with size `len(nums)`.",
+                    "solutionCode": "    res = [1] * len(nums)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Calculate prefix products.",
+                    "placeholderCode": "    prefix = 1\n    for i in range(len(nums)):\n        res[i] = prefix\n        prefix *= nums[i]",
+                    "validationRegex": "^\\s+prefix\\s*=\\s*1\\s*for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):\\s*res\\[i\\]\\s*=\\s*prefix\\s*prefix\\s*\\*=\\s*nums\\[i\\]$",
+                    "hint": "Iterate forward. Store current prefix product in `res[i]`, then update prefix.\\n\\nExample:\\nnums=[1, 2, 3, 4].\\ni=0: res[0]=1. prefix=1*1=1.\\ni=1: res[1]=1. prefix=1*2=2.\\ni=2: res[2]=2. prefix=2*3=6.",
+                    "solutionCode": "    prefix = 1\n    for i in range(len(nums)):\n        res[i] = prefix\n        prefix *= nums[i]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Calculate suffix products and combine.",
+                    "placeholderCode": "    postfix = 1\n    for i in range(len(nums) - 1, -1, -1):\n        res[i] *= postfix\n        postfix *= nums[i]",
+                    "validationRegex": "^\\s+postfix\\s*=\\s*1\\s*for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*res\\[i\\]\\s*\\*=\\s*postfix\\s*postfix\\s*\\*=\\s*nums\\[i\\]$",
+                    "hint": "Iterate backward. Multiply `res[i]` by current postfix product, then update postfix.",
+                    "solutionCode": "    postfix = 1\n    for i in range(len(nums) - 1, -1, -1):\n        res[i] *= postfix\n        postfix *= nums[i]"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the result list.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        }
+    }
+}

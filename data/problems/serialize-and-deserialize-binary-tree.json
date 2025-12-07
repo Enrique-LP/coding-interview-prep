@@ -1,0 +1,85 @@
+{
+    "id": "serialize-and-deserialize-binary-tree",
+    "title": "Serialize and Deserialize Binary Tree",
+    "description": "Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment. Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.",
+    "examples": [
+        {
+            "input": "root = [1,2,3,null,null,4,5]",
+            "output": "[1,2,3,null,null,4,5]"
+        },
+        {
+            "input": "root = []",
+            "output": "[]"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the tree is in the range [0, 10^4].",
+        "-1000 <= Node.val <= 1000"
+    ],
+    "difficulty": "Hard",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "DFS Preorder",
+            "description": "Use preorder traversal with delimiter.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define Codec class.",
+                    "placeholderCode": "class Codec:",
+                    "validationRegex": "^class\\s+Codec:$",
+                    "hint": "Define the class.",
+                    "solutionCode": "class Codec:"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Implement serialize.",
+                    "placeholderCode": "    def serialize(self, root):\n        res = []\n        def dfs(node):\n            if not node:\n                res.append(\"N\")\n                return\n            res.append(str(node.val))\n            dfs(node.left)\n            dfs(node.right)\n        dfs(root)\n        return \",\".join(res)",
+                    "validationRegex": "^\\s+def\\s+serialize\\(self,\\s*root\\):\\s*res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(node\\):\\s*if\\s+not\\s+node:\\s*res\\.append\\(\"N\"\\)\\s*return\\s*res\\.append\\(str\\(node\\.val\\)\\)\\s*dfs\\(node\\.left\\)\\s*dfs\\(node\\.right\\)\\s*dfs\\(root\\)\\s*return\\s*\",\"\\.join\\(res\\)$",
+                    "hint": "Use preorder traversal to build a comma-separated string.\\n\\nExample:\\nTree: 1 -> (2, 3). Preorder: 1, 2, N, N, 3, N, N.\\nString: \"1,2,N,N,3,N,N\".",
+                    "solutionCode": "    def serialize(self, root):\n        res = []\n        def dfs(node):\n            if not node:\n                res.append(\"N\")\n                return\n            res.append(str(node.val))\n            dfs(node.left)\n            dfs(node.right)\n        dfs(root)\n        return \",\".join(res)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Implement deserialize.",
+                    "placeholderCode": "    def deserialize(self, data):\n        vals = data.split(\",\")\n        self.i = 0\n        def dfs():\n            if vals[self.i] == \"N\":\n                self.i += 1\n                return None\n            node = TreeNode(int(vals[self.i]))\n            self.i += 1\n            node.left = dfs()\n            node.right = dfs()\n            return node\n        return dfs()",
+                    "validationRegex": "^\\s+def\\s+deserialize\\(self,\\s*data\\):\\s*vals\\s*=\\s*data\\.split\\(\",\"\\)\\s*self\\.i\\s*=\\s*0\\s*def\\s+dfs\\(\\):\\s*if\\s+vals\\[self\\.i\\]\\s*==\\s*\"N\":\\s*self\\.i\\s*\\+=\\s*1\\s*return\\s+None\\s*node\\s*=\\s*TreeNode\\(int\\(vals\\[self\\.i\\]\\)\\)\\s*self\\.i\\s*\\+=\\s*1\\s*node\\.left\\s*=\\s*dfs\\(\\)\\s*node\\.right\\s*=\\s*dfs\\(\\)\\s*return\\s+node\\s*return\\s+dfs\\(\\)$",
+                    "hint": "Reconstruct the tree using the same preorder logic.",
+                    "solutionCode": "    def deserialize(self, data):\n        vals = data.split(\",\")\n        self.i = 0\n        def dfs():\n            if vals[self.i] == \"N\":\n                self.i += 1\n                return None\n            node = TreeNode(int(vals[self.i]))\n            self.i += 1\n            node.left = dfs()\n            node.right = dfs()\n            return node\n        return dfs()"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DFS Preorder",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define Codec class.",
+                    "placeholderCode": "class Codec:",
+                    "validationRegex": "^class\\s+Codec:$",
+                    "hint": "Define the class.",
+                    "solutionCode": "class Codec:"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Implement serialize.",
+                    "placeholderCode": "    def serialize(self, root):\n        res = []\n        def dfs(node):\n            if not node:\n                res.append(\"N\")\n                return\n            res.append(str(node.val))\n            dfs(node.left)\n            dfs(node.right)\n        dfs(root)\n        return \",\".join(res)",
+                    "validationRegex": "^\\s+def\\s+serialize\\(self,\\s*root\\):\\s*res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(node\\):\\s*if\\s+not\\s+node:\\s*res\\.append\\(\"N\"\\)\\s*return\\s*res\\.append\\(str\\(node\\.val\\)\\)\\s*dfs\\(node\\.left\\)\\s*dfs\\(node\\.right\\)\\s*dfs\\(root\\)\\s*return\\s*\",\"\\.join\\(res\\)$",
+                    "hint": "Use preorder traversal to build a comma-separated string.",
+                    "solutionCode": "    def serialize(self, root):\n        res = []\n        def dfs(node):\n            if not node:\n                res.append(\"N\")\n                return\n            res.append(str(node.val))\n            dfs(node.left)\n            dfs(node.right)\n        dfs(root)\n        return \",\".join(res)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Implement deserialize.",
+                    "placeholderCode": "    def deserialize(self, data):\n        vals = data.split(\",\")\n        self.i = 0\n        def dfs():\n            if vals[self.i] == \"N\":\n                self.i += 1\n                return None\n            node = TreeNode(int(vals[self.i]))\n            self.i += 1\n            node.left = dfs()\n            node.right = dfs()\n            return node\n        return dfs()",
+                    "validationRegex": "^\\s+def\\s+deserialize\\(self,\\s*data\\):\\s*vals\\s*=\\s*data\\.split\\(\",\"\\)\\s*self\\.i\\s*=\\s*0\\s*def\\s+dfs\\(\\):\\s*if\\s+vals\\[self\\.i\\]\\s*==\\s*\"N\":\\s*self\\.i\\s*\\+=\\s*1\\s*return\\s+None\\s*node\\s*=\\s*TreeNode\\(int\\(vals\\[self\\.i\\]\\)\\)\\s*self\\.i\\s*\\+=\\s*1\\s*node\\.left\\s*=\\s*dfs\\(\\)\\s*node\\.right\\s*=\\s*dfs\\(\\)\\s*return\\s+node\\s*return\\s+dfs\\(\\)$",
+                    "hint": "Reconstruct the tree using the same preorder logic.",
+                    "solutionCode": "    def deserialize(self, data):\n        vals = data.split(\",\")\n        self.i = 0\n        def dfs():\n            if vals[self.i] == \"N\":\n                self.i += 1\n                return None\n            node = TreeNode(int(vals[self.i]))\n            self.i += 1\n            node.left = dfs()\n            node.right = dfs()\n            return node\n        return dfs()"
+                }
+            ]
+        }
+    }
+}

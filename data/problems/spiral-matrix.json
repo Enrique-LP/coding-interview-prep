@@ -1,0 +1,103 @@
+{
+    "id": "spiral-matrix",
+    "title": "Spiral Matrix",
+    "description": "Given an m x n matrix, return all elements of the matrix in spiral order.",
+    "examples": [
+        {
+            "input": "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
+            "output": "[1,2,3,6,9,8,7,4,5]"
+        },
+        {
+            "input": "matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]",
+            "output": "[1,2,3,4,8,12,11,10,9,5,6,7]"
+        }
+    ],
+    "constraints": [
+        "m == matrix.length",
+        "n == matrix[i].length",
+        "1 <= m, n <= 10",
+        "-100 <= matrix[i][j] <= 100"
+    ],
+    "difficulty": "Medium",
+    "topic": "Math & Geometry",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Simulation",
+            "description": "Simulate the spiral movement with boundaries.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function spiral_order that takes matrix.",
+                    "placeholderCode": "def spiral_order(matrix):",
+                    "validationRegex": "^def\\s+spiral_order\\(matrix\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def spiral_order(matrix):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize boundaries and result list.",
+                    "placeholderCode": "    res = []\n    left, right = 0, len(matrix[0])\n    top, bottom = 0, len(matrix)",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*left,\\s*right\\s*=\\s*0,\\s*len\\(matrix\\[0\\]\\)\\s*top,\\s*bottom\\s*=\\s*0,\\s*len\\(matrix\\)$",
+                    "hint": "Initialize boundaries: left, right, top, bottom.",
+                    "solutionCode": "    res = []\n    left, right = 0, len(matrix[0])\n    top, bottom = 0, len(matrix)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while boundaries are valid.",
+                    "placeholderCode": "    while left < right and top < bottom:\n        # Top row\n        for i in range(left, right):\n            res.append(matrix[top][i])\n        top += 1\n        # Right col\n        for i in range(top, bottom):\n            res.append(matrix[i][right - 1])\n        right -= 1\n        if not (left < right and top < bottom):\n            break\n        # Bottom row\n        for i in range(right - 1, left - 1, -1):\n            res.append(matrix[bottom - 1][i])\n        bottom -= 1\n        # Left col\n        for i in range(bottom - 1, top - 1, -1):\n            res.append(matrix[i][left])\n        left += 1",
+                    "validationRegex": "^\\s+while\\s+left\\s*<\\s+right\\s+and\\s+top\\s*<\\s+bottom:\\s*for\\s+i\\s+in\\s+range\\(left,\\s*right\\):\\s*res\\.append\\(matrix\\[top\\]\\[i\\]\\)\\s*top\\s*\\+=\\s*1\\s*for\\s+i\\s+in\\s+range\\(top,\\s*bottom\\):\\s*res\\.append\\(matrix\\[i\\]\\[right\\s*-\\s*1\\]\\)\\s*right\\s*-=\\s*1\\s*if\\s+not\\s*\\(left\\s*<\\s+right\\s+and\\s+top\\s*<\\s+bottom\\):\\s*break\\s*for\\s+i\\s+in\\s+range\\(right\\s*-\\s*1,\\s*left\\s*-\\s*1,\\s*-1\\):\\s*res\\.append\\(matrix\\[bottom\\s*-\\s*1\\]\\[i\\]\\)\\s*bottom\\s*-=\\s*1\\s*for\\s+i\\s+in\\s+range\\(bottom\\s*-\\s*1,\\s*top\\s*-\\s*1,\\s*-1\\):\\s*res\\.append\\(matrix\\[i\\]\\[left\\]\\)\\s*left\\s*\\+=\\s*1$",
+                    "hint": "Traverse the matrix in spiral order: top row, right column, bottom row, left column. Update boundaries after each traversal.",
+                    "solutionCode": "    while left < right and top < bottom:\n        # Top row\n        for i in range(left, right):\n            res.append(matrix[top][i])\n        top += 1\n        # Right col\n        for i in range(top, bottom):\n            res.append(matrix[i][right - 1])\n        right -= 1\n        if not (left < right and top < bottom):\n            break\n        # Bottom row\n        for i in range(right - 1, left - 1, -1):\n            res.append(matrix[bottom - 1][i])\n        bottom -= 1\n        # Left col\n        for i in range(bottom - 1, top - 1, -1):\n            res.append(matrix[i][left])\n        left += 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the result list.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Simulation",
+            "description": "Same as brute force, O(m*n).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function spiral_order that takes matrix.",
+                    "placeholderCode": "def spiral_order(matrix):",
+                    "validationRegex": "^def\\s+spiral_order\\(matrix\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def spiral_order(matrix):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize boundaries and result list.",
+                    "placeholderCode": "    res = []\n    left, right = 0, len(matrix[0])\n    top, bottom = 0, len(matrix)",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*left,\\s*right\\s*=\\s*0,\\s*len\\(matrix\\[0\\]\\)\\s*top,\\s*bottom\\s*=\\s*0,\\s*len\\(matrix\\)$",
+                    "hint": "Initialize boundaries.",
+                    "solutionCode": "    res = []\n    left, right = 0, len(matrix[0])\n    top, bottom = 0, len(matrix)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while boundaries are valid.",
+                    "placeholderCode": "    while left < right and top < bottom:\n        # Top row\n        for i in range(left, right):\n            res.append(matrix[top][i])\n        top += 1\n        # Right col\n        for i in range(top, bottom):\n            res.append(matrix[i][right - 1])\n        right -= 1\n        if not (left < right and top < bottom):\n            break\n        # Bottom row\n        for i in range(right - 1, left - 1, -1):\n            res.append(matrix[bottom - 1][i])\n        bottom -= 1\n        # Left col\n        for i in range(bottom - 1, top - 1, -1):\n            res.append(matrix[i][left])\n        left += 1",
+                    "validationRegex": "^\\s+while\\s+left\\s*<\\s+right\\s+and\\s+top\\s*<\\s+bottom:\\s*for\\s+i\\s+in\\s+range\\(left,\\s*right\\):\\s*res\\.append\\(matrix\\[top\\]\\[i\\]\\)\\s*top\\s*\\+=\\s*1\\s*for\\s+i\\s+in\\s+range\\(top,\\s*bottom\\):\\s*res\\.append\\(matrix\\[i\\]\\[right\\s*-\\s*1\\]\\)\\s*right\\s*-=\\s*1\\s*if\\s+not\\s*\\(left\\s*<\\s+right\\s+and\\s+top\\s*<\\s+bottom\\):\\s*break\\s*for\\s+i\\s+in\\s+range\\(right\\s*-\\s*1,\\s*left\\s*-\\s*1,\\s*-1\\):\\s*res\\.append\\(matrix\\[bottom\\s*-\\s*1\\]\\[i\\]\\)\\s*bottom\\s*-=\\s*1\\s*for\\s+i\\s+in\\s+range\\(bottom\\s*-\\s*1,\\s*top\\s*-\\s*1,\\s*-1\\):\\s*res\\.append\\(matrix\\[i\\]\\[left\\]\\)\\s*left\\s*\\+=\\s*1$",
+                    "hint": "Spiral traversal.",
+                    "solutionCode": "    while left < right and top < bottom:\n        # Top row\n        for i in range(left, right):\n            res.append(matrix[top][i])\n        top += 1\n        # Right col\n        for i in range(top, bottom):\n            res.append(matrix[i][right - 1])\n        right -= 1\n        if not (left < right and top < bottom):\n            break\n        # Bottom row\n        for i in range(right - 1, left - 1, -1):\n            res.append(matrix[bottom - 1][i])\n        bottom -= 1\n        # Left col\n        for i in range(bottom - 1, top - 1, -1):\n            res.append(matrix[i][left])\n        left += 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return result.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        }
+    }
+}

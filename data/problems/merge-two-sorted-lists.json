@@ -1,0 +1,126 @@
+{
+    "id": "merge-two-sorted-lists",
+    "title": "Merge Two Sorted Lists",
+    "description": "You are given the heads of two sorted linked lists list1 and list2. Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists. Return the head of the merged linked list.",
+    "examples": [
+        {
+            "input": "list1 = [1,2,4], list2 = [1,3,4]",
+            "output": "[1,1,2,3,4,4]"
+        },
+        {
+            "input": "list1 = [], list2 = []",
+            "output": "[]"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in both lists is in the range [0, 50].",
+        "-100 <= Node.val <= 100",
+        "Both list1 and list2 are sorted in non-decreasing order."
+    ],
+    "difficulty": "Easy",
+    "topic": "Linked List",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Iterative",
+            "description": "Use a dummy node and iterate through both lists.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function merge_two_lists that takes list1 and list2.",
+                    "placeholderCode": "def merge_two_lists(list1, list2):",
+                    "validationRegex": "^def\\s+merge_two_lists\\(list1,\\s*list2\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def merge_two_lists(list1, list2):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Create a dummy node and a tail pointer.",
+                    "placeholderCode": "    dummy = ListNode()\n    tail = dummy",
+                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(\\)\\s*tail\\s*=\\s*dummy$",
+                    "hint": "Init dummy node and tail.",
+                    "solutionCode": "    dummy = ListNode()\n    tail = dummy"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while both lists are not empty.",
+                    "placeholderCode": "    while list1 and list2:",
+                    "validationRegex": "^\\s+while\\s+list1\\s+and\\s+list2:$",
+                    "hint": "Loop while both lists have nodes.",
+                    "solutionCode": "    while list1 and list2:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Append the smaller node to the tail.",
+                    "placeholderCode": "        if list1.val < list2.val:\n            tail.next = list1\n            list1 = list1.next\n        else:\n            tail.next = list2\n            list2 = list2.next",
+                    "validationRegex": "^\\s+if\\s+list1\\.val\\s*<\\s+list2\\.val:\\s*tail\\.next\\s*=\\s*list1\\s*list1\\s*=\\s*list1\\.next\\s*else:\\s*tail\\.next\\s*=\\s*list2\\s*list2\\s*=\\s*list2\\.next$",
+                    "hint": "Compare values and append smaller node to tail.\\n\\nExample:\\nL1: 1->2, L2: 1->3. Tail=Dummy.\\n1 == 1. Append L1(1). Tail->1. L1 moves to 2.\\n2 < 1 (L2)? No. 2 > 1 (L2). Append L2(1). Tail->1->1. L2 moves to 3.",
+                    "solutionCode": "        if list1.val < list2.val:\n            tail.next = list1\n            list1 = list1.next\n        else:\n            tail.next = list2\n            list2 = list2.next"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Move the tail pointer forward.",
+                    "placeholderCode": "        tail = tail.next",
+                    "validationRegex": "^\\s+tail\\s*=\\s*tail\\.next$",
+                    "hint": "Advance tail.",
+                    "solutionCode": "        tail = tail.next"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Append the remaining nodes if any.",
+                    "placeholderCode": "    if list1:\n        tail.next = list1\n    elif list2:\n        tail.next = list2",
+                    "validationRegex": "^\\s+if\\s+list1:\\s*tail\\.next\\s*=\\s*list1\\s*elif\\s+list2:\\s*tail\\.next\\s*=\\s*list2$",
+                    "hint": "Append remaining list.",
+                    "solutionCode": "    if list1:\n        tail.next = list1\n    elif list2:\n        tail.next = list2"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return the next of dummy node.",
+                    "placeholderCode": "    return dummy.next",
+                    "validationRegex": "^\\s+return\\s+dummy\\.next$",
+                    "hint": "Return `dummy.next`.",
+                    "solutionCode": "    return dummy.next"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Recursive",
+            "description": "Recursively merge the lists.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function merge_two_lists that takes list1 and list2.",
+                    "placeholderCode": "def merge_two_lists(list1, list2):",
+                    "validationRegex": "^def\\s+merge_two_lists\\(list1,\\s*list2\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def merge_two_lists(list1, list2):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Base cases: if one list is empty, return the other.",
+                    "placeholderCode": "    if not list1:\n        return list2\n    if not list2:\n        return list1",
+                    "validationRegex": "^\\s+if\\s+not\\s+list1:\\s*return\\s+list2\\s*if\\s+not\\s+list2:\\s*return\\s+list1$",
+                    "hint": "Return non-empty list if one is empty.",
+                    "solutionCode": "    if not list1:\n        return list2\n    if not list2:\n        return list1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Recursive step: merge smaller list's next with the other list.",
+                    "placeholderCode": "    if list1.val < list2.val:\n        list1.next = merge_two_lists(list1.next, list2)\n        return list1",
+                    "validationRegex": "^\\s+if\\s+list1\\.val\\s*<\\s+list2\\.val:\\s*list1\\.next\\s*=\\s*merge_two_lists\\(list1\\.next,\\s*list2\\)\\s*return\\s+list1$",
+                    "hint": "If `list1` is smaller, set `list1.next` to result of merge.",
+                    "solutionCode": "    if list1.val < list2.val:\n        list1.next = merge_two_lists(list1.next, list2)\n        return list1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Else case for recursion.",
+                    "placeholderCode": "    else:\n        list2.next = merge_two_lists(list1, list2.next)\n        return list2",
+                    "validationRegex": "^\\s+else:\\s*list2\\.next\\s*=\\s*merge_two_lists\\(list1,\\s*list2\\.next\\)\\s*return\\s+list2$",
+                    "hint": "Else set `list2.next` to result of merge.",
+                    "solutionCode": "    else:\n        list2.next = merge_two_lists(list1, list2.next)\n        return list2"
+                }
+            ]
+        }
+    }
+}

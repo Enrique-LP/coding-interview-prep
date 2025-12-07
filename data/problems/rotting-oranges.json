@@ -1,0 +1,103 @@
+{
+    "id": "rotting-oranges",
+    "title": "Rotting Oranges",
+    "description": "You are given an m x n grid where each cell can have one of three values: 0 representing an empty cell, 1 representing a fresh orange, or 2 representing a rotten orange. Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten. Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.",
+    "examples": [
+        {
+            "input": "grid = [[2,1,1],[1,1,0],[0,1,1]]",
+            "output": "4"
+        },
+        {
+            "input": "grid = [[2,1,1],[0,1,1],[1,0,1]]",
+            "output": "-1"
+        }
+    ],
+    "constraints": [
+        "m == grid.length",
+        "n == grid[i].length",
+        "1 <= m, n <= 10",
+        "grid[i][j] is 0, 1, or 2."
+    ],
+    "difficulty": "Medium",
+    "topic": "Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "BFS",
+            "description": "Multi-source BFS from all rotten oranges.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function oranges_rotting that takes grid.",
+                    "placeholderCode": "def oranges_rotting(grid):",
+                    "validationRegex": "^def\\s+oranges_rotting\\(grid\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def oranges_rotting(grid):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize queue with rotten oranges and count fresh ones.",
+                    "placeholderCode": "    q = []\n    time, fresh = 0, 0\n    rows, cols = len(grid), len(grid[0])\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == 1: fresh += 1\n            if grid[r][c] == 2: q.append((r, c))",
+                    "validationRegex": "^\\s+q\\s*=\\s*\\[\\]\\s*time,\\s*fresh\\s*=\\s*0,\\s*0\\s*rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+grid\\[r\\]\\[c\\]\\s*==\\s*1:\\s*fresh\\s*\\+=\\s*1\\s*if\\s+grid\\[r\\]\\[c\\]\\s*==\\s*2:\\s*q\\.append\\(\\(r,\\s*c\\)\\)$",
+                    "hint": "Scan the grid. Add all rotten oranges to the queue and count fresh oranges.",
+                    "solutionCode": "    q = []\n    time, fresh = 0, 0\n    rows, cols = len(grid), len(grid[0])\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == 1: fresh += 1\n            if grid[r][c] == 2: q.append((r, c))"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Run BFS while queue and fresh oranges exist.",
+                    "placeholderCode": "    directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]\n    while q and fresh > 0:\n        for i in range(len(q)):\n            r, c = q.pop(0)\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or row == rows or col < 0 or\n                    col == cols or grid[row][col] != 1):\n                    continue\n                grid[row][col] = 2\n                q.append((row, col))\n                fresh -= 1\n        time += 1",
+                    "validationRegex": "^\\s+directions\\s*=\\s*\\[\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\],\\s*\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\]\\]\\s*while\\s+q\\s+and\\s+fresh\\s*>\\s*0:\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*r,\\s*c\\s*=\\s*q\\.pop\\(0\\)\\s*for\\s+dr,\\s*dc\\s+in\\s+directions:\\s*row,\\s*col\\s*=\\s*r\\s*\\+\\s*dr,\\s*c\\s*\\+\\s*dc\\s*if\\s*\\(row\\s*<\\s*0\\s+or\\s+row\\s*==\\s*rows\\s+or\\s+col\\s*<\\s*0\\s+or\\s+col\\s*==\\s*cols\\s+or\\s+grid\\[row\\]\\[col\\]\\s*!=\\s*1\\):\\s*continue\\s*grid\\[row\\]\\[col\\]\\s*=\\s*2\\s*q\\.append\\(\\(row,\\s*col\\)\\)\\s*fresh\\s*-=\\s*1\\s*time\\s*\\+=\\s*1$",
+                    "hint": "BFS level by level. For each rotten orange, infect adjacent fresh oranges, add them to queue, and decrement fresh count. Increment time after each level.\\n\\nExample:\\nGrid=[[2, 1], [0, 1]]. Q=[(0,0)]. Fresh=2.\\nMin 0: Pop (0,0). Infect (0,1). Grid=[[2, 2], [0, 1]]. Q=[(0,1)]. Fresh=1.\\nMin 1: Pop (0,1). Infect (1,1). Grid=[[2, 2], [0, 2]]. Q=[(1,1)]. Fresh=0.\\nMin 2: Pop (1,1). No fresh neighbors. Done. Time=2.",
+                    "solutionCode": "    directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]\n    while q and fresh > 0:\n        for i in range(len(q)):\n            r, c = q.pop(0)\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or row == rows or col < 0 or\n                    col == cols or grid[row][col] != 1):\n                    continue\n                grid[row][col] = 2\n                q.append((row, col))\n                fresh -= 1\n        time += 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return time if no fresh oranges left, else -1.",
+                    "placeholderCode": "    return time if fresh == 0 else -1",
+                    "validationRegex": "^\\s+return\\s+time\\s+if\\s+fresh\\s*==\\s*0\\s+else\\s+-1$",
+                    "hint": "If fresh oranges remain, return -1. Otherwise return the time elapsed.",
+                    "solutionCode": "    return time if fresh == 0 else -1"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "BFS",
+            "description": "Same as brute force, O(m*n).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function oranges_rotting that takes grid.",
+                    "placeholderCode": "def oranges_rotting(grid):",
+                    "validationRegex": "^def\\s+oranges_rotting\\(grid\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def oranges_rotting(grid):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize queue with rotten oranges and count fresh ones.",
+                    "placeholderCode": "    q = []\n    time, fresh = 0, 0\n    rows, cols = len(grid), len(grid[0])\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == 1: fresh += 1\n            if grid[r][c] == 2: q.append((r, c))",
+                    "validationRegex": "^\\s+q\\s*=\\s*\\[\\]\\s*time,\\s*fresh\\s*=\\s*0,\\s*0\\s*rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+grid\\[r\\]\\[c\\]\\s*==\\s*1:\\s*fresh\\s*\\+=\\s*1\\s*if\\s+grid\\[r\\]\\[c\\]\\s*==\\s*2:\\s*q\\.append\\(\\(r,\\s*c\\)\\)$",
+                    "hint": "Scan the grid. Add all rotten oranges to the queue and count fresh oranges.",
+                    "solutionCode": "    q = []\n    time, fresh = 0, 0\n    rows, cols = len(grid), len(grid[0])\n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == 1: fresh += 1\n            if grid[r][c] == 2: q.append((r, c))"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Run BFS while queue and fresh oranges exist.",
+                    "placeholderCode": "    directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]\n    while q and fresh > 0:\n        for i in range(len(q)):\n            r, c = q.pop(0)\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or row == rows or col < 0 or\n                    col == cols or grid[row][col] != 1):\n                    continue\n                grid[row][col] = 2\n                q.append((row, col))\n                fresh -= 1\n        time += 1",
+                    "validationRegex": "^\\s+directions\\s*=\\s*\\[\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\],\\s*\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\]\\]\\s*while\\s+q\\s+and\\s+fresh\\s*>\\s*0:\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*r,\\s*c\\s*=\\s*q\\.pop\\(0\\)\\s*for\\s+dr,\\s*dc\\s+in\\s+directions:\\s*row,\\s*col\\s*=\\s*r\\s*\\+\\s*dr,\\s*c\\s*\\+\\s*dc\\s*if\\s*\\(row\\s*<\\s*0\\s+or\\s+row\\s*==\\s*rows\\s+or\\s+col\\s*<\\s*0\\s+or\\s+col\\s*==\\s*cols\\s+or\\s+grid\\[row\\]\\[col\\]\\s*!=\\s*1\\):\\s*continue\\s*grid\\[row\\]\\[col\\]\\s*=\\s*2\\s*q\\.append\\(\\(row,\\s*col\\)\\)\\s*fresh\\s*-=\\s*1\\s*time\\s*\\+=\\s*1$",
+                    "hint": "BFS level by level. For each rotten orange, infect adjacent fresh oranges, add them to queue, and decrement fresh count. Increment time after each level.\\n\\nExample:\\nGrid=[[2, 1], [0, 1]]. Q=[(0,0)]. Fresh=2.\\nMin 0: Pop (0,0). Infect (0,1). Grid=[[2, 2], [0, 1]]. Q=[(0,1)]. Fresh=1.\\nMin 1: Pop (0,1). Infect (1,1). Grid=[[2, 2], [0, 2]]. Q=[(1,1)]. Fresh=0.\\nMin 2: Pop (1,1). No fresh neighbors. Done. Time=2.",
+                    "solutionCode": "    directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]\n    while q and fresh > 0:\n        for i in range(len(q)):\n            r, c = q.pop(0)\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or row == rows or col < 0 or\n                    col == cols or grid[row][col] != 1):\n                    continue\n                grid[row][col] = 2\n                q.append((row, col))\n                fresh -= 1\n        time += 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return time if no fresh oranges left, else -1.",
+                    "placeholderCode": "    return time if fresh == 0 else -1",
+                    "validationRegex": "^\\s+return\\s+time\\s+if\\s+fresh\\s*==\\s*0\\s+else\\s+-1$",
+                    "hint": "If fresh oranges remain, return -1. Otherwise return the time elapsed.",
+                    "solutionCode": "    return time if fresh == 0 else -1"
+                }
+            ]
+        }
+    }
+}

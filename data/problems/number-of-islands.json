@@ -1,0 +1,113 @@
+{
+    "id": "number-of-islands",
+    "title": "Number of Islands",
+    "description": "Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.",
+    "examples": [
+        {
+            "input": "grid = [\n  [\"1\",\"1\",\"1\",\"1\",\"0\"],\n  [\"1\",\"1\",\"0\",\"1\",\"0\"],\n  [\"1\",\"1\",\"0\",\"0\",\"0\"],\n  [\"0\",\"0\",\"0\",\"0\",\"0\"]\n]",
+            "output": "1"
+        },
+        {
+            "input": "grid = [\n  [\"1\",\"1\",\"0\",\"0\",\"0\"],\n  [\"1\",\"1\",\"0\",\"0\",\"0\"],\n  [\"0\",\"0\",\"1\",\"0\",\"0\"],\n  [\"0\",\"0\",\"0\",\"1\",\"1\"]\n]",
+            "output": "3"
+        }
+    ],
+    "constraints": [
+        "m == grid.length",
+        "n == grid[i].length",
+        "1 <= m, n <= 300",
+        "grid[i][j] is '0' or '1'."
+    ],
+    "difficulty": "Medium",
+    "topic": "Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "DFS",
+            "description": "Iterate through grid, start DFS on land to mark visited.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function num_islands that takes grid.",
+                    "placeholderCode": "def num_islands(grid):",
+                    "validationRegex": "^def\\s+num_islands\\(grid\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def num_islands(grid):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Check for empty grid.",
+                    "placeholderCode": "    if not grid:\n        return 0",
+                    "validationRegex": "^\\s+if\\s+not\\s+grid:\\s*return\\s+0$",
+                    "hint": "Return 0 if the grid is empty.",
+                    "solutionCode": "    if not grid:\n        return 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize count and dimensions.",
+                    "placeholderCode": "    count = 0\n    rows, cols = len(grid), len(grid[0])",
+                    "validationRegex": "^\\s+count\\s*=\\s*0\\s*rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)$",
+                    "hint": "Initialize a counter for islands and get grid dimensions.",
+                    "solutionCode": "    count = 0\n    rows, cols = len(grid), len(grid[0])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define DFS helper to mark visited land.",
+                    "placeholderCode": "    def dfs(r, c):\n        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] == '0':\n            return\n        grid[r][c] = '0'\n        dfs(r + 1, c)\n        dfs(r - 1, c)\n        dfs(r, c + 1)\n        dfs(r, c - 1)",
+                    "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c\\):\\s*if\\s+r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*>=\\s+rows\\s+or\\s+c\\s*>=\\s+cols\\s+or\\s+grid\\[r\\]\\[c\\]\\s*==\\s*'0':\\s*return\\s*grid\\[r\\]\\[c\\]\\s*=\\s*'0'\\s*dfs\\(r\\s*\\+\\s*1,\\s*c\\)\\s*dfs\\(r\\s*-\\s*1,\\s*c\\)\\s*dfs\\(r,\\s*c\\s*\\+\\s*1\\)\\s*dfs\\(r,\\s*c\\s*-\\s*1\\)$",
+                    "hint": "Recursive DFS. If out of bounds or water, return. Mark current cell as visited (e.g., change '1' to '0') and recurse in 4 directions.\\n\\nExample:\\nGrid=[[1, 1], [0, 0]].\\nStart at (0,0). Mark '0'. Recurse (0,1).\\n  (0,1) is '1'. Mark '0'. Recurse neighbors (all '0' or bounds).\\nIsland count = 1.",
+                    "solutionCode": "    def dfs(r, c):\n        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] == '0':\n            return\n        grid[r][c] = '0'\n        dfs(r + 1, c)\n        dfs(r - 1, c)\n        dfs(r, c + 1)\n        dfs(r, c - 1)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate through grid and start DFS on '1's.",
+                    "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1':\n                dfs(r, c)\n                count += 1",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+grid\\[r\\]\\[c\\]\\s*==\\s*'1':\\s*dfs\\(r,\\s*c\\)\\s*count\\s*\\+=\\s*1$",
+                    "hint": "Loop through every cell. If it's land, start DFS to mark the entire island and increment count.",
+                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1':\n                dfs(r, c)\n                count += 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return count.",
+                    "placeholderCode": "    return count",
+                    "validationRegex": "^\\s+return\\s+count$",
+                    "hint": "Return the total number of islands found.",
+                    "solutionCode": "    return count"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "BFS",
+            "description": "Use BFS to mark connected land cells.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function num_islands that takes grid.",
+                    "placeholderCode": "def num_islands(grid):",
+                    "validationRegex": "^def\\s+num_islands\\(grid\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def num_islands(grid):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize count, dimensions, and visited set.",
+                    "placeholderCode": "    if not grid: return 0\n    rows, cols = len(grid), len(grid[0])\n    visit = set()\n    islands = 0",
+                    "validationRegex": "^\\s+if\\s+not\\s+grid:\\s*return\\s+0\\s*rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)\\s*visit\\s*=\\s*set\\(\\)\\s*islands\\s*=\\s*0$",
+                    "hint": "Initialize variables. Use a set to keep track of visited cells without modifying the grid.",
+                    "solutionCode": "    if not grid: return 0\n    rows, cols = len(grid), len(grid[0])\n    visit = set()\n    islands = 0""validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+grid\\[r\\]\\[c\\]\\s*==\\s*'1'\\s+and\\s*\\(r,\\s*c\\)\\s+not\\s+in\\s+visit:\\s*bfs\\(r,\\s*c\\)\\s*islands\\s*\\+=\\s*1$",
+                    "hint": "Loop through the grid. If a cell is land and not visited, start BFS and increment island count.\\n\\nExample:\\nGrid=[[1, 0], [0, 1]].\\n(0,0) is '1'. BFS covers (0,0). Count=1.\\n(0,1) is '0'. Skip.\\n(1,0) is '0'. Skip.\\n(1,1) is '1'. BFS covers (1,1). Count=2.",
+                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1' and (r, c) not in visit:\n                bfs(r, c)\n                islands += 1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return islands count.",
+                    "placeholderCode": "    return islands",
+                    "validationRegex": "^\\s+return\\s+islands$",
+                    "hint": "Return the total number of islands.",
+                    "solutionCode": "    return islands"
+                }
+            ]
+        }
+    }
+}

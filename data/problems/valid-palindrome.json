@@ -1,0 +1,127 @@
+{
+    "id": "valid-palindrome",
+    "title": "Valid Palindrome",
+    "description": "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise.",
+    "examples": [
+        {
+            "input": "s = \"A man, a plan, a canal: Panama\"",
+            "output": "true",
+            "explanation": "\"amanaplanacanalpanama\" is a palindrome."
+        },
+        {
+            "input": "s = \"race a car\"",
+            "output": "false",
+            "explanation": "\"raceacar\" is not a palindrome."
+        }
+    ],
+    "constraints": [
+        "1 <= s.length <= 2 * 10^5",
+        "s consists only of printable ASCII characters."
+    ],
+    "difficulty": "Easy",
+    "topic": "Two Pointers",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Filter and Reverse",
+            "description": "Filter out non-alphanumeric characters and compare with reverse.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_palindrome that takes a string s.",
+                    "placeholderCode": "def is_palindrome(s):",
+                    "validationRegex": "^def\\s+is_palindrome\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_palindrome(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Create a new string with only alphanumeric characters converted to lowercase.",
+                    "placeholderCode": "    new_s = \"\".join(c.lower() for c in s if c.isalnum())",
+                    "validationRegex": "^\\s+new_s\\s*=\\s*\"\"\\.join\\(c\\.lower\\(\\)\\s+for\\s+c\\s+in\\s+s\\s+if\\s+c\\.isalnum\\(\\)\\)$",
+                    "hint": "Use list comprehension or generator with `.isalnum()` and `.lower()`.",
+                    "solutionCode": "    new_s = \"\".join(c.lower() for c in s if c.isalnum())"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return True if the new string is equal to its reverse.",
+                    "placeholderCode": "    return new_s == new_s[::-1]",
+                    "validationRegex": "^\\s+return\\s+new_s\\s*==\\s+new_s\\[::-1\\]$",
+                    "hint": "Compare `new_s` with `new_s[::-1]`.",
+                    "solutionCode": "    return new_s == new_s[::-1]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Two Pointers",
+            "description": "Use two pointers to compare characters from both ends, skipping non-alphanumeric ones.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_palindrome that takes a string s.",
+                    "placeholderCode": "def is_palindrome(s):",
+                    "validationRegex": "^def\\s+is_palindrome\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_palindrome(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize two pointers, l at the start and r at the end of the string.",
+                    "placeholderCode": "    l, r = 0, len(s) - 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*0,\\s*len\\(s\\)\\s*-\\s*1$",
+                    "hint": "Set `l` to 0 and `r` to `len(s) - 1`.",
+                    "solutionCode": "    l, r = 0, len(s) - 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop while l is less than r.",
+                    "placeholderCode": "    while l < r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<\\s*r:$",
+                    "hint": "Use a `while` loop.",
+                    "solutionCode": "    while l < r:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Move l forward if s[l] is not alphanumeric.",
+                    "placeholderCode": "        while l < r and not s[l].isalnum():\n            l += 1",
+                    "validationRegex": "^\\s+while\\s+l\\s*<\\s*r\\s+and\\s+not\\s+s\\[l\\]\\.isalnum\\(\\):\\s*l\\s*\\+=\\s*1$",
+                    "hint": "Increment `l` while `s[l]` is not alphanumeric.",
+                    "solutionCode": "        while l < r and not s[l].isalnum():\n            l += 1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Move r backward if s[r] is not alphanumeric.",
+                    "placeholderCode": "        while r > l and not s[r].isalnum():\n            r -= 1",
+                    "validationRegex": "^\\s+while\\s+r\\s*>\\s+l\\s+and\\s+not\\s+s\\[r\\]\\.isalnum\\(\\):\\s*r\\s*-=\\s*1$",
+                    "hint": "Decrement `r` while `s[r]` is not alphanumeric.",
+                    "solutionCode": "        while r > l and not s[r].isalnum():\n            r -= 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return False if characters at l and r (lowercased) don't match.",
+                    "placeholderCode": "        if s[l].lower() != s[r].lower():\n            return False",
+                    "validationRegex": "^\\s+if\\s+s\\[l\\]\\.lower\\(\\)\\s*!=\\s*s\\[r\\]\\.lower\\(\\):\\s*return\\s+False$",
+                    "hint": "Compare characters case-insensitively.\\n\\nExample:\\nIf s[l]='A' and s[r]='a'.\\n'A'.lower() == 'a'.lower() -> 'a' == 'a'. Match.",
+                    "solutionCode": "        if s[l].lower() != s[r].lower():\n            return False"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Move both pointers towards the center.",
+                    "placeholderCode": "        l, r = l + 1, r - 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*l\\s*\\+\\s*1,\\s*r\\s*-\\s*1$",
+                    "hint": "Update pointers.",
+                    "solutionCode": "        l, r = l + 1, r - 1"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return True if the loop finishes without mismatches.",
+                    "placeholderCode": "    return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "Return `True`.",
+                    "solutionCode": "    return True"
+                }
+            ]
+        }
+    }
+}

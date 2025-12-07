@@ -1,0 +1,117 @@
+{
+    "id": "maximum-depth-of-binary-tree",
+    "title": "Maximum Depth of Binary Tree",
+    "description": "Given the root of a binary tree, return its maximum depth. A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.",
+    "examples": [
+        {
+            "input": "root = [3,9,20,null,null,15,7]",
+            "output": "3"
+        },
+        {
+            "input": "root = [1,null,2]",
+            "output": "2"
+        }
+    ],
+    "constraints": [
+        "The number of nodes in the tree is in the range [0, 10^4].",
+        "-100 <= Node.val <= 100"
+    ],
+    "difficulty": "Easy",
+    "topic": "Trees",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive DFS",
+            "description": "Compute depth of left and right subtrees recursively.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function max_depth that takes root.",
+                    "placeholderCode": "def max_depth(root):",
+                    "validationRegex": "^def\\s+max_depth\\(root\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def max_depth(root):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Base case: if root is None, return 0.",
+                    "placeholderCode": "    if not root:\n        return 0",
+                    "validationRegex": "^\\s+if\\s+not\\s+root:\\s*return\\s+0$",
+                    "hint": "Return 0 if the tree is empty.",
+                    "solutionCode": "    if not root:\n        return 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return 1 + max of left and right depths.",
+                    "placeholderCode": "    return 1 + max(max_depth(root.left), max_depth(root.right))",
+                    "validationRegex": "^\\s+return\\s+1\\s*\\+\\s*max\\(max_depth\\(root\\.left\\),\\s*max_depth\\(root\\.right\\)\\)$",
+                    "hint": "Add 1 to the larger depth of the two subtrees.\\n\\nExample:\\nRoot=3. Left Depth=1 (Node 9). Right Depth=2 (Nodes 20->7).\\nMax(1, 2) = 2. Total Depth = 1 + 2 = 3.",
+                    "solutionCode": "    return 1 + max(max_depth(root.left), max_depth(root.right))"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Iterative BFS",
+            "description": "Count levels using a queue.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function max_depth that takes root.",
+                    "placeholderCode": "def max_depth(root):",
+                    "validationRegex": "^def\\s+max_depth\\(root\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def max_depth(root):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "If root is None, return 0.",
+                    "placeholderCode": "    if not root:\n        return 0",
+                    "validationRegex": "^\\s+if\\s+not\\s+root:\\s*return\\s+0$",
+                    "hint": "Return 0 if the tree is empty.",
+                    "solutionCode": "    if not root:\n        return 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize queue with root and level count.",
+                    "placeholderCode": "    queue = [root]\n    level = 0",
+                    "validationRegex": "^\\s+queue\\s*=\\s*\\[root\\]\\s*level\\s*=\\s*0$",
+                    "hint": "Start with the root in the queue and level 0.",
+                    "solutionCode": "    queue = [root]\n    level = 0"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Loop while queue is not empty.",
+                    "placeholderCode": "    while queue:",
+                    "validationRegex": "^\\s+while\\s+queue:$",
+                    "hint": "Continue as long as there are nodes to process.",
+                    "solutionCode": "    while queue:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate through current level nodes.",
+                    "placeholderCode": "        for i in range(len(queue)):\n            node = queue.pop(0)\n            if node.left: queue.append(node.left)\n            if node.right: queue.append(node.right)",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(queue\\)\\):\\s*node\\s*=\\s*queue\\.pop\\(0\\)\\s*if\\s+node\\.left:\\s*queue\\.append\\(node\\.left\\)\\s*if\\s+node\\.right:\\s*queue\\.append\\(node\\.right\\)$",
+                    "hint": "Process all nodes at the current level and add their children.",
+                    "solutionCode": "        for i in range(len(queue)):\n            node = queue.pop(0)\n            if node.left: queue.append(node.left)\n            if node.right: queue.append(node.right)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Increment level.",
+                    "placeholderCode": "        level += 1",
+                    "validationRegex": "^\\s+level\\s*\\+=\\s*1$",
+                    "hint": "Increase level count after processing a full level.",
+                    "solutionCode": "        level += 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return level.",
+                    "placeholderCode": "    return level",
+                    "validationRegex": "^\\s+return\\s+level$",
+                    "hint": "Return the total number of levels.",
+                    "solutionCode": "    return level"
+                }
+            ]
+        }
+    }
+}

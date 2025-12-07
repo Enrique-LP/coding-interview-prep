@@ -1,0 +1,114 @@
+{
+    "id": "word-break",
+    "title": "Word Break",
+    "description": "Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words. Note that the same word in the dictionary may be reused multiple times in the segmentation.",
+    "examples": [
+        {
+            "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+            "output": "true",
+            "explanation": "Return true because \"leetcode\" can be segmented as \"leet code\"."
+        },
+        {
+            "input": "s = \"applepenapple\", wordDict = [\"apple\",\"pen\"]",
+            "output": "true",
+            "explanation": "Return true because \"applepenapple\" can be segmented as \"apple pen apple\". Note that you are allowed to reuse a dictionary word."
+        }
+    ],
+    "constraints": [
+        "1 <= s.length <= 300",
+        "1 <= wordDict.length <= 1000",
+        "1 <= wordDict[i].length <= 20",
+        "s and wordDict[i] consist of only lowercase English letters.",
+        "All the strings of wordDict are unique."
+    ],
+    "difficulty": "Medium",
+    "topic": "1-D Dynamic Programming",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively check if prefix is in dict.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function word_break that takes s and wordDict.",
+                    "placeholderCode": "def word_break(s, wordDict):",
+                    "validationRegex": "^def\\s+word_break\\(s,\\s*wordDict\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def word_break(s, wordDict):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper with memoization.",
+                    "placeholderCode": "    memo = {}\n    def dfs(i):\n        if i == len(s): return True\n        if i in memo: return memo[i]",
+                    "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i\\):\\s*if\\s+i\\s*==\\s*len\\(s\\):\\s*return\\s+True\\s*if\\s+i\\s+in\\s+memo:\\s*return\\s+memo\\[i\\]$",
+                    "hint": "Recursive function `dfs(i)` checks if suffix starting at `i` can be segmented. Base case: i reached end -> True. Check memo.",
+                    "solutionCode": "    memo = {}\n    def dfs(i):\n        if i == len(s): return True\n        if i in memo: return memo[i]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Check all words in dict.",
+                    "placeholderCode": "        for w in wordDict:\n            if (i + len(w) <= len(s) and\n                s[i : i + len(w)] == w):\n                if dfs(i + len(w)):\n                    memo[i] = True\n                    return True",
+                    "validationRegex": "^\\s+for\\s+w\\s+in\\s+wordDict:\\s*if\\s*\\(i\\s*\\+\\s*len\\(w\\)\\s*<=\\s*len\\(s\\)\\s+and\\s+s\\[i\\s*:\\s*i\\s*\\+\\s*len\\(w\\)\\]\\s*==\\s*w\\):\\s*if\\s+dfs\\(i\\s*\\+\\s*len\\(w\\)\\):\\s*memo\\[i\\]\\s*=\\s*True\\s*return\\s+True$",
+                    "hint": "Try every word in dictionary. If it matches current prefix, recurse on the rest of the string.\\n\\nExample:\\nS=\"leet\", Dict=[\"leet\"].\\nDFS(0): \"leet\" matches. DFS(4) -> True. Return True.",
+                    "solutionCode": "        for w in wordDict:\n            if (i + len(w) <= len(s) and\n                s[i : i + len(w)] == w):\n                if dfs(i + len(w)):\n                    memo[i] = True\n                    return True"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Memoize False and return.",
+                    "placeholderCode": "        memo[i] = False\n        return False",
+                    "validationRegex": "^\\s+memo\\[i\\]\\s*=\\s*False\\s*return\\s+False$",
+                    "hint": "If no word matches, store False in memo and return.",
+                    "solutionCode": "        memo[i] = False\n        return False"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Call helper.",
+                    "placeholderCode": "    return dfs(0)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0\\)$",
+                    "hint": "Start recursion from index 0.",
+                    "solutionCode": "    return dfs(0)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Check if substring ending at i is valid.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function word_break that takes s and wordDict.",
+                    "placeholderCode": "def word_break(s, wordDict):",
+                    "validationRegex": "^def\\s+word_break\\(s,\\s*wordDict\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def word_break(s, wordDict):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize DP array.",
+                    "placeholderCode": "    dp = [False] * (len(s) + 1)\n    dp[len(s)] = True",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\[False\\]\\s*\\*\\s*\\(len\\(s\\)\\s*\\+\\s*1\\)\\s*dp\\[len\\(s\\)\\]\\s*=\\s*True$",
+                    "hint": "Initialize DP array. dp[i] means suffix starting at i can be segmented. dp[len(s)] = True (empty string).",
+                    "solutionCode": "    dp = [False] * (len(s) + 1)\n    dp[len(s)] = True"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate backwards through string.",
+                    "placeholderCode": "    for i in range(len(s) - 1, -1, -1):\n        for w in wordDict:\n            if (i + len(w) <= len(s) and\n                s[i : i + len(w)] == w):\n                dp[i] = dp[i + len(w)]\n                if dp[i]:\n                    break",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*for\\s+w\\s+in\\s+wordDict:\\s*if\\s*\\(i\\s*\\+\\s*len\\(w\\)\\s*<=\\s*len\\(s\\)\\s+and\\s+s\\[i\\s*:\\s*i\\s*\\+\\s*len\\(w\\)\\]\\s*==\\s*w\\):\\s*dp\\[i\\]\\s*=\\s*dp\\[i\\s*\\+\\s*len\\(w\\)\\]\\s*if\\s+dp\\[i\\]:\\s*break$",
+                    "hint": "Iterate backwards. For each index, check if any word in dictionary matches prefix. If so, dp[i] = dp[i + len(w)].\\n\\nExample:\\nS=\"leetcode\", Dict=[\"leet\", \"code\"]. DP=[F...T].\\ni=4 ('c'): \"code\" matches. DP[4] = DP[8] = True.\\ni=0 ('l'): \"leet\" matches. DP[0] = DP[4] = True.\\nResult: True.",
+                    "solutionCode": "    for i in range(len(s) - 1, -1, -1):\n        for w in wordDict:\n            if (i + len(w) <= len(s) and\n                s[i : i + len(w)] == w):\n                dp[i] = dp[i + len(w)]\n                if dp[i]:\n                    break"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return dp[0]",
+                    "validationRegex": "^\\s+return\\s+dp\\[0\\]$",
+                    "hint": "Return whether the entire string can be segmented (dp[0]).",
+                    "solutionCode": "    return dp[0]"
+                }
+            ]
+        }
+    }
+}

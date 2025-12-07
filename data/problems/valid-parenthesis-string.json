@@ -1,0 +1,113 @@
+{
+    "id": "valid-parenthesis-string",
+    "title": "Valid Parenthesis String",
+    "description": "Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid. The following rules define a valid string: Any left parenthesis '(' must have a corresponding right parenthesis ')'. Any right parenthesis ')' must have a corresponding left parenthesis '('. Left parenthesis '(' must go before the corresponding right parenthesis ')'. '*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string \"\".",
+    "examples": [
+        {
+            "input": "s = \"()\"",
+            "output": "true"
+        },
+        {
+            "input": "s = \"(*)\"",
+            "output": "true"
+        },
+        {
+            "input": "s = \"(*))\"",
+            "output": "true"
+        }
+    ],
+    "constraints": [
+        "1 <= s.length <= 100",
+        "s[i] is '(', ')' or '*'."
+    ],
+    "difficulty": "Medium",
+    "topic": "Greedy",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursive",
+            "description": "Recursively check all possibilities for '*'.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function check_valid_string that takes s.",
+                    "placeholderCode": "def check_valid_string(s):",
+                    "validationRegex": "^def\\s+check_valid_string\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def check_valid_string(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper with memoization.",
+                    "placeholderCode": "    memo = {}\n    def dfs(i, left):\n        if i == len(s): return left == 0\n        if left < 0: return False\n        if (i, left) in memo: return memo[(i, left)]",
+                    "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*left\\):\\s*if\\s+i\\s*==\\s*len\\(s\\):\\s*return\\s+left\\s*==\\s*0\\s*if\\s+left\\s*<\\s*0:\\s*return\\s+False\\s*if\\s*\\(i,\\s*left\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*left\\)\\]$",
+                    "hint": "Recursive function `dfs(i, left)`: `i` is current index, `left` is count of open parentheses. Base cases: end of string -> valid if left==0; left < 0 -> invalid. Check memo.",
+                    "solutionCode": "    memo = {}\n    def dfs(i, left):\n        if i == len(s): return left == 0\n        if left < 0: return False\n        if (i, left) in memo: return memo[(i, left)]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Handle '(', ')', and '*'.",
+                    "placeholderCode": "        if s[i] == '(': res = dfs(i + 1, left + 1)\n        elif s[i] == ')': res = dfs(i + 1, left - 1)\n        else: res = (dfs(i + 1, left + 1) or\n                     dfs(i + 1, left - 1) or\n                     dfs(i + 1, left))",
+                    "validationRegex": "^\\s+if\\s+s\\[i\\]\\s*==\\s*'\\(':\\s*res\\s*=\\s*dfs\\(i\\s*\\+\\s*1,\\s*left\\s*\\+\\s*1\\)\\s*elif\\s+s\\[i\\]\\s*==\\s*'\\)':\\s*res\\s*=\\s*dfs\\(i\\s*\\+\\s*1,\\s*left\\s*-\\s*1\\)\\s*else:\\s*res\\s*=\\s*\\(dfs\\(i\\s*\\+\\s*1,\\s*left\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(i\\s*\\+\\s*1,\\s*left\\s*-\\s*1\\)\\s+or\\s*dfs\\(i\\s*\\+\\s*1,\\s*left\\)\\)$",
+                    "hint": "If '(', increment left. If ')', decrement left. If '*', try treating as '(', ')', or empty (no change to left).\\n\\nExample:\\nS=\"(*)\".\\ni=0 '(': DFS(1, 1).\\ni=1 '*': DFS(2, 2) [as '('], DFS(2, 0) [as ')'], DFS(2, 1) [as ''].\\nDFS(2, 0) -> i=2 ')': DFS(3, -1) [Invalid].\\nDFS(2, 2) -> i=2 ')': DFS(3, 1) -> End, left!=0. False.\\nDFS(2, 1) -> i=2 ')': DFS(3, 0) -> End, left==0. True.",
+                    "solutionCode": "        if s[i] == '(': res = dfs(i + 1, left + 1)\n        elif s[i] == ')': res = dfs(i + 1, left - 1)\n        else: res = (dfs(i + 1, left + 1) or\n                     dfs(i + 1, left - 1) or\n                     dfs(i + 1, left))"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Memoize and return.",
+                    "placeholderCode": "        memo[(i, left)] = res\n        return res",
+                    "validationRegex": "^\\s+memo\\[\\(i,\\s*left\\)\\]\\s*=\\s*res\\s*return\\s+res$",
+                    "hint": "Store result in memo and return.",
+                    "solutionCode": "        memo[(i, left)] = res\n        return res"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Call helper.",
+                    "placeholderCode": "    return dfs(0, 0)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*0\\)$",
+                    "hint": "Start recursion from index 0 with 0 open parentheses.",
+                    "solutionCode": "    return dfs(0, 0)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Greedy",
+            "description": "Track min and max possible open parentheses.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function check_valid_string that takes s.",
+                    "placeholderCode": "def check_valid_string(s):",
+                    "validationRegex": "^def\\s+check_valid_string\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def check_valid_string(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize min and max open count.",
+                    "placeholderCode": "    leftMin, leftMax = 0, 0",
+                    "validationRegex": "^\\s+leftMin,\\s*leftMax\\s*=\\s*0,\\s*0$",
+                    "hint": "Track the range of possible open parentheses counts [leftMin, leftMax].",
+                    "solutionCode": "    leftMin, leftMax = 0, 0"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through s.",
+                    "placeholderCode": "    for c in s:\n        if c == '(': leftMin, leftMax = leftMin + 1, leftMax + 1\n        elif c == ')': leftMin, leftMax = leftMin - 1, leftMax - 1\n        else: leftMin, leftMax = leftMin - 1, leftMax + 1\n        if leftMax < 0: return False\n        if leftMin < 0: leftMin = 0",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+s:\\s*if\\s+c\\s*==\\s*'\\(':\\s*leftMin,\\s*leftMax\\s*=\\s*leftMin\\s*\\+\\s*1,\\s*leftMax\\s*\\+\\s*1\\s*elif\\s+c\\s*==\\s*'\\)':\\s*leftMin,\\s*leftMax\\s*=\\s*leftMin\\s*-\\s*1,\\s*leftMax\\s*-\\s*1\\s*else:\\s*leftMin,\\s*leftMax\\s*=\\s*leftMin\\s*-\\s*1,\\s*leftMax\\s*\\+\\s*1\\s*if\\s+leftMax\\s*<\\s*0:\\s*return\\s+False\\s*if\\s+leftMin\\s*<\\s*0:\\s*leftMin\\s*=\\s*0$",
+                    "hint": "Update range. '(' adds 1 to both. ')' subtracts 1. '*' expands range (subtract 1 from min, add 1 to max). If max < 0, invalid. If min < 0, reset min to 0 (can't have negative open parens).\\n\\nExample:\\nS=\"(*)\".\\nInit: Min=0, Max=0.\\n'(': Min=1, Max=1.\\n'*': Min=1-1=0, Max=1+1=2. Range [0, 2].\\n')': Min=0-1=-1 -> 0, Max=2-1=1. Range [0, 1].\\nResult: Min is 0 -> True.",
+                    "solutionCode": "    for c in s:\n        if c == '(': leftMin, leftMax = leftMin + 1, leftMax + 1\n        elif c == ')': leftMin, leftMax = leftMin - 1, leftMax - 1\n        else: leftMin, leftMax = leftMin - 1, leftMax + 1\n        if leftMax < 0: return False\n        if leftMin < 0: leftMin = 0"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return True if leftMin is 0.",
+                    "placeholderCode": "    return leftMin == 0",
+                    "validationRegex": "^\\s+return\\s+leftMin\\s*==\\s*0$",
+                    "hint": "If 0 is within the possible range [leftMin, leftMax], then it's valid. Since we reset leftMin to 0, we just check if leftMin == 0.",
+                    "solutionCode": "    return leftMin == 0"
+                }
+            ]
+        }
+    }
+}

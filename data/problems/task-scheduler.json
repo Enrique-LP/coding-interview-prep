@@ -1,0 +1,95 @@
+{
+    "id": "task-scheduler",
+    "title": "Task Scheduler",
+    "description": "Given a characters array tasks, representing the tasks a CPU needs to do, where each letter represents a different task. Tasks could be done in any order. Each task is done in one unit of time. For each unit of time, the CPU could complete either one task or just be idle. However, there is a non-negative integer n that represents the cooldown period between two same tasks (the same letter in the array), that is that there must be at least n units of time between any two same tasks. Return the least number of units of times that the CPU will take to finish all the given tasks.",
+    "examples": [
+        {
+            "input": "tasks = [\"A\",\"A\",\"A\",\"B\",\"B\",\"B\"], n = 2",
+            "output": "8",
+            "explanation": "A -> B -> idle -> A -> B -> idle -> A -> B\nThere is at least 2 units of time between any two same tasks."
+        },
+        {
+            "input": "tasks = [\"A\",\"A\",\"A\",\"B\",\"B\",\"B\"], n = 0",
+            "output": "6"
+        }
+    ],
+    "constraints": [
+        "1 <= task.length <= 10^4",
+        "tasks[i] is upper-case English letter.",
+        "The integer n is in the range [0, 100]."
+    ],
+    "difficulty": "Medium",
+    "topic": "Heap / Priority Queue",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Simulation",
+            "description": "Simulate the process using a heap and queue.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function least_interval that takes tasks and n.",
+                    "placeholderCode": "def least_interval(tasks, n):",
+                    "validationRegex": "^def\\s+least_interval\\(tasks,\\s*n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def least_interval(tasks, n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Count frequencies.",
+                    "placeholderCode": "    count = collections.Counter(tasks)\n    maxHeap = [-cnt for cnt in count.values()]\n    heapq.heapify(maxHeap)\n    time = 0\n    q = collections.deque() # pairs of [-cnt, idleTime]",
+                    "validationRegex": "^\\s+count\\s*=\\s*collections\\.Counter\\(tasks\\)\\s*maxHeap\\s*=\\s*\\[-cnt\\s+for\\s+cnt\\s+in\\s+count\\.values\\(\\)\\]\\s*heapq\\.heapify\\(maxHeap\\)\\s*time\\s*=\\s*0\\s*q\\s*=\\s*collections\\.deque\\(\\)$",
+                    "hint": "Use a max heap to store task frequencies and a queue for cooldowns.",
+                    "solutionCode": "    count = collections.Counter(tasks)\n    maxHeap = [-cnt for cnt in count.values()]\n    heapq.heapify(maxHeap)\n    time = 0\n    q = collections.deque() # pairs of [-cnt, idleTime]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Process tasks.",
+                    "placeholderCode": "    while maxHeap or q:\n        time += 1\n        if maxHeap:\n            cnt = 1 + heapq.heappop(maxHeap)\n            if cnt:\n                q.append([cnt, time + n])\n        if q and q[0][1] == time:\n            heapq.heappush(maxHeap, q.popleft()[0])",
+                    "validationRegex": "^\\s+while\\s+maxHeap\\s+or\\s+q:\\s*time\\s*\\+=\\s*1\\s*if\\s+maxHeap:\\s*cnt\\s*=\\s*1\\s*\\+\\s*heapq\\.heappop\\(maxHeap\\)\\s*if\\s+cnt:\\s*q\\.append\\(\\[cnt,\\s*time\\s*\\+\\s*n\\]\\)\\s*if\\s+q\\s+and\\s+q\\[0\\]\\[1\\]\\s*==\\s*time:\\s*heapq\\.heappush\\(maxHeap,\\s*q\\.popleft\\(\\)\\[0\\]\\)$",
+                    "hint": "Simulate each time unit, processing tasks and managing the cooldown queue.",
+                    "solutionCode": "    while maxHeap or q:\n        time += 1\n        if maxHeap:\n            cnt = 1 + heapq.heappop(maxHeap)\n            if cnt:\n                q.append([cnt, time + n])\n        if q and q[0][1] == time:\n            heapq.heappush(maxHeap, q.popleft()[0])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return time.",
+                    "placeholderCode": "    return time",
+                    "validationRegex": "^\\s+return\\s+time$",
+                    "hint": "Return the total time elapsed.",
+                    "solutionCode": "    return time"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Math",
+            "description": "Calculate based on max frequency.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function least_interval that takes tasks and n.",
+                    "placeholderCode": "def least_interval(tasks, n):",
+                    "validationRegex": "^def\\s+least_interval\\(tasks,\\s*n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def least_interval(tasks, n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Calculate max frequency.",
+                    "placeholderCode": "    count = collections.Counter(tasks)\n    max_freq = max(count.values())\n    max_freq_count = list(count.values()).count(max_freq)",
+                    "validationRegex": "^\\s+count\\s*=\\s*collections\\.Counter\\(tasks\\)\\s*max_freq\\s*=\\s*max\\(count\\.values\\(\\)\\)\\s*max_freq_count\\s*=\\s*list\\(count\\.values\\(\\)\\)\\.count\\(max_freq\\)$",
+                    "hint": "Find the maximum frequency and how many tasks have that frequency.",
+                    "solutionCode": "    count = collections.Counter(tasks)\n    max_freq = max(count.values())\n    max_freq_count = list(count.values()).count(max_freq)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Calculate result.",
+                    "placeholderCode": "    part_count = max_freq - 1\n    part_length = n - (max_freq_count - 1)\n    empty_slots = part_count * part_length\n    available_tasks = len(tasks) - max_freq * max_freq_count\n    idles = max(0, empty_slots - available_tasks)\n    return len(tasks) + idles",
+                    "validationRegex": "^\\s+part_count\\s*=\\s*max_freq\\s*-\\s*1\\s*part_length\\s*=\\s*n\\s*-\\s*\\(max_freq_count\\s*-\\s*1\\)\\s*empty_slots\\s*=\\s*part_count\\s*\\*\\s*part_length\\s*available_tasks\\s*=\\s*len\\(tasks\\)\\s*-\\s*max_freq\\s*\\*\\s*max_freq_count\\s*idles\\s*=\\s*max\\(0,\\s*empty_slots\\s*-\\s*available_tasks\\)\\s*return\\s+len\\(tasks\\)\\s*\\+\\s*idles$",
+                    "hint": "Calculate idle slots based on the most frequent task and fill them with other tasks.\\n\\nExample:\\nTasks=[A, A, A, B, B], n=2.\\nMaxFreq(A)=3. PartCount=2. PartLen=2.\\nEmptySlots = 2 * 2 = 4 (A _ _ A _ _ A).\\nAvailable(B)=2. Idles = 4 - 2 = 2.\\nTotal = 5 + 2 = 7.",
+                    "solutionCode": "    part_count = max_freq - 1\n    part_length = n - (max_freq_count - 1)\n    empty_slots = part_count * part_length\n    available_tasks = len(tasks) - max_freq * max_freq_count\n    idles = max(0, empty_slots - available_tasks)\n    return len(tasks) + idles"
+                }
+            ]
+        }
+    }
+}

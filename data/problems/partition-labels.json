@@ -1,0 +1,102 @@
+{
+    "id": "partition-labels",
+    "title": "Partition Labels",
+    "description": "You are given a string s. We want to partition the string into as many parts as possible so that each letter appears in at most one part. Note that the partition is done so that after concatenating all the parts in order, the resultant string should be s. Return a list of integers representing the size of these parts.",
+    "examples": [
+        {
+            "input": "s = \"ababcbacadefegdehijhklij\"",
+            "output": "[9,7,8]",
+            "explanation": "The partition is \"ababcbaca\", \"defegde\", \"hijhklij\".\nThis is a partition so that each letter appears in at most one part.\nA partition like \"ababcbacadefegde\", \"hijhklij\" is incorrect, because it splits s into less parts."
+        },
+        {
+            "input": "s = \"eccbbbbdec\"",
+            "output": "[10]"
+        }
+    ],
+    "constraints": [
+        "1 <= s.length <= 500",
+        "s consists of lowercase English letters."
+    ],
+    "difficulty": "Medium",
+    "topic": "Greedy",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Greedy",
+            "description": "Track last index of each char and extend partition.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function partition_labels that takes s.",
+                    "placeholderCode": "def partition_labels(s):",
+                    "validationRegex": "^def\\s+partition_labels\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def partition_labels(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Find last index of each character.",
+                    "placeholderCode": "    lastIndex = {}\n    for i, c in enumerate(s):\n        lastIndex[c] = i",
+                    "validationRegex": "^\\s+lastIndex\\s*=\\s*\\{\\}\\s*for\\s+i,\\s*c\\s+in\\s+enumerate\\(s\\):\\s*lastIndex\\[c\\]\\s*=\\s*i$",
+                    "hint": "Create a map storing the last occurrence index of each character.",
+                    "solutionCode": "    lastIndex = {}\n    for i, c in enumerate(s):\n        lastIndex[c] = i"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate and update partition end.",
+                    "placeholderCode": "    res = []\n    size, end = 0, 0\n    for i, c in enumerate(s):\n        size += 1\n        end = max(end, lastIndex[c])\n        if i == end:\n            res.append(size)\n            size = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*size,\\s*end\\s*=\\s*0,\\s*0\\s*for\\s+i,\\s*c\\s+in\\s+enumerate\\(s\\):\\s*size\\s*\\+=\\s*1\\s*end\\s*=\\s*max\\(end,\\s*lastIndex\\[c\\]\\)\\s*if\\s+i\\s*==\\s*end:\\s*res\\.append\\(size\\)\\s*size\\s*=\\s*0$",
+                    "hint": "Iterate through string. Extend the current partition end to the last occurrence of the current character. If current index reaches the partition end, the partition is complete.\\n\\nExample:\\nS=\"ababcbacadefegde...\"\\nLastIdx: a=8, b=5, c=7, d=14...\\ni=0 ('a'): End=max(0, 8)=8.\\ni=1 ('b'): End=max(8, 5)=8.\\n...\\ni=8 ('a'): i==End. Partition size=9. Reset size=0.",
+                    "solutionCode": "    res = []\n    size, end = 0, 0\n    for i, c in enumerate(s):\n        size += 1\n        end = max(end, lastIndex[c])\n        if i == end:\n            res.append(size)\n            size = 0"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the list of partition sizes.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Greedy",
+            "description": "Same as brute force, O(n).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function partition_labels that takes s.",
+                    "placeholderCode": "def partition_labels(s):",
+                    "validationRegex": "^def\\s+partition_labels\\(s\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def partition_labels(s):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Find last index of each character.",
+                    "placeholderCode": "    lastIndex = {}\n    for i, c in enumerate(s):\n        lastIndex[c] = i",
+                    "validationRegex": "^\\s+lastIndex\\s*=\\s*\\{\\}\\s*for\\s+i,\\s*c\\s+in\\s+enumerate\\(s\\):\\s*lastIndex\\[c\\]\\s*=\\s*i$",
+                    "hint": "Store last index of each char.",
+                    "solutionCode": "    lastIndex = {}\n    for i, c in enumerate(s):\n        lastIndex[c] = i"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate and update partition end.",
+                    "placeholderCode": "    res = []\n    size, end = 0, 0\n    for i, c in enumerate(s):\n        size += 1\n        end = max(end, lastIndex[c])\n        if i == end:\n            res.append(size)\n            size = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*size,\\s*end\\s*=\\s*0,\\s*0\\s*for\\s+i,\\s*c\\s+in\\s+enumerate\\(s\\):\\s*size\\s*\\+=\\s*1\\s*end\\s*=\\s*max\\(end,\\s*lastIndex\\[c\\]\\)\\s*if\\s+i\\s*==\\s*end:\\s*res\\.append\\(size\\)\\s*size\\s*=\\s*0$",
+                    "hint": "Extend partition end. If current index matches end, partition is done.\\n\\nExample:\\nS=\"ababcbacadefegde...\"\\nLastIdx: a=8, b=5, c=7, d=14...\\ni=0 ('a'): End=max(0, 8)=8.\\ni=1 ('b'): End=max(8, 5)=8.\\n...\\ni=8 ('a'): i==End. Partition size=9. Reset size=0.",
+                    "solutionCode": "    res = []\n    size, end = 0, 0\n    for i, c in enumerate(s):\n        size += 1\n        end = max(end, lastIndex[c])\n        if i == end:\n            res.append(size)\n            size = 0"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the list of sizes.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        }
+    }
+}

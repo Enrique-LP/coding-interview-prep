@@ -1,0 +1,95 @@
+{
+    "id": "set-matrix-zeroes",
+    "title": "Set Matrix Zeroes",
+    "description": "Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's. You must do it in place.",
+    "examples": [
+        {
+            "input": "matrix = [[1,1,1],[1,0,1],[1,1,1]]",
+            "output": "[[1,0,1],[0,0,0],[1,0,1]]"
+        },
+        {
+            "input": "matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]",
+            "output": "[[0,0,0,0],[0,4,5,0],[0,3,1,0]]"
+        }
+    ],
+    "constraints": [
+        "m == matrix.length",
+        "n == matrix[0].length",
+        "1 <= m, n <= 200",
+        "-2^31 <= matrix[i][j] <= 2^31 - 1"
+    ],
+    "difficulty": "Medium",
+    "topic": "Math & Geometry",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Additional Memory",
+            "description": "Use sets to store rows and cols to zero out.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function set_zeroes that takes matrix.",
+                    "placeholderCode": "def set_zeroes(matrix):",
+                    "validationRegex": "^def\\s+set_zeroes\\(matrix\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def set_zeroes(matrix):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Identify rows and cols with zeros.",
+                    "placeholderCode": "    rows, cols = len(matrix), len(matrix[0])\n    zero_rows, zero_cols = set(), set()\n    for r in range(rows):\n        for c in range(cols):\n            if matrix[r][c] == 0:\n                zero_rows.add(r)\n                zero_cols.add(c)",
+                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(matrix\\),\\s*len\\(matrix\\[0\\]\\)\\s*zero_rows,\\s*zero_cols\\s*=\\s*set\\(\\),\\s*set\\(\\)\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+matrix\\[r\\]\\[c\\]\\s*==\\s*0:\\s*zero_rows\\.add\\(r\\)\\s*zero_cols\\.add\\(c\\)$",
+                    "hint": "Iterate through the matrix and store the indices of rows and columns that contain 0.",
+                    "solutionCode": "    rows, cols = len(matrix), len(matrix[0])\n    zero_rows, zero_cols = set(), set()\n    for r in range(rows):\n        for c in range(cols):\n            if matrix[r][c] == 0:\n                zero_rows.add(r)\n                zero_cols.add(c)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Set rows and cols to zero.",
+                    "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if r in zero_rows or c in zero_cols:\n                matrix[r][c] = 0",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+r\\s+in\\s+zero_rows\\s+or\\s+c\\s+in\\s+zero_cols:\\s*matrix\\[r\\]\\[c\\]\\s*=\\s*0$",
+                    "hint": "Iterate through the matrix again and set elements to 0 if their row or column index is in the stored sets.",
+                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if r in zero_rows or c in zero_cols:\n                matrix[r][c] = 0"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "O(1) Memory",
+            "description": "Use first row and col as markers.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function set_zeroes that takes matrix.",
+                    "placeholderCode": "def set_zeroes(matrix):",
+                    "validationRegex": "^def\\s+set_zeroes\\(matrix\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def set_zeroes(matrix):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Use first row/col as markers.",
+                    "placeholderCode": "    rows, cols = len(matrix), len(matrix[0])\n    row_zero = False\n    for r in range(rows):\n        for c in range(cols):\n            if matrix[r][c] == 0:\n                matrix[0][c] = 0\n                if r > 0:\n                    matrix[r][0] = 0\n                else:\n                    row_zero = True",
+                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(matrix\\),\\s*len\\(matrix\\[0\\]\\)\\s*row_zero\\s*=\\s*False\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+matrix\\[r\\]\\[c\\]\\s*==\\s*0:\\s*matrix\\[0\\]\\[c\\]\\s*=\\s*0\\s*if\\s+r\\s*>\\s*0:\\s*matrix\\[r\\]\\[0\\]\\s*=\\s*0\\s*else:\\s*row_zero\\s*=\\s*True$",
+                    "hint": "Use the first row and first column to store flags indicating if a row or column should be zeroed. Handle the first row separately using a boolean flag.",
+                    "solutionCode": "    rows, cols = len(matrix), len(matrix[0])\n    row_zero = False\n    for r in range(rows):\n        for c in range(cols):\n            if matrix[r][c] == 0:\n                matrix[0][c] = 0\n                if r > 0:\n                    matrix[r][0] = 0\n                else:\n                    row_zero = True"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Set zeros based on markers.",
+                    "placeholderCode": "    for r in range(1, rows):\n        for c in range(1, cols):\n            if matrix[0][c] == 0 or matrix[r][0] == 0:\n                matrix[r][c] = 0",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(1,\\s*rows\\):\\s*for\\s+c\\s+in\\s+range\\(1,\\s*cols\\):\\s*if\\s+matrix\\[0\\]\\[c\\]\\s*==\\s*0\\s+or\\s+matrix\\[r\\]\\[0\\]\\s*==\\s*0:\\s*matrix\\[r\\]\\[c\\]\\s*=\\s*0$",
+                    "hint": "Iterate through the matrix (skipping first row and col) and set elements to 0 based on the markers in the first row and col.",
+                    "solutionCode": "    for r in range(1, rows):\n        for c in range(1, cols):\n            if matrix[0][c] == 0 or matrix[r][0] == 0:\n                matrix[r][c] = 0"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Handle first row and col separately.",
+                    "placeholderCode": "    if matrix[0][0] == 0:\n        for r in range(rows): matrix[r][0] = 0\n    if row_zero:\n        for c in range(cols): matrix[0][c] = 0",
+                    "validationRegex": "^\\s+if\\s+matrix\\[0\\]\\[0\\]\\s*==\\s*0:\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*matrix\\[r\\]\\[0\\]\\s*=\\s*0\\s*if\\s+row_zero:\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*matrix\\[0\\]\\[c\\]\\s*=\\s*0$",
+                    "hint": "Finally, update the first column if `matrix[0][0]` is 0, and update the first row if `row_zero` is True.",
+                    "solutionCode": "    if matrix[0][0] == 0:\n        for r in range(rows): matrix[r][0] = 0\n    if row_zero:\n        for c in range(cols): matrix[0][c] = 0"
+                }
+            ]
+        }
+    }
+}

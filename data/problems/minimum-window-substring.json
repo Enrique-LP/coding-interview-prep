@@ -1,0 +1,73 @@
+{
+    "id": "minimum-window-substring",
+    "title": "Minimum Window Substring",
+    "description": "Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string \"\". The testcases will be generated such that the answer is unique.",
+    "examples": [
+        {
+            "input": "s = \"ADOBECODEBANC\", t = \"ABC\"",
+            "output": "\"BANC\"",
+            "explanation": "The minimum window substring \"BANC\" includes 'A', 'B', and 'C' from string t."
+        },
+        {
+            "input": "s = \"a\", t = \"a\"",
+            "output": "\"a\""
+        },
+        {
+            "input": "s = \"a\", t = \"aa\"",
+            "output": "\"\""
+        }
+    ],
+    "constraints": [
+        "m == s.length",
+        "n == t.length",
+        "1 <= m, n <= 10^5",
+        "s and t consist of uppercase and lowercase English letters."
+    ],
+    "difficulty": "Hard",
+    "topic": "Sliding Window",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Nested Loops",
+            "description": "Check every substring.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function min_window that takes s and t.",
+                    "placeholderCode": "def min_window(s, t):",
+                    "validationRegex": "^def\\s+min_window\\(s,\\s*t\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def min_window(s, t):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Iterate all substrings.",
+                    "placeholderCode": "    res = \"\"\n    for i in range(len(s)):\n        for j in range(i, len(s)):\n            sub = s[i : j + 1]\n            # Check if sub contains t (omitted for brevity)\n            pass",
+                    "validationRegex": "^\\s+res\\s*=\\s*\"\"\\s*for\\s+i\\s+in\\s+range\\(len\\(s\\)\\):\\s*for\\s+j\\s+in\\s+range\\(i,\\s*len\\(s\\)\\):\\s*sub\\s*=\\s*s\\[i\\s*:\\s*j\\s*\\+\\s*1\\]\\s*pass$",
+                    "hint": "Iterate through all substrings using nested loops.",
+                    "solutionCode": "    res = \"\"\n    for i in range(len(s)):\n        for j in range(i, len(s)):\n            sub = s[i : j + 1]\n            # Check if sub contains t (omitted for brevity)\n            pass"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Sliding Window",
+            "description": "Expand right, shrink left when valid.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function min_window that takes s and t.",
+                    "placeholderCode": "def min_window(s, t):",
+                    "validationRegex": "^def\\s+min_window\\(s,\\s*t\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def min_window(s, t):"
+                },
+                {
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*res\\s*return\\s+s\\[l\\s*:\\s*r\\s*\\+\\s*1\\]\\s+if\\s+resLen\\s*!=\\s*float\\(\"inf\"\\)\\s+else\\s+\"\"$",
+                    "hint": "Return the substring or empty string.",
+                    "solutionCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\""
+                }
+            ]
+        }
+    }
+}

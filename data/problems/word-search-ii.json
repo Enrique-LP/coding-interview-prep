@@ -1,0 +1,91 @@
+{
+    "id": "word-search-ii",
+    "title": "Word Search II",
+    "description": "Given an m x n board of characters and a list of strings words, return all words on the board.",
+    "examples": [
+        {
+            "input": "board = [[\"o\",\"a\",\"a\",\"n\"],[\"e\",\"t\",\"a\",\"e\"],[\"i\",\"h\",\"k\",\"r\"],[\"i\",\"f\",\"l\",\"v\"]], words = [\"oath\",\"pea\",\"eat\",\"rain\"]",
+            "output": "[\"eat\",\"oath\"]"
+        },
+        {
+            "input": "board = [[\"a\",\"b\"],[\"c\",\"d\"]], words = [\"abcb\"]",
+            "output": "[]"
+        }
+    ],
+    "constraints": [
+        "m == board.length",
+        "n == board[i].length",
+        "1 <= m, n <= 12",
+        "board[i][j] is a lowercase English letter.",
+        "1 <= words.length <= 3 * 10^4",
+        "1 <= words[i].length <= 10",
+        "words[i] consists of lowercase English letters.",
+        "All the strings of words are unique."
+    ],
+    "difficulty": "Hard",
+    "topic": "Tries",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "DFS for each word",
+            "description": "Run DFS for each word on the board.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function find_words that takes board and words.",
+                    "placeholderCode": "def find_words(board, words):",
+                    "validationRegex": "^def\\s+find_words\\(board,\\s*words\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def find_words(board, words):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Iterate words and board.",
+                    "placeholderCode": "    res = []\n    for word in words:\n        # Check if word exists on board (omitted for brevity)\n        pass",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*for\\s+word\\s+in\\s+words:\\s*pass$",
+                    "hint": "Iterate through each word and check if it exists on the board using DFS.",
+                    "solutionCode": "    res = []\n    for word in words:\n        # Check if word exists on board (omitted for brevity)\n        pass"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Trie + DFS",
+            "description": "Build Trie from words, then DFS on board.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define TrieNode.",
+                    "placeholderCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.isWord = False\n    def addWord(self, word):\n        cur = self\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.isWord = True",
+                    "validationRegex": "^class\\s+TrieNode:\\s*def\\s+__init__\\(self\\):\\s*self\\.children\\s*=\\s*{}\\s*self\\.isWord\\s*=\\s*False\\s*def\\s+addWord\\(self,\\s*word\\):\\s*cur\\s*=\\s*self\\s*for\\s+c\\s+in\\s+word:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*cur\\.isWord\\s*=\\s*True$",
+                    "hint": "Define a TrieNode class with children and isWord flag, and an addWord method.",
+                    "solutionCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.isWord = False\n    def addWord(self, word):\n        cur = self\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.isWord = True"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define find_words.",
+                    "placeholderCode": "def find_words(board, words):",
+                    "validationRegex": "^def\\s+find_words\\(board,\\s*words\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def find_words(board, words):"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Build Trie.",
+                    "placeholderCode": "    root = TrieNode()\n    for w in words:\n        root.addWord(w)",
+                    "validationRegex": "^\\s+root\\s*=\\s*TrieNode\\(\\)\\s*for\\s+w\\s+in\\s+words:\\s*root\\.addWord\\(w\\)$",
+                    "hint": "Insert all words into the Trie.",
+                    "solutionCode": "    root = TrieNode()\n    for w in words:\n        root.addWord(w)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "DFS on board.",
+                    "placeholderCode": "    ROWS, COLS = len(board), len(board[0])\n    res, visit = set(), set()\n    def dfs(r, c, node, word):\n        if (r < 0 or c < 0 or r == ROWS or c == COLS or\n            (r, c) in visit or board[r][c] not in node.children):\n            return\n        visit.add((r, c))\n        node = node.children[board[r][c]]\n        word += board[r][c]\n        if node.isWord:\n            res.add(word)\n        dfs(r + 1, c, node, word)\n        dfs(r - 1, c, node, word)\n        dfs(r, c + 1, node, word)\n        dfs(r, c - 1, node, word)\n        visit.remove((r, c))\n    for r in range(ROWS):\n        for c in range(COLS):\n            dfs(r, c, root, \"\")\n    return list(res)",
+                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)\\s*res,\\s*visit\\s*=\\s*set\\(\\),\\s*set\\(\\)\\s*def\\s+dfs\\(r,\\s*c,\\s*node,\\s*word\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*ROWS\\s+or\\s+c\\s*==\\s*COLS\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+board\\[r\\]\\[c\\]\\s+not\\s+in\\s+node\\.children\\):\\s*return\\s*visit\\.add\\(\\(\\(r,\\s*c\\)\\)\\)\\s*node\\s*=\\s*node\\.children\\[board\\[r\\]\\[c\\]\\]\\s*word\\s*\\+=\\s*board\\[r\\]\\[c\\]\\s*if\\s+node\\.isWord:\\s*res\\.add\\(word\\)\\s*dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*node,\\s*word\\)\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*node,\\s*word\\)\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*node,\\s*word\\)\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*node,\\s*word\\)\\s*visit\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)\\s*for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*dfs\\(r,\\s*c,\\s*root,\\s*\"\"\\)\\s*return\\s+list\\(res\\)$",
+                    "hint": "Perform DFS on the board, traversing the Trie simultaneously.\\n\\nExample:\\nBoard: [['o','a'],['e','t']]. Trie has \"oath\".\\nStart at 'o'. Trie has 'o'. Move to 'a'. Trie has 'a'...\\nIf node.isWord, add to result. Mark visited to avoid cycles.",
+                    "solutionCode": "    ROWS, COLS = len(board), len(board[0])\n    res, visit = set(), set()\n    def dfs(r, c, node, word):\n        if (r < 0 or c < 0 or r == ROWS or c == COLS or\n            (r, c) in visit or board[r][c] not in node.children):\n            return\n        visit.add((r, c))\n        node = node.children[board[r][c]]\n        word += board[r][c]\n        if node.isWord:\n            res.add(word)\n        dfs(r + 1, c, node, word)\n        dfs(r - 1, c, node, word)\n        dfs(r, c + 1, node, word)\n        dfs(r, c - 1, node, word)\n        visit.remove((r, c))\n    for r in range(ROWS):\n        for c in range(COLS):\n            dfs(r, c, root, \"\")\n    return list(res)"
+                }
+            ]
+        }
+    }
+}

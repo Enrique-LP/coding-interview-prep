@@ -1,0 +1,140 @@
+{
+    "id": "two-sum",
+    "title": "Two Sum",
+    "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
+    "examples": [
+        {
+            "input": "nums = [2,7,11,15], target = 9",
+            "output": "[0,1]",
+            "explanation": "Because nums[0] + nums[1] == 9, we return [0, 1]."
+        },
+        {
+            "input": "nums = [3,2,4], target = 6",
+            "output": "[1,2]"
+        },
+        {
+            "input": "nums = [3,3], target = 6",
+            "output": "[0,1]"
+        }
+    ],
+    "constraints": [
+        "2 <= nums.length <= 10^4",
+        "-10^9 <= nums[i] <= 10^9",
+        "-10^9 <= target <= 10^9",
+        "Only one valid answer exists."
+    ],
+    "difficulty": "Easy",
+    "topic": "Arrays & Hashing",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Brute Force",
+            "description": "Check every pair of numbers.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function two_sum that takes a list of integers nums and an integer target.",
+                    "placeholderCode": "def two_sum(nums, target):",
+                    "validationRegex": "^def\\s+two_sum\\(nums,\\s*target\\):$",
+                    "hint": "Use the `def` keyword to define a function.",
+                    "solutionCode": "def two_sum(nums, target):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize a loop to iterate through the array with index i.",
+                    "placeholderCode": "    for i in range(len(nums)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):$",
+                    "hint": "Use `range(len(nums))` to get indices from 0 to length-1.",
+                    "solutionCode": "    for i in range(len(nums)):"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize a nested loop to iterate through the array with index j, starting from i + 1.",
+                    "placeholderCode": "        for j in range(i + 1, len(nums)):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(i\\s*\\+\\s*1,\\s*len\\(nums\\)\\):$",
+                    "hint": "Start the inner loop from `i + 1` to avoid using the same element twice.",
+                    "solutionCode": "        for j in range(i + 1, len(nums)):"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Check if the sum of nums[i] and nums[j] equals the target.",
+                    "placeholderCode": "            if nums[i] + nums[j] == target:",
+                    "validationRegex": "^\\s+if\\s+nums\\[i\\]\\s*\\+\\s*nums\\[j\\]\\s*==\\s*target:$",
+                    "hint": "Use the `if` statement to compare the sum.",
+                    "solutionCode": "            if nums[i] + nums[j] == target:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return the indices i and j as a list.",
+                    "placeholderCode": "                return [i, j]",
+                    "validationRegex": "^\\s+return\\s+\\[i,\\s*j\\]$",
+                    "hint": "Return the indices in a list format `[i, j]`.",
+                    "solutionCode": "                return [i, j]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Hash Map",
+            "description": "Use a hash map to store complements.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function two_sum that takes a list of integers nums and an integer target.",
+                    "placeholderCode": "def two_sum(nums, target):",
+                    "validationRegex": "^def\\s+two_sum\\(nums,\\s*target\\):$",
+                    "hint": "Use the `def` keyword to define a function.",
+                    "solutionCode": "def two_sum(nums, target):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize an empty dictionary to store the complement of each number and its index.",
+                    "placeholderCode": "    prevMap = {}",
+                    "validationRegex": "^\\s+prevMap\\s*=\\s*{}$",
+                    "hint": "Use `{}` to create an empty dictionary.",
+                    "solutionCode": "    prevMap = {}"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through the array with both index i and value n.",
+                    "placeholderCode": "    for i, n in enumerate(nums):",
+                    "validationRegex": "^\\s+for\\s+i,\\s*n\\s+in\\s+enumerate\\(nums\\):$",
+                    "hint": "Use `enumerate(nums)` to get both index and value.",
+                    "solutionCode": "    for i, n in enumerate(nums):"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Calculate the difference diff between the target and the current number n.",
+                    "placeholderCode": "        diff = target - n",
+                    "validationRegex": "^\\s+diff\\s*=\\s*target\\s*-\\s*n$",
+                    "hint": "Subtract `n` from `target`.",
+                    "solutionCode": "        diff = target - n"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if the difference diff is already in the dictionary.",
+                    "placeholderCode": "        if diff in prevMap:",
+                    "validationRegex": "^\\s+if\\s+diff\\s+in\\s+prevMap:$",
+                    "hint": "Use the `in` keyword to check for existence in the dictionary.\\n\\nExample:\\nIf target=9, n=7, diff=2.\\nIf prevMap={2: 0}, then `2 in prevMap` is True.",
+                    "solutionCode": "        if diff in prevMap:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "If it is, return the index of the difference (from the dictionary) and the current index i.",
+                    "placeholderCode": "            return [prevMap[diff], i]",
+                    "validationRegex": "^\\s+return\\s+\\[prevMap\\[diff\\],\\s*i\\]$",
+                    "hint": "Access the value from the map using `prevMap[diff]`.",
+                    "solutionCode": "            return [prevMap[diff], i]"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Store the current number n and its index i in the dictionary.",
+                    "placeholderCode": "        prevMap[n] = i",
+                    "validationRegex": "^\\s+prevMap\\[n\\]\\s*=\\s*i$",
+                    "hint": "Assign the index `i` to the key `n` in the dictionary.",
+                    "solutionCode": "        prevMap[n] = i"
+                }
+            ]
+        }
+    }
+}

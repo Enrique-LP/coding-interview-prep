@@ -1,0 +1,111 @@
+{
+    "id": "partition-equal-subset-sum",
+    "title": "Partition Equal Subset Sum",
+    "description": "Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.",
+    "examples": [
+        {
+            "input": "nums = [1,5,11,5]",
+            "output": "true",
+            "explanation": "The array can be partitioned as [1, 5, 5] and [11]."
+        },
+        {
+            "input": "nums = [1,2,3,5]",
+            "output": "false",
+            "explanation": "The array cannot be partitioned into equal sum subsets."
+        }
+    ],
+    "constraints": [
+        "1 <= nums.length <= 200",
+        "1 <= nums[i] <= 100"
+    ],
+    "difficulty": "Medium",
+    "topic": "1-D DP",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Recursion",
+            "description": "Try all subsets.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define canPartition.",
+                    "placeholderCode": "def canPartition(nums):",
+                    "validationRegex": "^def\\s+canPartition\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def canPartition(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Check sum parity.",
+                    "placeholderCode": "    if sum(nums) % 2:\n        return False",
+                    "validationRegex": "^\\s+if\\s+sum\\(nums\\)\\s*%\\s*2:\\s*return\\s+False$",
+                    "hint": "If the total sum is odd, it's impossible to partition into two equal sums.",
+                    "solutionCode": "    if sum(nums) % 2:\n        return False"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define DFS.",
+                    "placeholderCode": "    target = sum(nums) // 2\n    def dfs(i, current_sum):\n        if current_sum == target:\n            return True\n        if current_sum > target or i >= len(nums):\n            return False\n        return dfs(i + 1, current_sum + nums[i]) or dfs(i + 1, current_sum)",
+                    "validationRegex": "^\\s+target\\s*=\\s*sum\\(nums\\)\\s*//\\s*2\\s*def\\s+dfs\\(i,\\s*current_sum\\):\\s*if\\s+current_sum\\s*==\\s*target:\\s*return\\s+True\\s*if\\s+current_sum\\s*>\\s*target\\s+or\\s+i\\s*>=\\s*len\\(nums\\):\\s*return\\s+False\\s*return\\s+dfs\\(i\\s*\\+\\s*1,\\s*current_sum\\s*\\+\\s*nums\\[i\\]\\)\\s+or\\s+dfs\\(i\\s*\\+\\s*1,\\s*current_sum\\)$",
+                    "hint": "Recursive function to check if a subset sums to `target`. Try including or excluding current element.\\n\\nExample:\\nNums=[1, 5]. Target=3.\\nDFS(0, 0):\\n  Include 1 -> DFS(1, 1).\\n    Include 5 -> DFS(2, 6) (False).\\n    Exclude 5 -> DFS(2, 1) (False).\\n  Exclude 1 -> DFS(1, 0).\\n    Include 5 -> DFS(2, 5) (False).\\n    Exclude 5 -> DFS(2, 0) (False).",
+                    "solutionCode": "    target = sum(nums) // 2\n    def dfs(i, current_sum):\n        if current_sum == target:\n            return True\n        if current_sum > target or i >= len(nums):\n            return False\n        return dfs(i + 1, current_sum + nums[i]) or dfs(i + 1, current_sum)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Call DFS.",
+                    "placeholderCode": "    return dfs(0, 0)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*0\\)$",
+                    "hint": "Start DFS from index 0 with current sum 0.",
+                    "solutionCode": "    return dfs(0, 0)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP using Set",
+            "description": "Iteratively build reachable sums.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define canPartition.",
+                    "placeholderCode": "def canPartition(nums):",
+                    "validationRegex": "^def\\s+canPartition\\(nums\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def canPartition(nums):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Check sum parity.",
+                    "placeholderCode": "    if sum(nums) % 2:\n        return False",
+                    "validationRegex": "^\\s+if\\s+sum\\(nums\\)\\s*%\\s*2:\\s*return\\s+False$",
+                    "hint": "If the total sum is odd, it's impossible to partition into two equal sums.",
+                    "solutionCode": "    if sum(nums) % 2:\n        return False"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize DP set.",
+                    "placeholderCode": "    dp = set()\n    dp.add(0)\n    target = sum(nums) // 2",
+                    "validationRegex": "^\\s+dp\\s*=\\s*set\\(\\)\\s*dp\\.add\\(0\\)\\s*target\\s*=\\s*sum\\(nums\\)\\s*//\\s*2$",
+                    "hint": "Use a set `dp` to store all possible subset sums. Initialize with 0.",
+                    "solutionCode": "    dp = set()\n    dp.add(0)\n    target = sum(nums) // 2"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Iterate nums.",
+                    "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):\n        nextDP = set()\n        for t in dp:\n            if (t + nums[i]) == target:\n                return True\n            nextDP.add(t + nums[i])\n            nextDP.add(t)\n        dp = nextDP",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*nextDP\\s*=\\s*set\\(\\)\\s*for\\s+t\\s+in\\s+dp:\\s*if\\s*\\(t\\s*\\+\\s*nums\\[i\\]\\)\\s*==\\s*target:\\s*return\\s+True\\s*nextDP\\.add\\(t\\s*\\+\\s*nums\\[i\\]\\)\\s*nextDP\\.add\\(t\\)\\s*dp\\s*=\\s*nextDP$",
+                    "hint": "For each number, create a new set of sums by adding the number to existing sums. If target is reached, return True.\\n\\nExample:\\nNums=[1, 5]. Target=3.\\nInit: DP={0}.\\nN=1: Next={0+1, 0} = {1, 0}.\\nN=5: Next={1+5, 0+5, 1, 0} = {6, 5, 1, 0}.\\nTarget 3 not in set.",
+                    "solutionCode": "    for i in range(len(nums) - 1, -1, -1):\n        nextDP = set()\n        for t in dp:\n            if (t + nums[i]) == target:\n                return True\n            nextDP.add(t + nums[i])\n            nextDP.add(t)\n        dp = nextDP"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return True if target in dp else False",
+                    "validationRegex": "^\\s+return\\s+True\\s+if\\s+target\\s+in\\s+dp\\s+else\\s+False$",
+                    "hint": "Check if target sum is in the final set of possible sums.",
+                    "solutionCode": "    return True if target in dp else False"
+                }
+            ]
+        }
+    }
+}

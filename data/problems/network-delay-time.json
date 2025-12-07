@@ -1,0 +1,110 @@
+{
+    "id": "network-delay-time",
+    "title": "Network Delay Time",
+    "description": "You are given a network of n nodes, labeled from 1 to n. You are also given times, a list of travel times as directed edges times[i] = (ui, vi, wi), where ui is the source node, vi is the target node, and wi is the time it takes for a signal to travel from source to target. We will send a signal from a given node k. Return the minimum time it takes for all the n nodes to receive the signal. If it is impossible for all the n nodes to receive the signal, return -1.",
+    "examples": [
+        {
+            "input": "times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2",
+            "output": "2"
+        },
+        {
+            "input": "times = [[1,2,1]], n = 2, k = 1",
+            "output": "1"
+        },
+        {
+            "input": "times = [[1,2,1]], n = 2, k = 2",
+            "output": "-1"
+        }
+    ],
+    "constraints": [
+        "1 <= k <= n <= 100",
+        "1 <= times.length <= 6000",
+        "times[i].length == 3",
+        "1 <= ui, vi <= n",
+        "ui != vi",
+        "0 <= wi <= 100",
+        "All the pairs (ui, vi) are unique. (i.e., no multiple edges.)"
+    ],
+    "difficulty": "Medium",
+    "topic": "Advanced Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Dijkstra's Algorithm",
+            "description": "Use Dijkstra's algorithm to find shortest paths.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define networkDelayTime.",
+                    "placeholderCode": "def networkDelayTime(times, n, k):",
+                    "validationRegex": "^def\\s+networkDelayTime\\(times,\\s*n,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def networkDelayTime(times, n, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Build graph.",
+                    "placeholderCode": "    edges = collections.defaultdict(list)\n    for u, v, w in times:\n        edges[u].append((v, w))",
+                    "validationRegex": "^\\s+edges\\s*=\\s*collections\\.defaultdict\\(list\\)\\s*for\\s+u,\\s*v,\\s*w\\s+in\\s+times:\\s*edges\\[u\\]\\.append\\(\\(v,\\s*w\\)\\)$",
+                    "hint": "Create an adjacency list where each node points to its neighbors and the weight of the edge.",
+                    "solutionCode": "    edges = collections.defaultdict(list)\n    for u, v, w in times:\n        edges[u].append((v, w))"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Run Dijkstra's.",
+                    "placeholderCode": "    minHeap = [(0, k)]\n    visit = set()\n    t = 0\n    while minHeap:\n        w1, n1 = heapq.heappop(minHeap)\n        if n1 in visit:\n            continue\n        visit.add(n1)\n        t = max(t, w1)\n        for n2, w2 in edges[n1]:\n            if n2 not in visit:\n                heapq.heappush(minHeap, (w1 + w2, n2))",
+                    "validationRegex": "^\\s+minHeap\\s*=\\s*\\[\\(0,\\s*k\\)\\]\\s*visit\\s*=\\s*set\\(\\)\\s*t\\s*=\\s*0\\s*while\\s+minHeap:\\s*w1,\\s*n1\\s*=\\s*heapq\\.heappop\\(minHeap\\)\\s*if\\s+n1\\s+in\\s+visit:\\s*continue\\s*visit\\.add\\(n1\\)\\s*t\\s*=\\s*max\\(t,\\s*w1\\)\\s*for\\s+n2,\\s*w2\\s+in\\s+edges\\[n1\\]:\\s*if\\s+n2\\s+not\\s+in\\s+visit:\\s*heapq\\.heappush\\(minHeap,\\s*\\(w1\\s*\\+\\s*w2,\\s*n2\\)\\)$",
+                    "hint": "Use a min-heap to always expand the node with the smallest accumulated time. Keep track of visited nodes to avoid cycles and redundant work.\\n\\nExample:\\nTimes=[[2,1,1], [2,3,1], [3,4,1]]. Start K=2.\\nMinH=[(0, 2)].\\nPop (0, 2). Visit {2}. MaxTime=0. Neighbors: (1, cost 1), (3, cost 1).\\nPush (1, 1), (1, 3).\\nPop (1, 1). Visit {2, 1}. MaxTime=1.\\nPop (1, 3). Visit {2, 1, 3}. MaxTime=1. Neighbor: (4, cost 1).\\nPush (2, 4). Pop (2, 4). MaxTime=2.",
+                    "solutionCode": "    minHeap = [(0, k)]\n    visit = set()\n    t = 0\n    while minHeap:\n        w1, n1 = heapq.heappop(minHeap)\n        if n1 in visit:\n            continue\n        visit.add(n1)\n        t = max(t, w1)\n        for n2, w2 in edges[n1]:\n            if n2 not in visit:\n                heapq.heappush(minHeap, (w1 + w2, n2))"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return t if len(visit) == n else -1",
+                    "validationRegex": "^\\s+return\\s+t\\s+if\\s+len\\(visit\\)\\s*==\\s*n\\s+else\\s*-1$",
+                    "hint": "If we visited all n nodes, return the max time recorded (which is the time the last node received the signal). Otherwise, return -1.",
+                    "solutionCode": "    return t if len(visit) == n else -1"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Dijkstra's Algorithm",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define networkDelayTime.",
+                    "placeholderCode": "def networkDelayTime(times, n, k):",
+                    "validationRegex": "^def\\s+networkDelayTime\\(times,\\s*n,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def networkDelayTime(times, n, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Build graph.",
+                    "placeholderCode": "    edges = collections.defaultdict(list)\n    for u, v, w in times:\n        edges[u].append((v, w))",
+                    "validationRegex": "^\\s+edges\\s*=\\s*collections\\.defaultdict\\(list\\)\\s*for\\s+u,\\s*v,\\s*w\\s+in\\s+times:\\s*edges\\[u\\]\\.append\\(\\(v,\\s*w\\)\\)$",
+                    "hint": "Create an adjacency list where each node points to its neighbors and the weight of the edge.",
+                    "solutionCode": "    edges = collections.defaultdict(list)\n    for u, v, w in times:\n        edges[u].append((v, w))"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Run Dijkstra's.",
+                    "placeholderCode": "    minHeap = [(0, k)]\n    visit = set()\n    t = 0\n    while minHeap:\n        w1, n1 = heapq.heappop(minHeap)\n        if n1 in visit:\n            continue\n        visit.add(n1)\n        t = max(t, w1)\n        for n2, w2 in edges[n1]:\n            if n2 not in visit:\n                heapq.heappush(minHeap, (w1 + w2, n2))",
+                    "validationRegex": "^\\s+minHeap\\s*=\\s*\\[\\(0,\\s*k\\)\\]\\s*visit\\s*=\\s*set\\(\\)\\s*t\\s*=\\s*0\\s*while\\s+minHeap:\\s*w1,\\s*n1\\s*=\\s*heapq\\.heappop\\(minHeap\\)\\s*if\\s+n1\\s+in\\s+visit:\\s*continue\\s*visit\\.add\\(n1\\)\\s*t\\s*=\\s*max\\(t,\\s*w1\\)\\s*for\\s+n2,\\s*w2\\s+in\\s+edges\\[n1\\]:\\s*if\\s+n2\\s+not\\s+in\\s+visit:\\s*heapq\\.heappush\\(minHeap,\\s*\\(w1\\s*\\+\\s*w2,\\s*n2\\)\\)$",
+                    "hint": "Use a min-heap to always expand the node with the smallest accumulated time. Keep track of visited nodes to avoid cycles and redundant work.\\n\\nExample:\\nTimes=[[2,1,1], [2,3,1], [3,4,1]]. Start K=2.\\nMinH=[(0, 2)].\\nPop (0, 2). Visit {2}. MaxTime=0. Neighbors: (1, cost 1), (3, cost 1).\\nPush (1, 1), (1, 3).\\nPop (1, 1). Visit {2, 1}. MaxTime=1.\\nPop (1, 3). Visit {2, 1, 3}. MaxTime=1. Neighbor: (4, cost 1).\\nPush (2, 4). Pop (2, 4). MaxTime=2.",
+                    "solutionCode": "    minHeap = [(0, k)]\n    visit = set()\n    t = 0\n    while minHeap:\n        w1, n1 = heapq.heappop(minHeap)\n        if n1 in visit:\n            continue\n        visit.add(n1)\n        t = max(t, w1)\n        for n2, w2 in edges[n1]:\n            if n2 not in visit:\n                heapq.heappush(minHeap, (w1 + w2, n2))"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return t if len(visit) == n else -1",
+                    "validationRegex": "^\\s+return\\s+t\\s+if\\s+len\\(visit\\)\\s*==\\s*n\\s+else\\s*-1$",
+                    "hint": "If we visited all n nodes, return the max time recorded (which is the time the last node received the signal). Otherwise, return -1.",
+                    "solutionCode": "    return t if len(visit) == n else -1"
+                }
+            ]
+        }
+    }
+}

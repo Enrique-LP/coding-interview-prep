@@ -1,0 +1,89 @@
+{
+    "id": "number-of-connected-components-in-an-undirected-graph",
+    "title": "Number of Connected Components in an Undirected Graph",
+    "description": "You have a graph of n nodes. You are given an integer n and an array edges where edges[i] = [ai, bi] indicates that there is an edge between ai and bi in the graph. Return the number of connected components in the graph.",
+    "examples": [
+        {
+            "input": "n = 5, edges = [[0,1],[1,2],[3,4]]",
+            "output": "2"
+        },
+        {
+            "input": "n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]",
+            "output": "1"
+        }
+    ],
+    "constraints": [
+        "1 <= n <= 2000",
+        "1 <= edges.length <= 5000",
+        "edges[i].length == 2",
+        "0 <= ai <= bi < n",
+        "ai != bi",
+        "There are no repeated edges."
+    ],
+    "difficulty": "Medium",
+    "topic": "Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Union Find",
+            "description": "Use Union Find to count components.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define countComponents.",
+                    "placeholderCode": "def countComponents(n, edges):",
+                    "validationRegex": "^def\\s+countComponents\\(n,\\s*edges\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def countComponents(n, edges):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize Union Find.",
+                    "placeholderCode": "    par = [i for i in range(n)]\n    rank = [1] * n\n    def find(n1):\n        res = n1\n        while res != par[res]:\n            par[res] = par[par[res]]\n            res = par[res]\n        return res\n    def union(n1, n2):\n        p1, p2 = find(n1), find(n2)\n        if p1 == p2:\n            return 0\n        if rank[p1] > rank[p2]:\n            par[p2] = p1\n            rank[p1] += rank[p2]\n        else:\n            par[p1] = p2\n            rank[p2] += rank[p1]\n        return 1",
+                    "validationRegex": "^\\s+par\\s*=\\s*\\[i\\s+for\\s+i\\s+in\\s+range\\(n\\)\\]\\s*rank\\s*=\\s*\\[1\\]\\s*\\*\\s*n\\s*def\\s+find\\(n1\\):\\s*res\\s*=\\s*n1\\s*while\\s+res\\s*!=\\s*par\\[res\\]:\\s*par\\[res\\]\\s*=\\s*par\\[par\\[res\\]\\]\\s*res\\s*=\\s*par\\[res\\]\\s*return\\s+res\\s*def\\s+union\\(n1,\\s*n2\\):\\s*p1,\\s*p2\\s*=\\s*find\\(n1\\),\\s*find\\(n2\\)\\s*if\\s+p1\\s*==\\s*p2:\\s*return\\s*0\\s*if\\s+rank\\[p1\\]\\s*>\\s+rank\\[p2\\]:\\s*par\\[p2\\]\\s*=\\s*p1\\s*rank\\[p1\\]\\s*\\+=\\s*rank\\[p2\\]\\s*else:\\s*par\\[p1\\]\\s*=\\s*p2\\s*rank\\[p2\\]\\s*\\+=\\s*rank\\[p1\\]\\s*return\\s+1$",
+                    "hint": "Implement Union-Find. `find` gets the root with path compression. `union` merges sets by rank and returns 1 if a merge happened (reducing component count), 0 otherwise.",
+                    "solutionCode": "    par = [i for i in range(n)]\n    rank = [1] * n\n    def find(n1):\n        res = n1\n        while res != par[res]:\n            par[res] = par[par[res]]\n            res = par[res]\n        return res\n    def union(n1, n2):\n        p1, p2 = find(n1), find(n2)\n        if p1 == p2:\n            return 0\n        if rank[p1] > rank[p2]:\n            par[p2] = p1\n            rank[p1] += rank[p2]\n        else:\n            par[p1] = p2\n            rank[p2] += rank[p1]\n        return 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Process edges.",
+                    "placeholderCode": "    res = n\n    for n1, n2 in edges:\n        res -= union(n1, n2)\n    return res",
+                    "validationRegex": "^\\s+res\\s*=\\s*n\\s*for\\s+n1,\\s*n2\\s+in\\s+edges:\\s*res\\s*-=\\s*union\\(n1,\\s*n2\\)\\s*return\\s+res$",
+                    "hint": "Start with n components. For each edge, if it connects two previously unconnected components, decrement the count.",
+                    "solutionCode": "    res = n\n    for n1, n2 in edges:\n        res -= union(n1, n2)\n    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Union Find",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define countComponents.",
+                    "placeholderCode": "def countComponents(n, edges):",
+                    "validationRegex": "^def\\s+countComponents\\(n,\\s*edges\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def countComponents(n, edges):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize Union Find.",
+                    "placeholderCode": "    par = [i for i in range(n)]\n    rank = [1] * n\n    def find(n1):\n        res = n1\n        while res != par[res]:\n            par[res] = par[par[res]]\n            res = par[res]\n        return res\n    def union(n1, n2):\n        p1, p2 = find(n1), find(n2)\n        if p1 == p2:\n            return 0\n        if rank[p1] > rank[p2]:\n            par[p2] = p1\n            rank[p1] += rank[p2]\n        else:\n            par[p1] = p2\n            rank[p2] += rank[p1]\n        return 1",
+                    "validationRegex": "^\\s+par\\s*=\\s*\\[i\\s+for\\s+i\\s+in\\s+range\\(n\\)\\]\\s*rank\\s*=\\s*\\[1\\]\\s*\\*\\s*n\\s*def\\s+find\\(n1\\):\\s*res\\s*=\\s*n1\\s*while\\s+res\\s*!=\\s*par\\[res\\]:\\s*par\\[res\\]\\s*=\\s*par\\[par\\[res\\]\\]\\s*res\\s*=\\s*par\\[res\\]\\s*return\\s+res\\s*def\\s+union\\(n1,\\s*n2\\):\\s*p1,\\s*p2\\s*=\\s*find\\(n1\\),\\s*find\\(n2\\)\\s*if\\s+p1\\s*==\\s*p2:\\s*return\\s*0\\s*if\\s+rank\\[p1\\]\\s*>\\s+rank\\[p2\\]:\\s*par\\[p2\\]\\s*=\\s*p1\\s*rank\\[p1\\]\\s*\\+=\\s*rank\\[p2\\]\\s*else:\\s*par\\[p1\\]\\s*=\\s*p2\\s*rank\\[p2\\]\\s*\\+=\\s*rank\\[p1\\]\\s*return\\s+1$",
+                    "hint": "Implement Union-Find. `find` gets the root with path compression. `union` merges sets by rank and returns 1 if a merge happened (reducing component count), 0 otherwise.\\n\\nExample:\\nN=5. Edges=[[0,1], [1,2]].\\nInit: Par=[0,1,2,3,4]. Count=5.\\nUnion(0,1): Par[1]=0. Count=4.\\nUnion(1,2): Find(1)->0. Find(2)->2. Par[2]=0. Count=3.",
+                    "solutionCode": "    par = [i for i in range(n)]\n    rank = [1] * n\n    def find(n1):\n        res = n1\n        while res != par[res]:\n            par[res] = par[par[res]]\n            res = par[res]\n        return res\n    def union(n1, n2):\n        p1, p2 = find(n1), find(n2)\n        if p1 == p2:\n            return 0\n        if rank[p1] > rank[p2]:\n            par[p2] = p1\n            rank[p1] += rank[p2]\n        else:\n            par[p1] = p2\n            rank[p2] += rank[p1]\n        return 1"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Process edges.",
+                    "placeholderCode": "    res = n\n    for n1, n2 in edges:\n        res -= union(n1, n2)\n    return res",
+                    "validationRegex": "^\\s+res\\s*=\\s*n\\s*for\\s+n1,\\s*n2\\s+in\\s+edges:\\s*res\\s*-=\\s*union\\(n1,\\s*n2\\)\\s*return\\s+res$",
+                    "hint": "Start with n components. For each edge, if it connects two previously unconnected components, decrement the count.",
+                    "solutionCode": "    res = n\n    for n1, n2 in edges:\n        res -= union(n1, n2)\n    return res"
+                }
+            ]
+        }
+    }
+}

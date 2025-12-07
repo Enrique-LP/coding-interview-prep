@@ -1,0 +1,115 @@
+{
+    "id": "palindrome-number",
+    "title": "Palindrome Number",
+    "description": "Given an integer x, return true if x is a palindrome, and false otherwise.",
+    "examples": [
+        {
+            "input": "x = 121",
+            "output": "true",
+            "explanation": "121 reads as 121 from left to right and from right to left."
+        },
+        {
+            "input": "x = -121",
+            "output": "false",
+            "explanation": "From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome."
+        }
+    ],
+    "difficulty": "Easy",
+    "topic": "Math",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "String Conversion",
+            "description": "Convert the number to a string and check if it reads the same forwards and backwards.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_palindrome that takes an integer x.",
+                    "placeholderCode": "def is_palindrome(x):",
+                    "validationRegex": "^def\\s+is_palindrome\\(x\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_palindrome(x):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Convert the integer to a string.",
+                    "placeholderCode": "    s = str(x)",
+                    "validationRegex": "^\\s+s\\s*=\\s*str\\(x\\)$",
+                    "hint": "Use `str()` to convert the integer.",
+                    "solutionCode": "    s = str(x)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return true if the string is equal to its reverse.",
+                    "placeholderCode": "    return s == s[::-1]",
+                    "validationRegex": "^\\s+return\\s+s\\s*==\\s*s\\[::-1\\]$",
+                    "hint": "Use slicing `[::-1]` to reverse the string.",
+                    "solutionCode": "    return s == s[::-1]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Revert Half",
+            "description": "Revert the second half of the number and compare it with the first half.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_palindrome that takes an integer x.",
+                    "placeholderCode": "def is_palindrome(x):",
+                    "validationRegex": "^def\\s+is_palindrome\\(x\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_palindrome(x):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Handle edge cases: negative numbers or numbers ending in 0 (except 0 itself) are not palindromes.",
+                    "placeholderCode": "    if x < 0 or (x % 10 == 0 and x != 0): return False",
+                    "validationRegex": "^\\s+if\\s+x\\s*<\\s*0\\s+or\\s+\\(x\\s*%\\s*10\\s*==\\s*0\\s+and\\s+x\\s*!=\\s*0\\):\\s*return\\s+False$",
+                    "hint": "Negative numbers and numbers ending in 0 (except 0) cannot be palindromes.",
+                    "solutionCode": "    if x < 0 or (x % 10 == 0 and x != 0): return False"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize a variable to store the reversed half of the number.",
+                    "placeholderCode": "    reverted_number = 0",
+                    "validationRegex": "^\\s+reverted_number\\s*=\\s*0$",
+                    "hint": "Start with 0.",
+                    "solutionCode": "    reverted_number = 0"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Loop until the original number is greater than the reversed number.",
+                    "placeholderCode": "    while x > reverted_number:",
+                    "validationRegex": "^\\s+while\\s+x\\s*>\\s+reverted_number:$",
+                    "hint": "Use a `while` loop.",
+                    "solutionCode": "    while x > reverted_number:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Add the last digit of x to the reversed number.",
+                    "placeholderCode": "        reverted_number = reverted_number * 10 + x % 10",
+                    "validationRegex": "^\\s+reverted_number\\s*=\\s*reverted_number\\s*\\*\\s*10\\s*\\+\\s*x\\s*%\\s*10$",
+                    "hint": "Multiply by 10 to shift, then add the last digit (`x % 10`).",
+                    "solutionCode": "        reverted_number = reverted_number * 10 + x % 10"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Remove the last digit from x.",
+                    "placeholderCode": "        x //= 10",
+                    "validationRegex": "^\\s+x\\s*//=\\s*10$",
+                    "hint": "Use integer division `//= 10`.",
+                    "solutionCode": "        x //= 10"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check if the original number equals the reversed number (or reversed/10 for odd lengths).",
+                    "placeholderCode": "    return x == reverted_number or x == reverted_number // 10",
+                    "validationRegex": "^\\s+return\\s+x\\s*==\\s*reverted_number\\s+or\\s+x\\s*==\\s*reverted_number\\s*//\\s*10$",
+                    "hint": "Compare `x` with `reverted_number`. For odd lengths, divide `reverted_number` by 10.",
+                    "solutionCode": "    return x == reverted_number or x == reverted_number // 10"
+                }
+            ]
+        }
+    }
+}

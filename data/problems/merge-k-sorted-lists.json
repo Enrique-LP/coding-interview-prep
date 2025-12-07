@@ -1,0 +1,87 @@
+{
+    "id": "merge-k-sorted-lists",
+    "title": "Merge k Sorted Lists",
+    "description": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.",
+    "examples": [
+        {
+            "input": "lists = [[1,4,5],[1,3,4],[2,6]]",
+            "output": "[1,1,2,3,4,4,5,6]"
+        },
+        {
+            "input": "lists = []",
+            "output": "[]"
+        },
+        {
+            "input": "lists = [[]]",
+            "output": "[]"
+        }
+    ],
+    "constraints": [
+        "k == lists.length",
+        "0 <= k <= 10^4",
+        "0 <= lists[i].length <= 500",
+        "-10^4 <= lists[i][j] <= 10^4",
+        "lists[i] is sorted in ascending order.",
+        "The sum of lists[i].length will not exceed 10^4."
+    ],
+    "difficulty": "Hard",
+    "topic": "Linked List",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Collect and Sort",
+            "description": "Collect all nodes and sort them.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function merge_k_lists that takes lists.",
+                    "placeholderCode": "def merge_k_lists(lists):",
+                    "validationRegex": "^def\\s+merge_k_lists\\(lists\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def merge_k_lists(lists):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Collect values.",
+                    "placeholderCode": "    nodes = []\n    for l in lists:\n        while l:\n            nodes.append(l.val)\n            l = l.next",
+                    "validationRegex": "^\\s+nodes\\s*=\\s*\\[\\]\\s*for\\s+l\\s+in\\s+lists:\\s*while\\s+l:\\s*nodes\\.append\\(l\\.val\\)\\s*l\\s*=\\s*l\\.next$",
+                    "hint": "Iterate through all lists and collect values.",
+                    "solutionCode": "    nodes = []\n    for l in lists:\n        while l:\n            nodes.append(l.val)\n            l = l.next"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Sort and create list.",
+                    "placeholderCode": "    head = point = ListNode(0)\n    for x in sorted(nodes):\n        point.next = ListNode(x)\n        point = point.next\n    return head.next",
+                    "validationRegex": "^\\s+head\\s*=\\s*point\\s*=\\s*ListNode\\(0\\)\\s*for\\s+x\\s+in\\s+sorted\\(nodes\\):\\s*point\\.next\\s*=\\s*ListNode\\(x\\)\\s*point\\s*=\\s*point\\.next\\s*return\\s+head\\.next$",
+                    "hint": "Sort values and create a new linked list.",
+                    "solutionCode": "    head = point = ListNode(0)\n    for x in sorted(nodes):\n        point.next = ListNode(x)\n        point = point.next\n    return head.next"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Min Heap",
+            "description": "Use min heap to keep track of smallest element.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function merge_k_lists that takes lists.",
+                    "placeholderCode": "def merge_k_lists(lists):",
+                    "validationRegex": "^def\\s+merge_k_lists\\(lists\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def merge_k_lists(lists):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize heap.",
+                    "placeholderCode": "    import heapq\n    heap = []\n    for i, l in enumerate(lists):\n        if l:\n            heapq.heappush(heap, (l.val, i, l))",
+                    "validationRegex": "^\\s+import\\s+heapq\\s*heap\\s*=\\s*\\[\\]\\s*for\\s+i,\\s*l\\s+in\\s+enumerate\\(lists\\):\\s*if\\s+l:\\s*heapq\\.heappush\\(heap,\\s*\\(l\\.val,\\s*i,\\s*l\\)\\)$",
+                    "hint": "Push the head of each list into the heap.",
+                    "solutionCode": "    import heapq\n    heap = []\n    for i, l in enumerate(lists):\n        if l:\n            heapq.heappush(heap, (l.val, i, l))""validationRegex": "^\\s+return\\s+dummy\\.next$",
+                    "hint": "Return `dummy.next`.",
+                    "solutionCode": "    return dummy.next"
+                }
+            ]
+        }
+    }
+}

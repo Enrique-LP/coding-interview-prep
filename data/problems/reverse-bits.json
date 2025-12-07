@@ -1,0 +1,74 @@
+{
+    "id": "reverse-bits",
+    "title": "Reverse Bits",
+    "description": "Reverse bits of a given 32 bits unsigned integer.",
+    "examples": [
+        {
+            "input": "n = 00000010100101000001111010011100",
+            "output": "964176192 (00111001011110000010100101000000)",
+            "explanation": "The input binary string 00000010100101000001111010011100 represents the unsigned integer 43261596, so return 964176192 which its binary representation is 00111001011110000010100101000000."
+        },
+        {
+            "input": "n = 11111111111111111111111111111101",
+            "output": "3221225471 (10111111111111111111111111111111)",
+            "explanation": "The input binary string 11111111111111111111111111111101 represents the unsigned integer 4294967293, so return 3221225471 which its binary representation is 10111111111111111111111111111111."
+        }
+    ],
+    "constraints": [
+        "The input must be a binary string of length 32."
+    ],
+    "difficulty": "Easy",
+    "topic": "Bit Manipulation",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "String Manipulation",
+            "description": "Convert to binary string, reverse, convert back.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function reverse_bits that takes n.",
+                    "placeholderCode": "def reverse_bits(n):",
+                    "validationRegex": "^def\\s+reverse_bits\\(n\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Convert to binary string and reverse.",
+                    "placeholderCode": "    bin_str = bin(n)[2:].zfill(32)\n    rev_str = bin_str[::-1]",
+                    "validationRegex": "^\\s+bin_str\\s*=\\s*bin\\(n\\)\\[2:\\]\\.zfill\\(32\\)\\s*rev_str\\s*=\\s*bin_str\\[::-1\\]$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Convert back to int.",
+                    "placeholderCode": "    return int(rev_str, 2)",
+                    "validationRegex": "^\\s+return\\s+int\\(rev_str,\\s*2\\)$"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Bitwise Operations",
+            "description": "Shift bits to reverse.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function reverse_bits that takes n.",
+                    "placeholderCode": "def reverse_bits(n):",
+                    "validationRegex": "^def\\s+reverse_bits\\(n\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Loop 32 times.",
+                    "placeholderCode": "    res = 0\n    for _ in range(32):\n        res = (res << 1) + (n & 1)\n        n >>= 1",
+                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*for\\s+_\\s+in\\s+range\\(32\\):\\s*res\\s*=\\s*\\(res\\s*<<\\s*1\\)\\s*\\+\\s*\\(n\\s*&\\s*1\\)\\s*n\\s*>>=\\s*1$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$"
+                }
+            ]
+        }
+    }
+}

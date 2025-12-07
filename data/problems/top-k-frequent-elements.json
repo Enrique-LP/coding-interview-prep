@@ -1,0 +1,111 @@
+{
+    "id": "top-k-frequent-elements",
+    "title": "Top K Frequent Elements",
+    "description": "Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.",
+    "examples": [
+        {
+            "input": "nums = [1,1,1,2,2,3], k = 2",
+            "output": "[1,2]"
+        },
+        {
+            "input": "nums = [1], k = 1",
+            "output": "[1]"
+        }
+    ],
+    "constraints": [
+        "1 <= nums.length <= 10^5",
+        "-10^4 <= nums[i] <= 10^4",
+        "k is in the range [1, the number of unique elements in the array].",
+        "It is guaranteed that the answer is unique."
+    ],
+    "difficulty": "Medium",
+    "topic": "Array",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Sorting",
+            "description": "Count frequencies and sort by count.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function top_k_frequent that takes nums and k.",
+                    "placeholderCode": "def top_k_frequent(nums, k):",
+                    "validationRegex": "^def\\s+top_k_frequent\\(nums,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def top_k_frequent(nums, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Count the frequency of each number using a dictionary.",
+                    "placeholderCode": "    count = {}\n    for n in nums:\n        count[n] = 1 + count.get(n, 0)",
+                    "validationRegex": "^\\s+count\\s*=\\s*\\{\\}\\s*for\\s+n\\s+in\\s+nums:\\s*count\\[n\\]\\s*=\\s*1\\s*\\+\\s*count\\.get\\(n,\\s*0\\)$",
+                    "hint": "Use a dictionary and `.get(n, 0)` to count.",
+                    "solutionCode": "    count = {}\n    for n in nums:\n        count[n] = 1 + count.get(n, 0)"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Sort the items by frequency in descending order.",
+                    "placeholderCode": "    sorted_items = sorted(count.items(), key=lambda item: item[1], reverse=True)",
+                    "validationRegex": "^\\s+sorted_items\\s*=\\s*sorted\\(count\\.items\\(\\),\\s*key=lambda\\s+item:\\s*item\\[1\\],\\s*reverse=True\\)$",
+                    "hint": "Use `sorted()` with a lambda key for the second element (count).",
+                    "solutionCode": "    sorted_items = sorted(count.items(), key=lambda item: item[1], reverse=True)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return the first k elements.",
+                    "placeholderCode": "    return [item[0] for item in sorted_items[:k]]",
+                    "validationRegex": "^\\s+return\\s+\\[item\\[0\\]\\s+for\\s+item\\s+in\\s+sorted_items\\[:k\\]\\]$",
+                    "hint": "Use list comprehension and slice `[:k]`.",
+                    "solutionCode": "    return [item[0] for item in sorted_items[:k]]"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Bucket Sort",
+            "description": "Use bucket sort to achieve O(n) time complexity.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function top_k_frequent that takes nums and k.",
+                    "placeholderCode": "def top_k_frequent(nums, k):",
+                    "validationRegex": "^def\\s+top_k_frequent\\(nums,\\s*k\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def top_k_frequent(nums, k):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize a dictionary for counts and a list of lists for buckets.",
+                    "placeholderCode": "    count = {}\n    freq = [[] for i in range(len(nums) + 1)]",
+                    "validationRegex": "^\\s+count\\s*=\\s*\\{\\}\\s*freq\\s*=\\s*\\[\\[\\]\\s*for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*\\+\\s*1\\)\\]$",
+                    "hint": "Create `freq` as a list of empty lists with size `len(nums) + 1`.",
+                    "solutionCode": "    count = {}\n    freq = [[] for i in range(len(nums) + 1)]"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Count the frequency of each number.",
+                    "placeholderCode": "    for n in nums:\n        count[n] = 1 + count.get(n, 0)",
+                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:\\s*count\\[n\\]\\s*=\\s*1\\s*\\+\\s*count\\.get\\(n,\\s*0\\)$",
+                    "hint": "Populate the `count` dictionary.",
+                    "solutionCode": "    for n in nums:\n        count[n] = 1 + count.get(n, 0)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Populate the buckets where index is frequency.",
+                    "placeholderCode": "    for n, c in count.items():\n        freq[c].append(n)",
+                    "validationRegex": "^\\s+for\\s+n,\\s*c\\s+in\\s+count\\.items\\(\\):\\s*freq\\[c\\]\\.append\\(n\\)$",
+                    "hint": "Iterate through `count.items()` and append to `freq`.",
+                    "solutionCode": "    for n, c in count.items():\n        freq[c].append(n)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate through buckets from end to start to find top k elements.",
+                    "placeholderCode": "    res = []\n    for i in range(len(freq) - 1, 0, -1):\n        for n in freq[i]:\n            res.append(n)\n            if len(res) == k:\n                return res",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*for\\s+i\\s+in\\s+range\\(len\\(freq\\)\\s*-\\s*1,\\s*0,\\s*-1\\):\\s*for\\s+n\\s+in\\s+freq\\[i\\]:\\s*res\\.append\\(n\\)\\s*if\\s+len\\(res\\)\\s*==\\s*k:\\s*return\\s+res$",
+                    "hint": "Loop backwards through `freq`. Collect elements until `len(res) == k`.\\n\\nExample:\\nfreq=[[], [], [2], [1], [], ...]. (1 appears 3 times, 2 appears 2 times).\\nLoop from end. Found 1 at index 3. res=[1].\\nFound 2 at index 2. res=[1, 2]. Return.",
+                    "solutionCode": "    res = []\n    for i in range(len(freq) - 1, 0, -1):\n        for n in freq[i]:\n            res.append(n)\n            if len(res) == k:\n                return res"
+                }
+            ]
+        }
+    }
+}

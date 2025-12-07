@@ -1,0 +1,119 @@
+{
+    "id": "surrounded-regions",
+    "title": "Surrounded Regions",
+    "description": "Given an m x n matrix board containing 'X' and 'O', capture all regions that are 4-directionally surrounded by 'X'. A region is captured by flipping all 'O's into 'X's in that surrounded region.",
+    "examples": [
+        {
+            "input": "board = [[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"O\",\"O\",\"X\"],[\"X\",\"X\",\"O\",\"X\"],[\"X\",\"O\",\"X\",\"X\"]]",
+            "output": "[[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"O\",\"X\",\"X\"]]"
+        },
+        {
+            "input": "board = [[\"X\"]]",
+            "output": "[[\"X\"]]"
+        }
+    ],
+    "constraints": [
+        "m == board.length",
+        "n == board[i].length",
+        "1 <= m, n <= 200",
+        "board[i][j] is 'X' or 'O'."
+    ],
+    "difficulty": "Medium",
+    "topic": "Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "DFS from Borders",
+            "description": "Mark 'O's connected to border as safe, capture others.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function solve that takes board.",
+                    "placeholderCode": "def solve(board):",
+                    "validationRegex": "^def\\s+solve\\(board\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def solve(board):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize dimensions.",
+                    "placeholderCode": "    rows, cols = len(board), len(board[0])",
+                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)$",
+                    "hint": "Get the number of rows and columns.",
+                    "solutionCode": "    rows, cols = len(board), len(board[0])"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define DFS helper to mark safe 'O's as 'T'.",
+                    "placeholderCode": "    def capture(r, c):\n        if (r < 0 or c < 0 or r == rows or c == cols or\n            board[r][c] != 'O'):\n            return\n        board[r][c] = 'T'\n        capture(r + 1, c)\n        capture(r - 1, c)\n        capture(r, c + 1)\n        capture(r, c - 1)",
+                    "validationRegex": "^\\s+def\\s+capture\\(r,\\s*c\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*==\\s*cols\\s+or\\s+board\\[r\\]\\[c\\]\\s*!=\\s*'O'\\):\\s*return\\s*board\\[r\\]\\[c\\]\\s*=\\s*'T'\\s*capture\\(r\\s*\\+\\s*1,\\s*c\\)\\s*capture\\(r\\s*-\\s*1,\\s*c\\)\\s*capture\\(r,\\s*c\\s*\\+\\s*1\\)\\s*capture\\(r,\\s*c\\s*-\\s*1\\)$",
+                    "hint": "Recursive DFS. If out of bounds or not 'O', return. Mark current 'O' as 'T' (temporary safe) and recurse.",
+                    "solutionCode": "    def capture(r, c):\n        if (r < 0 or c < 0 or r == rows or c == cols or\n            board[r][c] != 'O'):\n            return\n        board[r][c] = 'T'\n        capture(r + 1, c)\n        capture(r - 1, c)\n        capture(r, c + 1)\n        capture(r, c - 1)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Run DFS on border 'O's.",
+                    "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if (board[r][c] == 'O' and\n                (r in [0, rows - 1] or c in [0, cols - 1])):\n                capture(r, c)",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s*\\(board\\[r\\]\\[c\\]\\s*==\\s*'O'\\s+and\\s*\\(r\\s+in\\s+\\[0,\\s*rows\\s*-\\s*1\\]\\s+or\\s+c\\s+in\\s+\\[0,\\s*cols\\s*-\\s*1\\]\\)\\):\\s*capture\\(r,\\s*c\\)$",
+                    "hint": "Iterate through the board. If a cell is 'O' and on the border, start DFS to mark it and its connected 'O's as safe.\\n\\nExample:\\nBoard=[['X','O','X'],['X','O','X'],['X','X','X']].\\n(0,1) is 'O' on border. DFS -> Mark (0,1) 'T'.\\nNeighbor (1,1) is 'O'. DFS -> Mark (1,1) 'T'.\\n(1,1) has no other 'O' neighbors. Done.",
+                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if (board[r][c] == 'O' and\n                (r in [0, rows - 1] or c in [0, cols - 1])):\n                capture(r, c)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Flip 'O' to 'X' and 'T' back to 'O'.",
+                    "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if board[r][c] == 'O':\n                board[r][c] = 'X'\n            elif board[r][c] == 'T':\n                board[r][c] = 'O'",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+board\\[r\\]\\[c\\]\\s*==\\s*'O':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'X'\\s*elif\\s+board\\[r\\]\\[c\\]\\s*==\\s*'T':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'O'$",
+                    "hint": "Final pass: change remaining 'O's (surrounded) to 'X', and revert 'T's (safe) back to 'O'.",
+                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if board[r][c] == 'O':\n                board[r][c] = 'X'\n            elif board[r][c] == 'T':\n                board[r][c] = 'O'"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DFS from Borders",
+            "description": "Same as brute force, O(m*n).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function solve that takes board.",
+                    "placeholderCode": "def solve(board):",
+                    "validationRegex": "^def\\s+solve\\(board\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def solve(board):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize dimensions.",
+                    "placeholderCode": "    rows, cols = len(board), len(board[0])",
+                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)$",
+                    "hint": "Get the number of rows and columns.",
+                    "solutionCode": "    rows, cols = len(board), len(board[0])"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Define DFS helper to mark safe 'O's as 'T'.",
+                    "placeholderCode": "    def capture(r, c):\n        if (r < 0 or c < 0 or r == rows or c == cols or\n            board[r][c] != 'O'):\n            return\n        board[r][c] = 'T'\n        capture(r + 1, c)\n        capture(r - 1, c)\n        capture(r, c + 1)\n        capture(r, c - 1)",
+                    "validationRegex": "^\\s+def\\s+capture\\(r,\\s*c\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*==\\s*cols\\s+or\\s+board\\[r\\]\\[c\\]\\s*!=\\s*'O'\\):\\s*return\\s*board\\[r\\]\\[c\\]\\s*=\\s*'T'\\s*capture\\(r\\s*\\+\\s*1,\\s*c\\)\\s*capture\\(r\\s*-\\s*1,\\s*c\\)\\s*capture\\(r,\\s*c\\s*\\+\\s*1\\)\\s*capture\\(r,\\s*c\\s*-\\s*1\\)$",
+                    "hint": "Recursive DFS. If out of bounds or not 'O', return. Mark current 'O' as 'T' (temporary safe) and recurse.",
+                    "solutionCode": "    def capture(r, c):\n        if (r < 0 or c < 0 or r == rows or c == cols or\n            board[r][c] != 'O'):\n            return\n        board[r][c] = 'T'\n        capture(r + 1, c)\n        capture(r - 1, c)\n        capture(r, c + 1)\n        capture(r, c - 1)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Run DFS on border 'O's.",
+                    "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if (board[r][c] == 'O' and\n                (r in [0, rows - 1] or c in [0, cols - 1])):\n                capture(r, c)",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s*\\(board\\[r\\]\\[c\\]\\s*==\\s*'O'\\s+and\\s*\\(r\\s+in\\s+\\[0,\\s*rows\\s*-\\s*1\\]\\s+or\\s+c\\s+in\\s+\\[0,\\s*cols\\s*-\\s*1\\]\\)\\):\\s*capture\\(r,\\s*c\\)$",
+                    "hint": "Iterate through the board. If a cell is 'O' and on the border, start DFS to mark it and its connected 'O's as safe.\\n\\nExample:\\nBoard=[['X','O','X'],['X','O','X'],['X','X','X']].\\n(0,1) is 'O' on border. DFS -> Mark (0,1) 'T'.\\nNeighbor (1,1) is 'O'. DFS -> Mark (1,1) 'T'.\\n(1,1) has no other 'O' neighbors. Done.",
+                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if (board[r][c] == 'O' and\n                (r in [0, rows - 1] or c in [0, cols - 1])):\n                capture(r, c)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Flip 'O' to 'X' and 'T' back to 'O'.",
+                    "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if board[r][c] == 'O':\n                board[r][c] = 'X'\n            elif board[r][c] == 'T':\n                board[r][c] = 'O'",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+board\\[r\\]\\[c\\]\\s*==\\s*'O':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'X'\\s*elif\\s+board\\[r\\]\\[c\\]\\s*==\\s*'T':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'O'$",
+                    "hint": "Final pass: change remaining 'O's (surrounded) to 'X', and revert 'T's (safe) back to 'O'.",
+                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if board[r][c] == 'O':\n                board[r][c] = 'X'\n            elif board[r][c] == 'T':\n                board[r][c] = 'O'"
+                }
+            ]
+        }
+    }
+}

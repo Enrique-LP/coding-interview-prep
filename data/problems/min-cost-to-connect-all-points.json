@@ -1,0 +1,86 @@
+{
+    "id": "min-cost-to-connect-all-points",
+    "title": "Min Cost to Connect All Points",
+    "description": "You are given an array points representing integer coordinates of some points on a 2D-plane, where points[i] = [xi, yi]. The cost of connecting two points [xi, yi] and [xj, yj] is the manhattan distance between them: |xi - xj| + |yi - yj|, where |val| denotes the absolute value of val. Return the minimum cost to make all points connected. All points are connected if there is exactly one simple path between any two points.",
+    "examples": [
+        {
+            "input": "points = [[0,0],[2,2],[3,10],[5,2],[7,0]]",
+            "output": "20"
+        },
+        {
+            "input": "points = [[3,12],[-2,5],[-4,1]]",
+            "output": "18"
+        }
+    ],
+    "constraints": [
+        "1 <= points.length <= 1000",
+        "-10^6 <= xi, yi <= 10^6",
+        "All pairs (xi, yi) are distinct."
+    ],
+    "difficulty": "Medium",
+    "topic": "Advanced Graphs",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Prim's Algorithm",
+            "description": "Use Prim's algorithm to find MST.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define minCostConnectPoints.",
+                    "placeholderCode": "def minCostConnectPoints(points):",
+                    "validationRegex": "^def\\s+minCostConnectPoints\\(points\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def minCostConnectPoints(points):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize.",
+                    "placeholderCode": "    N = len(points)\n    adj = {i: [] for i in range(N)}\n    for i in range(N):\n        x1, y1 = points[i]\n        for j in range(i + 1, N):\n            x2, y2 = points[j]\n            dist = abs(x1 - x2) + abs(y1 - y2)\n            adj[i].append([dist, j])\n            adj[j].append([dist, i])",
+                    "validationRegex": "^\\s+N\\s*=\\s*len\\(points\\)\\s*adj\\s*=\\s*{i:\\s*\\[\\]\\s+for\\s+i\\s+in\\s+range\\(N\\)}\\s*for\\s+i\\s+in\\s+range\\(N\\):\\s*x1,\\s*y1\\s*=\\s*points\\[i\\]\\s*for\\s+j\\s+in\\s+range\\(i\\s*\\+\\s*1,\\s*N\\):\\s*x2,\\s*y2\\s*=\\s*points\\[j\\]\\s*dist\\s*=\\s*abs\\(x1\\s*-\\s*x2\\)\\s*\\+\\s*abs\\(y1\\s*-\\s*y2\\)\\s*adj\\[i\\]\\.append\\(\\[dist,\\s*j\\]\\)\\s*adj\\[j\\]\\.append\\(\\[dist,\\s*i\\]\\)$",
+                    "hint": "Build adjacency list with all edges (Manhattan distance). This is a dense graph.",
+                    "solutionCode": "    N = len(points)\n    adj = {i: [] for i in range(N)}\n    for i in range(N):\n        x1, y1 = points[i]\n        for j in range(i + 1, N):\n            x2, y2 = points[j]\n            dist = abs(x1 - x2) + abs(y1 - y2)\n            adj[i].append([dist, j])\n            adj[j].append([dist, i])"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Run Prim's.",
+                    "placeholderCode": "    res = 0\n    visit = set()\n    minH = [[0, 0]]\n    while len(visit) < N:\n        cost, i = heapq.heappop(minH)\n        if i in visit:\n            continue\n        res += cost\n        visit.add(i)\n        for neiCost, nei in adj[i]:\n            if nei not in visit:\n                heapq.heappush(minH, [neiCost, nei])\n    return res",
+                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*visit\\s*=\\s*set\\(\\)\\s*minH\\s*=\\s*\\[\\[0,\\s*0\\]\\]\\s*while\\s+len\\(visit\\)\\s*<\\s*N:\\s*cost,\\s*i\\s*=\\s*heapq\\.heappop\\(minH\\)\\s*if\\s+i\\s+in\\s+visit:\\s*continue\\s*res\\s*\\+=\\s*cost\\s*visit\\.add\\(i\\)\\s*for\\s+neiCost,\\s*nei\\s+in\\s+adj\\[i\\]:\\s*if\\s+nei\\s+not\\s+in\\s+visit:\\s*heapq\\.heappush\\(minH,\\s*\\[neiCost,\\s*nei\\]\\)\\s*return\\s+res$",
+                    "hint": "Prim's algorithm: Start with node 0 in min-heap. Pop min cost edge, add to MST if not visited. Add neighbors to heap.\\n\\nExample:\\nPoints=[(0,0), (2,2), (3,10)].\\nStart (0,0). MinH=[(0, 0)].\\nPop (0, 0). Visit {0}. Add edges: (0,1,cost 4), (0,2,cost 13).\\nPop (0,1). Visit {0,1}. Cost+=4. Add edges from 1: (1,2,cost 9).\\nPop (1,2). Visit {0,1,2}. Cost+=9. Total=13.",
+                    "solutionCode": "    res = 0\n    visit = set()\n    minH = [[0, 0]]\n    while len(visit) < N:\n        cost, i = heapq.heappop(minH)\n        if i in visit:\n            continue\n        res += cost\n        visit.add(i)\n        for neiCost, nei in adj[i]:\n            if nei not in visit:\n                heapq.heappush(minH, [neiCost, nei])\n    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Prim's Algorithm",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define minCostConnectPoints.",
+                    "placeholderCode": "def minCostConnectPoints(points):",
+                    "validationRegex": "^def\\s+minCostConnectPoints\\(points\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def minCostConnectPoints(points):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize.",
+                    "placeholderCode": "    N = len(points)\n    adj = {i: [] for i in range(N)}\n    for i in range(N):\n        x1, y1 = points[i]\n        for j in range(i + 1, N):\n            x2, y2 = points[j]\n            dist = abs(x1 - x2) + abs(y1 - y2)\n            adj[i].append([dist, j])\n            adj[j].append([dist, i])",
+                    "validationRegex": "^\\s+N\\s*=\\s*len\\(points\\)\\s*adj\\s*=\\s*{i:\\s*\\[\\]\\s+for\\s+i\\s+in\\s+range\\(N\\)}\\s*for\\s+i\\s+in\\s+range\\(N\\):\\s*x1,\\s*y1\\s*=\\s*points\\[i\\]\\s*for\\s+j\\s+in\\s+range\\(i\\s*\\+\\s*1,\\s*N\\):\\s*x2,\\s*y2\\s*=\\s*points\\[j\\]\\s*dist\\s*=\\s*abs\\(x1\\s*-\\s*x2\\)\\s*\\+\\s*abs\\(y1\\s*-\\s*y2\\)\\s*adj\\[i\\]\\.append\\(\\[dist,\\s*j\\]\\)\\s*adj\\[j\\]\\.append\\(\\[dist,\\s*i\\]\\)$",
+                    "hint": "Build adjacency list with all edges (Manhattan distance). This is a dense graph.",
+                    "solutionCode": "    N = len(points)\n    adj = {i: [] for i in range(N)}\n    for i in range(N):\n        x1, y1 = points[i]\n        for j in range(i + 1, N):\n            x2, y2 = points[j]\n            dist = abs(x1 - x2) + abs(y1 - y2)\n            adj[i].append([dist, j])\n            adj[j].append([dist, i])"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Run Prim's.",
+                    "placeholderCode": "    res = 0\n    visit = set()\n    minH = [[0, 0]]\n    while len(visit) < N:\n        cost, i = heapq.heappop(minH)\n        if i in visit:\n            continue\n        res += cost\n        visit.add(i)\n        for neiCost, nei in adj[i]:\n            if nei not in visit:\n                heapq.heappush(minH, [neiCost, nei])\n    return res",
+                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*visit\\s*=\\s*set\\(\\)\\s*minH\\s*=\\s*\\[\\[0,\\s*0\\]\\]\\s*while\\s+len\\(visit\\)\\s*<\\s*N:\\s*cost,\\s*i\\s*=\\s*heapq\\.heappop\\(minH\\)\\s*if\\s+i\\s+in\\s+visit:\\s*continue\\s*res\\s*\\+=\\s*cost\\s*visit\\.add\\(i\\)\\s*for\\s+neiCost,\\s*nei\\s+in\\s+adj\\[i\\]:\\s*if\\s+nei\\s+not\\s+in\\s+visit:\\s*heapq\\.heappush\\(minH,\\s*\\[neiCost,\\s*nei\\]\\)\\s*return\\s+res$",
+                    "hint": "Prim's algorithm: Start with node 0 in min-heap. Pop min cost edge, add to MST if not visited. Add neighbors to heap.\\n\\nExample:\\nPoints=[(0,0), (2,2), (3,10)].\\nStart (0,0). MinH=[(0, 0)].\\nPop (0, 0). Visit {0}. Add edges: (0,1,cost 4), (0,2,cost 13).\\nPop (0,1). Visit {0,1}. Cost+=4. Add edges from 1: (1,2,cost 9).\\nPop (1,2). Visit {0,1,2}. Cost+=9. Total=13.",
+                    "solutionCode": "    res = 0\n    visit = set()\n    minH = [[0, 0]]\n    while len(visit) < N:\n        cost, i = heapq.heappop(minH)\n        if i in visit:\n            continue\n        res += cost\n        visit.add(i)\n        for neiCost, nei in adj[i]:\n            if nei not in visit:\n                heapq.heappush(minH, [neiCost, nei])\n    return res"
+                }
+            ]
+        }
+    }
+}

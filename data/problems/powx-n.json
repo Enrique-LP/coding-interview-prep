@@ -1,0 +1,101 @@
+{
+    "id": "powx-n",
+    "title": "Pow(x, n)",
+    "description": "Implement pow(x, n), which calculates x raised to the power n (i.e., x^n).",
+    "examples": [
+        {
+            "input": "x = 2.00000, n = 10",
+            "output": "1024.00000"
+        },
+        {
+            "input": "x = 2.10000, n = 3",
+            "output": "9.26100"
+        },
+        {
+            "input": "x = 2.00000, n = -2",
+            "output": "0.25000",
+            "explanation": "2^-2 = 1/2^2 = 1/4 = 0.25"
+        }
+    ],
+    "constraints": [
+        "-100.0 < x < 100.0",
+        "-2^31 <= n <= 2^31 - 1",
+        "n is an integer.",
+        "Either x is not zero or n > 0.",
+        "-10^4 <= x^n <= 10^4"
+    ],
+    "difficulty": "Medium",
+    "topic": "Math & Geometry",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Loop",
+            "description": "Multiply x by itself n times. (Will TLE for large n)",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function my_pow that takes x and n.",
+                    "placeholderCode": "def my_pow(x, n):",
+                    "validationRegex": "^def\\s+my_pow\\(x,\\s*n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def my_pow(x, n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Handle negative n.",
+                    "placeholderCode": "    if n < 0:\n        x = 1 / x\n        n = -n",
+                    "validationRegex": "^\\s+if\\s+n\\s*<\\s*0:\\s*x\\s*=\\s*1\\s*/\\s*x\\s*n\\s*=\\s*-n$",
+                    "hint": "If n is negative, invert x and make n positive.",
+                    "solutionCode": "    if n < 0:\n        x = 1 / x\n        n = -n"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Loop n times.",
+                    "placeholderCode": "    res = 1\n    for _ in range(n):\n        res *= x",
+                    "validationRegex": "^\\s+res\\s*=\\s*1\\s*for\\s+_\\s+in\\s+range\\(n\\):\\s*res\\s*\\*=\\s*x$",
+                    "hint": "Multiply x by itself n times.",
+                    "solutionCode": "    res = 1\n    for _ in range(n):\n        res *= x"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the result.",
+                    "solutionCode": "    return res"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Binary Exponentiation",
+            "description": "Recursive approach with O(log n).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function my_pow that takes x and n.",
+                    "placeholderCode": "def my_pow(x, n):",
+                    "validationRegex": "^def\\s+my_pow\\(x,\\s*n\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def my_pow(x, n):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define recursive helper.",
+                    "placeholderCode": "    def helper(x, n):\n        if x == 0: return 0\n        if n == 0: return 1\n        res = helper(x, n // 2)\n        res = res * res\n        return x * res if n % 2 else res",
+                    "validationRegex": "^\\s+def\\s+helper\\(x,\\s*n\\):\\s*if\\s+x\\s*==\\s*0:\\s*return\\s+0\\s*if\\s+n\\s*==\\s*0:\\s*return\\s+1\\s*res\\s*=\\s*helper\\(x,\\s*n\\s*//\\s*2\\)\\s*res\\s*=\\s*res\\s*\\*\\s*res\\s*return\\s+x\\s*\\*\\s*res\\s+if\\s+n\\s*%\\s*2\\s+else\\s+res$",
+                    "hint": "Use recursion. Calculate `x^(n/2)` once and square it. If n is odd, multiply by x one more time.",
+                    "solutionCode": "    def helper(x, n):\n        if x == 0: return 0\n        if n == 0: return 1\n        res = helper(x, n // 2)\n        res = res * res\n        return x * res if n % 2 else res"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Handle negative n.",
+                    "placeholderCode": "    res = helper(x, abs(n))\n    return res if n >= 0 else 1 / res",
+                    "validationRegex": "^\\s+res\\s*=\\s*helper\\(x,\\s*abs\\(n\\)\\)\\s*return\\s+res\\s+if\\s+n\\s*>=\\s*0\\s+else\\s+1\\s*/\\s*res$",
+                    "hint": "Calculate power for absolute value of n. If n was negative, return reciprocal.",
+                    "solutionCode": "    res = helper(x, abs(n))\n    return res if n >= 0 else 1 / res"
+                }
+            ]
+        }
+    }
+}

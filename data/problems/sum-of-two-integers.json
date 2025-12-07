@@ -1,0 +1,66 @@
+{
+    "id": "sum-of-two-integers",
+    "title": "Sum of Two Integers",
+    "description": "Given two integers a and b, return the sum of the two integers without using the operators + and -.",
+    "examples": [
+        {
+            "input": "a = 1, b = 2",
+            "output": "3"
+        },
+        {
+            "input": "a = 2, b = 3",
+            "output": "5"
+        }
+    ],
+    "constraints": [
+        "-1000 <= a, b <= 1000"
+    ],
+    "difficulty": "Medium",
+    "topic": "Bit Manipulation",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Built-in Sum (Not Allowed)",
+            "description": "Use sum function. (Violates constraints)",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function get_sum that takes a and b.",
+                    "placeholderCode": "def get_sum(a, b):",
+                    "validationRegex": "^def\\s+get_sum\\(a,\\s*b\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Return sum.",
+                    "placeholderCode": "    return sum([a, b])",
+                    "validationRegex": "^\\s+return\\s+sum\\(\\[a,\\s*b\\]\\)$"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Bitwise Operators",
+            "description": "Use XOR for sum and AND for carry.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function get_sum that takes a and b.",
+                    "placeholderCode": "def get_sum(a, b):",
+                    "validationRegex": "^def\\s+get_sum\\(a,\\s*b\\):$"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Loop while carry exists.",
+                    "placeholderCode": "    mask = 0xffffffff\n    while (b & mask) > 0:\n        carry = (a & b) << 1\n        a = (a ^ b)\n        b = carry",
+                    "validationRegex": "^\\s+mask\\s*=\\s*0xffffffff\\s*while\\s*\\(b\\s*&\\s*mask\\)\\s*>\\s*0:\\s*carry\\s*=\\s*\\(a\\s*&\\s*b\\)\\s*<<\\s*1\\s*a\\s*=\\s*\\(a\\s*\\^\\s*b\\)\\s*b\\s*=\\s*carry$"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Handle negative numbers.",
+                    "placeholderCode": "    return (a & mask) if b > 0 else a",
+                    "validationRegex": "^\\s+return\\s*\\(a\\s*&\\s*mask\\)\\s+if\\s+b\\s*>\\s*0\\s+else\\s+a$"
+                }
+            ]
+        }
+    }
+}

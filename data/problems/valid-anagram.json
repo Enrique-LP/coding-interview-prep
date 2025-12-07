@@ -1,0 +1,109 @@
+{
+    "id": "valid-anagram",
+    "title": "Valid Anagram",
+    "description": "Given two strings s and t, return true if t is an anagram of s, and false otherwise. An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.",
+    "examples": [
+        {
+            "input": "s = \"anagram\", t = \"nagaram\"",
+            "output": "true"
+        },
+        {
+            "input": "s = \"rat\", t = \"car\"",
+            "output": "false"
+        }
+    ],
+    "constraints": [
+        "1 <= s.length, t.length <= 5 * 10^4",
+        "s and t consist of lowercase English letters."
+    ],
+    "difficulty": "Easy",
+    "topic": "String",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Sorting",
+            "description": "Sort both strings and compare them.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_anagram that takes two strings s and t.",
+                    "placeholderCode": "def is_anagram(s, t):",
+                    "validationRegex": "^def\\s+is_anagram\\(s,\\s*t\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_anagram(s, t):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Return True if the sorted characters of s equal the sorted characters of t.",
+                    "placeholderCode": "    return sorted(s) == sorted(t)",
+                    "validationRegex": "^\\s+return\\s+sorted\\(s\\)\\s*==\\s*sorted\\(t\\)$",
+                    "hint": "Use the `sorted()` function on both strings and compare them with `==`.",
+                    "solutionCode": "    return sorted(s) == sorted(t)"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Hash Map Count",
+            "description": "Count frequency of each character.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_anagram that takes two strings s and t.",
+                    "placeholderCode": "def is_anagram(s, t):",
+                    "validationRegex": "^def\\s+is_anagram\\(s,\\s*t\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_anagram(s, t):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Check if the lengths of s and t are different. If so, return False.",
+                    "placeholderCode": "    if len(s) != len(t): return False",
+                    "validationRegex": "^\\s+if\\s+len\\(s\\)\\s*!=\\s*len\\(t\\):\\s*return\\s+False$",
+                    "hint": "If lengths differ, they cannot be anagrams.",
+                    "solutionCode": "    if len(s) != len(t): return False"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize two dictionaries to count character frequencies.",
+                    "placeholderCode": "    countS, countT = {}, {}",
+                    "validationRegex": "^\\s+countS,\\s*countT\\s*=\\s*\\{\\},\\s*\\{\\}$",
+                    "hint": "Use `{}` to create empty dictionaries.",
+                    "solutionCode": "    countS, countT = {}, {}"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Iterate through the length of s to count characters.",
+                    "placeholderCode": "    for i in range(len(s)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\):$",
+                    "hint": "Use `range(len(s))` to iterate.",
+                    "solutionCode": "    for i in range(len(s)):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Increment the count for the character at index i in s.",
+                    "placeholderCode": "        countS[s[i]] = countS.get(s[i], 0) + 1",
+                    "validationRegex": "^\\s+countS\\[s\\[i\\]\\]\\s*=\\s*countS\\.get\\(s\\[i\\],\\s*0\\)\\s*\\+\\s*1$",
+                    "hint": "Use `.get(key, 0)` to handle missing keys safely.\\n\\nExample:\\nIf countS={'a': 1} and s[i]='a'.\\ncountS['a'] becomes 1 + 1 = 2.",
+                    "solutionCode": "        countS[s[i]] = countS.get(s[i], 0) + 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Increment the count for the character at index i in t.",
+                    "placeholderCode": "        countT[t[i]] = countT.get(t[i], 0) + 1",
+                    "validationRegex": "^\\s+countT\\[t\\[i\\]\\]\\s*=\\s*countT\\.get\\(t\\[i\\],\\s*0\\)\\s*\\+\\s*1$",
+                    "hint": "Do the same for string t.",
+                    "solutionCode": "        countT[t[i]] = countT.get(t[i], 0) + 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return True if the two count dictionaries are equal.",
+                    "placeholderCode": "    return countS == countT",
+                    "validationRegex": "^\\s+return\\s+countS\\s*==\\s*countT$",
+                    "hint": "Compare the two dictionaries directly.",
+                    "solutionCode": "    return countS == countT"
+                }
+            ]
+        }
+    }
+}

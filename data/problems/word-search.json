@@ -1,0 +1,92 @@
+{
+    "id": "word-search",
+    "title": "Word Search",
+    "description": "Given an m x n grid of characters board and a string word, return true if word exists in the grid. The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.",
+    "examples": [
+        {
+            "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCCED\"",
+            "output": "true"
+        },
+        {
+            "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"SEE\"",
+            "output": "true"
+        },
+        {
+            "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCB\"",
+            "output": "false"
+        }
+    ],
+    "constraints": [
+        "m == board.length",
+        "n = board[i].length",
+        "1 <= m, n <= 6",
+        "1 <= word.length <= 15",
+        "board and word consists of only lowercase and uppercase English letters."
+    ],
+    "difficulty": "Medium",
+    "topic": "Backtracking",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "DFS",
+            "description": "DFS from every cell.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function exist that takes board and word.",
+                    "placeholderCode": "def exist(board, word):",
+                    "validationRegex": "^def\\s+exist\\(board,\\s*word\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def exist(board, word):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define DFS.",
+                    "placeholderCode": "    ROWS, COLS = len(board), len(board[0])\n    path = set()\n    def dfs(r, c, i):\n        if i == len(word):\n            return True\n        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or\n            word[i] != board[r][c] or (r, c) in path):\n            return False\n        path.add((r, c))\n        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))\n        path.remove((r, c))\n        return res",
+                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)\\s*path\\s*=\\s*set\\(\\)\\s*def\\s+dfs\\(r,\\s*c,\\s*i\\):\\s*if\\s+i\\s*==\\s*len\\(word\\):\\s*return\\s+True\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*>=\\s*ROWS\\s+or\\s+c\\s*>=\\s*COLS\\s+or\\s*word\\[i\\]\\s*!=\\s*board\\[r\\]\\[c\\]\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+path\\):\\s*return\\s+False\\s*path\\.add\\(\\(\\(r,\\s*c\\)\\)\\)\\s*res\\s*=\\s*\\(dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*i\\s*\\+\\s*1\\)\\)\\s*path\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)\\s*return\\s+res$",
+                    "hint": "Implement DFS to check adjacent cells. Use a set to track visited cells in the current path.\\n\\nExample:\\nWord=\"AB\". Board=[['A', 'B']].\\nStart at (0,0) 'A'. Match! Path={(0,0)}.\\nCheck neighbors. (0,1) is 'B'. Match!\\nWord found.",
+                    "solutionCode": "    ROWS, COLS = len(board), len(board[0])\n    path = set()\n    def dfs(r, c, i):\n        if i == len(word):\n            return True\n        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or\n            word[i] != board[r][c] or (r, c) in path):\n            return False\n        path.add((r, c))\n        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))\n        path.remove((r, c))\n        return res"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate grid.",
+                    "placeholderCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True\n    return False",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*if\\s+dfs\\(r,\\s*c,\\s*0\\):\\s*return\\s+True\\s*return\\s+False$",
+                    "hint": "Start DFS from every cell in the grid.",
+                    "solutionCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True\n    return False"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DFS",
+            "description": "Same as brute force.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function exist that takes board and word.",
+                    "placeholderCode": "def exist(board, word):",
+                    "validationRegex": "^def\\s+exist\\(board,\\s*word\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def exist(board, word):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define DFS.",
+                    "placeholderCode": "    ROWS, COLS = len(board), len(board[0])\n    path = set()\n    def dfs(r, c, i):\n        if i == len(word):\n            return True\n        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or\n            word[i] != board[r][c] or (r, c) in path):\n            return False\n        path.add((r, c))\n        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))\n        path.remove((r, c))\n        return res",
+                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)\\s*path\\s*=\\s*set\\(\\)\\s*def\\s+dfs\\(r,\\s*c,\\s*i\\):\\s*if\\s+i\\s*==\\s*len\\(word\\):\\s*return\\s+True\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*>=\\s*ROWS\\s+or\\s+c\\s*>=\\s*COLS\\s+or\\s*word\\[i\\]\\s*!=\\s*board\\[r\\]\\[c\\]\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+path\\):\\s*return\\s+False\\s*path\\.add\\(\\(\\(r,\\s*c\\)\\)\\)\\s*res\\s*=\\s*\\(dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*i\\s*\\+\\s*1\\)\\)\\s*path\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)\\s*return\\s+res$",
+                    "hint": "Implement DFS to check adjacent cells. Use a set to track visited cells in the current path.\\n\\nExample:\\nWord=\"AB\". Board=[['A', 'B']].\\nStart at (0,0) 'A'. Match! Path={(0,0)}.\\nCheck neighbors. (0,1) is 'B'. Match!\\nWord found.",
+                    "solutionCode": "    ROWS, COLS = len(board), len(board[0])\n    path = set()\n    def dfs(r, c, i):\n        if i == len(word):\n            return True\n        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or\n            word[i] != board[r][c] or (r, c) in path):\n            return False\n        path.add((r, c))\n        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))\n        path.remove((r, c))\n        return res"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate grid.",
+                    "placeholderCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True\n    return False",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*if\\s+dfs\\(r,\\s*c,\\s*0\\):\\s*return\\s+True\\s*return\\s+False$",
+                    "hint": "Start DFS from every cell in the grid.",
+                    "solutionCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True\n    return False"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,94 @@
+{
+    "id": "multiply-strings",
+    "title": "Multiply Strings",
+    "description": "Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string. Note: You must not use any built-in BigInteger library or convert the inputs to integer directly.",
+    "examples": [
+        {
+            "input": "num1 = \"2\", num2 = \"3\"",
+            "output": "\"6\""
+        },
+        {
+            "input": "num1 = \"123\", num2 = \"456\"",
+            "output": "\"56088\""
+        }
+    ],
+    "constraints": [
+        "1 <= num1.length, num2.length <= 200",
+        "num1 and num2 consist of digits only.",
+        "Both num1 and num2 do not contain any leading zero, except the number 0 itself."
+    ],
+    "difficulty": "Medium",
+    "topic": "Math & Geometry",
+    "strategies": {
+        "brute-force": {
+            "id": "brute-force",
+            "name": "Conversion (Not Allowed)",
+            "description": "Convert to int, multiply, convert back. (Violates constraints)",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function multiply that takes num1 and num2.",
+                    "placeholderCode": "def multiply(num1, num2):",
+                    "validationRegex": "^def\\s+multiply\\(num1,\\s*num2\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def multiply(num1, num2):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Convert and multiply.",
+                    "placeholderCode": "    return str(int(num1) * int(num2))",
+                    "validationRegex": "^\\s+return\\s+str\\(int\\(num1\\)\\s*\\*\\s*int\\(num2\\)\\)$",
+                    "hint": "Convert strings to integers, multiply them, and convert back to string. Note: This approach is not allowed by the problem constraints.",
+                    "solutionCode": "    return str(int(num1) * int(num2))"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Manual Multiplication",
+            "description": "Simulate manual multiplication process.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function multiply that takes num1 and num2.",
+                    "placeholderCode": "def multiply(num1, num2):",
+                    "validationRegex": "^def\\s+multiply\\(num1,\\s*num2\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def multiply(num1, num2):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Handle zero case.",
+                    "placeholderCode": "    if \"0\" in [num1, num2]: return \"0\"",
+                    "validationRegex": "^\\s+if\\s+\"0\"\\s+in\\s+\\[num1,\\s*num2\\]:\\s*return\\s+\"0\"$",
+                    "hint": "If either number is \"0\", return \"0\".",
+                    "solutionCode": "    if \"0\" in [num1, num2]: return \"0\""
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize result array.",
+                    "placeholderCode": "    res = [0] * (len(num1) + len(num2))\n    num1, num2 = num1[::-1], num2[::-1]",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[0\\]\\s*\\*\\s*\\(len\\(num1\\)\\s*\\+\\s*len\\(num2\\)\\)\\s*num1,\\s*num2\\s*=\\s*num1\\[::-1\\],\\s*num2\\[::-1\\]$",
+                    "hint": "Create a result array of size `len(num1) + len(num2)` initialized with zeros. Reverse both strings to simplify index calculations.",
+                    "solutionCode": "    res = [0] * (len(num1) + len(num2))\n    num1, num2 = num1[::-1], num2[::-1]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Multiply digits.",
+                    "placeholderCode": "    for i1 in range(len(num1)):\n        for i2 in range(len(num2)):\n            digit = int(num1[i1]) * int(num2[i2])\n            res[i1 + i2] += digit\n            res[i1 + i2 + 1] += res[i1 + i2] // 10\n            res[i1 + i2] = res[i1 + i2] % 10",
+                    "validationRegex": "^\\s+for\\s+i1\\s+in\\s+range\\(len\\(num1\\)\\):\\s*for\\s+i2\\s+in\\s+range\\(len\\(num2\\)\\):\\s*digit\\s*=\\s*int\\(num1\\[i1\\]\\)\\s*\\*\\s*int\\(num2\\[i2\\]\\)\\s*res\\[i1\\s*\\+\\s*i2\\]\\s*\\+=\\s*digit\\s*res\\[i1\\s*\\+\\s*i2\\s*\\+\\s*1\\]\\s*\\+=\\s*res\\[i1\\s*\\+\\s*i2\\]\\s*//\\s*10\\s*res\\[i1\\s*\\+\\s*i2\\]\\s*=\\s*res\\[i1\\s*\\+\\s*i2\\]\\s*%\\s*10$",
+                    "hint": "Iterate through each digit of both numbers, multiply them, and add the result to the corresponding position in the `res` array. Handle carry-over.",
+                    "solutionCode": "    for i1 in range(len(num1)):\n        for i2 in range(len(num2)):\n            digit = int(num1[i1]) * int(num2[i2])\n            res[i1 + i2] += digit\n            res[i1 + i2 + 1] += res[i1 + i2] // 10\n            res[i1 + i2] = res[i1 + i2] % 10"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Reverse and join.",
+                    "placeholderCode": "    res, beg = res[::-1], 0\n    while beg < len(res) and res[beg] == 0:\n        beg += 1\n    res = map(str, res[beg:])\n    return \"\".join(res)",
+                    "validationRegex": "^\\s+res,\\s*beg\\s*=\\s*res\\[::-1\\],\\s*0\\s*while\\s+beg\\s*<\\s+len\\(res\\)\\s+and\\s+res\\[beg\\]\\s*==\\s*0:\\s*beg\\s*\\+=\\s*1\\s*res\\s*=\\s*map\\(str,\\s*res\\[beg:\\]\\)\\s*return\\s+\"\"\\.join\\(res\\)$",
+                    "hint": "Reverse the result array, skip leading zeros, convert digits to strings, and join them.",
+                    "solutionCode": "    res, beg = res[::-1], 0\n    while beg < len(res) and res[beg] == 0:\n        beg += 1\n    res = map(str, res[beg:])\n    return \"\".join(res)"
+                }
+            ]
+        }
+    }
+}
