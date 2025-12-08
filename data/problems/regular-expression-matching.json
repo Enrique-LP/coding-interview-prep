@@ -72,119 +72,45 @@
                     "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*0\\)$"
                 }
             ]
-{
-                "id": "regular-expression-matching",
-                "title": "Regular Expression Matching",
-                "description": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where: '.' Matches any single character. '*' Matches zero or more of the preceding element. The matching should cover the entire input string (not partial).",
-                "examples": [
-                    {
-                        "input": "s = \"aa\", p = \"a\"",
-                        "output": "false",
-                        "explanation": "\"a\" does not match the entire string \"aa\"."
-                    },
-                    {
-                        "input": "s = \"aa\", p = \"a*\"",
-                        "output": "true",
-                        "explanation": "'*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes \"aa\"."
-                    },
-                    {
-                        "input": "s = \"ab\", p = \".*\"",
-                        "output": "true",
-                        "explanation": "\".*\" means \"zero or more (*) of any character (.)\"."
-                    }
-                ],
-                "constraints": [
-                    "1 <= s.length <= 20",
-                    "1 <= p.length <= 30",
-                    "s contains only lowercase English letters.",
-                    "p contains only lowercase English letters, '.', and '*'.",
-                    "It is guaranteed for each appearance of the character '*', there will be a previous valid character to match."
-                ],
-                "difficulty": "Hard",
-                "topic": "2-D Dynamic Programming",
-                "strategies": {
-                    "brute-force": {
-                        "id": "brute-force",
-                        "name": "Recursive",
-                        "description": "Recursively check matches.",
-                        "steps": [
-                            {
-                                "id": 1,
-                                "instruction": "Define the function is_match that takes s and p.",
-                                "placeholderCode": "def is_match(s, p):",
-                                "validationRegex": "^def\\s+is_match\\(s,\\s*p\\):$"
-                            },
-                            {
-                                "id": 2,
-                                "instruction": "Define recursive helper with memoization.",
-                                "placeholderCode": "    memo = {}\n    def dfs(i, j):\n        if (i, j) in memo: return memo[(i, j)]\n        if j == len(p): return i == len(s)",
-                                "hint": "Recursive function `dfs(i, j)` checks if s[i:] matches p[j:]. Base case: p consumed -> check if s consumed. Check memo.\\n\\nExample:\\nS=\"aa\", P=\"a*\".\\nDFS(0,0): P[1]='*'.\\n  Skip '*': DFS(0,2) -> \"aa\" vs \"\" -> False.\\n  Use '*': 'a'=='a'. DFS(1,0) -> \"a\" vs \"a*\".\\n    Use '*': 'a'=='a'. DFS(2,0) -> \"\" vs \"a*\".\\n      Skip '*': DFS(2,2) -> \"\" vs \"\" -> True.",
-                            },
-                            {
-                                "id": 3,
-                                "instruction": "Check first character match.",
-                                "placeholderCode": "        first_match = i < len(s) and (p[j] == s[i] or p[j] == '.')",
-                                "validationRegex": "^\\s+first_match\\s*=\\s*i\\s*<\\s+len\\(s\\)\\s+and\\s*\\(p\\[j\\]\\s*==\\s+s\\[i\\]\\s+or\\s+p\\[j\\]\\s*==\\s*'.'\\)$"
-                            },
-                            {
-                                "id": 4,
-                                "instruction": "Handle '*' wildcard.",
-                                "placeholderCode": "        if j + 1 < len(p) and p[j + 1] == '*':\n            ans = dfs(i, j + 2) or (first_match and dfs(i + 1, j))\n        else:\n            ans = first_match and dfs(i + 1, j + 1)",
-                                "validationRegex": "^\\s+if\\s+j\\s*\\+\\s*1\\s*<\\s+len\\(p\\)\\s+and\\s+p\\[j\\s*\\+\\s*1\\]\\s*==\\s*'*':\\s*ans\\s*=\\s*dfs\\(i,\\s*j\\s*\\+\\s*2\\)\\s+or\\s*\\(first_match\\s+and\\s+dfs\\(i\\s*\\+\\s*1,\\s*j\\)\\)\\s*else:\\s*ans\\s*=\\s*first_match\\s+and\\s+dfs\\(i\\s*\\+\\s*1,\\s*j\\s*\\+\\s*1\\)$",
-                                "hint": "If next char is '*', either skip '*' (j+2) or use '*' (match s[i] and recurse i+1). Else, match char and recurse i+1, j+1.\\n\\nExample:\\nS=\"aa\", P=\"a*\".\\ni=0, j=0. Next is '*'.\\nOption 1 (Skip): DFS(0, 2) -> Match \"aa\" vs \"\" -> False.\\nOption 2 (Use): 'a'=='a'. DFS(1, 0) -> Match \"a\" vs \"a*\".\\n  Next is '*'. Use again. DFS(2, 0) -> Match \"\" vs \"a*\".\\n    Skip. DFS(2, 2) -> Match \"\" vs \"\" -> True."
-                            },
-                            {
-                                "id": 5,
-                                "instruction": "Memoize and return.",
-                                "placeholderCode": "        memo[(i, j)] = ans\n        return ans",
-                                "validationRegex": "^\\s+memo\\[\\(i,\\s*j\\)\\]\\s*=\\s*ans\\s*return\\s+ans$"
-                            },
-                            {
-                                "id": 6,
-                                "instruction": "Call helper.",
-                                "placeholderCode": "    return dfs(0, 0)",
-                                "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*0\\)$"
-                            }
-                        ]
-                    },
-                    "optimal": {
-                        "id": "optimal",
-                        "name": "DP (Iterative)",
-                        "description": "Use 2D grid to build solution bottom-up.",
-                        "steps": [
-                            {
-                                "id": 1,
-                                "instruction": "Define the function is_match that takes s and p.",
-                                "placeholderCode": "def is_match(s, p):",
-                                "validationRegex": "^def\\s+is_match\\(s,\\s*p\\):$",
-                                "hint": "Use `def` to define the function.",
-                                "solutionCode": "def is_match(s, p):"
-                            },
-                            {
-                                "id": 2,
-                                "instruction": "Initialize DP grid.",
-                                "placeholderCode": "    dp = [[False] * (len(p) + 1) for _ in range(len(s) + 1)]\n    dp[len(s)][len(p)] = True",
-                                "validationRegex": "^\\s+dp\\s*=\\s*\\[\\[False\\]\\s*\\*\\s*\\(len\\(p\\)\\s*\\+\\s*1\\)\\s+for\\s+_\\s+in\\s+range\\(len\\(s\\)\\s*\\+\\s*1\\)\\]\\s*dp\\[len\\(s\\)\\]\\[len\\(p\\)\\]\\s*=\\s*True$",
-                                "hint": "Initialize DP grid. dp[i][j] means s[i:] matches p[j:]. Base case: empty matches empty.",
-                                "solutionCode": "    dp = [[False] * (len(p) + 1) for _ in range(len(s) + 1)]\n    dp[len(s)][len(p)] = True"
-                            },
-                            {
-                                "id": 3,
-                                "instruction": "Iterate backwards.",
-                                "placeholderCode": "    for i in range(len(s), -1, -1):\n        for j in range(len(p) - 1, -1, -1):\n            first_match = i < len(s) and (p[j] == s[i] or p[j] == '.')\n            if j + 1 < len(p) and p[j + 1] == '*':\n                dp[i][j] = dp[i][j + 2] or (first_match and dp[i + 1][j])\n            else:\n                dp[i][j] = first_match and dp[i + 1][j + 1]",
-                                "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\),\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(p\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*first_match\\s*=\\s*i\\s*<\\s+len\\(s\\)\\s+and\\s*\\(p\\[j\\]\\s*==\\s+s\\[i\\]\\s+or\\s+p\\[j\\]\\s*==\\s*'.'\\)\\s*if\\s+j\\s*\\+\\s*1\\s*<\\s+len\\(p\\)\\s+and\\s+p\\[j\\s*\\+\\s*1\\]\\s*==\\s*'*':\\s*dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\]\\[j\\s*\\+\\s*2\\]\\s+or\\s*\\(first_match\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\]\\)\\s*else:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*first_match\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]$",
-                                "hint": "Iterate backwards. Implement the same logic as recursion but using the DP table.\\n\\nExample:\\nS=\"aa\", P=\"a*\".\\nDP[2][2]=True.\\nj=1 ('*'): Skip. DP[2][1] = DP[2][3] (F) or (F and ..) -> False.\\nj=0 ('a'): Next is '*'.\\n  Skip: DP[2][2] (T) -> True.\\n  Use: 'a'=='a'. DP[3][0] (F) -> False.\\n  Result: True.",
-                                "solutionCode": "    for i in range(len(s), -1, -1):\n        for j in range(len(p) - 1, -1, -1):\n            first_match = i < len(s) and (p[j] == s[i] or p[j] == '.')\n            if j + 1 < len(p) and p[j + 1] == '*':\n                dp[i][j] = dp[i][j + 2] or (first_match and dp[i + 1][j])\n            else:\n                dp[i][j] = first_match and dp[i + 1][j + 1]"
-                            },
-                            {
-                                "id": 4,
-                                "instruction": "Return result.",
-                                "placeholderCode": "    return dp[0][0]",
-                                "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
-                                "hint": "Return result for start of strings.",
-                                "solutionCode": "    return dp[0][0]"
-                            }
-                        ]
-                    }
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "DP (Iterative)",
+            "description": "Use 2D grid to build solution bottom-up.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function is_match that takes s and p.",
+                    "placeholderCode": "def is_match(s, p):",
+                    "validationRegex": "^def\\s+is_match\\(s,\\s*p\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def is_match(s, p):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize DP grid.",
+                    "placeholderCode": "    dp = [[False] * (len(p) + 1) for _ in range(len(s) + 1)]\n    dp[len(s)][len(p)] = True",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\[\\[False\\]\\s*\\*\\s*\\(len\\(p\\)\\s*\\+\\s*1\\)\\s+for\\s+_\\s+in\\s+range\\(len\\(s\\)\\s*\\+\\s*1\\)\\]\\s*dp\\[len\\(s\\)\\]\\[len\\(p\\)\\]\\s*=\\s*True$",
+                    "hint": "Initialize DP grid. dp[i][j] means s[i:] matches p[j:]. Base case: empty matches empty.",
+                    "solutionCode": "    dp = [[False] * (len(p) + 1) for _ in range(len(s) + 1)]\n    dp[len(s)][len(p)] = True"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate backwards.",
+                    "placeholderCode": "    for i in range(len(s), -1, -1):\n        for j in range(len(p) - 1, -1, -1):\n            first_match = i < len(s) and (p[j] == s[i] or p[j] == '.')\n            if j + 1 < len(p) and p[j + 1] == '*':\n                dp[i][j] = dp[i][j + 2] or (first_match and dp[i + 1][j])\n            else:\n                dp[i][j] = first_match and dp[i + 1][j + 1]",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\),\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(p\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*first_match\\s*=\\s*i\\s*<\\s+len\\(s\\)\\s+and\\s*\\(p\\[j\\]\\s*==\\s+s\\[i\\]\\s+or\\s+p\\[j\\]\\s*==\\s*'.'\\)\\s*if\\s+j\\s*\\+\\s*1\\s*<\\s+len\\(p\\)\\s+and\\s+p\\[j\\s*\\+\\s*1\\]\\s*==\\s*'*':\\s*dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\]\\[j\\s*\\+\\s*2\\]\\s+or\\s*\\(first_match\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\]\\)\\s*else:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*first_match\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]$",
+                    "hint": "Iterate backwards. Implement the same logic as recursion but using the DP table.\\n\\nExample:\\nS=\"aa\", P=\"a*\".\\nDP[2][2]=True.\\nj=1 ('*'): Skip. DP[2][1] = DP[2][3] (F) or (F and ..) -> False.\\nj=0 ('a'): Next is '*'.\\n  Skip: DP[2][2] (T) -> True.\\n  Use: 'a'=='a'. DP[3][0] (F) -> False.\\n  Result: True.",
+                    "solutionCode": "    for i in range(len(s), -1, -1):\n        for j in range(len(p) - 1, -1, -1):\n            first_match = i < len(s) and (p[j] == s[i] or p[j] == '.')\n            if j + 1 < len(p) and p[j + 1] == '*':\n                dp[i][j] = dp[i][j + 2] or (first_match and dp[i + 1][j])\n            else:\n                dp[i][j] = first_match and dp[i + 1][j + 1]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return dp[0][0]",
+                    "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
+                    "hint": "Return result for start of strings.",
+                    "solutionCode": "    return dp[0][0]"
                 }
-            }
+            ]
+        }
+    }
+}

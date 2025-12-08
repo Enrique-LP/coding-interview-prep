@@ -70,7 +70,21 @@
                     "placeholderCode": "    dummy = ListNode(0, head)\n    groupPrev = dummy",
                     "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(0,\\s*head\\)\\s*groupPrev\\s*=\\s*dummy$",
                     "hint": "Init dummy node and `groupPrev`.",
-                    "solutionCode": "    dummy = ListNode(0, head)\n    groupPrev = dummy""validationRegex": "^\\s+return\\s+dummy\\.next$",
+                    "solutionCode": "    dummy = ListNode(0, head)\n    groupPrev = dummy"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate and reverse groups.",
+                    "placeholderCode": "    while True:\n        kth = self.getKth(groupPrev, k)\n        if not kth:\n            break\n        groupNext = kth.next\n        prev, curr = kth.next, groupPrev.next\n        while curr != groupNext:\n            tmp = curr.next\n            curr.next = prev\n            prev = curr\n            curr = tmp\n        tmp = groupPrev.next\n        groupPrev.next = kth\n        groupPrev = tmp",
+                    "validationRegex": "^\\s*while\\s+True:\\s*kth\\s*=\\s*self\\.getKth\\(groupPrev,\\s*k\\)\\s*if\\s+not\\s+kth:\\s*break\\s*groupNext\\s*=\\s*kth\\.next\\s*prev,\\s*curr\\s*=\\s*kth\\.next,\\s*groupPrev\\.next\\s*while\\s+curr\\s*!=\\s*groupNext:\\s*tmp\\s*=\\s*curr\\.next\\s*curr\\.next\\s*=\\s*prev\\s*prev\\s*=\\s*curr\\s*curr\\s*=\\s*tmp\\s*tmp\\s*=\\s*groupPrev\\.next\\s*groupPrev\\.next\\s*=\\s*kth\\s*groupPrev\\s*=\\s*tmp$",
+                    "hint": "Get kth node. If not exists, break. Else reverse group between `groupPrev` and `groupNext`.",
+                    "solutionCode": "    while True:\n        kth = self.getKth(groupPrev, k)\n        if not kth:\n            break\n        groupNext = kth.next\n        prev, curr = kth.next, groupPrev.next\n        while curr != groupNext:\n            tmp = curr.next\n            curr.next = prev\n            prev = curr\n            curr = tmp\n        tmp = groupPrev.next\n        groupPrev.next = kth\n        groupPrev = tmp"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return dummy.next",
+                    "validationRegex": "^\\s+return\\s+dummy\\.next$",
                     "hint": "Return `dummy.next`.",
                     "solutionCode": "    return dummy.next"
                 }

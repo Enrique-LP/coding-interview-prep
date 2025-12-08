@@ -52,7 +52,21 @@
                     "placeholderCode": "        res = dfs(i + 1)",
                     "validationRegex": "^\\s+res\\s*=\\s*dfs\\(i\\s*\\+\\s*1\\)$",
                     "hint": "Recursively call for the next character (single digit decoding).",
-                    "solutionCode": "        res = dfs(i + 1)""validationRegex": "^\\s+dp\\[i\\]\\s*=\\s*res\\s*return\\s+res$",
+                    "solutionCode": "        res = dfs(i + 1)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Check two digit decoding.",
+                    "placeholderCode": "        if (i + 1 < len(s) and (s[i] == \"1\" or\n            (s[i] == \"2\" and s[i + 1] in \"0123456\"))):\n            res += dfs(i + 2)",
+                    "validationRegex": "^\\s+if\\s*\\(i\\s*\\+\\s*1\\s*<\\s+len\\(s\\)\\s+and\\s*\\(s\\[i\\]\\s*==\\s*\"1\"\\s+or\\s*\\(s\\[i\\]\\s*==\\s*\"2\"\\s+and\\s+s\\[i\\s*\\+\\s*1\\]\\s+in\\s*\"0123456\"\\)\\)\\):\\s*res\\s*\\+=\\s*dfs\\(i\\s*\\+\\s*2\\)$",
+                    "hint": "If two digits form a valid number (10-26), add the result of dfs(i + 2).",
+                    "solutionCode": "        if (i + 1 < len(s) and (s[i] == \"1\" or\n            (s[i] == \"2\" and s[i + 1] in \"0123456\"))):\n            res += dfs(i + 2)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Store result in memoization table and return.",
+                    "placeholderCode": "        dp[i] = res\n        return res",
+                    "validationRegex": "^\\s+dp\\[i\\]\\s*=\\s*res\\s*return\\s+res$",
                     "hint": "Store result in `dp` and return it.",
                     "solutionCode": "        dp[i] = res\n        return res"
                 },

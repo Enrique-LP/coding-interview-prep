@@ -77,7 +77,21 @@
                     "placeholderCode": "    import heapq\n    heap = []\n    for i, l in enumerate(lists):\n        if l:\n            heapq.heappush(heap, (l.val, i, l))",
                     "validationRegex": "^\\s+import\\s+heapq\\s*heap\\s*=\\s*\\[\\]\\s*for\\s+i,\\s*l\\s+in\\s+enumerate\\(lists\\):\\s*if\\s+l:\\s*heapq\\.heappush\\(heap,\\s*\\(l\\.val,\\s*i,\\s*l\\)\\)$",
                     "hint": "Push the head of each list into the heap.",
-                    "solutionCode": "    import heapq\n    heap = []\n    for i, l in enumerate(lists):\n        if l:\n            heapq.heappush(heap, (l.val, i, l))""validationRegex": "^\\s+return\\s+dummy\\.next$",
+                    "solutionCode": "    import heapq\n    heap = []\n    for i, l in enumerate(lists):\n        if l:\n            heapq.heappush(heap, (l.val, i, l))"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Process heap and build result list.",
+                    "placeholderCode": "    dummy = ListNode(0)\n    curr = dummy\n    while heap:\n        val, i, node = heapq.heappop(heap)\n        curr.next = node\n        curr = curr.next\n        if node.next:\n            heapq.heappush(heap, (node.next.val, i, node.next))",
+                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(0\\)\\s*curr\\s*=\\s*dummy\\s*while\\s+heap:\\s*val,\\s*i,\\s*node\\s*=\\s*heapq\\.heappop\\(heap\\)\\s*curr\\.next\\s*=\\s*node\\s*curr\\s*=\\s*curr\\.next\\s*if\\s+node\\.next:\\s*heapq\\.heappush\\(heap,\\s*\\(node\\.next\\.val,\\s*i,\\s*node\\.next\\)\\)$",
+                    "hint": "Extract minimum from heap, append to result, and push next node of extracted list.",
+                    "solutionCode": "    dummy = ListNode(0)\n    curr = dummy\n    while heap:\n        val, i, node = heapq.heappop(heap)\n        curr.next = node\n        curr = curr.next\n        if node.next:\n            heapq.heappush(heap, (node.next.val, i, node.next))"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return result.",
+                    "placeholderCode": "    return dummy.next",
+                    "validationRegex": "^\\s+return\\s+dummy\\.next$",
                     "hint": "Return `dummy.next`.",
                     "solutionCode": "    return dummy.next"
                 }
