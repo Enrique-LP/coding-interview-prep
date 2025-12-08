@@ -90,7 +90,7 @@
                     "instruction": "Add the last digit of x to the reversed number.",
                     "placeholderCode": "        reverted_number = reverted_number * 10 + x % 10",
                     "validationRegex": "^\\s+reverted_number\\s*=\\s*reverted_number\\s*\\*\\s*10\\s*\\+\\s*x\\s*%\\s*10$",
-                    "hint": "We build the reverse number digit by digit.\\nExample: If x is 123, we take 3 (123 % 10), then 2, then 1.\\nreverted_number becomes 3, then 32, then 321.",
+                    "hint": "We build the reverse number digit by digit. Example with x = 123: 1st iteration (x=123): reverted_number = 0 * 10 + 3 = 3. 2nd iteration (x=12): reverted_number = 3 * 10 + 2 = 32. 3rd iteration (x=1): reverted_number = 32 * 10 + 1 = 321.",
                     "solutionCode": "        reverted_number = (\n            reverted_number * 10 + x % 10\n        )"
                 },
                 {
