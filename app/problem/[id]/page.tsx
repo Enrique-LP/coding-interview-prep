@@ -11,11 +11,11 @@ import { CodeEditor } from "@/components/editor/code-editor"
 import { Console } from "@/components/editor/console"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
-import { Play, RotateCcw } from "lucide-react"
+import { Play, RotateCcw, Check } from "lucide-react"
 import { useStore } from "@/lib/store"
 import { usePyodide } from "@/hooks/use-pyodide"
 import { Problem } from "@/types"
-import { Toaster } from "sonner"
+import { Toaster, toast } from "sonner"
 import { ResizablePanel, ResizablePanelGroup, ResizableHandle } from "@/components/ui/resizable"
 import { cn } from "@/lib/utils"
 import CompletionScreen from "@/components/problem/completion-screen"
@@ -430,8 +430,9 @@ export default function ProblemPage() {
     )
 
     const RightPanel = (
-        <div className="h-full flex flex-col relative">
-            <div className="absolute top-4 right-6 z-10">
+        <div className="h-full flex flex-col relative bg-zinc-950">
+            {/* Desktop Run Button - Hidden on mobile */}
+            <div className="hidden md:block absolute top-4 right-6 z-10">
                 <Button
                     size="sm"
                     onClick={handleRunCode}
@@ -445,6 +446,58 @@ export default function ProblemPage() {
                 >
                     <Play className="w-4 h-4 mr-2" />
                     {isRunning ? "Running..." : "Run Code"}
+                </Button>
+            </div>
+
+            {/* Mobile Chameleon Button - Visible only on mobile */}
+            <div className="md:hidden absolute bottom-6 right-6 z-50">
+                <Button
+                    size="default"
+                    onClick={() => {
+                        const totalSteps = problem ? problem.strategies[currentStrategy].steps.length : 0
+
+                        if (currentStepIndex < totalSteps) {
+                            // Validate current step logic
+                            const { validateStep } = useStore.getState()
+                            const isValid = validateStep()
+
+                            if (isValid) {
+                                toast.success("Step Completed!", {
+                                    description: "Great job! Moving to the next step.",
+                                    duration: 1500,
+                                })
+                            } else {
+                                toast.error("Incorrect Code", {
+                                    description: "Please check your code and try again.",
+                                    duration: 2000,
+                                })
+                            }
+                        } else {
+                            // Run code logic
+                            handleRunCode()
+                        }
+                    }}
+                    disabled={!isReady || (currentStepIndex >= (problem ? problem.strategies[currentStrategy].steps.length : 0) && isRunning)}
+                    className={cn(
+                        "transition-all duration-300 shadow-xl border border-white/10",
+                        currentStepIndex < (problem ? problem.strategies[currentStrategy].steps.length : 0)
+                            ? "bg-blue-600 hover:bg-blue-700 text-white" // Check Step Style
+                            : (!isReady || isRunning) // Run Code Disabled Style
+                                ? "bg-zinc-800 text-zinc-500 cursor-not-allowed hover:bg-zinc-800"
+                                : "bg-green-600 hover:bg-green-700 text-white hover:shadow-green-900/20" // Run Code Style
+                    )}
+                >
+                    {currentStepIndex < (problem ? problem.strategies[currentStrategy].steps.length : 0) ? (
+                        <>
+                            <Check className="w-5 h-5 mr-2" />
+                            Check Step
+                        </>
+                    ) : (
+                        <>
+                            <Play className="w-5 h-5 mr-2" />
+                            {isRunning ? "Running..." : "Run Code"}
+                        </>
+                    )}
                 </Button>
             </div>
 
