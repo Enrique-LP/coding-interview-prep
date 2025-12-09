@@ -18,7 +18,7 @@
         "strs[i] contains any possible characters out of 256 valid ascii characters."
     ],
     "difficulty": "Medium",
-    "topic": "Arrays & Hashing",
+    "topic": "String",
     "strategies": {
         "brute-force": {
             "id": "brute-force",
