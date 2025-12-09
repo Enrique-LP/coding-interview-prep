@@ -121,7 +121,7 @@
                     "instruction": "Count the frequency of each character in the string.",
                     "placeholderCode": "        for c in s:\n            count[ord(c) - ord('a')] += 1",
                     "validationRegex": "^\\s+for\\s+c\\s+in\\s+s:\\s*count\\[ord\\(c\\)\\s*-\\s*ord\\('a'\\)\\]\\s*\\+=\\s*1$",
-                    "hint": "`ord(c)` gets the ASCII number of a char (e.g. 'a'=97). By subtracting `ord('a')`, we map 'a' to index 0, 'b' to 1, ..., 'z' to 25. This lets us use the array as a frequency counter.",
+                    "hint": "We iterate through 's' and update the count at the calculated index. Example with s='abc': 1. c='a' (index 0) -> count[0] becomes 1. 2. c='b' (index 1) -> count[1] becomes 1. 3. c='c' (index 2) -> count[2] becomes 1. Final count array represents the character conceptual frequency.",
                     "solutionCode": "        for c in s:\n            count[ord(c) - ord('a')] += 1"
                 },
                 {
@@ -129,7 +129,7 @@
                     "instruction": "Use the count tuple as a key to group anagrams.",
                     "placeholderCode": "        ans[tuple(count)].append(s)",
                     "validationRegex": "^\\s+ans\\[tuple\\(count\\)\\]\\.append\\(s\\)$",
-                    "hint": "Python dictionaries require keys to be immutable (unchangeable). Lists are mutable, so we convert `count` to a `tuple` (which is immutable) to use it as a key.",
+                    "hint": "We combine 3 steps in 1 line: 1. `tuple(count)` converts list to tuple (valid dict key). 2. `ans[...]` accesses the group. **Crucial:** Since we used `defaultdict(list)`, if the key is new, it auto-creates an empty list `[]` for us. 3. `.append(s)` adds the word to that list.",
                     "solutionCode": "        ans[tuple(count)].append(s)"
                 },
                 {
