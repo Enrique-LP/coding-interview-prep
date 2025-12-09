@@ -101,12 +101,20 @@ export const useStore = create<State>()(
 
                 if (!step) return false
 
-                // Get the last line of code (trim whitespace)
+                // Normalize code: remove extra whitespace and newlines for easier regex matching
+                // This allows matching multi-line inputs as a single stream of text
+                const normalizedCode = code.trim().replace(/\s+/g, ' ')
+
+                // We also check against the raw last line for backward compatibility 
+                // or for simple single-line steps where user just typed the new line
                 const lines = code.trim().split('\n')
-                const lastLine = lines[lines.length - 1]
+                const lastLine = lines[lines.length - 1].trim()
 
                 const regex = new RegExp(step.validationRegex)
-                const isValid = regex.test(lastLine)
+
+                // Try matching against the normalized full code (for multi-line steps)
+                // OR against just the last line (for standard single-line steps)
+                const isValid = regex.test(normalizedCode) || regex.test(lastLine)
 
                 if (isValid) {
                     // Move to next step
