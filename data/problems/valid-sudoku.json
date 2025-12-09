@@ -75,14 +75,30 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize sets.",
-                    "placeholderCode": "    cols = collections.defaultdict(set)\n    rows = collections.defaultdict(set)\n    squares = collections.defaultdict(set)",
-                    "validationRegex": "^\\s+cols\\s*=\\s*collections\\.defaultdict\\(set\\)\\s*rows\\s*=\\s*collections\\.defaultdict\\(set\\)\\s*squares\\s*=\\s*collections\\.defaultdict\\(set\\)$",
-                    "hint": "Use `collections.defaultdict(set)`.",
-                    "solutionCode": "    cols = collections.defaultdict(set)\n    rows = collections.defaultdict(set)\n    squares = collections.defaultdict(set)"
+                    "instruction": "Initialize the dictionary for tracking columns.",
+                    "placeholderCode": "    cols = collections.defaultdict(set)",
+                    "validationRegex": "^\\s+cols\\s*=\\s*collections\\.defaultdict\\(set\\)$",
+                    "hint": "Use `collections.defaultdict(set)` to store seen numbers for each column index.",
+                    "solutionCode": "    cols = collections.defaultdict(set)"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize the dictionary for tracking rows.",
+                    "placeholderCode": "    rows = collections.defaultdict(set)",
+                    "validationRegex": "^\\s+rows\\s*=\\s*collections\\.defaultdict\\(set\\)$",
+                    "hint": "Similarly, create a defaultdict of sets to track numbers seen in each row.",
+                    "solutionCode": "    rows = collections.defaultdict(set)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Initialize the dictionary for tracking 3x3 squares.",
+                    "placeholderCode": "    squares = collections.defaultdict(set)",
+                    "validationRegex": "^\\s+squares\\s*=\\s*collections\\.defaultdict\\(set\\)$",
+                    "hint": "Create one more defaultdict for the 3x3 sub-boxes. We will use `(r // 3, c // 3)` tuples as keys.",
+                    "solutionCode": "    squares = collections.defaultdict(set)"
+                },
+                {
+                    "id": 5,
                     "instruction": "Iterate through board.",
                     "placeholderCode": "    for r in range(9):\n        for c in range(9):\n            if board[r][c] == \".\":\n                continue\n            if (board[r][c] in rows[r] or\n                board[r][c] in cols[c] or\n                board[r][c] in squares[(r // 3, c // 3)]):\n                return False\n            cols[c].add(board[r][c])\n            rows[r].add(board[r][c])\n            squares[(r // 3, c // 3)].add(board[r][c])",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(9\\):\\s*for\\s+c\\s+in\\s+range\\(9\\):\\s*if\\s+board\\[r\\]\\[c\\]\\s*==\\s*\".\":\\s*continue\\s*if\\s*\\(board\\[r\\]\\[c\\]\\s+in\\s+rows\\[r\\]\\s+or\\s*board\\[r\\]\\[c\\]\\s+in\\s+cols\\[c\\]\\s+or\\s*board\\[r\\]\\[c\\]\\s+in\\s+squares\\[\\(r\\s*//\\s*3,\\s*c\\s*//\\s*3\\)\\]\\):\\s*return\\s+False\\s*cols\\[c\\]\\.add\\(board\\[r\\]\\[c\\]\\)\\s*rows\\[r\\]\\.add\\(board\\[r\\]\\[c\\]\\)\\s*squares\\[\\(r\\s*//\\s*3,\\s*c\\s*//\\s*3\\)\\]\\.add\\(board\\[r\\]\\[c\\]\\)$",
@@ -90,7 +106,7 @@
                     "solutionCode": "    for r in range(9):\n        for c in range(9):\n            if board[r][c] == \".\":\n                continue\n            if (board[r][c] in rows[r] or\n                board[r][c] in cols[c] or\n                board[r][c] in squares[(r // 3, c // 3)]):\n                return False\n            cols[c].add(board[r][c])\n            rows[r].add(board[r][c])\n            squares[(r // 3, c // 3)].add(board[r][c])"
                 },
                 {
-                    "id": 4,
+                    "id": 6,
                     "instruction": "Return True.",
                     "placeholderCode": "    return True",
                     "validationRegex": "^\\s+return\\s+True$",
