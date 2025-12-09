@@ -121,7 +121,7 @@
                     "instruction": "Count the frequency of each character in the string.",
                     "placeholderCode": "        for c in s:\n            count[ord(c) - ord('a')] += 1",
                     "validationRegex": "^\\s+for\\s+c\\s+in\\s+s:\\s*count\\[ord\\(c\\)\\s*-\\s*ord\\('a'\\)\\]\\s*\\+=\\s*1$",
-                    "hint": "1. Find Index: Subtract ord('a') to map 'a'->0, 'b'->1. (e.g. 'a' is at index 0). Why subtract ord('a')? ASCII for 'a' is 97, but our list indices start at 0. If we used count[ord('a')], we'd crash trying to access index 97! By subtracting 97 (ord('a')), we shift values down: 'a' (97) - 97 = 0 (Index 0) 'b' (98) - 97 = 1 (Index 1) This maps 'a'...'z' perfectly to indices 0...25. 2. Count It: We access count[0] and do += 1. Basically: 'I found an \"a\", so go to box #0 and add one tally mark to it.'",
+                    "hint": "We iterate through 's' and update the count at the calculated index. 1. Find Index: Subtract ord('a') to map 'a'->0, 'b'->1. (e.g. 'a' is at index 0). Why subtract ord('a')? ASCII for 'a' is 97, but our list indices start at 0. If we used count[ord('a')], we'd crash trying to access index 97! By subtracting 97 (ord('a')), we shift values down: 'a' (97) - 97 = 0 (Index 0) 'b' (98) - 97 = 1 (Index 1) This maps 'a'...'z' perfectly to indices 0...25. 2. Count It: We access count[0] and do += 1. Basically: 'I found an \"a\", so go to box #0 and add one tally mark to it.'",
                     "solutionCode": "        for c in s:\n            count[ord(c) - ord('a')] += 1"
                 },
                 {
