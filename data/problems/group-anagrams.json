@@ -96,7 +96,7 @@
                     "id": 2,
                     "instruction": "Initialize a dictionary using default values of lists.",
                     "placeholderCode": "    from collections import defaultdict\n    ans = defaultdict(list)",
-                    "validationRegex": "^\\s+from\\s+collections\\s+import\\s+defaultdict\\s*ans\\s*=\\s*defaultdict\\(list\\)$",
+                    "validationRegex": "from\\s+collections\\s+import\\s+defaultdict.*ans\\s*=\\s*defaultdict\\(list\\)",
                     "hint": "Import `defaultdict` and initialize it with `list`.",
                     "solutionCode": "    from collections import defaultdict\n    ans = defaultdict(list)"
                 },
