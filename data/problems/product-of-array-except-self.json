@@ -74,22 +74,70 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Calculate prefix products.",
-                    "placeholderCode": "    prefix = 1\n    for i in range(len(nums)):\n        res[i] = prefix\n        prefix *= nums[i]",
-                    "validationRegex": "^\\s+prefix\\s*=\\s*1\\s*for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):\\s*res\\[i\\]\\s*=\\s*prefix\\s*prefix\\s*\\*=\\s*nums\\[i\\]$",
-                    "hint": "Iterate forward. Store current prefix product in `res[i]`, then update prefix.\\n\\nExample:\\nnums=[1, 2, 3, 4].\\ni=0: res[0]=1. prefix=1*1=1.\\ni=1: res[1]=1. prefix=1*2=2.\\ni=2: res[2]=2. prefix=2*3=6.",
-                    "solutionCode": "    prefix = 1\n    for i in range(len(nums)):\n        res[i] = prefix\n        prefix *= nums[i]"
+                    "instruction": "Initialize the prefix product variable.",
+                    "placeholderCode": "    prefix = 1",
+                    "validationRegex": "^\\s+prefix\\s*=\\s*1$",
+                    "hint": "Concept: Product Except Self = (Left Product) * (Right Product). `prefix` tracks the Left Product. Start at 1. Example nums=[1, 2, 3, 4]. At i=2 (value 3), `prefix` will eventually store 1*2 = 2.",
+                    "solutionCode": "    prefix = 1"
                 },
                 {
                     "id": 4,
-                    "instruction": "Calculate suffix products and combine.",
-                    "placeholderCode": "    postfix = 1\n    for i in range(len(nums) - 1, -1, -1):\n        res[i] *= postfix\n        postfix *= nums[i]",
-                    "validationRegex": "^\\s+postfix\\s*=\\s*1\\s*for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*res\\[i\\]\\s*\\*=\\s*postfix\\s*postfix\\s*\\*=\\s*nums\\[i\\]$",
-                    "hint": "Iterate backward. Multiply `res[i]` by current postfix product, then update postfix.",
-                    "solutionCode": "    postfix = 1\n    for i in range(len(nums) - 1, -1, -1):\n        res[i] *= postfix\n        postfix *= nums[i]"
+                    "instruction": "Iterate through the array to calculate prefix products.",
+                    "placeholderCode": "    for i in range(len(nums)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):$",
+                    "hint": "We loop through every index `i` of the input array `nums`.",
+                    "solutionCode": "    for i in range(len(nums)):"
                 },
                 {
                     "id": 5,
+                    "instruction": "Store the current prefix product in the result.",
+                    "placeholderCode": "        res[i] = prefix",
+                    "validationRegex": "^\\s+res\\[i\\]\\s*=\\s*prefix$",
+                    "hint": "Crucial Step: Before we multiply `nums[i]` into our prefix, `prefix` holds the product of everything to the LEFT of `i`. So `res[i]` becomes that product.",
+                    "solutionCode": "        res[i] = prefix"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update the prefix product for the next iteration.",
+                    "placeholderCode": "        prefix *= nums[i]",
+                    "validationRegex": "^\\s+prefix\\s*\\*=\\s*nums\\[i\\]$",
+                    "hint": "Now that we've used the old prefix for `i`, we include `nums[i]` in the prefix so it's ready for `i+1`.",
+                    "solutionCode": "        prefix *= nums[i]"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Initialize the suffix product variable.",
+                    "placeholderCode": "    postfix = 1",
+                    "validationRegex": "^\\s+postfix\\s*=\\s*1$",
+                    "hint": "Now the Right Product! `postfix` tracks product of numbers to the RIGHT. Example nums=[1, 2, 3, 4]. At i=2 (value 3), `postfix` will capture 4. Final calculation: Prefix(2) * Postfix(4) = 8.",
+                    "solutionCode": "    postfix = 1"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Iterate backwards through the array.",
+                    "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "We loop from the last index down to 0 to calculate the products from the RIGHT side.",
+                    "solutionCode": "    for i in range(len(nums) - 1, -1, -1):"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Multiply the current result by the suffix product.",
+                    "placeholderCode": "        res[i] *= postfix",
+                    "validationRegex": "^\\s+res\\[i\\]\\s*\\*=\\s*postfix$",
+                    "hint": "`res[i]` already has the PREFIX product. Initializing it with `*=` POSTFIX combines both sides: `prefix * suffix` = Product of Array Except Self!",
+                    "solutionCode": "        res[i] *= postfix"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Update the suffix product for the next iteration.",
+                    "placeholderCode": "        postfix *= nums[i]",
+                    "validationRegex": "^\\s+postfix\\s*\\*=\\s*nums\\[i\\]$",
+                    "hint": "Include the current number `nums[i]` in the `postfix` so it's ready for the next index to the left (`i-1`).",
+                    "solutionCode": "        postfix *= nums[i]"
+                },
+                {
+                    "id": 11,
                     "instruction": "Return result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
