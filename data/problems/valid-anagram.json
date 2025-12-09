@@ -84,7 +84,7 @@
                     "instruction": "Increment the count for the character at index i in s.",
                     "placeholderCode": "        countS[s[i]] = countS.get(s[i], 0) + 1",
                     "validationRegex": "^\\s+countS\\[s\\[i\\]\\]\\s*=\\s*countS\\.get\\(s\\[i\\],\\s*0\\)\\s*\\+\\s*1$",
-                    "hint": "Use `.get(key, 0)` to handle missing keys safely.\\n\\nExample:\\nIf countS={'a': 1} and s[i]='a'.\\ncountS['a'] becomes 1 + 1 = 2.",
+                    "hint": "We use .get(s[i], 0) because if the character s[i] is effectively new, it won't exist in the dictionary yet, so we return 0 as a default value. Example: If finding 'a' for the first time, .get('a', 0) returns 0, then we add 1. Result: {'a': 1}.",
                     "solutionCode": "        countS[s[i]] = countS.get(s[i], 0) + 1"
                 },
                 {
