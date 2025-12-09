@@ -110,11 +110,19 @@ export const useStore = create<State>()(
                 const lines = code.trim().split('\n')
                 const lastLine = lines[lines.length - 1].trim()
 
-                const regex = new RegExp(step.validationRegex)
+                // Create a "strict" regex (exactly as defined, usually with ^ anchor) for single-line checks
+                const strictRegex = new RegExp(step.validationRegex)
 
-                // Try matching against the normalized full code (for multi-line steps)
-                // OR against just the last line (for standard single-line steps)
-                const isValid = regex.test(normalizedCode) || regex.test(lastLine)
+                // Create a "loose" regex by removing the ^ anchor if present
+                // This allows matching the step's code even if it's appended after previous steps' code
+                const regexSource = step.validationRegex.startsWith('^')
+                    ? step.validationRegex.slice(1)
+                    : step.validationRegex
+                const looseRegex = new RegExp(regexSource)
+
+                // 1. Check strict match against just the last line (legacy/single-line support)
+                // 2. Check loose match against the full normalized code (multi-line support)
+                const isValid = strictRegex.test(lastLine) || looseRegex.test(normalizedCode)
 
                 if (isValid) {
                     // Move to next step
