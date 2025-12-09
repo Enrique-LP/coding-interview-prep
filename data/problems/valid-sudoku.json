@@ -99,18 +99,74 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Iterate through board.",
-                    "placeholderCode": "    for r in range(9):\n        for c in range(9):\n            if board[r][c] == \".\":\n                continue\n            if (board[r][c] in rows[r] or\n                board[r][c] in cols[c] or\n                board[r][c] in squares[(r // 3, c // 3)]):\n                return False\n            cols[c].add(board[r][c])\n            rows[r].add(board[r][c])\n            squares[(r // 3, c // 3)].add(board[r][c])",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(9\\):\\s*for\\s+c\\s+in\\s+range\\(9\\):\\s*if\\s+board\\[r\\]\\[c\\]\\s*==\\s*\".\":\\s*continue\\s*if\\s*\\(board\\[r\\]\\[c\\]\\s+in\\s+rows\\[r\\]\\s+or\\s*board\\[r\\]\\[c\\]\\s+in\\s+cols\\[c\\]\\s+or\\s*board\\[r\\]\\[c\\]\\s+in\\s+squares\\[\\(r\\s*//\\s*3,\\s*c\\s*//\\s*3\\)\\]\\):\\s*return\\s+False\\s*cols\\[c\\]\\.add\\(board\\[r\\]\\[c\\]\\)\\s*rows\\[r\\]\\.add\\(board\\[r\\]\\[c\\]\\)\\s*squares\\[\\(r\\s*//\\s*3,\\s*c\\s*//\\s*3\\)\\]\\.add\\(board\\[r\\]\\[c\\]\\)$",
-                    "hint": "Check for duplicates in row, col, and square.",
-                    "solutionCode": "    for r in range(9):\n        for c in range(9):\n            if board[r][c] == \".\":\n                continue\n            if (board[r][c] in rows[r] or\n                board[r][c] in cols[c] or\n                board[r][c] in squares[(r // 3, c // 3)]):\n                return False\n            cols[c].add(board[r][c])\n            rows[r].add(board[r][c])\n            squares[(r // 3, c // 3)].add(board[r][c])"
+                    "instruction": "Iterate through the rows of the board.",
+                    "placeholderCode": "    for r in range(9):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(9\\):$",
+                    "hint": "Start loops to visit every cell in the 9x9 grid.",
+                    "solutionCode": "    for r in range(9):"
                 },
                 {
                     "id": 6,
+                    "instruction": "Iterate through the columns of the board.",
+                    "placeholderCode": "        for c in range(9):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(9\\):$",
+                    "hint": "Nested loop to access `board[r][c]`.",
+                    "solutionCode": "        for c in range(9):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Skip empty cells.",
+                    "placeholderCode": "            if board[r][c] == \".\":\n                continue",
+                    "validationRegex": "^\\s+if\\s+board\\[r\\]\\[c\\]\\s*==\\s*\".\":\\s*continue$",
+                    "hint": "If the cell is a dot `.` it's empty, so we ignore it.",
+                    "solutionCode": "            if board[r][c] == \".\":\n                continue"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Calculate the 3x3 sub-grid key.",
+                    "placeholderCode": "            grid_key = (r // 3, c // 3)",
+                    "validationRegex": "^\\s+grid_key\\s*=\\s*\\(r\\s*//\\s*3,\\s*c\\s*//\\s*3\\)$",
+                    "hint": "Determine which 3x3 block we are in. Row 0-2 -> 0, Row 3-5 -> 1. We create a tuple key like `(0, 1)`.",
+                    "solutionCode": "            grid_key = (r // 3, c // 3)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check for conflicts in rows, columns, or squares.",
+                    "placeholderCode": "            if (board[r][c] in rows[r] or\n                board[r][c] in cols[c] or\n                board[r][c] in squares[grid_key]):\n                return False",
+                    "validationRegex": "^\\s+if\\s*\\(board\\[r\\]\\[c\\]\\s+in\\s+rows\\[r\\]\\s+or\\s*board\\[r\\]\\[c\\]\\s+in\\s+cols\\[c\\]\\s+or\\s*board\\[r\\]\\[c\\]\\s+in\\s+squares\\[grid_key\\]\\):\\s*return\\s+False$",
+                    "hint": "If the current number is ALREADY in our `rows`, `cols`, or `squares` sets, it's a duplicate! Sudoku invalid.",
+                    "solutionCode": "            if (board[r][c] in rows[r] or\n                board[r][c] in cols[c] or\n                board[r][c] in squares[grid_key]):\n                return False"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Add the number to the column tracking set.",
+                    "placeholderCode": "            cols[c].add(board[r][c])",
+                    "validationRegex": "^\\s+cols\\[c\\]\\.add\\(board\\[r\\]\\[c\\]\\)$",
+                    "hint": "Mark this number as 'seen' in the current column.",
+                    "solutionCode": "            cols[c].add(board[r][c])"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Add the number to the row tracking set.",
+                    "placeholderCode": "            rows[r].add(board[r][c])",
+                    "validationRegex": "^\\s+rows\\[r\\]\\.add\\(board\\[r\\]\\[c\\]\\)$",
+                    "hint": "Mark this number as 'seen' in the current row.",
+                    "solutionCode": "            rows[r].add(board[r][c])"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Add the number to the square tracking set.",
+                    "placeholderCode": "            squares[grid_key].add(board[r][c])",
+                    "validationRegex": "^\\s+squares\\[grid_key\\]\\.add\\(board\\[r\\]\\[c\\]\\)$",
+                    "hint": "Mark this number as 'seen' in the current 3x3 block.",
+                    "solutionCode": "            squares[grid_key].add(board[r][c])"
+                },
+                {
+                    "id": 13,
                     "instruction": "Return True.",
                     "placeholderCode": "    return True",
                     "validationRegex": "^\\s+return\\s+True$",
-                    "hint": "Return `True`.",
+                    "hint": "If we finish both loops without returning False, the board is valid.",
                     "solutionCode": "    return True"
                 }
             ]
