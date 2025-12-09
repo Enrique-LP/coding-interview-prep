@@ -99,11 +99,43 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Iterate through buckets from end to start to find top k elements.",
-                    "placeholderCode": "    res = []\n    for i in range(len(freq) - 1, 0, -1):\n        for n in freq[i]:\n            res.append(n)\n            if len(res) == k:\n                return res",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*for\\s+i\\s+in\\s+range\\(len\\(freq\\)\\s*-\\s*1,\\s*0,\\s*-1\\):\\s*for\\s+n\\s+in\\s+freq\\[i\\]:\\s*res\\.append\\(n\\)\\s*if\\s+len\\(res\\)\\s*==\\s*k:\\s*return\\s+res$",
-                    "hint": "Loop backwards through `freq`. Collect elements until `len(res) == k`.\\n\\nExample:\\nfreq=[[], [], [2], [1], [], ...]. (1 appears 3 times, 2 appears 2 times).\\nLoop from end. Found 1 at index 3. res=[1].\\nFound 2 at index 2. res=[1, 2]. Return.",
-                    "solutionCode": "    res = []\n    for i in range(len(freq) - 1, 0, -1):\n        for n in freq[i]:\n            res.append(n)\n            if len(res) == k:\n                return res"
+                    "instruction": "Initialize the result list.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "Create an empty list `res` to store our top K elements.",
+                    "solutionCode": "    res = []"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Loop backwards through the frequency buckets.",
+                    "placeholderCode": "    for i in range(len(freq) - 1, 0, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(freq\\)\\s*-\\s*1,\\s*0,\\s*-1\\):$",
+                    "hint": "Why backwards? Higher indices = Higher frequency. We must start from the end (`len(freq)-1`) to find the 'Top' elements first. `range(start, 0, -1)` stops right before index 0, so we check all valid counts down to 1.",
+                    "solutionCode": "    for i in range(len(freq) - 1, 0, -1):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Iterate through each number in the current bucket.",
+                    "placeholderCode": "        for n in freq[i]:",
+                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+freq\\[i\\]:$",
+                    "hint": "A bucket `freq[i]` might contain multiple numbers that appeared `i` times (e.g., both 2 and 3 appeared 5 times). We need to check all of them.",
+                    "solutionCode": "        for n in freq[i]:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Add the number to the result.",
+                    "placeholderCode": "            res.append(n)",
+                    "validationRegex": "^\\s+res\\.append\\(n\\)$",
+                    "hint": "Add the current number `n` to our result list.",
+                    "solutionCode": "            res.append(n)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return if we have collected k elements.",
+                    "placeholderCode": "            if len(res) == k:\n                return res",
+                    "validationRegex": "^\\s+if\\s+len\\(res\\)\\s*==\\s*k:\\s*return\\s+res$",
+                    "hint": "Once our list `res` reaches size `k`, we have found the top K elements. Return `res` immediately.",
+                    "solutionCode": "            if len(res) == k:\n                return res"
                 }
             ]
         }
