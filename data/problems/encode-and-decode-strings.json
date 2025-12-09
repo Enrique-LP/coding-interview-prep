@@ -50,19 +50,107 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define encode function.",
-                    "placeholderCode": "def encode(strs):\n    res = \"\"\n    for s in strs:\n        res += str(len(s)) + \"#\" + s\n    return res",
-                    "validationRegex": "^def\\s+encode\\(strs\\):\\s*res\\s*=\\s*\"\"\\s*for\\s+s\\s+in\\s+strs:\\s*res\\s*\\+=\\s*str\\(len\\(s\\)\\)\\s*\\+\\s*\"#\"\\s*\\+\\s*s\\s*return\\s+res$",
-                    "hint": "Iterate through strings, adding `len(s) + '#' + s` to result.",
-                    "solutionCode": "def encode(strs):\n    res = \"\"\n    for s in strs:\n        res += str(len(s)) + \"#\" + s\n    return res"
+                    "instruction": "Define the encode function.",
+                    "placeholderCode": "def encode(strs):",
+                    "validationRegex": "^def\\s+encode\\(strs\\):$",
+                    "hint": "Define a function named `encode` that takes a list of strings `strs`.",
+                    "solutionCode": "def encode(strs):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Define decode function.",
-                    "placeholderCode": "def decode(s):\n    res, i = [], 0\n    while i < len(s):\n        j = i\n        while s[j] != \"#\":\n            j += 1\n        length = int(s[i:j])\n        res.append(s[j + 1 : j + 1 + length])\n        i = j + 1 + length\n    return res",
-                    "validationRegex": "^def\\s+decode\\(s\\):\\s*res,\\s*i\\s*=\\s*\\[\\],\\s*0\\s*while\\s+i\\s*<\\s+len\\(s\\):\\s*j\\s*=\\s*i\\s*while\\s+s\\[j\\]\\s*!=\\s*\"#\":\\s*j\\s*\\+=\\s*1\\s*length\\s*=\\s*int\\(s\\[i:j\\]\\)\\s*res\\.append\\(s\\[j\\s*\\+\\s*1\\s*:\\s*j\\s*\\+\\s*1\\s*\\+\\s*length\\]\\)\\s*i\\s*=\\s*j\\s*\\+\\s*1\\s*\\+\\s*length\\s*return\\s+res$",
-                    "hint": "Parse the length prefix until '#', then extract the substring of that length.",
-                    "solutionCode": "def decode(s):\n    res, i = [], 0\n    while i < len(s):\n        j = i\n        while s[j] != \"#\":\n            j += 1\n        length = int(s[i:j])\n        res.append(s[j + 1 : j + 1 + length])\n        i = j + 1 + length\n    return res"
+                    "instruction": "Initialize the result string.",
+                    "placeholderCode": "    res = \"\"",
+                    "validationRegex": "^\\s+res\\s*=\\s*\"\"$",
+                    "hint": "Start with an empty string to accumulate our encoded result.",
+                    "solutionCode": "    res = \"\""
+                },
+                {
+                    "id": 3,
+                    "instruction": "Iterate through each string.",
+                    "placeholderCode": "    for s in strs:",
+                    "validationRegex": "^\\s+for\\s+s\\s+in\\s+strs:$",
+                    "hint": "Loop through every string in the provided list.",
+                    "solutionCode": "    for s in strs:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Append length, delimiter, and string.",
+                    "placeholderCode": "        res += str(len(s)) + \"#\" + s",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*str\\(len\\(s\\)\\)\\s*\\+\\s*\"#\"\\s*\\+\\s*s$",
+                    "hint": "Core Logic: Prefix every string with its length and a '#' delimiter. Example: 'lint' -> '4#lint'. This tells the decoder exactly where the string ends.",
+                    "solutionCode": "        res += str(len(s)) + \"#\" + s"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return the encoded string.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the final concatenated string.",
+                    "solutionCode": "    return res"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Define the decode function.",
+                    "placeholderCode": "def decode(s):",
+                    "validationRegex": "^def\\s+decode\\(s\\):$",
+                    "hint": "Define a function named `decode` that takes the encoded string `s`.",
+                    "solutionCode": "def decode(s):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Initialize result list and pointer.",
+                    "placeholderCode": "    res, i = [], 0",
+                    "validationRegex": "^\\s+res,\\s*i\\s*=\\s*\\[\\],\\s*0$",
+                    "hint": "Use `i` as a pointer to traverse the string `s`. Start at index 0.",
+                    "solutionCode": "    res, i = [], 0"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Loop through the string.",
+                    "placeholderCode": "    while i < len(s):",
+                    "validationRegex": "^\\s+while\\s+i\\s*<\\s+len\\(s\\):$",
+                    "hint": "Continue decoding until our pointer `i` reaches the end of the string.",
+                    "solutionCode": "    while i < len(s):"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Find the delimiter position.",
+                    "placeholderCode": "        j = i\n        while s[j] != \"#\":\n            j += 1",
+                    "validationRegex": "^\\s+j\\s*=\\s*i\\s*while\\s+s\\[j\\]\\s*!=\\s*\"#\":\\s*j\\s*\\+=\\s*1$",
+                    "hint": "Move a second pointer `j` forward until it hits the '#'. The text between `i` and `j` is our number (the length).",
+                    "solutionCode": "        j = i\n        while s[j] != \"#\":\n            j += 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Parse the length of the next string.",
+                    "placeholderCode": "        length = int(s[i:j])",
+                    "validationRegex": "^\\s+length\\s*=\\s*int\\(s\\[i:j\\]\\)$",
+                    "hint": "Convert the substring from `i` to `j` into an integer. This tells us how many characters to read next.",
+                    "solutionCode": "        length = int(s[i:j])"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Extract the string and add to result.",
+                    "placeholderCode": "        res.append(s[j + 1 : j + 1 + length])",
+                    "validationRegex": "^\\s+res\\.append\\(s\\[j\\s*\\+\\s*1\\s*:\\s*j\\s*\\+\\s*1\\s*\\+\\s*length\\]\\)$",
+                    "hint": "Slice the string starting RIGHT AFTER the delimiter (`j+1`) up to the specified `length`. Append it to `res`.",
+                    "solutionCode": "        res.append(s[j + 1 : j + 1 + length])"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Move the pointer to the next segment.",
+                    "placeholderCode": "        i = j + 1 + length",
+                    "validationRegex": "^\\s+i\\s*=\\s*j\\s*\\+\\s*1\\s*\\+\\s*length$",
+                    "hint": "Update `i` to jump over the string we just read, landing on the start of the next length prefix.",
+                    "solutionCode": "        i = j + 1 + length"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Return the decoded list.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the list of original strings.",
+                    "solutionCode": "    return res"
                 }
             ]
         }
