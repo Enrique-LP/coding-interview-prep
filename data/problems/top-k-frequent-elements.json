@@ -86,7 +86,7 @@
                     "instruction": "Count the frequency of each number.",
                     "placeholderCode": "    for n in nums:\n        count[n] = 1 + count.get(n, 0)",
                     "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:\\s*count\\[n\\]\\s*=\\s*1\\s*\\+\\s*count\\.get\\(n,\\s*0\\)$",
-                    "hint": "Populate the `count` dictionary.",
+                    "hint": " Populate the 'count' dictionary. We loop through numbers. `count.get(n, 0)` safely gets the current count of `n`, defaulting to 0 if it's the first time we see it. We add `1` to count the current occurrence. E.g., first '1' -> 0+1=1. Second '1' -> 1+1=2.",
                     "solutionCode": "    for n in nums:\n        count[n] = 1 + count.get(n, 0)"
                 },
                 {
