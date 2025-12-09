@@ -121,7 +121,7 @@
                     "instruction": "Count the frequency of each character in the string.",
                     "placeholderCode": "        for c in s:\n            count[ord(c) - ord('a')] += 1",
                     "validationRegex": "^\\s+for\\s+c\\s+in\\s+s:\\s*count\\[ord\\(c\\)\\s*-\\s*ord\\('a'\\)\\]\\s*\\+=\\s*1$",
-                    "hint": "Use `ord(c) - ord('a')` to map characters to indices 0-25.",
+                    "hint": "`ord(c)` gets the ASCII number of a char (e.g. 'a'=97). By subtracting `ord('a')`, we map 'a' to index 0, 'b' to 1, ..., 'z' to 25. This lets us use the array as a frequency counter.",
                     "solutionCode": "        for c in s:\n            count[ord(c) - ord('a')] += 1"
                 },
                 {
@@ -129,7 +129,7 @@
                     "instruction": "Use the count tuple as a key to group anagrams.",
                     "placeholderCode": "        ans[tuple(count)].append(s)",
                     "validationRegex": "^\\s+ans\\[tuple\\(count\\)\\]\\.append\\(s\\)$",
-                    "hint": "Convert `count` to a tuple to use as a dictionary key.",
+                    "hint": "Python dictionaries require keys to be immutable (unchangeable). Lists are mutable, so we convert `count` to a `tuple` (which is immutable) to use it as a key.",
                     "solutionCode": "        ans[tuple(count)].append(s)"
                 },
                 {
@@ -137,7 +137,7 @@
                     "instruction": "Return the grouped anagrams.",
                     "placeholderCode": "    return list(ans.values())",
                     "validationRegex": "^\\s+return\\s+list\\(ans\\.values\\(\\)\\)$",
-                    "hint": "Return the values as a list.",
+                    "hint": "`ans.values()` contains the lists of anagrams we collected (e.g. [['eat', 'tea'], ['tan']]). We wrap it in `list()` to return the final format expected.",
                     "solutionCode": "    return list(ans.values())"
                 }
             ]
