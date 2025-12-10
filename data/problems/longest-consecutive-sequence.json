@@ -66,22 +66,62 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Create set.",
-                    "placeholderCode": "    numSet = set(nums)\n    longest = 0",
-                    "validationRegex": "^\\s+numSet\\s*=\\s*set\\(nums\\)\\s*longest\\s*=\\s*0$",
-                    "hint": "Convert `nums` to a set for O(1) lookups.",
-                    "solutionCode": "    numSet = set(nums)\n    longest = 0"
+                    "instruction": "Convert the input list to a set.",
+                    "placeholderCode": "    numSet = set(nums)",
+                    "validationRegex": "^\\s+numSet\\s*=\\s*set\\(nums\\)$",
+                    "hint": "Converting `nums` to a Set allows us to check if a number exists in O(1) time.",
+                    "solutionCode": "    numSet = set(nums)"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate and check for start of sequence.",
-                    "placeholderCode": "    for n in nums:\n        if (n - 1) not in numSet:\n            length = 0\n            while (n + length) in numSet:\n                length += 1\n            longest = max(length, longest)",
-                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:\\s*if\\s*\\(n\\s*-\\s*1\\)\\s+not\\s+in\\s+numSet:\\s*length\\s*=\\s*0\\s*while\\s*\\(n\\s*\\+\\s*length\\)\\s+in\\s+numSet:\\s*length\\s*\\+=\\s*1\\s*longest\\s*=\\s*max\\(length,\\s*longest\\)$",
-                    "hint": "If `n-1` is not in set, `n` is the start. Count consecutive numbers.\\n\\nExample:\\nSet={100, 4, 200, 1, 3, 2}.\\nn=1. 0 not in set -> Start.\\nCheck 2 in set? Yes. Check 3? Yes. Check 4? Yes. Check 5? No.\\nLength=4.",
-                    "solutionCode": "    for n in nums:\n        if (n - 1) not in numSet:\n            length = 0\n            while (n + length) in numSet:\n                length += 1\n            longest = max(length, longest)"
+                    "instruction": "Initialize the variable to track the longest sequence.",
+                    "placeholderCode": "    longest = 0",
+                    "validationRegex": "^\\s+longest\\s*=\\s*0$",
+                    "hint": "We'll store the length of the longest consecutive sequence found so far in this variable.",
+                    "solutionCode": "    longest = 0"
                 },
                 {
                     "id": 4,
+                    "instruction": "Iterate through each number in the set.",
+                    "placeholderCode": "    for n in nums:",
+                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:$",
+                    "hint": "Loop through the numbers. Using `numSet` or `nums` works, but iterating `nums` is standard.",
+                    "solutionCode": "    for n in nums:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if the current number is the start of a sequence.",
+                    "placeholderCode": "        if (n - 1) not in numSet:",
+                    "validationRegex": "^\\s+if\\s*\\(n\\s*-\\s*1\\)\\s+not\\s+in\\s+numSet:$",
+                    "hint": "Crucial Logic: If `n - 1` exists, then `n` is NOT the start of a sequence (it's part of `n-1`'s sequence). We only start counting if `n` is the first number.",
+                    "solutionCode": "        if (n - 1) not in numSet:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Initialize the current sequence length.",
+                    "placeholderCode": "            length = 0",
+                    "validationRegex": "^\\s+length\\s*=\\s*0$",
+                    "hint": "Start counting the length of this new sequence.",
+                    "solutionCode": "            length = 0"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Count consecutive numbers.",
+                    "placeholderCode": "            while (n + length) in numSet:\n                length += 1",
+                    "validationRegex": "^\\s+while\\s*\\(n\\s*\\+\\s*length\\)\\s+in\\s+numSet:\\s*length\\s*\\+=\\s*1$",
+                    "hint": "Keep checking if the next number `n + length` exists in our set. If yes, extend the length.",
+                    "solutionCode": "            while (n + length) in numSet:\n                length += 1"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Update the maximum length found so far.",
+                    "placeholderCode": "            longest = max(length, longest)",
+                    "validationRegex": "^\\s+longest\\s*=\\s*max\\(length,\\s*longest\\)$",
+                    "hint": "If this sequence is longer than our previous best, update `longest`.",
+                    "solutionCode": "            longest = max(length, longest)"
+                },
+                {
+                    "id": 9,
                     "instruction": "Return longest.",
                     "placeholderCode": "    return longest",
                     "validationRegex": "^\\s+return\\s+longest$",
