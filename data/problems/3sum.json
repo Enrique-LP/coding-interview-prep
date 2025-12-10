@@ -139,11 +139,35 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "If sum is 0, add to result and skip duplicates for the left pointer.",
-                    "placeholderCode": "            else:\n                res.append([a, nums[l], nums[r]])\n                l += 1\n                while nums[l] == nums[l - 1] and l < r:\n                    l += 1",
-                    "validationRegex": "^\\s+else:\\s*res\\.append\\(\\[a,\\s*nums\\[l\\],\\s*nums\\[r\\]\\]\\)\\s*l\\s*\\+=\\s*1\\s*while\\s+nums\\[l\\s*==\\s*nums\\[l\\s*-\\s*1\\]\\s+and\\s+l\\s*<\\s*r:\\s*l\\s*\\+=\\s*1$",
-                    "hint": "Add to result. Increment `l` and skip duplicates.\\n\\nExample:\\nFound triplet [-1, -1, 2]. Add to res.\\nIncrement l. If next nums[l] is also -1, skip it to avoid duplicate triplet [-1, -1, 2].",
-                    "solutionCode": "            else:\n                res.append([a, nums[l], nums[r]])\n                l += 1\n                while nums[l] == nums[l - 1] and l < r:\n                    l += 1"
+                    "instruction": "If sum is 0, add the triplet to the result.",
+                    "placeholderCode": "            else:\n                res.append([a, nums[l], nums[r]])",
+                    "validationRegex": "^\\s+else:\\s*res\\.append\\(\\[a,\\s*nums\\[l\\],\\s*nums\\[r\\]\\]\\)$",
+                    "hint": "We found a valid triplet! Add `[a, nums[l], nums[r]]` to our results list.",
+                    "solutionCode": "            else:\n                res.append([a, nums[l], nums[r]])"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Move the left pointer forward.",
+                    "placeholderCode": "                l += 1",
+                    "validationRegex": "^\\s+l\\s*\\+=\\s*1$",
+                    "hint": "Since we used `nums[l]`, we need to move to the next number to find more potential triplets.",
+                    "solutionCode": "                l += 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Skip duplicate values for the left pointer.",
+                    "placeholderCode": "                while nums[l] == nums[l - 1] and l < r:\n                    l += 1",
+                    "validationRegex": "^\\s+while\\s+nums\\[l\\]\\s*==\\s*nums\\[l\\s*-\\s*1\\]\\s+and\\s+l\\s*<\\s*r:\\s*l\\s*\\+=\\s*1$",
+                    "hint": "To avoid duplicate triplets (e.g., [-1, -1, 2] twice), keep advancing `l` if the value is the same as the previous one.",
+                    "solutionCode": "                while nums[l] == nums[l - 1] and l < r:\n                    l += 1"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Return the result.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the list of triplets found.",
+                    "solutionCode": "    return res"
                 }
             ]
         }
