@@ -114,14 +114,30 @@
                 },
                 {
                     "id": 9,
-                    "instruction": "Find the delimiter position.",
-                    "placeholderCode": "        j = i\n        while s[j] != \"#\":\n            j += 1",
-                    "validationRegex": "^\\s+j\\s*=\\s*i\\s*while\\s+s\\[j\\]\\s*!=\\s*\"#\":\\s*j\\s*\\+=\\s*1$",
-                    "hint": "Move a second pointer `j` forward until it hits the '#'. The text between `i` and `j` is our number (the length).",
-                    "solutionCode": "        j = i\n        while s[j] != \"#\":\n            j += 1"
+                    "instruction": "Initialize a pointer to find the delimiter.",
+                    "placeholderCode": "        j = i",
+                    "validationRegex": "^\\s+j\\s*=\\s*i$",
+                    "hint": "We need a second pointer `j` starting at `i` to scan for the '#' character.",
+                    "solutionCode": "        j = i"
                 },
                 {
                     "id": 10,
+                    "instruction": "Scan until the delimiter is found.",
+                    "placeholderCode": "        while s[j] != \"#\":",
+                    "validationRegex": "^\\s+while\\s+s\\[j\\]\\s*!=\\s*\"#\":$",
+                    "hint": "Keep matching characters until we hit the separator '#'. The characters between `i` and `j` will be our length number.",
+                    "solutionCode": "        while s[j] != \"#\":"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Move the scanner pointer forward.",
+                    "placeholderCode": "            j += 1",
+                    "validationRegex": "^\\s+j\\s*\\+=\\s*1$",
+                    "hint": "Advance `j` to check the next character.",
+                    "solutionCode": "            j += 1"
+                },
+                {
+                    "id": 12,
                     "instruction": "Parse the length of the next string.",
                     "placeholderCode": "        length = int(s[i:j])",
                     "validationRegex": "^\\s+length\\s*=\\s*int\\(s\\[i:j\\]\\)$",
@@ -129,7 +145,7 @@
                     "solutionCode": "        length = int(s[i:j])"
                 },
                 {
-                    "id": 11,
+                    "id": 13,
                     "instruction": "Extract the string and add to result.",
                     "placeholderCode": "        res.append(s[j + 1 : j + 1 + length])",
                     "validationRegex": "^\\s+res\\.append\\(s\\[j\\s*\\+\\s*1\\s*:\\s*j\\s*\\+\\s*1\\s*\\+\\s*length\\]\\)$",
@@ -137,7 +153,7 @@
                     "solutionCode": "        res.append(s[j + 1 : j + 1 + length])"
                 },
                 {
-                    "id": 12,
+                    "id": 14,
                     "instruction": "Move the pointer to the next segment.",
                     "placeholderCode": "        i = j + 1 + length",
                     "validationRegex": "^\\s+i\\s*=\\s*j\\s*\\+\\s*1\\s*\\+\\s*length$",
@@ -145,7 +161,7 @@
                     "solutionCode": "        i = j + 1 + length"
                 },
                 {
-                    "id": 13,
+                    "id": 15,
                     "instruction": "Return the decoded list.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
