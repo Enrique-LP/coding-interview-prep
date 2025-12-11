@@ -75,14 +75,38 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize pointers and max values.",
-                    "placeholderCode": "    if not height: return 0\n    l, r = 0, len(height) - 1\n    leftMax, rightMax = height[l], height[r]\n    res = 0",
-                    "validationRegex": "^\\s+if\\s+not\\s+height:\\s*return\\s+0\\s*l,\\s*r\\s*=\\s*0,\\s*len\\(height\\)\\s*-\\s*1\\s*leftMax,\\s*rightMax\\s*=\\s*height\\[l\\],\\s*height\\[r\\]\\s*res\\s*=\\s*0$",
-                    "hint": "Initialize `l`, `r` at ends. `leftMax`, `rightMax` with initial heights.",
-                    "solutionCode": "    if not height: return 0\n    l, r = 0, len(height) - 1\n    leftMax, rightMax = height[l], height[r]\n    res = 0"
+                    "instruction": "Handle edge case for empty input.",
+                    "placeholderCode": "    if not height: return 0",
+                    "validationRegex": "^\\s+if\\s+not\\s+height:\\s*return\\s+0$",
+                    "hint": "If the input array is empty, no water can be trapped.",
+                    "solutionCode": "    if not height: return 0"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize left and right pointers.",
+                    "placeholderCode": "    l, r = 0, len(height) - 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*0,\\s*len\\(height\\)\\s*-\\s*1$",
+                    "hint": "Start pointers at the beginning (0) and end (n-1) of the array.",
+                    "solutionCode": "    l, r = 0, len(height) - 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Initialize max height trackers.",
+                    "placeholderCode": "    leftMax, rightMax = height[l], height[r]",
+                    "validationRegex": "^\\s+leftMax,\\s*rightMax\\s*=\\s*height\\[l\\],\\s*height\\[r\\]$",
+                    "hint": "We need to track the highest bar seen so far from the left and from the right. Initialize them with the starting values.",
+                    "solutionCode": "    leftMax, rightMax = height[l], height[r]"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Initialize the result variable.",
+                    "placeholderCode": "    res = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*0$",
+                    "hint": "This variable will accumulate the total amount of trapped water.",
+                    "solutionCode": "    res = 0"
+                },
+                {
+                    "id": 6,
                     "instruction": "Iterate while left pointer is less than right pointer.",
                     "placeholderCode": "    while l < r:\n        if leftMax < rightMax:\n            l += 1\n            leftMax = max(leftMax, height[l])\n            res += leftMax - height[l]\n        else:\n            r -= 1\n            rightMax = max(rightMax, height[r])\n            res += rightMax - height[r]",
                     "validationRegex": "while\\s+l\\s*<\\s*r:\\s*if\\s+leftMax\\s*<\\s*rightMax:\\s*l\\s*\\+=\\s*1\\s*leftMax\\s*=\\s*max\\(leftMax,\\s*height\\[l\\]\\)\\s*res\\s*\\+=\\s*leftMax\\s*-\\s*height\\[l\\]\\s*else:\\s*r\\s*-=\\s*1\\s*rightMax\\s*=\\s*max\\(rightMax,\\s*height\\[r\\]\\)\\s*res\\s*\\+=\\s*rightMax\\s*-\\s*height\\[r\\]",
@@ -90,7 +114,7 @@
                     "solutionCode": "    while l < r:\n        if leftMax < rightMax:\n            l += 1\n            leftMax = max(leftMax, height[l])\n            res += leftMax - height[l]\n        else:\n            r -= 1\n            rightMax = max(rightMax, height[r])\n            res += rightMax - height[r]"
                 },
                 {
-                    "id": 4,
+                    "id": 7,
                     "instruction": "Return the result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
