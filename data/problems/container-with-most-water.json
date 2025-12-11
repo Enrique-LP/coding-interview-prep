@@ -75,14 +75,46 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Loop while l < r.",
-                    "placeholderCode": "    while l < r:\n        area = (r - l) * min(height[l], height[r])\n        res = max(res, area)\n        if height[l] < height[r]:\n            l += 1\n        else:\n            r -= 1",
-                    "validationRegex": "^\\s+while\\s+l\\s*<\\s+r:\\s*area\\s*=\\s*\\(r\\s*-\\s*l\\)\\s*\\*\\s*min\\(height\\[l\\],\\s*height\\[r\\]\\)\\s*res\\s*=\\s*max\\(res,\\s*area\\)\\s*if\\s+height\\[l\\],\\s*<\\s+height\\[r\\]:\\s*l\\s*\\+=\\s*1\\s*else:\\s*r\\s*-=\\s*1$",
-                    "hint": "Calculate area. Move the pointer pointing to the shorter line inward.\\n\\nExample:\\nheight=[1, 8, 6, 2, 5, 4, 8, 3, 7]. l=0(1), r=8(7).\\nArea = (8-0) * min(1, 7) = 8 * 1 = 8.\\nSince height[l] < height[r] (1 < 7), move l to 1.",
-                    "solutionCode": "    while l < r:\n        area = (r - l) * min(height[l], height[r])\n        res = max(res, area)\n        if height[l] < height[r]:\n            l += 1\n        else:\n            r -= 1"
+                    "instruction": "Start the loop to check lines.",
+                    "placeholderCode": "    while l < r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<\\s*r:$",
+                    "hint": "We continue as long as the left pointer is to the left of the right pointer.",
+                    "solutionCode": "    while l < r:"
                 },
                 {
                     "id": 4,
+                    "instruction": "Calculate the area formed by the current lines.",
+                    "placeholderCode": "        area = (r - l) * min(height[l], height[r])",
+                    "validationRegex": "^\\s+area\\s*=\\s*\\(r\\s*-\\s*l\\)\\s*\\*\\s*min\\(height\\[l\\],\\s*height\\[r\\]\\)$",
+                    "hint": "Width is `r - l`. Height is limited by the shorter line `min(height[l], height[r])`.",
+                    "solutionCode": "        area = (r - l) * min(height[l], height[r])"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Update the maximum area found so far.",
+                    "placeholderCode": "        res = max(res, area)",
+                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*area\\)$",
+                    "hint": "Keep track of the largest container found.",
+                    "solutionCode": "        res = max(res, area)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Move the pointer of the shorter line inward.",
+                    "placeholderCode": "        if height[l] < height[r]:\n            l += 1",
+                    "validationRegex": "^\\s+if\\s+height\\[l\\]\\s*<\\s+height\\[r\\]:\\s*l\\s*\\+=\\s*1$",
+                    "hint": "Greedy Strategy: To potentially find a bigger area, we must get rid of the shorter line (the limiting factor) by moving its pointer.",
+                    "solutionCode": "        if height[l] < height[r]:\n            l += 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Otherwise, move the right pointer.",
+                    "placeholderCode": "        else:\n            r -= 1",
+                    "validationRegex": "^\\s+else:\\s*r\\s*-=\\s*1$",
+                    "hint": "If the right line is shorter (or equal), move the right pointer inward.",
+                    "solutionCode": "        else:\n            r -= 1"
+                },
+                {
+                    "id": 8,
                     "instruction": "Return result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
