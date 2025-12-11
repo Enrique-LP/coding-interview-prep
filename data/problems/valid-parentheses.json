@@ -109,34 +109,58 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "If it's a closing bracket, check if stack is not empty and matches.",
-                    "placeholderCode": "        if c in closeToOpen:\n            if stack and stack[-1] == closeToOpen[c]:\n                stack.pop()",
-                    "validationRegex": "^\\s+if\\s+c\\s+in\\s+closeToOpen:\\s*if\\s+stack\\s+and\\s+stack\\[-1\\]\\s*==\\s*closeToOpen\\[c\\]:\\s*stack\\.pop\\(\\)$",
-                    "hint": "If closing bracket, check stack top. Pop if matches.\\n\\nExample:\\ns='()'. Stack=['(']. c=')'.\\n')' matches '('. Pop '('. Stack=[].",
-                    "solutionCode": "        if c in closeToOpen:\n            if stack and stack[-1] == closeToOpen[c]:\n                stack.pop()"
+                    "instruction": "Check if the character is a closing bracket.",
+                    "placeholderCode": "        if c in closeToOpen:",
+                    "validationRegex": "^\\s+if\\s+c\\s+in\\s+closeToOpen:$",
+                    "hint": "Is `c` one of ')', '}', or ']'?",
+                    "solutionCode": "        if c in closeToOpen:"
                 },
                 {
                     "id": 5,
-                    "instruction": "If it's a closing bracket but doesn't match, return False.",
-                    "placeholderCode": "            else:\n                return False",
-                    "validationRegex": "^\\s+else:\\s*return\\s+False$",
-                    "hint": "Return `False` if mismatch or empty stack.",
-                    "solutionCode": "            else:\n                return False"
+                    "instruction": "Check if it matches the open bracket on top of the stack.",
+                    "placeholderCode": "            if stack and stack[-1] == closeToOpen[c]:",
+                    "validationRegex": "^\\s+if\\s+stack\\s+and\\s+stack\\[-1\\]\\s*==\\s*closeToOpen\\[c\\]:$",
+                    "hint": "Two conditions needed: 1. Stack is not empty. 2. The top item `stack[-1]` is the correct opening pair for `c`.",
+                    "solutionCode": "            if stack and stack[-1] == closeToOpen[c]:"
                 },
                 {
                     "id": 6,
-                    "instruction": "If it's an open bracket, push it onto the stack.",
-                    "placeholderCode": "        else:\n            stack.append(c)",
-                    "validationRegex": "^\\s+else:\\s*stack\\.append\\(c\\)$",
-                    "hint": "Push open bracket to stack.",
-                    "solutionCode": "        else:\n            stack.append(c)"
+                    "instruction": "Pop the matching bracket from the stack.",
+                    "placeholderCode": "                stack.pop()",
+                    "validationRegex": "^\\s+stack\\.pop\\(\\)$",
+                    "hint": "Match found! Remove the open bracket from the stack because it has been successfully closed.",
+                    "solutionCode": "                stack.pop()"
                 },
                 {
                     "id": 7,
+                    "instruction": "Handle invalid cases (mismatch or empty stack).",
+                    "placeholderCode": "            else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "If the stack was empty OR the top didn't match, the string is invalid.",
+                    "solutionCode": "            else:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return False immediately.",
+                    "placeholderCode": "                return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "We found a closing bracket that breaks the rules. Fail immediately.",
+                    "solutionCode": "                return False"
+                },
+                {
+                    "id": 9,
+                    "instruction": "If it's an open bracket, push it onto the stack.",
+                    "placeholderCode": "        else:\n            stack.append(c)",
+                    "validationRegex": "^\\s+else:\\s*stack\\.append\\(c\\)$",
+                    "hint": "It wasn't a closing bracket, so it must be an opening one. Save it for later.",
+                    "solutionCode": "        else:\n            stack.append(c)"
+                },
+                {
+                    "id": 10,
                     "instruction": "Return True if the stack is empty.",
                     "placeholderCode": "    return True if not stack else False",
                     "validationRegex": "^\\s+return\\s+True\\s+if\\s+not\\s+stack\\s+else\\s+False$",
-                    "hint": "Return `True` if stack is empty.",
+                    "hint": "If stack is empty, every bracket was closed correctly. If items remain, some were left open (return False).",
                     "solutionCode": "    return True if not stack else False"
                 }
             ]
