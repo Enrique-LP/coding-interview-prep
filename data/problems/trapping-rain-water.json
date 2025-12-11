@@ -123,22 +123,54 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "Process the left side.",
-                    "placeholderCode": "            l += 1\n            leftMax = max(leftMax, height[l])\n            res += leftMax - height[l]",
-                    "validationRegex": "^\\s+l\\s*\\+=\\s*1\\s*leftMax\\s*=\\s*max\\(leftMax,\\s*height\\[l\\]\\)\\s*res\\s*\\+=\\s*leftMax\\s*-\\s*height\\[l\\]$",
-                    "hint": "Move left pointer. Update `leftMax`. Add trapped water: `leftMax - height[l]` (since `rightMax` is guaranteed to be taller, water level is dictated by `leftMax`).",
-                    "solutionCode": "            l += 1\n            leftMax = max(leftMax, height[l])\n            res += leftMax - height[l]"
+                    "instruction": "Move the left pointer inward.",
+                    "placeholderCode": "            l += 1",
+                    "validationRegex": "^\\s+l\\s*\\+=\\s*1$",
+                    "hint": "We process position `l+1`.",
+                    "solutionCode": "            l += 1"
                 },
                 {
                     "id": 9,
-                    "instruction": "Process the right side.",
-                    "placeholderCode": "        else:\n            r -= 1\n            rightMax = max(rightMax, height[r])\n            res += rightMax - height[r]",
-                    "validationRegex": "^\\s+else:\\s*r\\s*-=\\s*1\\s*rightMax\\s*=\\s*max\\(rightMax,\\s*height\\[r\\]\\)\\s*res\\s*\\+=\\s*rightMax\\s*-\\s*height\\[r\\]$",
-                    "hint": "Move right pointer. Update `rightMax`. Add trapped water: `rightMax - height[r]`.",
-                    "solutionCode": "        else:\n            r -= 1\n            rightMax = max(rightMax, height[r])\n            res += rightMax - height[r]"
+                    "instruction": "Update the max height on the left.",
+                    "placeholderCode": "            leftMax = max(leftMax, height[l])",
+                    "validationRegex": "^\\s+leftMax\\s*=\\s*max\\(leftMax,\\s*height\\[l\\]\\)$",
+                    "hint": "Is the new wall at `l` taller than our current `leftMax`? Update if so.",
+                    "solutionCode": "            leftMax = max(leftMax, height[l])"
                 },
                 {
                     "id": 10,
+                    "instruction": "Add trapped water for the current position.",
+                    "placeholderCode": "            res += leftMax - height[l]",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*leftMax\\s*-\\s*height\\[l\\]$",
+                    "hint": "Since `leftMax < rightMax`, the water level is bounded by `leftMax`. Water trapped = `leftMax` (water level) - `height[l]` (bar height).",
+                    "solutionCode": "            res += leftMax - height[l]"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Process the right side (if rightMax <= leftMax).",
+                    "placeholderCode": "        else:\n            r -= 1",
+                    "validationRegex": "^\\s+else:\\s*r\\s*-=\\s*1$",
+                    "hint": "If `leftMax >= rightMax`, we process from the right side. Move `r` inward.",
+                    "solutionCode": "        else:\n            r -= 1"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Update the max height on the right.",
+                    "placeholderCode": "            rightMax = max(rightMax, height[r])",
+                    "validationRegex": "^\\s+rightMax\\s*=\\s*max\\(rightMax,\\s*height\\[r\\]\\)$",
+                    "hint": "Check if the new wall at `r` is the tallest seen from the right so far.",
+                    "solutionCode": "            rightMax = max(rightMax, height[r])"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Add trapped water for the right side.",
+                    "placeholderCode": "            res += rightMax - height[r]",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*rightMax\\s*-\\s*height\\[r\\]$",
+                    "hint": "Here, water level is bounded by `rightMax`. Add `rightMax - height[r]` to the result.",
+                    "solutionCode": "            res += rightMax - height[r]"
+                },
+                {
+                    "id": 14,
                     "instruction": "Return the result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
