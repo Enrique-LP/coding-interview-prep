@@ -108,13 +108,37 @@
                 {
                     "id": 6,
                     "instruction": "Iterate while left pointer is less than right pointer.",
-                    "placeholderCode": "    while l < r:\n        if leftMax < rightMax:\n            l += 1\n            leftMax = max(leftMax, height[l])\n            res += leftMax - height[l]\n        else:\n            r -= 1\n            rightMax = max(rightMax, height[r])\n            res += rightMax - height[r]",
-                    "validationRegex": "while\\s+l\\s*<\\s*r:\\s*if\\s+leftMax\\s*<\\s*rightMax:\\s*l\\s*\\+=\\s*1\\s*leftMax\\s*=\\s*max\\(leftMax,\\s*height\\[l\\]\\)\\s*res\\s*\\+=\\s*leftMax\\s*-\\s*height\\[l\\]\\s*else:\\s*r\\s*-=\\s*1\\s*rightMax\\s*=\\s*max\\(rightMax,\\s*height\\[r\\]\\)\\s*res\\s*\\+=\\s*rightMax\\s*-\\s*height\\[r\\]",
-                    "hint": "Loop while `l < r`. Update the pointer with the smaller max value.",
-                    "solutionCode": "    while l < r:\n        if leftMax < rightMax:\n            l += 1\n            leftMax = max(leftMax, height[l])\n            res += leftMax - height[l]\n        else:\n            r -= 1\n            rightMax = max(rightMax, height[r])\n            res += rightMax - height[r]"
+                    "placeholderCode": "    while l < r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<\\s*r:$",
+                    "hint": "Continue the process until the two pointers meet.",
+                    "solutionCode": "    while l < r:"
                 },
                 {
                     "id": 7,
+                    "instruction": "Check which max height is smaller.",
+                    "placeholderCode": "        if leftMax < rightMax:",
+                    "validationRegex": "^\\s+if\\s+leftMax\\s*<\\s*rightMax:$",
+                    "hint": "The amount of water trapped is determined by the shorter of the two walls. We always process the side with the smaller max height.",
+                    "solutionCode": "        if leftMax < rightMax:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Process the left side.",
+                    "placeholderCode": "            l += 1\n            leftMax = max(leftMax, height[l])\n            res += leftMax - height[l]",
+                    "validationRegex": "^\\s+l\\s*\\+=\\s*1\\s*leftMax\\s*=\\s*max\\(leftMax,\\s*height\\[l\\]\\)\\s*res\\s*\\+=\\s*leftMax\\s*-\\s*height\\[l\\]$",
+                    "hint": "Move left pointer. Update `leftMax`. Add trapped water: `leftMax - height[l]` (since `rightMax` is guaranteed to be taller, water level is dictated by `leftMax`).",
+                    "solutionCode": "            l += 1\n            leftMax = max(leftMax, height[l])\n            res += leftMax - height[l]"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Process the right side.",
+                    "placeholderCode": "        else:\n            r -= 1\n            rightMax = max(rightMax, height[r])\n            res += rightMax - height[r]",
+                    "validationRegex": "^\\s+else:\\s*r\\s*-=\\s*1\\s*rightMax\\s*=\\s*max\\(rightMax,\\s*height\\[r\\]\\)\\s*res\\s*\\+=\\s*rightMax\\s*-\\s*height\\[r\\]$",
+                    "hint": "Move right pointer. Update `rightMax`. Add trapped water: `rightMax - height[r]`.",
+                    "solutionCode": "        else:\n            r -= 1\n            rightMax = max(rightMax, height[r])\n            res += rightMax - height[r]"
+                },
+                {
+                    "id": 10,
                     "instruction": "Return the result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
