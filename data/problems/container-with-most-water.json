@@ -86,7 +86,7 @@
                     "instruction": "Calculate the area formed by the current lines.",
                     "placeholderCode": "        area = (r - l) * min(height[l], height[r])",
                     "validationRegex": "^\\s+area\\s*=\\s*\\(r\\s*-\\s*l\\)\\s*\\*\\s*min\\(height\\[l\\],\\s*height\\[r\\]\\)$",
-                    "hint": "Width is `r - l`. Height is limited by the shorter line `min(height[l], height[r])`.",
+                    "hint": "FORMULA: Area = Width * Height.\nWidth = `r - l`.\nHeight = `min(left, right)` because water spills over the shorter wall.\nExample: l=0 (val 1), r=8 (val 7). Width=8. Height=min(1,7)=1. Area = 8 * 1 = 8.",
                     "solutionCode": "        area = (r - l) * min(height[l], height[r])"
                 },
                 {
@@ -94,7 +94,7 @@
                     "instruction": "Update the maximum area found so far.",
                     "placeholderCode": "        res = max(res, area)",
                     "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*area\\)$",
-                    "hint": "Keep track of the largest container found.",
+                    "hint": "We want the global maximum. Compare our current `area` (e.g., 8) with the best record so far `res` (e.g., 0). Keep the bigger number.",
                     "solutionCode": "        res = max(res, area)"
                 },
                 {
@@ -102,7 +102,7 @@
                     "instruction": "Move the pointer of the shorter line inward.",
                     "placeholderCode": "        if height[l] < height[r]:\n            l += 1",
                     "validationRegex": "^\\s+if\\s+height\\[l\\]\\s*<\\s+height\\[r\\]:\\s*l\\s*\\+=\\s*1$",
-                    "hint": "Greedy Strategy: To potentially find a bigger area, we must get rid of the shorter line (the limiting factor) by moving its pointer.",
+                    "hint": "WHY? The shorter line limits our height. Keeping it useless because width is shrinking. We discard the shorter line (move `l` forward) hoping to find a taller line to support more water.",
                     "solutionCode": "        if height[l] < height[r]:\n            l += 1"
                 },
                 {
