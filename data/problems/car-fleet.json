@@ -70,18 +70,58 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Pair position and speed and sort.",
-                    "placeholderCode": "    pair = [[p, s] for p, s in zip(position, speed)]\n    stack = []\n    for p, s in sorted(pair)[::-1]:\n        stack.append((target - p) / s)\n        if len(stack) >= 2 and stack[-1] <= stack[-2]:\n            stack.pop()",
-                    "validationRegex": "^\\s+pair\\s*=\\s*\\[\\[p,\\s*s\\]\\s+for\\s+p,\\s*s\\s+in\\s+zip\\(position,\\s*speed\\)\\]\\s*stack\\s*=\\s*\\[\\]\\s*for\\s+p,\\s*s\\s+in\\s+sorted\\(pair\\)\\[::-1\\]:\\s*stack\\.append\\(\\(target\\s*-\\s*p\\)\\s*/\\s*s\\)\\s*if\\s+len\\(stack\\)\\s*>=\\s*2\\s+and\\s+stack\\[-1\\]\\s*<=\\s+stack\\[-2\\]:\\s*stack\\.pop\\(\\)$",
-                    "hint": "Sort cars by position descending. Calculate time to target. If current time <= prev time, it joins the fleet.",
-                    "solutionCode": "    pair = [[p, s] for p, s in zip(position, speed)]\n    stack = []\n    for p, s in sorted(pair)[::-1]:\n        stack.append((target - p) / s)\n        if len(stack) >= 2 and stack[-1] <= stack[-2]:\n            stack.pop()"
+                    "instruction": "Pair position and speed.",
+                    "placeholderCode": "    pair = [[p, s] for p, s in zip(position, speed)]",
+                    "validationRegex": "^\\s+pair\\s*=\\s*\\[\\[p,\\s*s\\]\\s+for\\s+p,\\s*s\\s+in\\s+zip\\(position,\\s*speed\\)\\]$",
+                    "hint": "Create a list of pairs `[position, speed]`. We need them linked for sorting.",
+                    "solutionCode": "    pair = [[p, s] for p, s in zip(position, speed)]"
                 },
                 {
                     "id": 3,
-                    "instruction": "Return stack length.",
+                    "instruction": "Initialize the stack.",
+                    "placeholderCode": "    stack = []",
+                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]$",
+                    "hint": "This stack will store the arrival time of the *leaders* of each fleet.",
+                    "solutionCode": "    stack = []"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Iterate through cars from closest to target (reverse sorted).",
+                    "placeholderCode": "    for p, s in sorted(pair)[::-1]:",
+                    "validationRegex": "^\\s+for\\s+p,\\s*s\\s+in\\s+sorted\\(pair\\)\\[::-1\\]:$",
+                    "hint": "Sort by position and iterate backwards. We must process the car closest to the target first.",
+                    "solutionCode": "    for p, s in sorted(pair)[::-1]:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Calculate arrival time and add to stack.",
+                    "placeholderCode": "        stack.append((target - p) / s)",
+                    "validationRegex": "^\\s+stack\\.append\\(\\(target\\s*-\\s*p\\)\\s*/\\s*s\\)\\s*$",
+                    "hint": "Time = Distance / Speed. Push this car's arrival time to the stack.",
+                    "solutionCode": "        stack.append((target - p) / s)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check if current car catches up to the fleet ahead.",
+                    "placeholderCode": "        if len(stack) >= 2 and stack[-1] <= stack[-2]:",
+                    "validationRegex": "^\\s+if\\s+len\\(stack\\)\\s*>=\\s*2\\s+and\\s+stack\\[-1\\]\\s*<=\\s+stack\\[-2\\]:$",
+                    "hint": "If this car's time (`stack[-1]`) is <= the car ahead (`stack[-2]`), it means it catches up.",
+                    "solutionCode": "        if len(stack) >= 2 and stack[-1] <= stack[-2]:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Merge into the fleet (pop the faster car).",
+                    "placeholderCode": "            stack.pop()",
+                    "validationRegex": "^\\s+stack\\.pop\\(\\)$",
+                    "hint": "Since it catches up, it becomes part of the fleet ahead. We discard its specific time because the fleet speed is limited by the slower car.",
+                    "solutionCode": "            stack.pop()"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return the number of fleets.",
                     "placeholderCode": "    return len(stack)",
                     "validationRegex": "^\\s+return\\s+len\\(stack\\)$",
-                    "hint": "Return the number of fleets (stack size).",
+                    "hint": "The stack remaining contains the bottleneck times (leaders) of each separate fleet.",
                     "solutionCode": "    return len(stack)"
                 }
             ]
