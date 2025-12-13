@@ -158,19 +158,35 @@
                 },
                 {
                     "id": 12,
-                    "instruction": "Implement top.",
-                    "placeholderCode": "    def top(self):\n        return self.stack[-1]",
-                    "validationRegex": "^\\s+def\\s+top\\(self\\):\\s*return\\s+self\\.stack\\[-1\\]$",
-                    "hint": "Return top of `stack`.",
-                    "solutionCode": "    def top(self):\n        return self.stack[-1]"
+                    "instruction": "Define the top method.",
+                    "placeholderCode": "    def top(self):",
+                    "validationRegex": "^\\s+def\\s+top\\(self\\):$",
+                    "hint": "Define a method named `top`. It takes no arguments (besides `self`).",
+                    "solutionCode": "    def top(self):"
                 },
                 {
                     "id": 13,
-                    "instruction": "Implement getMin.",
-                    "placeholderCode": "    def getMin(self):\n        return self.minStack[-1]",
-                    "validationRegex": "^\\s+def\\s+getMin\\(self\\):\\s*return\\s+self\\.minStack\\[-1\\]$",
-                    "hint": "Return top of `minStack`.",
-                    "solutionCode": "    def getMin(self):\n        return self.minStack[-1]"
+                    "instruction": "Return the top of the main stack.",
+                    "placeholderCode": "        return self.stack[-1]",
+                    "validationRegex": "^\\s+return\\s+self\\.stack\\[-1\\]$",
+                    "hint": "Access the last element `[-1]` of `self.stack`.",
+                    "solutionCode": "        return self.stack[-1]"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Define the getMin method.",
+                    "placeholderCode": "    def getMin(self):",
+                    "validationRegex": "^\\s+def\\s+getMin\\(self\\):$",
+                    "hint": "Define a method named `getMin`.",
+                    "solutionCode": "    def getMin(self):"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Return the minimum value.",
+                    "placeholderCode": "        return self.minStack[-1]",
+                    "validationRegex": "^\\s+return\\s+self\\.minStack\\[-1\\]$",
+                    "hint": "Since `minStack` always tracks the minimum at the top, just return `self.minStack[-1]`.",
+                    "solutionCode": "        return self.minStack[-1]"
                 }
             ]
         }
