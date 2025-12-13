@@ -102,14 +102,38 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Implement push.",
-                    "placeholderCode": "    def push(self, val):\n        self.stack.append(val)\n        val = min(val, self.minStack[-1] if self.minStack else val)\n        self.minStack.append(val)",
-                    "validationRegex": "^\\s+def\\s+push\\(self,\\s*val\\):\\s*self\\.stack\\.append\\(val\\)\\s*val\\s*=\\s*min\\(val,\\s*self\\.minStack\\[-1\\]\\s+if\\s+self\\.minStack\\s+else\\s+val\\)\\s*self\\.minStack\\.append\\(val\\)$",
-                    "hint": "Append to `stack`. Append min of `val` and current min to `minStack`.",
-                    "solutionCode": "    def push(self, val):\n        self.stack.append(val)\n        val = min(val, self.minStack[-1] if self.minStack else val)\n        self.minStack.append(val)"
+                    "instruction": "Define the push method.",
+                    "placeholderCode": "    def push(self, val):",
+                    "validationRegex": "^\\s+def\\s+push\\(self,\\s*val\\):$",
+                    "hint": "Define a method named `push` that takes `val` as an argument.",
+                    "solutionCode": "    def push(self, val):"
                 },
                 {
                     "id": 6,
+                    "instruction": "Add the value to the main stack.",
+                    "placeholderCode": "        self.stack.append(val)",
+                    "validationRegex": "^\\s+self\\.stack\\.append\\(val\\)$",
+                    "hint": "Standard stack behavior: just append the new value.",
+                    "solutionCode": "        self.stack.append(val)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Calculate the current minimum.",
+                    "placeholderCode": "        val = min(val, self.minStack[-1] if self.minStack else val)",
+                    "validationRegex": "^\\s+val\\s*=\\s*min\\(val,\\s*self\\.minStack\\[-1\\]\\s+if\\s+self\\.minStack\\s+else\\s+val\\)$",
+                    "hint": "Key Logic: The new min is the smaller of the *new value* vs *the previous min* (top of minStack). If minStack is empty, the new val is the min.",
+                    "solutionCode": "        val = min(val, self.minStack[-1] if self.minStack else val)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Push the calculated minimum to the min-stack.",
+                    "placeholderCode": "        self.minStack.append(val)",
+                    "validationRegex": "^\\s+self\\.minStack\\.append\\(val\\)$",
+                    "hint": "Store the current minimum at this level so we can retrieve it in O(1).",
+                    "solutionCode": "        self.minStack.append(val)"
+                },
+                {
+                    "id": 9,
                     "instruction": "Implement pop.",
                     "placeholderCode": "    def pop(self):\n        self.stack.pop()\n        self.minStack.pop()",
                     "validationRegex": "^\\s+def\\s+pop\\(self\\):\\s*self\\.stack\\.pop\\(\\)\\s*self\\.minStack\\.pop\\(\\)$",
@@ -117,7 +141,7 @@
                     "solutionCode": "    def pop(self):\n        self.stack.pop()\n        self.minStack.pop()"
                 },
                 {
-                    "id": 7,
+                    "id": 10,
                     "instruction": "Implement top.",
                     "placeholderCode": "    def top(self):\n        return self.stack[-1]",
                     "validationRegex": "^\\s+def\\s+top\\(self\\):\\s*return\\s+self\\.stack\\[-1\\]$",
@@ -125,7 +149,7 @@
                     "solutionCode": "    def top(self):\n        return self.stack[-1]"
                 },
                 {
-                    "id": 8,
+                    "id": 11,
                     "instruction": "Implement getMin.",
                     "placeholderCode": "    def getMin(self):\n        return self.minStack[-1]",
                     "validationRegex": "^\\s+def\\s+getMin\\(self\\):\\s*return\\s+self\\.minStack\\[-1\\]$",
