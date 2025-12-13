@@ -77,14 +77,46 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Process temperatures.",
-                    "placeholderCode": "    for i, t in enumerate(temperatures):\n        while stack and t > stack[-1][0]:\n            stackT, stackInd = stack.pop()\n            res[stackInd] = (i - stackInd)\n        stack.append([t, i])",
-                    "validationRegex": "^\\s+for\\s+i,\\s*t\\s+in\\s+enumerate\\(temperatures\\):\\s*while\\s+stack\\s+and\\s+t\\s*>\\s+stack\\[-1\\]\\[0\\]:\\s*stackT,\\s*stackInd\\s*=\\s*stack\\.pop\\(\\)\\s*res\\[stackInd\\]\\s*=\\s*\\(i\\s*-\\s*stackInd\\)\\s*stack\\.append\\(\\[t,\\s*i\\]\\)$",
-                    "hint": "Iterate. While current temp > stack top temp, pop and calculate days difference.\\n\\nExample:\\nTemps=[73, 74]. Stack=[(73, 0)].\\ni=1, t=74. 74 > 73. Pop (73, 0).\\nres[0] = 1 - 0 = 1. Push (74, 1).",
-                    "solutionCode": "    for i, t in enumerate(temperatures):\n        while stack and t > stack[-1][0]:\n            stackT, stackInd = stack.pop()\n            res[stackInd] = (i - stackInd)\n        stack.append([t, i])"
+                    "instruction": "Iterate through temperatures with index.",
+                    "placeholderCode": "    for i, t in enumerate(temperatures):",
+                    "validationRegex": "^\\s+for\\s+i,\\s*t\\s+in\\s+enumerate\\(temperatures\\):$",
+                    "hint": "We need both the index `i` (to calculate days) and value `t`.",
+                    "solutionCode": "    for i, t in enumerate(temperatures):"
                 },
                 {
                     "id": 4,
+                    "instruction": "Check if current temp is warmer than the stack top.",
+                    "placeholderCode": "        while stack and t > stack[-1][0]:",
+                    "validationRegex": "^\\s+while\\s+stack\\s+and\\s+t\\s*>\\s+stack\\[-1\\]\\[0\\]:$",
+                    "hint": "If the stack isn't empty AND current `t` is hotter than the temp stored at the top of the stack...",
+                    "solutionCode": "        while stack and t > stack[-1][0]:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Pop the colder day from the stack.",
+                    "placeholderCode": "            stackT, stackInd = stack.pop()",
+                    "validationRegex": "^\\s+stackT,\\s*stackInd\\s*=\\s*stack\\.pop\\(\\)$",
+                    "hint": "We found a warmer day for `stackInd`! So we remove it from the waiting list (stack).",
+                    "solutionCode": "            stackT, stackInd = stack.pop()"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Calculate days waited and update result.",
+                    "placeholderCode": "            res[stackInd] = (i - stackInd)",
+                    "validationRegex": "^\\s+res\\[stackInd\\]\\s*=\\s*\\(i\\s*-\\s*stackInd\\)$",
+                    "hint": "The wait was `current_index - old_index` days.",
+                    "solutionCode": "            res[stackInd] = (i - stackInd)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Push current temperature and index to stack.",
+                    "placeholderCode": "        stack.append([t, i])",
+                    "validationRegex": "^\\s+stack\\.append\\(\\[t,\\s*i\\]\\)$",
+                    "hint": "Add the current day to the stack. We'll find a warmer day for it later.",
+                    "solutionCode": "        stack.append([t, i])"
+                },
+                {
+                    "id": 8,
                     "instruction": "Return result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
