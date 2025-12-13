@@ -64,18 +64,122 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Define backtrack function.",
-                    "placeholderCode": "    stack = []\n    res = []\n    def backtrack(openN, closedN):\n        if openN == closedN == n:\n            res.append(\"\".join(stack))\n            return\n        if openN < n:\n            stack.append(\"(\")\n            backtrack(openN + 1, closedN)\n            stack.pop()\n        if closedN < openN:\n            stack.append(\")\")\n            backtrack(openN, closedN + 1)\n            stack.pop()",
-                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]\\s*res\\s*=\\s*\\[\\]\\s*def\\s+backtrack\\(openN,\\s*closedN\\):\\s*if\\s+openN\\s*==\\s*closedN\\s*==\\s*n:\\s*res\\.append\\(\"\"\\.join\\(stack\\)\\)\\s*return\\s*if\\s+openN\\s*<\\s*n:\\s*stack\\.append\\(\"\\(\"\\)\\s*backtrack\\(openN\\s*\\+\\s*1,\\s*closedN\\)\\s*stack\\.pop\\(\\)\\s*if\\s+closedN\\s*<\\s+openN:\\s*stack\\.append\\(\"\\)\"\\)\\s*backtrack\\(openN,\\s*closedN\\s*\\+\\s*1\\)\\s*stack\\.pop\\(\\)$",
-                    "hint": "Use recursion. Track open and closed count. Add '(' if `open < n`. Add ')' if `closed < open`.",
-                    "solutionCode": "    stack = []\n    res = []\n    def backtrack(openN, closedN):\n        if openN == closedN == n:\n            res.append(\"\".join(stack))\n            return\n        if openN < n:\n            stack.append(\"(\")\n            backtrack(openN + 1, closedN)\n            stack.pop()\n        if closedN < openN:\n            stack.append(\")\")\n            backtrack(openN, closedN + 1)\n            stack.pop()"
+                    "instruction": "Initialize the stack.",
+                    "placeholderCode": "    stack = []",
+                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]$",
+                    "hint": "We'll use a list `stack` to build the current combination of parentheses.",
+                    "solutionCode": "    stack = []"
                 },
                 {
                     "id": 3,
-                    "instruction": "Call backtrack.",
+                    "instruction": "Initialize the result list.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "This list will store all valid Parentheses combinations found.",
+                    "solutionCode": "    res = []"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define the recursive backtracking function.",
+                    "placeholderCode": "    def backtrack(openN, closedN):",
+                    "validationRegex": "^\\s+def\\s+backtrack\\(openN,\\s*closedN\\):$",
+                    "hint": "Define a helper function taking `openN` (count of open parens) and `closedN` (count of closed parens).",
+                    "solutionCode": "    def backtrack(openN, closedN):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check the base case (valid combination found).",
+                    "placeholderCode": "        if openN == closedN == n:",
+                    "validationRegex": "^\\s+if\\s+openN\\s*==\\s*closedN\\s*==\\s*n:$",
+                    "hint": "Goal Reached: We have used `n` open and `n` closed parentheses.",
+                    "solutionCode": "        if openN == closedN == n:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Add the valid combination to results.",
+                    "placeholderCode": "            res.append(\"\".join(stack))",
+                    "validationRegex": "^\\s+res\\.append\\(\"\"\\.join\\(stack\\)\\)$",
+                    "hint": "Join the stack characters into a string and save it.",
+                    "solutionCode": "            res.append(\"\".join(stack))"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return to explore other paths.",
+                    "placeholderCode": "            return",
+                    "validationRegex": "^\\s+return$",
+                    "hint": "Stop this branch of recursion.",
+                    "solutionCode": "            return"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Check if we can add an open parenthesis.",
+                    "placeholderCode": "        if openN < n:",
+                    "validationRegex": "^\\s+if\\s+openN\\s*<\\s*n:$",
+                    "hint": "Rule 1: We can add an '(' only if we haven't used all `n` of them yet.",
+                    "solutionCode": "        if openN < n:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Add an open parenthesis.",
+                    "placeholderCode": "            stack.append(\"(\")",
+                    "validationRegex": "^\\s+stack\\.append\\(\"\\(\"\\)$",
+                    "hint": "Choose: Add '(' to our current path.",
+                    "solutionCode": "            stack.append(\"(\")"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Recurse with one more open parenthesis.",
+                    "placeholderCode": "            backtrack(openN + 1, closedN)",
+                    "validationRegex": "^\\s+backtrack\\(openN\\s*\\+\\s*1,\\s*closedN\\)$",
+                    "hint": "Explore: Call backtrack incrementing the open count.",
+                    "solutionCode": "            backtrack(openN + 1, closedN)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Backtrack (remove the open parenthesis).",
+                    "placeholderCode": "            stack.pop()",
+                    "validationRegex": "^\\s+stack\\.pop\\(\\)$",
+                    "hint": "Unchoose: Remove the '(' so we can try a different choice later (this is the essence of backtracking).",
+                    "solutionCode": "            stack.pop()"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Check if we can add a closing parenthesis.",
+                    "placeholderCode": "        if closedN < openN:",
+                    "validationRegex": "^\\s+if\\s+closedN\\s*<\\s+openN:$",
+                    "hint": "Rule 2: We can add an ')' only if there are unclosed '(' available (closed count < open count).",
+                    "solutionCode": "        if closedN < openN:"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Add a closing parenthesis.",
+                    "placeholderCode": "            stack.append(\")\")",
+                    "validationRegex": "^\\s+stack\\.append\\(\"\\)\"\\)$",
+                    "hint": "Choose: Add ')' to our current path.",
+                    "solutionCode": "            stack.append(\")\")"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Recurse with one more closed parenthesis.",
+                    "placeholderCode": "            backtrack(openN, closedN + 1)",
+                    "validationRegex": "^\\s+backtrack\\(openN,\\s*closedN\\s*\\+\\s*1\\)$",
+                    "hint": "Explore: Call backtrack incrementing the closed count.",
+                    "solutionCode": "            backtrack(openN, closedN + 1)"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Backtrack (remove the closing parenthesis).",
+                    "placeholderCode": "            stack.pop()",
+                    "validationRegex": "^\\s+stack\\.pop\\(\\)$",
+                    "hint": "Unchoose: Remove the ')' to backtrack.",
+                    "solutionCode": "            stack.pop()"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Start the backtracking process.",
                     "placeholderCode": "    backtrack(0, 0)\n    return res",
                     "validationRegex": "^\\s+backtrack\\(0,\\s*0\\)\\s*return\\s+res$",
-                    "hint": "Start backtracking with 0 open and 0 closed.",
+                    "hint": "Initial call: 0 open, 0 closed. Finally return the result list.",
                     "solutionCode": "    backtrack(0, 0)\n    return res"
                 }
             ]
