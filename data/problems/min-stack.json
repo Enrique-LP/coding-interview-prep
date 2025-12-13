@@ -134,14 +134,30 @@
                 },
                 {
                     "id": 9,
-                    "instruction": "Implement pop.",
-                    "placeholderCode": "    def pop(self):\n        self.stack.pop()\n        self.minStack.pop()",
-                    "validationRegex": "^\\s+def\\s+pop\\(self\\):\\s*self\\.stack\\.pop\\(\\)\\s*self\\.minStack\\.pop\\(\\)$",
-                    "hint": "Pop from both stacks.",
-                    "solutionCode": "    def pop(self):\n        self.stack.pop()\n        self.minStack.pop()"
+                    "instruction": "Define the pop method.",
+                    "placeholderCode": "    def pop(self):",
+                    "validationRegex": "^\\s+def\\s+pop\\(self\\):$",
+                    "hint": "Define the method `pop`. It takes no arguments (besides `self`).",
+                    "solutionCode": "    def pop(self):"
                 },
                 {
                     "id": 10,
+                    "instruction": "Remove the top element from the main stack.",
+                    "placeholderCode": "        self.stack.pop()",
+                    "validationRegex": "^\\s+self\\.stack\\.pop\\(\\)$",
+                    "hint": "Use the standard list `.pop()` method.",
+                    "solutionCode": "        self.stack.pop()"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Remove the top element from the min-stack.",
+                    "placeholderCode": "        self.minStack.pop()",
+                    "validationRegex": "^\\s+self\\.minStack\\.pop\\(\\)$",
+                    "hint": "CRITICAL: You must also pop from `minStack` to keep them in sync.",
+                    "solutionCode": "        self.minStack.pop()"
+                },
+                {
+                    "id": 12,
                     "instruction": "Implement top.",
                     "placeholderCode": "    def top(self):\n        return self.stack[-1]",
                     "validationRegex": "^\\s+def\\s+top\\(self\\):\\s*return\\s+self\\.stack\\[-1\\]$",
@@ -149,7 +165,7 @@
                     "solutionCode": "    def top(self):\n        return self.stack[-1]"
                 },
                 {
-                    "id": 11,
+                    "id": 13,
                     "instruction": "Implement getMin.",
                     "placeholderCode": "    def getMin(self):\n        return self.minStack[-1]",
                     "validationRegex": "^\\s+def\\s+getMin\\(self\\):\\s*return\\s+self\\.minStack\\[-1\\]$",
