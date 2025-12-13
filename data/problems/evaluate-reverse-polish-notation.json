@@ -83,14 +83,110 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Process tokens.",
-                    "placeholderCode": "    for t in tokens:\n        if t == \"+\":\n            stack.append(stack.pop() + stack.pop())\n        elif t == \"-\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(b - a)\n        elif t == \"*\":\n            stack.append(stack.pop() * stack.pop())\n        elif t == \"/\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(int(b / a))\n        else:\n            stack.append(int(t))",
-                    "validationRegex": "^\\s+for\\s+t\\s+in\\s+tokens:\\s*if\\s+t\\s*==\\s*\"\\+\":\\s*stack\\.append\\(stack\\.pop\\(\\)\\s*\\+\\s*stack\\.pop\\(\\)\\)\\s*elif\\s+t\\s*==\\s*\"-\":\\s*a,\\s*b\\s*=\\s*stack\\.pop\\(\\),\\s*stack\\.pop\\(\\)\\s*stack\\.append\\(b\\s*-\\s*a\\)\\s*elif\\s+t\\s*==\\s*\"\\*\":\\s*stack\\.append\\(stack\\.pop\\(\\)\\s*\\*\\s*stack\\.pop\\(\\)\\)\\s*elif\\s+t\\s*==\\s*\"/\":\\s*a,\\s*b\\s*=\\s*stack\\.pop\\(\\),\\s*stack\\.pop\\(\\)\\s*stack\\.append\\(int\\(b\\s*/\\s*a\\)\\)\\s*else:\\s*stack\\.append\\(int\\(t\\)\\)$",
-                    "hint": "Iterate tokens. If operator, pop two operands and apply. Else push operand.",
-                    "solutionCode": "    for t in tokens:\n        if t == \"+\":\n            stack.append(stack.pop() + stack.pop())\n        elif t == \"-\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(b - a)\n        elif t == \"*\":\n            stack.append(stack.pop() * stack.pop())\n        elif t == \"/\":\n            a, b = stack.pop(), stack.pop()\n            stack.append(int(b / a))\n        else:\n            stack.append(int(t))"
+                    "instruction": "Iterate through each token.",
+                    "placeholderCode": "    for t in tokens:",
+                    "validationRegex": "^\\s+for\\s+t\\s+in\\s+tokens:$",
+                    "hint": "Process each string in the input list.",
+                    "solutionCode": "    for t in tokens:"
                 },
                 {
                     "id": 4,
+                    "instruction": "Check if token is addition.",
+                    "placeholderCode": "        if t == \"+\":",
+                    "validationRegex": "^\\s+if\\s+t\\s*==\\s*\"\\+\":$",
+                    "hint": "Is the operator `+`?",
+                    "solutionCode": "        if t == \"+\":"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Perform addition.",
+                    "placeholderCode": "            stack.append(stack.pop() + stack.pop())",
+                    "validationRegex": "^\\s+stack\\.append\\(stack\\.pop\\(\\)\\s*\\+\\s*stack\\.pop\\(\\)\\)$",
+                    "hint": "Pop two values, add them, and push the result back. Order doesn't matter for addition.",
+                    "solutionCode": "            stack.append(stack.pop() + stack.pop())"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check if token is subtraction.",
+                    "placeholderCode": "        elif t == \"-\":",
+                    "validationRegex": "^\\s+elif\\s+t\\s*==\\s*\"-\":$",
+                    "hint": "Is the operator `-`?",
+                    "solutionCode": "        elif t == \"-\":"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Pop operands for subtraction.",
+                    "placeholderCode": "            a, b = stack.pop(), stack.pop()",
+                    "validationRegex": "^\\s+a,\\s*b\\s*=\\s*stack\\.pop\\(\\),\\s*stack\\.pop\\(\\)$",
+                    "hint": "Pop `a` (top) and `b` (second top). We need them separate because order matters.",
+                    "solutionCode": "            a, b = stack.pop(), stack.pop()"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Perform subtraction.",
+                    "placeholderCode": "            stack.append(b - a)",
+                    "validationRegex": "^\\s+stack\\.append\\(b\\s*-\\s*a\\)$",
+                    "hint": "Push `b - a`. Note: `b` was the first pushed, `a` was the last.",
+                    "solutionCode": "            stack.append(b - a)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if token is multiplication.",
+                    "placeholderCode": "        elif t == \"*\":",
+                    "validationRegex": "^\\s+elif\\s+t\\s*==\\s*\"\\*\":$",
+                    "hint": "Is the operator `*`?",
+                    "solutionCode": "        elif t == \"*\":"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Perform multiplication.",
+                    "placeholderCode": "            stack.append(stack.pop() * stack.pop())",
+                    "validationRegex": "^\\s+stack\\.append\\(stack\\.pop\\(\\)\\s*\\*\\s*stack\\.pop\\(\\)\\)$",
+                    "hint": "Pop two values, multiply, push result.",
+                    "solutionCode": "            stack.append(stack.pop() * stack.pop())"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Check if token is division.",
+                    "placeholderCode": "        elif t == \"/\":",
+                    "validationRegex": "^\\s+elif\\s+t\\s*==\\s*\"/\":$",
+                    "hint": "Is the operator `/`?",
+                    "solutionCode": "        elif t == \"/\":"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Pop operands for division.",
+                    "placeholderCode": "            a, b = stack.pop(), stack.pop()",
+                    "validationRegex": "^\\s+a,\\s*b\\s*=\\s*stack\\.pop\\(\\),\\s*stack\\.pop\\(\\)$",
+                    "hint": "Pop `a` and `b`. Order matters for division.",
+                    "solutionCode": "            a, b = stack.pop(), stack.pop()"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Perform division (truncate toward zero).",
+                    "placeholderCode": "            stack.append(int(b / a))",
+                    "validationRegex": "^\\s+stack\\.append\\(int\\(b\\s*/\\s*a\\)\\)$",
+                    "hint": "Calculate `b / a` and cast to `int` to truncate toward zero (Python's `//` behaves differently for negatives).",
+                    "solutionCode": "            stack.append(int(b / a))"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Otherwise, handle number.",
+                    "placeholderCode": "        else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "If it's not an operator, it must be a number.",
+                    "solutionCode": "        else:"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Push number to stack.",
+                    "placeholderCode": "            stack.append(int(t))",
+                    "validationRegex": "^\\s+stack\\.append\\(int\\(t\\)\\)$",
+                    "hint": "Convert the string token to an integer and push it.",
+                    "solutionCode": "            stack.append(int(t))"
+                },
+                {
+                    "id": 16,
                     "instruction": "Return result.",
                     "placeholderCode": "    return stack[0]",
                     "validationRegex": "^\\s+return\\s+stack\\[0\\]$",
