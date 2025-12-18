@@ -122,14 +122,22 @@
                 },
                 {
                     "id": 9,
-                    "instruction": "Process the bars remaining in the stack.",
-                    "placeholderCode": "    for i, h in stack:\n        maxArea = max(maxArea, h * (len(heights) - i))",
-                    "validationRegex": "^\\s+for\\s+i,\\s*h\\s+in\\s+stack:\\s*maxArea\\s*=\\s*max\\(maxArea,\\s*h\\s*\\*\\s*\\(len\\(heights\\)\\s*-\\s*i\\)\\)$",
-                    "hint": "After the loop, some bars might still be in the stack. They could extend all the way to the end of the histogram.",
-                    "solutionCode": "    for i, h in stack:\n        maxArea = max(maxArea, h * (len(heights) - i))"
+                    "instruction": "Iterate through the bars remaining in the stack.",
+                    "placeholderCode": "    for i, h in stack:",
+                    "validationRegex": "^\\s+for\\s+i,\\s*h\\s+in\\s+stack:$",
+                    "hint": "Any bars still in the stack weren't 'closed' by a shorter bar, meaning they can extend all the way to the end of the histogram.",
+                    "solutionCode": "    for i, h in stack:"
                 },
                 {
                     "id": 10,
+                    "instruction": "Calculate area for the remaining bars using the total width.",
+                    "placeholderCode": "        maxArea = max(maxArea, h * (len(heights) - i))",
+                    "validationRegex": "^\\s+maxArea\\s*=\\s*max\\(maxArea,\\s*h\\s*\\*\\s*\\(len\\(heights\\)\\s*-\\s*i\\)\\)$",
+                    "hint": "The width is `total_length - start_index`. These bars reach the right edge!",
+                    "solutionCode": "        maxArea = max(maxArea, h * (len(heights) - i))"
+                },
+                {
+                    "id": 11,
                     "instruction": "Return the maximum area found.",
                     "placeholderCode": "    return maxArea",
                     "validationRegex": "^\\s+return\\s+maxArea$",
