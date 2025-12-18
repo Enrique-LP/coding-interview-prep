@@ -52,19 +52,110 @@
         "optimal": {
             "id": "optimal",
             "name": "Sliding Window",
-            "description": "Expand right, shrink left when valid.",
+            "description": "Expand right to satisfy, shrink left to minimize.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function min_window that takes s and t.",
+                    "instruction": "Define the function min_window.",
                     "placeholderCode": "def min_window(s, t):",
                     "validationRegex": "^def\\s+min_window\\(s,\\s*t\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Define the function with target `t` and source `s`.",
                     "solutionCode": "def min_window(s, t):"
                 },
                 {
+                    "id": 2,
+                    "instruction": "Handle the empty case for string t.",
+                    "placeholderCode": "    if t == \"\": return \"\"",
+                    "validationRegex": "^\\s+if\\s+t\\s*==\\s*\"\":\\s*return\\s*\"\"$",
+                    "hint": "If we need nothing, return an empty string.",
+                    "solutionCode": "    if t == \"\": return \"\""
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize frequency dictionaries for T and the current window.",
+                    "placeholderCode": "    countT, window = {}, {}",
+                    "validationRegex": "^\\s+countT,\\s*window\\s*=\\s*\\{\\},\\s*\\{\\}$",
+                    "hint": "We need to track what characters we NEED (`countT`) and what we HAVE in the window (`window`).",
+                    "solutionCode": "    countT, window = {}, {}"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Populate the dictionary of required characters from t.",
+                    "placeholderCode": "    for c in t:\n        countT[c] = 1 + countT.get(c, 0)",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+t:\\s*countT\\[c\\]\\s*=\\s*1\\s*\\+\\s*countT\\.get\\(c,\\s*0\\)$",
+                    "hint": "Count how many times each character appears in `t`.",
+                    "solutionCode": "    for c in t:\n        countT[c] = 1 + countT.get(c, 0)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Initialize status variables.",
+                    "placeholderCode": "    have, need = 0, len(countT)",
+                    "validationRegex": "^\\s+have,\\s*need\\s*=\\s*0,\\s*len\\(countT\\)$",
+                    "hint": "`need` is the number of UNIQUE characters in `t`. `have` is how many of those unique characters satisfy the required frequency in our window.",
+                    "solutionCode": "    have, need = 0, len(countT)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Initialize result pointers and minimum length.",
+                    "placeholderCode": "    res, resLen = [-1, -1], float(\"inf\")\n    l = 0",
+                    "validationRegex": "^\\s+res,\\s*resLen\\s*=\\s*\\[-1,\\s*-1\\],\\s*float\\(\"inf\"\\)\\s*l\\s*=\\s*0$",
+                    "hint": "`res` will store the best start and end indices. `resLen` tracks the shortest length found.",
+                    "solutionCode": "    res, resLen = [-1, -1], float(\"inf\")\n    l = 0"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Iterate through the string s with the right pointer r.",
+                    "placeholderCode": "    for r in range(len(s)):\n        c = s[r]",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(len\\(s\\)\\):\\s*c\\s*=\\s*s\\[r\\]$",
+                    "hint": "Expand the window to the right.",
+                    "solutionCode": "    for r in range(len(s)):\n        c = s[r]"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Add the current character to the window count.",
+                    "placeholderCode": "        window[c] = 1 + window.get(c, 0)",
+                    "validationRegex": "^\\s+window\\[c\\]\\s*=\\s*1\\s*\\+\\s*window\\.get\\(c,\\s*0\\)$",
+                    "hint": "Update our window frequency dictionary.",
+                    "solutionCode": "        window[c] = 1 + window.get(c, 0)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Update 'have' if character frequency requirement is met.",
+                    "placeholderCode": "        if c in countT and window[c] == countT[c]:\n            have += 1",
+                    "validationRegex": "^\\s+if\\s+c\\s+in\\s+countT\\s+and\\s+window\\[c\\]\\s*==\\s*countT\\[c\\]:\\s*have\\s*\\+=\\s*1$",
+                    "hint": "If this character was necessary and we now have exactly the number required, increment our 'have' count.",
+                    "solutionCode": "        if c in countT and window[c] == countT[c]:\n            have += 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Shrink the window while all requirements are satisfied.",
+                    "placeholderCode": "        while have == need:",
+                    "validationRegex": "^\\s+while\\s+have\\s*==\\s*need:$",
+                    "hint": "Condition: As long as the current window contains all letters of `t` with proper frequency...",
+                    "solutionCode": "        while have == need:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Update the result if the current window is smaller.",
+                    "placeholderCode": "            if (r - l + 1) < resLen:\n                res = [l, r]\n                resLen = (r - l + 1)",
+                    "validationRegex": "^\\s+if\\s+\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*<\\s*resLen:\\s*res\\s*=\\s*\\[l,\\s*r\\]\\s*resLen\\s*=\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)$",
+                    "hint": "We found a valid window! Save its boundaries and update the minimum length.",
+                    "solutionCode": "            if (r - l + 1) < resLen:\n                res = [l, r]\n                resLen = (r - l + 1)"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Remove the character at the left from the window.",
+                    "placeholderCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1",
+                    "validationRegex": "^\\s+window\\[s\\[l\\]\\]\\s*-=\\s*1\\s*if\\s+s\\[l\\]\\s+in\\s+countT\\s+and\\s+window\\[s\\[l\\]\\]\\s*<\\s*countT\\[s\\[l\\]\\]:\\s*have\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
+                    "hint": "Crucial: Pop the left character. If losing it makes the window invalid (`have < need`), the while loop will end. Increment `l` to move the left border.",
+                    "solutionCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Return the minimum window substring.",
+                    "placeholderCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\"",
                     "validationRegex": "^\\s+l,\\s*r\\s*=\\s*res\\s*return\\s+s\\[l\\s*:\\s*r\\s*\\+\\s*1\\]\\s+if\\s+resLen\\s*!=\\s*float\\(\"inf\"\\)\\s+else\\s+\"\"$",
-                    "hint": "Return the substring or empty string.",
+                    "hint": "Use the boundaries we saved in `res`. If `resLen` never changed, return an empty string.",
                     "solutionCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\""
                 }
             ]

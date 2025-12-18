@@ -62,19 +62,78 @@
         "optimal": {
             "id": "optimal",
             "name": "Sliding Window with Array",
-            "description": "Use frequency arrays to compare window.",
+            "description": "Use frequency arrays and a match counter for O(n) complexity.",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function check_inclusion that takes s1 and s2.",
                     "placeholderCode": "def check_inclusion(s1, s2):",
                     "validationRegex": "^def\\s+check_inclusion\\(s1,\\s*s2\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Start by defining the function.",
                     "solutionCode": "def check_inclusion(s1, s2):"
                 },
                 {
+                    "id": 2,
+                    "instruction": "Handle the case where s1 is longer than s2.",
+                    "placeholderCode": "    if len(s1) > len(s2): return False",
+                    "validationRegex": "^\\s+if\\s+len\\(s1\\)\\s*>\\s+len\\(s2\\):\\s*return\\s+False$",
+                    "hint": "If `s1` is longer, it's impossible for `s2` to contain a permutation of it.",
+                    "solutionCode": "    if len(s1) > len(s2): return False"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize frequency arrays and pointers.",
+                    "placeholderCode": "    s1Count, s2Count = [0] * 26, [0] * 26\n    for i in range(len(s1)):\n        s1Count[ord(s1[i]) - ord('a')] += 1\n        s2Count[ord(s2[i]) - ord('a')] += 1",
+                    "validationRegex": "^\\s+s1Count,\\s*s2Count\\s*=\\s*\\[0\\]\\s*\\*\\s*26,\\s*\\[0\\]\\s*\\*\\s*26\\s+for\\s+i\\s+in\\s+range\\(len\\(s1\\)\\):\\s+s1Count\\[ord\\(s1\\[i\\]\\)\\s*-\\s*ord\\('a'\\)\\]\\s*\\+=\\s*1\\s+s2Count\\[ord\\(s2\\[i\\]\\)\\s*-\\s*ord\\('a'\\)\\]\\s*\\+=\\s*1$",
+                    "hint": "Use arrays of size 26 for 'a'-'z'. Fill them for the initial window.",
+                    "solutionCode": "    s1Count, s2Count = [0] * 26, [0] * 26\n    for i in range(len(s1)):\n        s1Count[ord(s1[i]) - ord('a')] += 1\n        s2Count[ord(s2[i]) - ord('a')] += 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Calculate initial matches.",
+                    "placeholderCode": "    matches = 0\n    for i in range(26):\n        if s1Count[i] == s2Count[i]:\n            matches += 1",
+                    "validationRegex": "^\\s+matches\\s*=\\s*0\\s*for\\s+i\\s+in\\s+range\\(26\\):\\s*if\\s+s1Count\\[i\\]\\s*==\\s*s2Count\\[i\\]:\\s*matches\\s*\\+=\\s*1$",
+                    "hint": "Compare the two arrays. `matches` tracking prevents us from re-scanning 26 letters every time.",
+                    "solutionCode": "    matches = 0\n    for i in range(26):\n        if s1Count[i] == s2Count[i]:\n            matches += 1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Slide the window through s2.",
+                    "placeholderCode": "    l = 0\n    for r in range(len(s1), len(s2)):",
+                    "validationRegex": "^\\s+l\\s*=\\s*0\\s*for\\s+r\\s+in\\s+range\\(len\\(s1\\),\\s*len\\(s2\\)\\):$",
+                    "hint": "Use `l` as the left pointer and `r` as the right pointer. Start `r` from `len(s1)`.",
+                    "solutionCode": "    l = 0\n    for r in range(len(s1), len(s2)):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return True if all 26 characters match.",
+                    "placeholderCode": "        if matches == 26: return True",
+                    "validationRegex": "^\\s+if\\s+matches\\s*==\\s*26:\\s*return\\s+True$",
+                    "hint": "If at any point we have 26 matches, we found a permutation!",
+                    "solutionCode": "        if matches == 26: return True"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Process the character entering from the right.",
+                    "placeholderCode": "        index = ord(s2[r]) - ord('a')\n        s2Count[index] += 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] + 1 == s2Count[index]:\n            matches -= 1",
+                    "validationRegex": "^\\s+index\\s*=\\s*ord\\(s2\\[r\\]\\)\\s*-\\s*ord\\('a'\\)\\s*s2Count\\[index\\]\\s*\\+=\\s*1\\s*if\\s+s1Count\\[index\\]\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*\\+=\\s*1\\s*elif\\s+s1Count\\[index\\]\\s*\\+\\s*1\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*-=\\s*1$",
+                    "hint": "Increment count for `s2[r]`. If it now matches `s1Count`, increment `matches`. If it just *stopped* matching, decrement `matches`.",
+                    "solutionCode": "        index = ord(s2[r]) - ord('a')\n        s2Count[index] += 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] + 1 == s2Count[index]:\n            matches -= 1"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Process the character leaving from the left.",
+                    "placeholderCode": "        index = ord(s2[l]) - ord('a')\n        s2Count[index] -= 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] - 1 == s2Count[index]:\n            matches -= 1\n        l += 1",
+                    "validationRegex": "^\\s+index\\s*=\\s*ord\\(s2\\[l\\]\\)\\s*-\\s*ord\\('a'\\)\\s*s2Count\\[index\\]\\s*-=\\s*1\\s*if\\s+s1Count\\[index\\]\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*\\+=\\s*1\\s*elif\\s+s1Count\\[index\\]\\s*-\\s*1\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
+                    "hint": "Decrement count for `s2[l]`. Same match logic. Then increment `l` (shrink window).",
+                    "solutionCode": "        index = ord(s2[l]) - ord('a')\n        s2Count[index] -= 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] - 1 == s2Count[index]:\n            matches -= 1\n        l += 1"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return the final match check.",
+                    "placeholderCode": "    return matches == 26",
                     "validationRegex": "^\\s+return\\s+matches\\s*==\\s*26$",
-                    "hint": "Check if final window matches.",
+                    "hint": "One final check after the loop ends.",
                     "solutionCode": "    return matches == 26"
                 }
             ]
