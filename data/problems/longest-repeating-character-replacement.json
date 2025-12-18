@@ -100,34 +100,42 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Update count and max frequency.",
-                    "placeholderCode": "        count[s[r]] = 1 + count.get(s[r], 0)\n        max_f = max(max_f, count[s[r]])",
-                    "validationRegex": "^\\s+count\\[s\\[r\\]\\]\\s*=\\s*1\\s*\\+\\s*count\\.get\\(s\\[r\\],\\s*0\\)\\s*max_f\\s*=\\s*max\\(max_f,\\s*count\\[s\\[r\\]\\]\\)$",
-                    "hint": "Update count for `s[r]` and `max_f`.",
-                    "solutionCode": "        count[s[r]] = 1 + count.get(s[r], 0)\n        max_f = max(max_f, count[s[r]])"
+                    "instruction": "Update the count of the current character in the dictionary.",
+                    "placeholderCode": "        count[s[r]] = 1 + count.get(s[r], 0)",
+                    "validationRegex": "^\\s+count\\[s\\[r\\]\\]\\s*=\\s*1\\s*\\+\\s*count\\.get\\(s\\[r\\],\\s*0\\)$",
+                    "hint": "Increment the frequency of the current character `s[r]` in our `count` dictionary.",
+                    "solutionCode": "        count[s[r]] = 1 + count.get(s[r], 0)"
                 },
                 {
                     "id": 5,
-                    "instruction": "Shrink window if invalid.",
-                    "placeholderCode": "        while (r - l + 1) - max_f > k:\n            count[s[l]] -= 1\n            l += 1",
-                    "validationRegex": "^\\s+while\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*-\\s*max_f\\s*>\\s*k:\\s*count\\[s\\[l\\]\\]\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
-                    "hint": "If window length - max_f > k, shrink window from left.",
-                    "solutionCode": "        while (r - l + 1) - max_f > k:\n            count[s[l]] -= 1\n            l += 1"
+                    "instruction": "Update the maximum frequency tracked so far.",
+                    "placeholderCode": "        max_f = max(max_f, count[s[r]])",
+                    "validationRegex": "^\\s+max_f\\s*=\\s*max\\(max_f,\\s*count\\[s\\[r\\]\\]\\)$",
+                    "hint": "Update `max_f` with the count of the character we just added. This represents the 'majority' character in our potential window.",
+                    "solutionCode": "        max_f = max(max_f, count[s[r]])"
                 },
                 {
                     "id": 6,
-                    "instruction": "Update result.",
-                    "placeholderCode": "        res = max(res, r - l + 1)",
-                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*r\\s*-\\s*l\\s*\\+\\s*1\\)$",
-                    "hint": "Update `res` with current window size.",
-                    "solutionCode": "        res = max(res, r - l + 1)"
+                    "instruction": "Shrink the window if it's no longer valid.",
+                    "placeholderCode": "        while (r - l + 1) - max_f > k:\n            count[s[l]] -= 1\n            l += 1",
+                    "validationRegex": "^\\s+while\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*-\\s*max_f\\s*>\\s*k:\\s*count\\[s\\[l\\]\\]\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
+                    "hint": "Validity Rule: If `window_length (r - l + 1) - max_frequency > k`, we have too many 'other' characters to replace. Move the left pointer `l` to shrink the window.",
+                    "solutionCode": "        while (r - l + 1) - max_f > k:\n            count[s[l]] -= 1\n            l += 1"
                 },
                 {
                     "id": 7,
-                    "instruction": "Return result.",
+                    "instruction": "Update the result with the current window size.",
+                    "placeholderCode": "        res = max(res, r - l + 1)",
+                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*r\\s*-\\s*l\\s*\\+\\s*1\\)$",
+                    "hint": "At this point, the window is valid. Update `res` if this window is the longest so far.",
+                    "solutionCode": "        res = max(res, r - l + 1)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return the final result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "Return the result.",
+                    "hint": "The result list will contain the maximum length of the substring found.",
                     "solutionCode": "    return res"
                 }
             ]
