@@ -210,14 +210,62 @@
                 },
                 {
                     "id": 19,
-                    "instruction": "Process the character leaving from the left.",
-                    "placeholderCode": "        index = ord(s2[l]) - ord('a')\n        s2Count[index] -= 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] - 1 == s2Count[index]:\n            matches -= 1\n        l += 1",
-                    "validationRegex": "^\\s+index\\s*=\\s*ord\\(s2\\[l\\]\\)\\s*-\\s*ord\\('a'\\)\\s*s2Count\\[index\\]\\s*-=\\s*1\\s*if\\s+s1Count\\[index\\]\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*\\+=\\s*1\\s*elif\\s+s1Count\\[index\\]\\s*-\\s*1\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
-                    "hint": "Decrement count for `s2[l]`. Same match logic. Then increment `l` (shrink window).",
-                    "solutionCode": "        index = ord(s2[l]) - ord('a')\n        s2Count[index] -= 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] - 1 == s2Count[index]:\n            matches -= 1\n        l += 1"
+                    "instruction": "Calculate the index of the character leaving the window on the left.",
+                    "placeholderCode": "        index = ord(s2[l]) - ord('a')",
+                    "validationRegex": "^\\s+index\\s*=\\s*ord\\(s2\\[l\\]\\)\\s*-\\s*ord\\('a'\\)$",
+                    "hint": "We look at the character pointed by `l` and convert it to its 0-25 index.",
+                    "solutionCode": "        index = ord(s2[l]) - ord('a')"
                 },
                 {
                     "id": 20,
+                    "instruction": "Decrement its frequency as it leaves the window.",
+                    "placeholderCode": "        s2Count[index] -= 1",
+                    "validationRegex": "^\\s+s2Count\\[index\\]\\s*-=\\s*1$",
+                    "hint": "The window is moving right, so the character at `s2[l]` is no longer part of our counts.",
+                    "solutionCode": "        s2Count[index] -= 1"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Check if decrementing created a new match.",
+                    "placeholderCode": "        if s1Count[index] == s2Count[index]:",
+                    "validationRegex": "^\\s+if\\s+s1Count\\[index\\]\\s*==\\s*s2Count\\[index\\]:$",
+                    "hint": "It's possible we had 'too many' of this character, and removing one made the count exactly right.",
+                    "solutionCode": "        if s1Count[index] == s2Count[index]:"
+                },
+                {
+                    "id": 22,
+                    "instruction": "If it now matches, increment the global matches count.",
+                    "placeholderCode": "            matches += 1",
+                    "validationRegex": "^\\s+matches\\s*\\+=\\s*1$",
+                    "hint": "Another letter's frequency is now perfectly satisfied.",
+                    "solutionCode": "            matches += 1"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Check if decrementing broke a previous match.",
+                    "placeholderCode": "        elif s1Count[index] - 1 == s2Count[index]:",
+                    "validationRegex": "^\\s+elif\\s+s1Count\\[index\\]\\s*-\\s*1\\s*==\\s*s2Count\\[index\\]:$",
+                    "hint": "If the counts were equal before we subtracted 1, we now have 'too few'.",
+                    "solutionCode": "        elif s1Count[index] - 1 == s2Count[index]:"
+                },
+                {
+                    "id": 24,
+                    "instruction": "If the match was broken, decrement the global matches count.",
+                    "placeholderCode": "            matches -= 1",
+                    "validationRegex": "^\\s+matches\\s*-=\\s*1$",
+                    "hint": "We lost the match for this specific letter.",
+                    "solutionCode": "            matches -= 1"
+                },
+                {
+                    "id": 25,
+                    "instruction": "Shift the left pointer of the window to the right.",
+                    "placeholderCode": "        l += 1",
+                    "validationRegex": "^\\s+l\\s*\\+=\\s*1$",
+                    "hint": "Move `l` forward to complete the sliding action.",
+                    "solutionCode": "        l += 1"
+                },
+                {
+                    "id": 26,
                     "instruction": "Return the final match check.",
                     "placeholderCode": "    return matches == 26",
                     "validationRegex": "^\\s+return\\s+matches\\s*==\\s*26$",
