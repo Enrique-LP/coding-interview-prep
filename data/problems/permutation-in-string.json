@@ -101,7 +101,7 @@
                     "instruction": "Increment the count for the character in s1.",
                     "placeholderCode": "        s1Count[ord(s1[i]) - ord('a')] += 1",
                     "validationRegex": "^\\s+s1Count\\[ord\\(s1\\[i\\]\\)\\s*-\\s*ord\\('a'\\)\\]\\s*\\+=\\s*1$",
-                    "hint": "Map the character to its 0-25 index using `ord()` and increment its frequency.",
+                    "hint": "Use `ord()` to convert a character into its integer ASCII value. Subtracting `ord('a')` from it maps the letters 'a'-'z' to the indices 0-25. \n\nExample: If s1[i] is 'b', then `ord('b') - ord('a')` is `98 - 97 = 1`. This allows us to increment `s1Count[1]` to track the frequency of 'b'.",
                     "solutionCode": "        s1Count[ord(s1[i]) - ord('a')] += 1"
                 },
                 {
@@ -109,7 +109,7 @@
                     "instruction": "Increment the count for the character in the s2 window.",
                     "placeholderCode": "        s2Count[ord(s2[i]) - ord('a')] += 1",
                     "validationRegex": "^\\s+s2Count\\[ord\\(s2\\[i\\]\\)\\s*-\\s*ord\\('a'\\)\\]\\s*\\+=\\s*1$",
-                    "hint": "Simultaneously, fill the initial window for s2.",
+                    "hint": "Similarly, map the character from s2 to an index 0-25 using `ord()` and increment its frequency in the current window counter.",
                     "solutionCode": "        s2Count[ord(s2[i]) - ord('a')] += 1"
                 },
                 {
