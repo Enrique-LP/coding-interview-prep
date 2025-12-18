@@ -114,14 +114,38 @@
                 },
                 {
                     "id": 7,
-                    "instruction": "Calculate initial matches.",
-                    "placeholderCode": "    matches = 0\n    for i in range(26):\n        if s1Count[i] == s2Count[i]:\n            matches += 1",
-                    "validationRegex": "^\\s+matches\\s*=\\s*0\\s*for\\s+i\\s+in\\s+range\\(26\\):\\s*if\\s+s1Count\\[i\\]\\s*==\\s*s2Count\\[i\\]:\\s*matches\\s*\\+=\\s*1$",
-                    "hint": "Compare the two arrays. `matches` tracking prevents us from re-scanning 26 letters every time.",
-                    "solutionCode": "    matches = 0\n    for i in range(26):\n        if s1Count[i] == s2Count[i]:\n            matches += 1"
+                    "instruction": "Initialize the match counter.",
+                    "placeholderCode": "    matches = 0",
+                    "validationRegex": "^\\s+matches\\s*=\\s*0$",
+                    "hint": "We start with 0 matches and will check all 26 possible lowercase English letters.",
+                    "solutionCode": "    matches = 0"
                 },
                 {
                     "id": 8,
+                    "instruction": "Iterate through the 26 possible characters.",
+                    "placeholderCode": "    for i in range(26):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(26\\):$",
+                    "hint": "Each index in our frequency arrays represents one letter of the alphabet ('a'-'z').",
+                    "solutionCode": "    for i in range(26):"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if frequencies match for the current character.",
+                    "placeholderCode": "        if s1Count[i] == s2Count[i]:",
+                    "validationRegex": "^\\s+if\\s+s1Count\\[i\\]\\s*==\\s*s2Count\\[i\\]:$",
+                    "hint": "Compare the count of letter `i` in `s1` versus its count in the current `s2` window.",
+                    "solutionCode": "        if s1Count[i] == s2Count[i]:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Increment the match count.",
+                    "placeholderCode": "            matches += 1",
+                    "validationRegex": "^\\s+matches\\s*\\+=\\s*1$",
+                    "hint": "If the frequencies are equal (even if both are 0), it counts as a match for that specific letter.",
+                    "solutionCode": "            matches += 1"
+                },
+                {
+                    "id": 11,
                     "instruction": "Slide the window through s2.",
                     "placeholderCode": "    l = 0\n    for r in range(len(s1), len(s2)):",
                     "validationRegex": "^\\s+l\\s*=\\s*0\\s*for\\s+r\\s+in\\s+range\\(len\\(s1\\),\\s*len\\(s2\\)\\):$",
@@ -129,7 +153,7 @@
                     "solutionCode": "    l = 0\n    for r in range(len(s1), len(s2)):"
                 },
                 {
-                    "id": 9,
+                    "id": 12,
                     "instruction": "Return True if all 26 characters match.",
                     "placeholderCode": "        if matches == 26: return True",
                     "validationRegex": "^\\s+if\\s+matches\\s*==\\s*26:\\s*return\\s+True$",
@@ -137,7 +161,7 @@
                     "solutionCode": "        if matches == 26: return True"
                 },
                 {
-                    "id": 10,
+                    "id": 13,
                     "instruction": "Process the character entering from the right.",
                     "placeholderCode": "        index = ord(s2[r]) - ord('a')\n        s2Count[index] += 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] + 1 == s2Count[index]:\n            matches -= 1",
                     "validationRegex": "^\\s+index\\s*=\\s*ord\\(s2\\[r\\]\\)\\s*-\\s*ord\\('a'\\)\\s*s2Count\\[index\\]\\s*\\+=\\s*1\\s*if\\s+s1Count\\[index\\]\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*\\+=\\s*1\\s*elif\\s+s1Count\\[index\\]\\s*\\+\\s*1\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*-=\\s*1$",
@@ -145,7 +169,7 @@
                     "solutionCode": "        index = ord(s2[r]) - ord('a')\n        s2Count[index] += 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] + 1 == s2Count[index]:\n            matches -= 1"
                 },
                 {
-                    "id": 11,
+                    "id": 14,
                     "instruction": "Process the character leaving from the left.",
                     "placeholderCode": "        index = ord(s2[l]) - ord('a')\n        s2Count[index] -= 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] - 1 == s2Count[index]:\n            matches -= 1\n        l += 1",
                     "validationRegex": "^\\s+index\\s*=\\s*ord\\(s2\\[l\\]\\)\\s*-\\s*ord\\('a'\\)\\s*s2Count\\[index\\]\\s*-=\\s*1\\s*if\\s+s1Count\\[index\\]\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*\\+=\\s*1\\s*elif\\s+s1Count\\[index\\]\\s*-\\s*1\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
@@ -153,7 +177,7 @@
                     "solutionCode": "        index = ord(s2[l]) - ord('a')\n        s2Count[index] -= 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] - 1 == s2Count[index]:\n            matches -= 1\n        l += 1"
                 },
                 {
-                    "id": 12,
+                    "id": 15,
                     "instruction": "Return the final match check.",
                     "placeholderCode": "    return matches == 26",
                     "validationRegex": "^\\s+return\\s+matches\\s*==\\s*26$",
