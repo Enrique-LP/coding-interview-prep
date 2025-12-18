@@ -99,34 +99,50 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "If character is in set, remove from left until it's gone.",
-                    "placeholderCode": "        while s[r] in char_set:\n            char_set.remove(s[l])\n            l += 1",
-                    "validationRegex": "^\\s+while\\s+s\\[r\\]\\s+in\\s+char_set:\\s*char_set\\.remove\\(s\\[l\\]\\)\\s*l\\s*\\+=\\s*1$",
-                    "hint": "While `s[r]` is in set, remove `s[l]` and increment `l`.\\n\\nExample:\\ns='abcabcbb'. Set={'a','b','c'}. r at index 3 ('a').\\n'a' is in set. Remove s[0] ('a'). l becomes 1. Set={'b','c'}.\\nNow 'a' can be added.",
-                    "solutionCode": "        while s[r] in char_set:\n            char_set.remove(s[l])\n            l += 1"
+                    "instruction": "Check for repeating characters using a while loop.",
+                    "placeholderCode": "        while s[r] in char_set:",
+                    "validationRegex": "^\\s+while\\s+s\\[r\\]\\s+in\\s+char_set:$",
+                    "hint": "If the current character `s[r]` is already in our set, we have a duplicate! We must shrink the window from the left.",
+                    "solutionCode": "        while s[r] in char_set:"
                 },
                 {
                     "id": 5,
-                    "instruction": "Add the current character to the set.",
-                    "placeholderCode": "        char_set.add(s[r])",
-                    "validationRegex": "^\\s+char_set\\.add\\(s\\[r\\]\\)$",
-                    "hint": "Add `s[r]` to `char_set`.",
-                    "solutionCode": "        char_set.add(s[r])"
+                    "instruction": "Remove the character at the left pointer from the set.",
+                    "placeholderCode": "            char_set.remove(s[l])",
+                    "validationRegex": "^\\s+char_set\\.remove\\(s\\[l\\]\\)$",
+                    "hint": "To get rid of the duplicate, we remove characters from the left side of our window one by one.",
+                    "solutionCode": "            char_set.remove(s[l])"
                 },
                 {
                     "id": 6,
-                    "instruction": "Update the result with the window size.",
-                    "placeholderCode": "        res = max(res, r - l + 1)",
-                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*r\\s*-\\s*l\\s*\\+\\s*1\\)$",
-                    "hint": "Update `res` with `r - l + 1`.",
-                    "solutionCode": "        res = max(res, r - l + 1)"
+                    "instruction": "Move the left pointer forward.",
+                    "placeholderCode": "            l += 1",
+                    "validationRegex": "^\\s+l\\s*\\+=\\s*1$",
+                    "hint": "Shrink the window by moving `l` to the right until `s[r]` is no longer a duplicate.",
+                    "solutionCode": "            l += 1"
                 },
                 {
                     "id": 7,
-                    "instruction": "Return the result.",
+                    "instruction": "Add the current character to the set.",
+                    "placeholderCode": "        char_set.add(s[r])",
+                    "validationRegex": "^\\s+char_set\\.add\\(s\\[r\\]\\)$",
+                    "hint": "Now that our window is clean (no duplicates), add `s[r]` to the set.",
+                    "solutionCode": "        char_set.add(s[r])"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Update the maximum length found so far.",
+                    "placeholderCode": "        res = max(res, r - l + 1)",
+                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*r\\s*-\\s*l\\s*\\+\\s*1\\)$",
+                    "hint": "The current window size is `r - l + 1`. Update our overall maximum length.",
+                    "solutionCode": "        res = max(res, r - l + 1)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return the final result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "Return the result.",
+                    "hint": "Return the length of the longest substring found.",
                     "solutionCode": "    return res"
                 }
             ]
