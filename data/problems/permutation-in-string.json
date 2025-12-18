@@ -162,14 +162,54 @@
                 },
                 {
                     "id": 13,
-                    "instruction": "Process the character entering from the right.",
-                    "placeholderCode": "        index = ord(s2[r]) - ord('a')\n        s2Count[index] += 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] + 1 == s2Count[index]:\n            matches -= 1",
-                    "validationRegex": "^\\s+index\\s*=\\s*ord\\(s2\\[r\\]\\)\\s*-\\s*ord\\('a'\\)\\s*s2Count\\[index\\]\\s*\\+=\\s*1\\s*if\\s+s1Count\\[index\\]\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*\\+=\\s*1\\s*elif\\s+s1Count\\[index\\]\\s*\\+\\s*1\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*-=\\s*1$",
-                    "hint": "Increment count for `s2[r]`. If it now matches `s1Count`, increment `matches`. If it just *stopped* matching, decrement `matches`.",
-                    "solutionCode": "        index = ord(s2[r]) - ord('a')\n        s2Count[index] += 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] + 1 == s2Count[index]:\n            matches -= 1"
+                    "instruction": "Calculate the alphabet index of the character entering the window.",
+                    "placeholderCode": "        index = ord(s2[r]) - ord('a')",
+                    "validationRegex": "^\\s+index\\s*=\\s*ord\\(s2\\[r\\]\\)\\s*-\\s*ord\\('a'\\)$",
+                    "hint": "Like before, we convert the character at the right pointer `r` to an index 0-25.",
+                    "solutionCode": "        index = ord(s2[r]) - ord('a')"
                 },
                 {
                     "id": 14,
+                    "instruction": "Increment the frequency of the new character in our window.",
+                    "placeholderCode": "        s2Count[index] += 1",
+                    "validationRegex": "^\\s+s2Count\\[index\\]\\s*\\+=\\s*1$",
+                    "hint": "The character at `s2[r]` just entered the window, so we increase its count.",
+                    "solutionCode": "        s2Count[index] += 1"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Check if this character's frequency now matches the requirement.",
+                    "placeholderCode": "        if s1Count[index] == s2Count[index]:",
+                    "validationRegex": "^\\s+if\\s+s1Count\\[index\\]\\s*==\\s*s2Count\\[index\\]:$",
+                    "hint": "Check if the amount of this specific character in our window exactly matches how many we need from `s1`.",
+                    "solutionCode": "        if s1Count[index] == s2Count[index]:"
+                },
+                {
+                    "id": 16,
+                    "instruction": "If it matches, increment the global matches count.",
+                    "placeholderCode": "            matches += 1",
+                    "validationRegex": "^\\s+matches\\s*\\+=\\s*1$",
+                    "hint": "We found another letter whose frequency is perfectly satisfied in our window.",
+                    "solutionCode": "            matches += 1"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Check if this character formerly matched but now exceeds the requirement.",
+                    "placeholderCode": "        elif s1Count[index] + 1 == s2Count[index]:",
+                    "validationRegex": "^\\s+elif\\s+s1Count\\[index\\]\\s*\\+\\s*1\\s*==\\s*s2Count\\[index\\]:$",
+                    "hint": "If the count was already equal before we added this character, it means we now have 'too many'.",
+                    "solutionCode": "        elif s1Count[index] + 1 == s2Count[index]:"
+                },
+                {
+                    "id": 18,
+                    "instruction": "If it no longer matches, decrement the global matches count.",
+                    "placeholderCode": "            matches -= 1",
+                    "validationRegex": "^\\s+matches\\s*-=\\s*1$",
+                    "hint": "This specific letter's frequency is no longer exactly what we need, so we lose a match.",
+                    "solutionCode": "            matches -= 1"
+                },
+                {
+                    "id": 19,
                     "instruction": "Process the character leaving from the left.",
                     "placeholderCode": "        index = ord(s2[l]) - ord('a')\n        s2Count[index] -= 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] - 1 == s2Count[index]:\n            matches -= 1\n        l += 1",
                     "validationRegex": "^\\s+index\\s*=\\s*ord\\(s2\\[l\\]\\)\\s*-\\s*ord\\('a'\\)\\s*s2Count\\[index\\]\\s*-=\\s*1\\s*if\\s+s1Count\\[index\\]\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*\\+=\\s*1\\s*elif\\s+s1Count\\[index\\]\\s*-\\s*1\\s*==\\s*s2Count\\[index\\]:\\s*matches\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
@@ -177,7 +217,7 @@
                     "solutionCode": "        index = ord(s2[l]) - ord('a')\n        s2Count[index] -= 1\n        if s1Count[index] == s2Count[index]:\n            matches += 1\n        elif s1Count[index] - 1 == s2Count[index]:\n            matches -= 1\n        l += 1"
                 },
                 {
-                    "id": 15,
+                    "id": 20,
                     "instruction": "Return the final match check.",
                     "placeholderCode": "    return matches == 26",
                     "validationRegex": "^\\s+return\\s+matches\\s*==\\s*26$",
