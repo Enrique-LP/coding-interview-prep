@@ -82,34 +82,58 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Maintain monotonic increasing stack.",
-                    "placeholderCode": "        while stack and stack[-1][1] > h:\n            index, height = stack.pop()\n            maxArea = max(maxArea, height * (i - index))\n            start = index",
-                    "validationRegex": "^\\s+while\\s+stack\\s+and\\s+stack\\[-1\\]\\[1\\]\\s*>\\s*h:\\s*index,\\s*height\\s*=\\s*stack\\.pop\\(\\)\\s*maxArea\\s*=\\s*max\\(maxArea,\\s*height\\s*\\*\\s*\\(i\\s*-\\s*index\\)\\)\\s*start\\s*=\\s*index$",
-                    "hint": "While stack top > current height, pop and calculate area. Update `start`.",
-                    "solutionCode": "        while stack and stack[-1][1] > h:\n            index, height = stack.pop()\n            maxArea = max(maxArea, height * (i - index))\n            start = index"
+                    "instruction": "Check if the current height is smaller than the top of the stack.",
+                    "placeholderCode": "        while stack and stack[-1][1] > h:",
+                    "validationRegex": "^\\s+while\\s+stack\\s+and\\s+stack\\[-1\\]\\[1\\]\\s*>\\s*h:$",
+                    "hint": "While the stack isn't empty AND the last height added is TALLER than our current height `h`...",
+                    "solutionCode": "        while stack and stack[-1][1] > h:"
                 },
                 {
                     "id": 5,
-                    "instruction": "Push current height to stack.",
-                    "placeholderCode": "        stack.append((start, h))",
-                    "validationRegex": "^\\s+stack\\.append\\(\\(\\(start,\\s*h\\)\\)\\)$",
-                    "hint": "Push current `start` index and `h`eight.",
-                    "solutionCode": "        stack.append((start, h))"
+                    "instruction": "Pop the taller bar from the stack.",
+                    "placeholderCode": "            index, height = stack.pop()",
+                    "validationRegex": "^\\s+index,\\s*height\\s*=\\s*stack\\.pop\\(\\)$",
+                    "hint": "This taller bar can't extend any further to the right because `h` is lower. So we 'close' it and get its data.",
+                    "solutionCode": "            index, height = stack.pop()"
                 },
                 {
                     "id": 6,
-                    "instruction": "Process remaining stack items.",
-                    "placeholderCode": "    for i, h in stack:\n        maxArea = max(maxArea, h * (len(heights) - i))",
-                    "validationRegex": "^\\s+for\\s+i,\\s*h\\s+in\\s+stack:\\s*maxArea\\s*=\\s*max\\(maxArea,\\s*h\\s*\\*\\s*\\(len\\(heights\\)\\s*-\\s*i\\)\\)$",
-                    "hint": "Calculate area for remaining items in stack starting from their index to end.",
-                    "solutionCode": "    for i, h in stack:\n        maxArea = max(maxArea, h * (len(heights) - i))"
+                    "instruction": "Calculate the area of the rectangle formed by the popped bar.",
+                    "placeholderCode": "            maxArea = max(maxArea, height * (i - index))",
+                    "validationRegex": "^\\s+maxArea\\s*=\\s*max\\(maxArea,\\s*height\\s*\\*\\s*\\(i\\s*-\\s*index\\)\\)$",
+                    "hint": "The width is `current_index (i) - start_index (index)`. We update `maxArea` if this new rectangle is the biggest so far.",
+                    "solutionCode": "            maxArea = max(maxArea, height * (i - index))"
                 },
                 {
                     "id": 7,
-                    "instruction": "Return maxArea.",
+                    "instruction": "Update the start index for the current (shorter) bar.",
+                    "placeholderCode": "            start = index",
+                    "validationRegex": "^\\s+start\\s*=\\s*index$",
+                    "hint": "Crucial Trick: Since `h` is shorter, it could have started way back where the taller bar we just popped started. We move `start` back.",
+                    "solutionCode": "            start = index"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Push the current bar to the stack.",
+                    "placeholderCode": "        stack.append((start, h))",
+                    "validationRegex": "^\\s+stack\\.append\\(\\(\\(start,\\s*h\\)\\)\\)$",
+                    "hint": "Finally, we push our current height `h` with its potentially 'stretched' `start` index.",
+                    "solutionCode": "        stack.append((start, h))"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Process the bars remaining in the stack.",
+                    "placeholderCode": "    for i, h in stack:\n        maxArea = max(maxArea, h * (len(heights) - i))",
+                    "validationRegex": "^\\s+for\\s+i,\\s*h\\s+in\\s+stack:\\s*maxArea\\s*=\\s*max\\(maxArea,\\s*h\\s*\\*\\s*\\(len\\(heights\\)\\s*-\\s*i\\)\\)$",
+                    "hint": "After the loop, some bars might still be in the stack. They could extend all the way to the end of the histogram.",
+                    "solutionCode": "    for i, h in stack:\n        maxArea = max(maxArea, h * (len(heights) - i))"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Return the maximum area found.",
                     "placeholderCode": "    return maxArea",
                     "validationRegex": "^\\s+return\\s+maxArea$",
-                    "hint": "Return the maximum area.",
+                    "hint": "Return our winner: `maxArea`.",
                     "solutionCode": "    return maxArea"
                 }
             ]
