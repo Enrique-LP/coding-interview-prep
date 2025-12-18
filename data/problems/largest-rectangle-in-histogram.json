@@ -82,7 +82,7 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Check if the current height is smaller than the top of the stack.",
+                    "instruction": "Start a loop to check if previous bars are taller than the current one.",
                     "placeholderCode": "        while stack and stack[-1][1] > h:",
                     "validationRegex": "^\\s+while\\s+stack\\s+and\\s+stack\\[-1\\]\\[1\\]\\s*>\\s*h:$",
                     "hint": "While the stack isn't empty AND the last height added is TALLER than our current height `h`...",
@@ -116,7 +116,7 @@
                     "id": 8,
                     "instruction": "Push the current bar to the stack.",
                     "placeholderCode": "        stack.append((start, h))",
-                    "validationRegex": "^\\s+stack\\.append\\(\\(\\(start,\\s*h\\)\\)\\)$",
+                    "validationRegex": "^\\s+stack\\.append\\(\\s*\\(\\s*start,\\s*h\\s*\\)\\s*\\)$",
                     "hint": "Finally, we push our current height `h` with its potentially 'stretched' `start` index.",
                     "solutionCode": "        stack.append((start, h))"
                 },
