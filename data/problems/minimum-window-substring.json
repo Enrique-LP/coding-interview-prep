@@ -200,14 +200,38 @@
                 },
                 {
                     "id": 19,
-                    "instruction": "Remove the character at the left from the window.",
-                    "placeholderCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1",
-                    "validationRegex": "^\\s+window\\[s\\[l\\]\\]\\s*-=\\s*1\\s*if\\s+s\\[l\\]\\s+in\\s+countT\\s+and\\s+window\\[s\\[l\\]\\]\\s*<\\s*countT\\[s\\[l\\]\\]:\\s*have\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
-                    "hint": "Crucial: Pop the left character. If losing it makes the window invalid (`have < need`), the while loop will end. Increment `l` to move the left border.",
-                    "solutionCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1"
+                    "instruction": "Decrement the frequency of the character leaving the window at the left.",
+                    "placeholderCode": "            window[s[l]] -= 1",
+                    "validationRegex": "^\\s+window\\[s\\[l\\]\\]\\s*-=\\s*1$",
+                    "hint": "We are about to move the left pointer `l`, so we must first subtract the character at `s[l]` from our current window counts.",
+                    "solutionCode": "            window[s[l]] -= 1"
                 },
                 {
                     "id": 20,
+                    "instruction": "Check if removing this character makes the window invalid.",
+                    "placeholderCode": "            if s[l] in countT and window[s[l]] < countT[s[l]]:",
+                    "validationRegex": "^\\s+if\\s+s\\[l\\]\\s+in\\s+countT\\s+and\\s+window\\[s\\[l\\]\\]\\s*<\\s*countT\\[s\\[l\\]\\]:$",
+                    "hint": "If the character leaving the window was one we needed, and its new count in the window is now less than what we required from `t`...",
+                    "solutionCode": "            if s[l] in countT and window[s[l]] < countT[s[l]]:"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Decrease the count of satisfied requirements.",
+                    "placeholderCode": "                have -= 1",
+                    "validationRegex": "^\\s+have\\s*-=\\s*1$",
+                    "hint": "Since we no longer have enough of character `s[l]`, the window is no longer valid. We decrease `have` to reflect this.",
+                    "solutionCode": "                have -= 1"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Increment the left pointer to officially shrink the window.",
+                    "placeholderCode": "            l += 1",
+                    "validationRegex": "^\\s+l\\s*\\+=\\s*1$",
+                    "hint": "Finally, we move `l` one step to the right. This might make the `while have == need` condition false if we just invalidated the window.",
+                    "solutionCode": "            l += 1"
+                },
+                {
+                    "id": 23,
                     "instruction": "Return the final result as a substring.",
                     "placeholderCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\"",
                     "validationRegex": "^\\s+l\\s*,\\s*r\\s*=\\s*res\\s+return\\s+s\\[l\\s*:\\s*r\\s*\\+\\s*1\\]\\s+if\\s+resLen\\s*!=\\s*float\\(\"inf\"\\)\\s+else\\s+\"\"$",
