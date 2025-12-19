@@ -168,10 +168,10 @@
                 },
                 {
                     "id": 15,
-                    "instruction": "Shrink the window while all requirements are satisfied.",
+                    "instruction": "Start contracting the window from the left as long as it remains valid.",
                     "placeholderCode": "        while have == need:",
                     "validationRegex": "^\\s+while\\s+have\\s*==\\s*need:$",
-                    "hint": "Condition: As long as the current window contains all letters of `t` with proper frequency...",
+                    "hint": "When `have == need`, our current window `[l, r]` contains all necessary characters. We enter this loop to see if we can shrink the window from the left while keeping it valid to find the minimum length.",
                     "solutionCode": "        while have == need:"
                 },
                 {
