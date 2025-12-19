@@ -128,14 +128,22 @@
                 },
                 {
                     "id": 10,
-                    "instruction": "Iterate through the string s with the right pointer r.",
-                    "placeholderCode": "    for r in range(len(s)):\n        c = s[r]",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(len\\(s\\)\\):\\s*c\\s*=\\s*s\\[r\\]$",
-                    "hint": "Expand the window to the right.",
-                    "solutionCode": "    for r in range(len(s)):\n        c = s[r]"
+                    "instruction": "Start the main loop to expand the window using the right pointer r.",
+                    "placeholderCode": "    for r in range(len(s)):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(len\\(s\\)\\):$",
+                    "hint": "This loop defines the right boundary of our window, expanding it from left to right as `r` increases.",
+                    "solutionCode": "    for r in range(len(s)):"
                 },
                 {
                     "id": 11,
+                    "instruction": "Retrieve the character at the current right pointer position.",
+                    "placeholderCode": "        c = s[r]",
+                    "validationRegex": "^\\s+c\\s*=\\s*s\\[r\\]$",
+                    "hint": "We assign `s[r]` to a variable `c` to make it easier to work with in the following steps.",
+                    "solutionCode": "        c = s[r]"
+                },
+                {
+                    "id": 12,
                     "instruction": "Add the current character to the window count.",
                     "placeholderCode": "        window[c] = 1 + window.get(c, 0)",
                     "validationRegex": "^\\s+window\\[c\\]\\s*=\\s*1\\s*\\+\\s*window\\.get\\(c,\\s*0\\)$",
@@ -143,7 +151,7 @@
                     "solutionCode": "        window[c] = 1 + window.get(c, 0)"
                 },
                 {
-                    "id": 12,
+                    "id": 13,
                     "instruction": "Update 'have' if character frequency requirement is met.",
                     "placeholderCode": "        if c in countT and window[c] == countT[c]:\n            have += 1",
                     "validationRegex": "^\\s+if\\s+c\\s+in\\s+countT\\s+and\\s+window\\[c\\]\\s*==\\s*countT\\[c\\]:\\s*have\\s*\\+=\\s*1$",
@@ -151,7 +159,7 @@
                     "solutionCode": "        if c in countT and window[c] == countT[c]:\n            have += 1"
                 },
                 {
-                    "id": 13,
+                    "id": 14,
                     "instruction": "Shrink the window while all requirements are satisfied.",
                     "placeholderCode": "        while have == need:",
                     "validationRegex": "^\\s+while\\s+have\\s*==\\s*need:$",
@@ -159,7 +167,7 @@
                     "solutionCode": "        while have == need:"
                 },
                 {
-                    "id": 14,
+                    "id": 15,
                     "instruction": "Update the result if the current window is smaller.",
                     "placeholderCode": "            if (r - l + 1) < resLen:\n                res = [l, r]\n                resLen = (r - l + 1)",
                     "validationRegex": "^\\s+if\\s+\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*<\\s*resLen:\\s*res\\s*=\\s*\\[l,\\s*r\\]\\s*resLen\\s*=\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)$",
@@ -167,7 +175,7 @@
                     "solutionCode": "            if (r - l + 1) < resLen:\n                res = [l, r]\n                resLen = (r - l + 1)"
                 },
                 {
-                    "id": 15,
+                    "id": 16,
                     "instruction": "Remove the character at the left from the window.",
                     "placeholderCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1",
                     "validationRegex": "^\\s+window\\[s\\[l\\]\\]\\s*-=\\s*1\\s*if\\s+s\\[l\\]\\s+in\\s+countT\\s+and\\s+window\\[s\\[l\\]\\]\\s*<\\s*countT\\[s\\[l\\]\\]:\\s*have\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
@@ -175,7 +183,7 @@
                     "solutionCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1"
                 },
                 {
-                    "id": 16,
+                    "id": 17,
                     "instruction": "Return the final result as a substring.",
                     "placeholderCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\"",
                     "validationRegex": "^\\s+l\\s*,\\s*r\\s*=\\s*res\\s+return\\s+s\\[l\\s*:\\s*r\\s*\\+\\s*1\\]\\s+if\\s+resLen\\s*!=\\s*float\\(\"inf\"\\)\\s+else\\s+\"\"$",
