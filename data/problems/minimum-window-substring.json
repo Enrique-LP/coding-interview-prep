@@ -152,14 +152,22 @@
                 },
                 {
                     "id": 13,
-                    "instruction": "Update 'have' if character frequency requirement is met.",
-                    "placeholderCode": "        if c in countT and window[c] == countT[c]:\n            have += 1",
-                    "validationRegex": "^\\s+if\\s+c\\s+in\\s+countT\\s+and\\s+window\\[c\\]\\s*==\\s*countT\\[c\\]:\\s*have\\s*\\+=\\s*1$",
-                    "hint": "If this character was necessary and we now have exactly the number required, increment our 'have' count.",
-                    "solutionCode": "        if c in countT and window[c] == countT[c]:\n            have += 1"
+                    "instruction": "Check if the current character's frequency requirement is met.",
+                    "placeholderCode": "        if c in countT and window[c] == countT[c]:",
+                    "validationRegex": "^\\s+if\\s+c\\s+in\\s+countT\\s+and\\s+window\\[c\\]\\s*==\\s*countT\\[c\\]:$",
+                    "hint": "We only care about characters that are in `countT`. If our window has reached the exact frequency needed for character `c`, we've satisfied one unique character requirement.",
+                    "solutionCode": "        if c in countT and window[c] == countT[c]:"
                 },
                 {
                     "id": 14,
+                    "instruction": "Increment the count of satisfied character requirements.",
+                    "placeholderCode": "            have += 1",
+                    "validationRegex": "^\\s+have\\s*\\+=\\s*1$",
+                    "hint": "The `have` variable tracks how many unique characters from `t` have been fully satisfied in the current window.",
+                    "solutionCode": "            have += 1"
+                },
+                {
+                    "id": 15,
                     "instruction": "Shrink the window while all requirements are satisfied.",
                     "placeholderCode": "        while have == need:",
                     "validationRegex": "^\\s+while\\s+have\\s*==\\s*need:$",
@@ -167,7 +175,7 @@
                     "solutionCode": "        while have == need:"
                 },
                 {
-                    "id": 15,
+                    "id": 16,
                     "instruction": "Update the result if the current window is smaller.",
                     "placeholderCode": "            if (r - l + 1) < resLen:\n                res = [l, r]\n                resLen = (r - l + 1)",
                     "validationRegex": "^\\s+if\\s+\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*<\\s*resLen:\\s*res\\s*=\\s*\\[l,\\s*r\\]\\s*resLen\\s*=\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)$",
@@ -175,7 +183,7 @@
                     "solutionCode": "            if (r - l + 1) < resLen:\n                res = [l, r]\n                resLen = (r - l + 1)"
                 },
                 {
-                    "id": 16,
+                    "id": 17,
                     "instruction": "Remove the character at the left from the window.",
                     "placeholderCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1",
                     "validationRegex": "^\\s+window\\[s\\[l\\]\\]\\s*-=\\s*1\\s*if\\s+s\\[l\\]\\s+in\\s+countT\\s+and\\s+window\\[s\\[l\\]\\]\\s*<\\s*countT\\[s\\[l\\]\\]:\\s*have\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
@@ -183,7 +191,7 @@
                     "solutionCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1"
                 },
                 {
-                    "id": 17,
+                    "id": 18,
                     "instruction": "Return the final result as a substring.",
                     "placeholderCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\"",
                     "validationRegex": "^\\s+l\\s*,\\s*r\\s*=\\s*res\\s+return\\s+s\\[l\\s*:\\s*r\\s*\\+\\s*1\\]\\s+if\\s+resLen\\s*!=\\s*float\\(\"inf\"\\)\\s+else\\s+\"\"$",
