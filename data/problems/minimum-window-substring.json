@@ -176,14 +176,30 @@
                 },
                 {
                     "id": 16,
-                    "instruction": "Update the result if the current window is smaller.",
-                    "placeholderCode": "            if (r - l + 1) < resLen:\n                res = [l, r]\n                resLen = (r - l + 1)",
-                    "validationRegex": "^\\s+if\\s+\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*<\\s*resLen:\\s*res\\s*=\\s*\\[l,\\s*r\\]\\s*resLen\\s*=\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)$",
-                    "hint": "We found a valid window! Save its boundaries and update the minimum length.",
-                    "solutionCode": "            if (r - l + 1) < resLen:\n                res = [l, r]\n                resLen = (r - l + 1)"
+                    "instruction": "Check if the current valid window is the smallest we've seen so far.",
+                    "placeholderCode": "            if (r - l + 1) < resLen:",
+                    "validationRegex": "^\\s+if\\s+\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*<\\s*resLen:$",
+                    "hint": "We compare the current window size `(r - l + 1)` with the minimum length we've stored (`resLen`).",
+                    "solutionCode": "            if (r - l + 1) < resLen:"
                 },
                 {
                     "id": 17,
+                    "instruction": "Store the starting and ending indices of this new minimum window.",
+                    "placeholderCode": "                res = [l, r]",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[l,\\s*r\\]$",
+                    "hint": "Since this is the smallest valid window found so far, we update `res` with the current pointers `[l, r]`.",
+                    "solutionCode": "                res = [l, r]"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Update the minimum length found so far.",
+                    "placeholderCode": "                resLen = (r - l + 1)",
+                    "validationRegex": "^\\s+resLen\\s*=\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)$",
+                    "hint": "We also need to update `resLen` so that the next valid window will be compared against this new, smaller minimum.",
+                    "solutionCode": "                resLen = (r - l + 1)"
+                },
+                {
+                    "id": 19,
                     "instruction": "Remove the character at the left from the window.",
                     "placeholderCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1",
                     "validationRegex": "^\\s+window\\[s\\[l\\]\\]\\s*-=\\s*1\\s*if\\s+s\\[l\\]\\s+in\\s+countT\\s+and\\s+window\\[s\\[l\\]\\]\\s*<\\s*countT\\[s\\[l\\]\\]:\\s*have\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
@@ -191,7 +207,7 @@
                     "solutionCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1"
                 },
                 {
-                    "id": 18,
+                    "id": 20,
                     "instruction": "Return the final result as a substring.",
                     "placeholderCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\"",
                     "validationRegex": "^\\s+l\\s*,\\s*r\\s*=\\s*res\\s+return\\s+s\\[l\\s*:\\s*r\\s*\\+\\s*1\\]\\s+if\\s+resLen\\s*!=\\s*float\\(\"inf\"\\)\\s+else\\s+\"\"$",
