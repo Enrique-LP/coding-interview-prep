@@ -232,11 +232,19 @@
                 },
                 {
                     "id": 23,
-                    "instruction": "Return the final result as a substring.",
-                    "placeholderCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\"",
-                    "validationRegex": "^\\s+l\\s*,\\s*r\\s*=\\s*res\\s+return\\s+s\\[l\\s*:\\s*r\\s*\\+\\s*1\\]\\s+if\\s+resLen\\s*!=\\s*float\\(\"inf\"\\)\\s+else\\s+\"\"$",
-                    "hint": "Retrieve the best boundaries from `res`. If `resLen` is still infinity, it means no valid window was found.",
-                    "solutionCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\""
+                    "instruction": "Unpack the best window start and end indices from the result variable.",
+                    "placeholderCode": "    l, r = res",
+                    "validationRegex": "^\\s+l\\s*,\\s*r\\s*=\\s*res$",
+                    "hint": "We retrieve the stored pointers `[l, r]` from our `res` list.",
+                    "solutionCode": "    l, r = res"
+                },
+                {
+                    "id": 24,
+                    "instruction": "Return the minimum window substring if found, otherwise return an empty string.",
+                    "placeholderCode": "    return s[l : r + 1] if resLen != float(\"inf\") else \"\"",
+                    "validationRegex": "^\\s+return\\s+s\\[l\\s*:\\s*r\\s*\\+\\s*1\\]\\s+if\\s+resLen\\s*!=\\s*float\\(\"inf\"\\)\\s+else\\s+\"\"$",
+                    "hint": "If `resLen` was never updated from infinity, it means no valid substring was found. Otherwise, return the slice of `s` using our best indices.",
+                    "solutionCode": "    return s[l : r + 1] if resLen != float(\"inf\") else \"\""
                 }
             ]
         }
