@@ -80,14 +80,22 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Populate the dictionary of required characters from t.",
-                    "placeholderCode": "    for c in t:\n        countT[c] = 1 + countT.get(c, 0)",
-                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+t:\\s*countT\\[c\\]\\s*=\\s*1\\s*\\+\\s*countT\\.get\\(c,\\s*0\\)$",
-                    "hint": "Count how many times each character appears in `t`.",
-                    "solutionCode": "    for c in t:\n        countT[c] = 1 + countT.get(c, 0)"
+                    "instruction": "Start a loop to iterate through each character in target string t.",
+                    "placeholderCode": "    for c in t:",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+t:$",
+                    "hint": "We need to go through string `t` to count character frequencies.",
+                    "solutionCode": "    for c in t:"
                 },
                 {
                     "id": 5,
+                    "instruction": "Update the count of character 'c' in the countT dictionary.",
+                    "placeholderCode": "        countT[c] = 1 + countT.get(c, 0)",
+                    "validationRegex": "^\\s+countT\\[c\\]\\s*=\\s*1\\s*\\+\\s*countT\\.get\\(c,\\s*0\\)$",
+                    "hint": "Increment the value for key `c`. If `c` is not present, use 0 as the default.",
+                    "solutionCode": "        countT[c] = 1 + countT.get(c, 0)"
+                },
+                {
+                    "id": 6,
                     "instruction": "Initialize status variables.",
                     "placeholderCode": "    have, need = 0, len(countT)",
                     "validationRegex": "^\\s+have,\\s*need\\s*=\\s*0,\\s*len\\(countT\\)$",
@@ -95,7 +103,7 @@
                     "solutionCode": "    have, need = 0, len(countT)"
                 },
                 {
-                    "id": 6,
+                    "id": 7,
                     "instruction": "Initialize result pointers and minimum length.",
                     "placeholderCode": "    res, resLen = [-1, -1], float(\"inf\")\n    l = 0",
                     "validationRegex": "^\\s+res,\\s*resLen\\s*=\\s*\\[-1,\\s*-1\\],\\s*float\\(\"inf\"\\)\\s*l\\s*=\\s*0$",
@@ -103,7 +111,7 @@
                     "solutionCode": "    res, resLen = [-1, -1], float(\"inf\")\n    l = 0"
                 },
                 {
-                    "id": 7,
+                    "id": 8,
                     "instruction": "Iterate through the string s with the right pointer r.",
                     "placeholderCode": "    for r in range(len(s)):\n        c = s[r]",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(len\\(s\\)\\):\\s*c\\s*=\\s*s\\[r\\]$",
@@ -111,7 +119,7 @@
                     "solutionCode": "    for r in range(len(s)):\n        c = s[r]"
                 },
                 {
-                    "id": 8,
+                    "id": 9,
                     "instruction": "Add the current character to the window count.",
                     "placeholderCode": "        window[c] = 1 + window.get(c, 0)",
                     "validationRegex": "^\\s+window\\[c\\]\\s*=\\s*1\\s*\\+\\s*window\\.get\\(c,\\s*0\\)$",
@@ -119,7 +127,7 @@
                     "solutionCode": "        window[c] = 1 + window.get(c, 0)"
                 },
                 {
-                    "id": 9,
+                    "id": 10,
                     "instruction": "Update 'have' if character frequency requirement is met.",
                     "placeholderCode": "        if c in countT and window[c] == countT[c]:\n            have += 1",
                     "validationRegex": "^\\s+if\\s+c\\s+in\\s+countT\\s+and\\s+window\\[c\\]\\s*==\\s*countT\\[c\\]:\\s*have\\s*\\+=\\s*1$",
@@ -127,7 +135,7 @@
                     "solutionCode": "        if c in countT and window[c] == countT[c]:\n            have += 1"
                 },
                 {
-                    "id": 10,
+                    "id": 11,
                     "instruction": "Shrink the window while all requirements are satisfied.",
                     "placeholderCode": "        while have == need:",
                     "validationRegex": "^\\s+while\\s+have\\s*==\\s*need:$",
@@ -135,7 +143,7 @@
                     "solutionCode": "        while have == need:"
                 },
                 {
-                    "id": 11,
+                    "id": 12,
                     "instruction": "Update the result if the current window is smaller.",
                     "placeholderCode": "            if (r - l + 1) < resLen:\n                res = [l, r]\n                resLen = (r - l + 1)",
                     "validationRegex": "^\\s+if\\s+\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*<\\s*resLen:\\s*res\\s*=\\s*\\[l,\\s*r\\]\\s*resLen\\s*=\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)$",
@@ -143,7 +151,7 @@
                     "solutionCode": "            if (r - l + 1) < resLen:\n                res = [l, r]\n                resLen = (r - l + 1)"
                 },
                 {
-                    "id": 12,
+                    "id": 13,
                     "instruction": "Remove the character at the left from the window.",
                     "placeholderCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1",
                     "validationRegex": "^\\s+window\\[s\\[l\\]\\]\\s*-=\\s*1\\s*if\\s+s\\[l\\]\\s+in\\s+countT\\s+and\\s+window\\[s\\[l\\]\\]\\s*<\\s*countT\\[s\\[l\\]\\]:\\s*have\\s*-=\\s*1\\s*l\\s*\\+=\\s*1$",
@@ -151,10 +159,10 @@
                     "solutionCode": "            window[s[l]] -= 1\n            if s[l] in countT and window[s[l]] < countT[s[l]]:\n                have -= 1\n            l += 1"
                 },
                 {
-                    "id": 13,
+                    "id": 14,
                     "instruction": "Return the minimum window substring.",
                     "placeholderCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\"",
-                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*res\\s*return\\s+s\\[l\\s*:\\s*r\\s*\\+\\s*1\\]\\s+if\\s+resLen\\s*!=\\s*float\\(\"inf\"\\)\\s+else\\s+\"\"$",
+                    "validationRegex": "^\\s+l\\s*,\\s*r\\s*=\\s*res\\s+return\\s+s\\[l\\s*:\\s*r\\s*\\+\\s*1\\]\\s+if\\s+resLen\\s*!=\\s*float\\(\"inf\"\\)\\s+else\\s+\"\"$",
                     "hint": "Use the boundaries we saved in `res`. If `resLen` never changed, return an empty string.",
                     "solutionCode": "    l, r = res\n    return s[l : r + 1] if resLen != float(\"inf\") else \"\""
                 }
