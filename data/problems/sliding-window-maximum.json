@@ -83,10 +83,10 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Inside the loop, check if the current value is larger than elements at the end of the deque.",
+                    "instruction": "Initiate a sub-loop to remove all elements from the deque that are smaller than the current value.",
                     "placeholderCode": "        while q and nums[q[-1]] < nums[r]:",
                     "validationRegex": "^\\s+while\\s+q\\s+and\\s+nums\\[q\\[-1\\]\\]\\s*<\\s*nums\\[r\\]:$",
-                    "hint": "To maintain a monotonic decreasing deque, we must remove all indices of elements smaller than the current `nums[r]`.",
+                    "hint": "Think of this as a competition: if the new element `nums[r]` is larger than elements already in the deque, those elements will never be the maximum again (since `nums[r]` is both larger and will stay in the window longer).",
                     "solutionCode": "        while q and nums[q[-1]] < nums[r]:"
                 },
                 {
@@ -94,7 +94,7 @@
                     "instruction": "Pop the last element from the deque while it's smaller than the current element.",
                     "placeholderCode": "            q.pop()",
                     "validationRegex": "^\\s+q\\.pop\\(\\)$",
-                    "hint": "Remove the index from the end of the deque since it can no longer be the maximum for any window containing `nums[r]`.",
+                    "hint": "Since these older, smaller elements are now 'obsolete' (they can't be the maximum anymore), we remove them from the back of our deque.",
                     "solutionCode": "            q.pop()"
                 },
                 {
