@@ -75,18 +75,90 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Process elements.",
-                    "placeholderCode": "    while r < len(nums):\n        while q and nums[q[-1]] < nums[r]:\n            q.pop()\n        q.append(r)\n        if l > q[0]:\n            q.popleft()\n        if (r + 1) >= k:\n            output.append(nums[q[0]])\n            l += 1\n        r += 1",
-                    "validationRegex": "^\\s+while\\s+r\\s*<\\s+len\\(nums\\):\\s*while\\s+q\\s+and\\s+nums\\[q\\[-1\\]\\]\\s*<\\s+nums\\[r\\]:\\s*q\\.pop\\(\\)\\s*q\\.append\\(r\\)\\s*if\\s+l\\s*>\\s+q\\[0\\]:\\s*q\\.popleft\\(\\)\\s*if\\s*\\(r\\s*\\+\\s*1\\)\\s*>=\\s*k:\\s*output\\.append\\(nums\\[q\\[0\\]\\]\\)\\s*l\\s*\\+=\\s*1\\s*r\\s*\\+=\\s*1$",
-                    "hint": "Maintain monotonic decreasing deque. Remove indices out of window. Add max to output.",
-                    "solutionCode": "    while r < len(nums):\n        while q and nums[q[-1]] < nums[r]:\n            q.pop()\n        q.append(r)\n        if l > q[0]:\n            q.popleft()\n        if (r + 1) >= k:\n            output.append(nums[q[0]])\n            l += 1\n        r += 1"
+                    "instruction": "Start a while loop to iterate through the array until the right pointer r reaches the end.",
+                    "placeholderCode": "    while r < len(nums):",
+                    "validationRegex": "^\\s+while\\s+r\\s*<\\s+len\\(nums\\):$",
+                    "hint": "The loop continues as long as `r` is within the bounds of `nums`.",
+                    "solutionCode": "    while r < len(nums):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Inside the loop, check if the current value is larger than elements at the end of the deque.",
+                    "placeholderCode": "        while q and nums[q[-1]] < nums[r]:",
+                    "validationRegex": "^\\s+while\\s+q\\s+and\\s+nums\\[q\\[-1\\]\\]\\s*<\\s*nums\\[r\\]:$",
+                    "hint": "To maintain a monotonic decreasing deque, we must remove all indices of elements smaller than the current `nums[r]`.",
+                    "solutionCode": "        while q and nums[q[-1]] < nums[r]:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Pop the last element from the deque while it's smaller than the current element.",
+                    "placeholderCode": "            q.pop()",
+                    "validationRegex": "^\\s+q\\.pop\\(\\)$",
+                    "hint": "Remove the index from the end of the deque since it can no longer be the maximum for any window containing `nums[r]`.",
+                    "solutionCode": "            q.pop()"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Append the current right pointer index r to the deque.",
+                    "placeholderCode": "        q.append(r)",
+                    "validationRegex": "^\\s+q\\.append\\(r\\)$",
+                    "hint": "Now that smaller elements are gone, `r` is potentially the maximum for future windows.",
+                    "solutionCode": "        q.append(r)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check if the maximum element's index (at q[0]) is now out of the current window.",
+                    "placeholderCode": "        if l > q[0]:",
+                    "validationRegex": "^\\s+if\\s+l\\s*>\\s+q\\[0\\]:$",
+                    "hint": "The left boundary `l` has moved, so we check if the largest element still belongs in the window.",
+                    "solutionCode": "        if l > q[0]:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Remove the leftmost index from the deque if it's out of range.",
+                    "placeholderCode": "            q.popleft()",
+                    "validationRegex": "^\\s+q\\.popleft\\(\\)$",
+                    "hint": "The index `q[0]` is no longer within `[l, r]`, so it can't be the maximum anymore.",
+                    "solutionCode": "            q.popleft()"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if the sliding window has reached the target size k.",
+                    "placeholderCode": "        if (r + 1) >= k:",
+                    "validationRegex": "^\\s+if\\s*\\(r\\s*\\+\\s*1\\)\\s*>=\\s*k:$",
+                    "hint": "We only start recording maximums once the window has at least `k` elements.",
+                    "solutionCode": "        if (r + 1) >= k:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Append the maximum value (at nums[q[0]]) to the output list.",
+                    "placeholderCode": "            output.append(nums[q[0]])",
+                    "validationRegex": "^\\s+output\\.append\\(nums\\[q\\[0\\]\\]\\)$",
+                    "hint": "Because the deque is monotonic decreasing, `q[0]` always points to the maximum element index.",
+                    "solutionCode": "            output.append(nums[q[0]])"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Increment the left pointer l to shift the window.",
+                    "placeholderCode": "            l += 1",
+                    "validationRegex": "^\\s+l\\s*\\+=\\s*1$",
+                    "hint": "Move the left boundary forward once the window is full.",
+                    "solutionCode": "            l += 1"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Increment the right pointer r to move to the next element.",
+                    "placeholderCode": "        r += 1",
+                    "validationRegex": "^\\s+r\\s*\\+=\\s*1$",
+                    "hint": "Always expand the right boundary in each iteration.",
+                    "solutionCode": "        r += 1"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Return the final output list containing maximums for each window.",
                     "placeholderCode": "    return output",
                     "validationRegex": "^\\s+return\\s+output$",
-                    "hint": "Return the result.",
+                    "hint": "The loop is finished, return the result.",
                     "solutionCode": "    return output"
                 }
             ]
