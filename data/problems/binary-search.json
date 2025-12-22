@@ -117,14 +117,22 @@
                 },
                 {
                     "id": 7,
-                    "instruction": "If mid value < target, move left pointer.",
-                    "placeholderCode": "        elif nums[mid] < target:\n            l = mid + 1",
-                    "validationRegex": "^\\s+elif\\s+nums\\[mid\\]\\s*<\\s+target:\\s*l\\s*=\\s*mid\\s*\\+\\s*1$",
-                    "hint": "If `nums[mid] < target`, search right half.",
-                    "solutionCode": "        elif nums[mid] < target:\n            l = mid + 1"
+                    "instruction": "Check if the value at the middle index is less than the target.",
+                    "placeholderCode": "        elif nums[mid] < target:",
+                    "validationRegex": "^\\s+elif\\s+nums\\[mid\\]\\s*<\\s+target:$",
+                    "hint": "If `nums[mid] < target`, it means our target must be in the right half of the array.",
+                    "solutionCode": "        elif nums[mid] < target:"
                 },
                 {
                     "id": 8,
+                    "instruction": "Move the left pointer to the right of the middle index.",
+                    "placeholderCode": "            l = mid + 1",
+                    "validationRegex": "^\\s+l\\s*=\\s*mid\\s*\\+\\s*1$",
+                    "hint": "Update `l` to `mid + 1` to search in the right half.",
+                    "solutionCode": "            l = mid + 1"
+                },
+                {
+                    "id": 9,
                     "instruction": "If found, return mid.",
                     "placeholderCode": "        else:\n            return mid",
                     "validationRegex": "^\\s+else:\\s*return\\s+mid$",
@@ -132,7 +140,7 @@
                     "solutionCode": "        else:\n            return mid"
                 },
                 {
-                    "id": 9,
+                    "id": 10,
                     "instruction": "Return -1 if loop finishes.",
                     "placeholderCode": "    return -1",
                     "validationRegex": "^\\s+return\\s+-1$",
