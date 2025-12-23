@@ -83,14 +83,22 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Get dimensions and initialize row pointers.",
-                    "placeholderCode": "    ROWS, COLS = len(matrix), len(matrix[0])\n    top, bot = 0, ROWS - 1",
-                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(matrix\\),\\s*len\\(matrix\\[0\\]\\)\\s*top,\\s*bot\\s*=\\s*0,\\s*ROWS\\s*-\\s*1$",
-                    "hint": "Get dimensions. Init `top` and `bot` pointers.",
-                    "solutionCode": "    ROWS, COLS = len(matrix), len(matrix[0])\n    top, bot = 0, ROWS - 1"
+                    "instruction": "Get the number of rows and columns in the matrix.",
+                    "placeholderCode": "    ROWS, COLS = len(matrix), len(matrix[0])",
+                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(matrix\\),\\s*len\\(matrix\\[0\\]\\)$",
+                    "hint": "We need `ROWS` to define our row search boundaries and `COLS` for the final element search.",
+                    "solutionCode": "    ROWS, COLS = len(matrix), len(matrix[0])"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize the top and bottom pointers for binary searching the rows.",
+                    "placeholderCode": "    top, bot = 0, ROWS - 1",
+                    "validationRegex": "^\\s+top,\\s*bot\\s*=\\s*0,\\s*ROWS\\s*-\\s*1$",
+                    "hint": "The `top` pointer starts at the first row (0) and `bot` at the last row (`ROWS - 1`).",
+                    "solutionCode": "    top, bot = 0, ROWS - 1"
+                },
+                {
+                    "id": 4,
                     "instruction": "Binary search to find the correct row.",
                     "placeholderCode": "    while top <= bot:\n        row = (top + bot) // 2\n        if target > matrix[row][-1]:\n            top = row + 1\n        elif target < matrix[row][0]:\n            bot = row - 1\n        else:\n            break",
                     "validationRegex": "^\\s+while\\s+top\\s*<=\\s*bot:\\s*row\\s*=\\s*\\(top\\s*\\+\\s*bot\\)\\s*//\\s*2\\s*if\\s+target\\s*>\\s+matrix\\[row\\]\\[-1\\]:\\s*top\\s*=\\s*row\\s*\\+\\s*1\\s*elif\\s+target\\s*<\\s+matrix\\[row\\]\\[0\\]:\\s*bot\\s*=\\s*row\\s*-\\s*1\\s*else:\\s*break$",
@@ -98,7 +106,7 @@
                     "solutionCode": "    while top <= bot:\n        row = (top + bot) // 2\n        if target > matrix[row][-1]:\n            top = row + 1\n        elif target < matrix[row][0]:\n            bot = row - 1\n        else:\n            break"
                 },
                 {
-                    "id": 4,
+                    "id": 5,
                     "instruction": "If no row found, return False.",
                     "placeholderCode": "    if not (top <= bot):\n        return False",
                     "validationRegex": "^\\s+if\\s+not\\s*\\(top\\s*<=\\s*bot\\):\\s*return\\s+False$",
@@ -106,7 +114,7 @@
                     "solutionCode": "    if not (top <= bot):\n        return False"
                 },
                 {
-                    "id": 5,
+                    "id": 6,
                     "instruction": "Binary search within the found row.",
                     "placeholderCode": "    row = (top + bot) // 2\n    l, r = 0, COLS - 1\n    while l <= r:\n        m = (l + r) // 2\n        if target > matrix[row][m]:\n            l = m + 1\n        elif target < matrix[row][m]:\n            r = m - 1\n        else:\n            return True",
                     "validationRegex": "^\\s+row\\s*=\\s*\\(top\\s*\\+\\s*bot\\)\\s*//\\s*2\\s*l,\\s*r\\s*=\\s*0,\\s*COLS\\s*-\\s*1\\s*while\\s+l\\s*<=\\s*r:\\s*m\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*if\\s+target\\s*>\\s+matrix\\[row\\]\\[m\\]:\\s*l\\s*=\\s*m\\s*\\+\\s*1\\s*elif\\s+target\\s*<\\s+matrix\\[row\\]\\[m\\]:\\s*r\\s*=\\s*m\\s*-\\s*1\\s*else:\\s*return\\s+True$",
@@ -114,7 +122,7 @@
                     "solutionCode": "    row = (top + bot) // 2\n    l, r = 0, COLS - 1\n    while l <= r:\n        m = (l + r) // 2\n        if target > matrix[row][m]:\n            l = m + 1\n        elif target < matrix[row][m]:\n            r = m - 1\n        else:\n            return True"
                 },
                 {
-                    "id": 6,
+                    "id": 7,
                     "instruction": "Return False if not found in row.",
                     "placeholderCode": "    return False",
                     "validationRegex": "^\\s+return\\s+False$",
