@@ -163,18 +163,82 @@
                 },
                 {
                     "id": 12,
-                    "instruction": "Binary search for the target within the identified row.",
-                    "placeholderCode": "    row = (top + bot) // 2\n    l, r = 0, COLS - 1\n    while l <= r:\n        m = (l + r) // 2\n        if target > matrix[row][m]:\n            l = m + 1\n        elif target < matrix[row][m]:\n            r = m - 1\n        else:\n            return True",
-                    "validationRegex": "^\\s+row\\s*=\\s*\\(top\\s*\\+\\s*bot\\)\\s*//\\s*2\\s*l,\\s*r\\s*=\\s*0,\\s*COLS\\s*-\\s*1\\s*while\\s+l\\s*<=\\s*r:\\s*m\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*if\\s+target\\s*>\\s+matrix\\[row\\]\\[m\\]:\\s*l\\s*=\\s*m\\s*\\+\\s*1\\s*elif\\s+target\\s*<\\s+matrix\\[row\\]\\[m\\]:\\s*r\\s*=\\s*m\\s*-\\s*1\\s*else:\\s*return\\s+True$",
-                    "hint": "Now that we know which row to search, we use standard binary search on its elements.",
-                    "solutionCode": "    row = (top + bot) // 2\n    l, r = 0, COLS - 1\n    while l <= r:\n        m = (l + r) // 2\n        if target > matrix[row][m]:\n            l = m + 1\n        elif target < matrix[row][m]:\n            r = m - 1\n        else:\n            return True"
+                    "instruction": "Set the final row index to be searched.",
+                    "placeholderCode": "    row = (top + bot) // 2",
+                    "validationRegex": "^\\s+row\\s*=\\s*\\(top\\s*\\+\\s*bot\\)\\s*//\\s*2$",
+                    "hint": "We use the resulting pointers from the row search to pin down exactly which row we'll scan.",
+                    "solutionCode": "    row = (top + bot) // 2"
                 },
                 {
                     "id": 13,
-                    "instruction": "Return False if the target was not found in the identified row.",
+                    "instruction": "Initialize the left and right pointers for searching within the row.",
+                    "placeholderCode": "    l, r = 0, COLS - 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*0,\\s*COLS\\s*-\\s*1$",
+                    "hint": "Start `l` at 0 and `r` at the last column index.",
+                    "solutionCode": "    l, r = 0, COLS - 1"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Start a while loop to binary search through the row's elements.",
+                    "placeholderCode": "    while l <= r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<=\\s*r:$",
+                    "hint": "Standard binary search loop across columns.",
+                    "solutionCode": "    while l <= r:"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Calculate the middle column index.",
+                    "placeholderCode": "        m = (l + r) // 2",
+                    "validationRegex": "^\\s+m\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2$",
+                    "hint": "Find the center of the current column range.",
+                    "solutionCode": "        m = (l + r) // 2"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Check if the target is greater than the middle element.",
+                    "placeholderCode": "        if target > matrix[row][m]:",
+                    "validationRegex": "^\\s+if\\s+target\\s*>\\s+matrix\\[row\\]\\[m\\]:$",
+                    "hint": "If target is larger, search the right half of the row.",
+                    "solutionCode": "        if target > matrix[row][m]:"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Move the left pointer to the right of the middle index.",
+                    "placeholderCode": "            l = m + 1",
+                    "validationRegex": "^\\s+l\\s*=\\s*m\\s*\\+\\s*1$",
+                    "hint": "Discard the left half of the column search space.",
+                    "solutionCode": "            l = m + 1"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Check if the target is smaller than the middle element.",
+                    "placeholderCode": "        elif target < matrix[row][m]:",
+                    "validationRegex": "^\\s+elif\\s+target\\s*<\\s+matrix\\[row\\]\\[m\\]:$",
+                    "hint": "If target is smaller, search the left half of the row.",
+                    "solutionCode": "        elif target < matrix[row][m]:"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Move the right pointer to the left of the middle index.",
+                    "placeholderCode": "            r = m - 1",
+                    "validationRegex": "^\\s+r\\s*=\\s*m\\s*-\\s*1$",
+                    "hint": "Discard the right half of the column search space.",
+                    "solutionCode": "            r = m - 1"
+                },
+                {
+                    "id": 20,
+                    "instruction": "If the target matches the middle element, return True.",
+                    "placeholderCode": "        else:\n            return True",
+                    "validationRegex": "^\\s+else:\\s*return\\s+True$",
+                    "hint": "Found it! Return True immediately.",
+                    "solutionCode": "        else:\n            return True"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Return False if the target was not found in the matrix.",
                     "placeholderCode": "    return False",
                     "validationRegex": "^\\s+return\\s+False$",
-                    "hint": "If the binary search completes without returning True, the target is not in the matrix.",
+                    "hint": "Both searches are complete and the target wasn't found.",
                     "solutionCode": "    return False"
                 }
             ]
