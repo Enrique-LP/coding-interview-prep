@@ -66,66 +66,74 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function min_eating_speed that takes piles and h.",
-                    "placeholderCode": "def min_eating_speed(piles, h):",
-                    "validationRegex": "^def\\s+min_eating_speed\\(piles,\\s*h\\):$",
-                    "hint": "Use `def` to define the function.",
-                    "solutionCode": "def min_eating_speed(piles, h):"
+                    "instruction": "Import the math module to use the ceil function later.",
+                    "placeholderCode": "import math",
+                    "validationRegex": "^import\\s+math$",
+                    "hint": "We need the `math` module to calculate the hours (rounding up).",
+                    "solutionCode": "import math"
                 },
                 {
                     "id": 2,
-                    "instruction": "Import the math module and initialize the binary search range.",
-                    "placeholderCode": "    import math\n    l, r = 1, max(piles)",
-                    "validationRegex": "^\\s+import\\s+math\\s+l,\\s*r\\s*=\\s*1,\\s*max\\(piles\\)$",
-                    "hint": "We import `math` for the `ceil` function. The slowest possible speed is 1, and the fastest Koko would ever need is the size of the largest pile (`max(piles)`).",
-                    "solutionCode": "    import math\n    l, r = 1, max(piles)"
+                    "instruction": "Define the function min_eating_speed that takes piles and h.",
+                    "placeholderCode": "def min_eating_speed(piles, h):",
+                    "validationRegex": "^def\\s+min_eating_speed\\(piles,\\s*h\\):$",
+                    "hint": "Create the main function.",
+                    "solutionCode": "def min_eating_speed(piles, h):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Initialize the variable to store our best found speed.",
-                    "placeholderCode": "    res = r",
-                    "validationRegex": "^\\s+res\\s*=\\s*r$",
-                    "hint": "We start by assuming the maximum possible speed is our initial 'best' result.",
-                    "solutionCode": "    res = r"
+                    "instruction": "Initialize the binary search range [1, max(piles)].",
+                    "placeholderCode": "    l, r = 1, max(piles)",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*1,\\s*max\\(piles\\)$",
+                    "hint": "The slowest speed is 1 and the fastest needed is the largest pile.",
+                    "solutionCode": "    l, r = 1, max(piles)"
                 },
                 {
                     "id": 4,
-                    "instruction": "Loop while l <= r.",
-                    "placeholderCode": "    while l <= r:",
-                    "validationRegex": "^\\s+while\\s+l\\s*<=\\s*r:$",
-                    "hint": "Start the binary search loop to narrow down the minimum speed.",
-                    "solutionCode": "    while l <= r:"
+                    "instruction": "Initialize the variable to store the best found speed.",
+                    "placeholderCode": "    res = r",
+                    "validationRegex": "^\\s+res\\s*=\\s*r$",
+                    "hint": "Start with the maximum speed as the initial result.",
+                    "solutionCode": "    res = r"
                 },
                 {
                     "id": 5,
-                    "instruction": "Calculate mid speed k and total hours.",
-                    "placeholderCode": "        k = (l + r) // 2\n        hours = 0\n        for p in piles:\n            hours += math.ceil(p / k)",
-                    "validationRegex": "^\\s+k\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*hours\\s*=\\s*0\\s*for\\s+p\\s+in\\s+piles:\\s*hours\\s*\\+=\\s*math\\.ceil\\(p\\s*/\\s*k\\)$",
-                    "hint": "Calculate how many hours it takes Koko to finish all piles at speed `k`.",
-                    "solutionCode": "        k = (l + r) // 2\n        hours = 0\n        for p in piles:\n            hours += math.ceil(p / k)"
+                    "instruction": "Start the binary search loop (while l <= r).",
+                    "placeholderCode": "    while l <= r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<=\\s*r:$",
+                    "hint": "Standard binary search condition.",
+                    "solutionCode": "    while l <= r:"
                 },
                 {
                     "id": 6,
-                    "instruction": "If hours <= h, update result and try smaller speed.",
-                    "placeholderCode": "        if hours <= h:\n            res = min(res, k)\n            r = k - 1",
-                    "validationRegex": "^\\s+if\\s+hours\\s*<=\\s*h:\\s*res\\s*=\\s*min\\(res,\\s*k\\)\\s*r\\s*=\\s*k\\s*-\\s*1$",
-                    "hint": "If Koko finishes on time, this speed works! Save it and try to find an even smaller speed by searching in the left half.",
-                    "solutionCode": "        if hours <= h:\n            res = min(res, k)\n            r = k - 1"
+                    "instruction": "Calculate midpoint k and calculate total hours for that speed.",
+                    "placeholderCode": "        k = (l + r) // 2\n        hours = 0\n        for p in piles:\n            hours += math.ceil(p / k)",
+                    "validationRegex": "^\\s+k\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*hours\\s*=\\s*0\\s*for\\s+p\\s+in\\s+piles:\\s*hours\\s*\\+=\\s*math\\.ceil\\(p\\s*/\\s*k\\)$",
+                    "hint": "Calculate the total hours for the current speed `k`.",
+                    "solutionCode": "        k = (l + r) // 2\n        hours = 0\n        for p in piles:\n            hours += math.ceil(p / k)"
                 },
                 {
                     "id": 7,
-                    "instruction": "If hours > h, try larger speed.",
-                    "placeholderCode": "        else:\n            l = k + 1",
-                    "validationRegex": "^\\s+else:\\s*l\\s*=\\s*k\\s*\\+\\s*1$",
-                    "hint": "If it takes too many hours, Koko is eating too slowly. Move the left pointer to search for a faster speed.",
-                    "solutionCode": "        else:\n            l = k + 1"
+                    "instruction": "If Koko can finish on time, update res and try a smaller speed.",
+                    "placeholderCode": "        if hours <= h:\n            res = min(res, k)\n            r = k - 1",
+                    "validationRegex": "^\\s+if\\s+hours\\s*<=\\s*h:\\s*res\\s*=\\s*min\\(res,\\s*k\\)\\s*r\\s*=\\s*k\\s*-\\s*1$",
+                    "hint": "Search the left half for a smaller valid speed.",
+                    "solutionCode": "        if hours <= h:\n            res = min(res, k)\n            r = k - 1"
                 },
                 {
                     "id": 8,
-                    "instruction": "Return the minimum speed found.",
+                    "instruction": "If Koko is too slow, increase the speed.",
+                    "placeholderCode": "        else:\n            l = k + 1",
+                    "validationRegex": "^\\s+else:\\s*l\\s*=\\s*k\\s*\\+\\s*1$",
+                    "hint": "Search the right half for a faster speed.",
+                    "solutionCode": "        else:\n            l = k + 1"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return the final minimum speed found.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "Once the binary search finishes, `res` will hold the minimum speed that satisfies the condition.",
+                    "hint": "Finished! Return the result.",
                     "solutionCode": "    return res"
                 }
             ]
