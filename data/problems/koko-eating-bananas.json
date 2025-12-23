@@ -130,14 +130,22 @@
                 },
                 {
                     "id": 10,
-                    "instruction": "Update the result and try to find a smaller speed.",
-                    "placeholderCode": "            res = min(res, k)\n            r = k - 1",
-                    "validationRegex": "^\\s+res\\s*=\\s*min\\(res,\\s*k\\)\\s*r\\s*=\\s*k\\s*-\\s*1$",
-                    "hint": "Save this speed and search for even lower speeds to the left.",
-                    "solutionCode": "            res = min(res, k)\n            r = k - 1"
+                    "instruction": "Update the result with the current valid speed k.",
+                    "placeholderCode": "            res = min(res, k)",
+                    "validationRegex": "^\\s+res\\s*=\\s*min\\(res,\\s*k\\)$",
+                    "hint": "Since this speed works, we update our best result candidate.",
+                    "solutionCode": "            res = min(res, k)"
                 },
                 {
                     "id": 11,
+                    "instruction": "Try searching for a smaller valid speed by moving the right pointer.",
+                    "placeholderCode": "            r = k - 1",
+                    "validationRegex": "^\\s+r\\s*=\\s*k\\s*-\\s*1$",
+                    "hint": "Since we want the *minimum* speed, we now look at even smaller speeds in the left half.",
+                    "solutionCode": "            r = k - 1"
+                },
+                {
+                    "id": 12,
                     "instruction": "Otherwise, increase the speed by moving the left pointer.",
                     "placeholderCode": "        else:\n            l = k + 1",
                     "validationRegex": "^\\s+else:\\s*l\\s*=\\s*k\\s*\\+\\s*1$",
@@ -145,7 +153,7 @@
                     "solutionCode": "        else:\n            l = k + 1"
                 },
                 {
-                    "id": 12,
+                    "id": 13,
                     "instruction": "Finally, return the minimum calculated speed.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
