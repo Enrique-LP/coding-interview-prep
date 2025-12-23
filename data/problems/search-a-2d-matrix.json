@@ -99,34 +99,82 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Binary search to find the correct row.",
-                    "placeholderCode": "    while top <= bot:\n        row = (top + bot) // 2\n        if target > matrix[row][-1]:\n            top = row + 1\n        elif target < matrix[row][0]:\n            bot = row - 1\n        else:\n            break",
-                    "validationRegex": "^\\s+while\\s+top\\s*<=\\s*bot:\\s*row\\s*=\\s*\\(top\\s*\\+\\s*bot\\)\\s*//\\s*2\\s*if\\s+target\\s*>\\s+matrix\\[row\\]\\[-1\\]:\\s*top\\s*=\\s*row\\s*\\+\\s*1\\s*elif\\s+target\\s*<\\s+matrix\\[row\\]\\[0\\]:\\s*bot\\s*=\\s*row\\s*-\\s*1\\s*else:\\s*break$",
-                    "hint": "Binary search rows. Check first and last element of row.\\n\\nExample:\\nMatrix=[[1,3],[10,20]]. Target=3.\\nRow 0: [1, 3]. 3 is in range [1, 3]. Search this row.\\nRow 1: [10, 20]. 3 < 10. Too big.",
-                    "solutionCode": "    while top <= bot:\n        row = (top + bot) // 2\n        if target > matrix[row][-1]:\n            top = row + 1\n        elif target < matrix[row][0]:\n            bot = row - 1\n        else:\n            break"
+                    "instruction": "Start a while loop to binary search through the rows.",
+                    "placeholderCode": "    while top <= bot:",
+                    "validationRegex": "^\\s+while\\s+top\\s*<=\\s*bot:$",
+                    "hint": "The search continues as long as we have a valid range of rows to check.",
+                    "solutionCode": "    while top <= bot:"
                 },
                 {
                     "id": 5,
-                    "instruction": "If no row found, return False.",
-                    "placeholderCode": "    if not (top <= bot):\n        return False",
-                    "validationRegex": "^\\s+if\\s+not\\s*\\(top\\s*<=\\s*bot\\):\\s*return\\s+False$",
-                    "hint": "If loop finished without break, target is not in any row range.",
-                    "solutionCode": "    if not (top <= bot):\n        return False"
+                    "instruction": "Calculate the middle row index.",
+                    "placeholderCode": "        row = (top + bot) // 2",
+                    "validationRegex": "^\\s+row\\s*=\\s*\\(top\\s*\\+\\s*bot\\)\\s*//\\s*2$",
+                    "hint": "Average the `top` and `bot` pointers to find the pivot row.",
+                    "solutionCode": "        row = (top + bot) // 2"
                 },
                 {
                     "id": 6,
-                    "instruction": "Binary search within the found row.",
-                    "placeholderCode": "    row = (top + bot) // 2\n    l, r = 0, COLS - 1\n    while l <= r:\n        m = (l + r) // 2\n        if target > matrix[row][m]:\n            l = m + 1\n        elif target < matrix[row][m]:\n            r = m - 1\n        else:\n            return True",
-                    "validationRegex": "^\\s+row\\s*=\\s*\\(top\\s*\\+\\s*bot\\)\\s*//\\s*2\\s*l,\\s*r\\s*=\\s*0,\\s*COLS\\s*-\\s*1\\s*while\\s+l\\s*<=\\s*r:\\s*m\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*if\\s+target\\s*>\\s+matrix\\[row\\]\\[m\\]:\\s*l\\s*=\\s*m\\s*\\+\\s*1\\s*elif\\s+target\\s*<\\s+matrix\\[row\\]\\[m\\]:\\s*r\\s*=\\s*m\\s*-\\s*1\\s*else:\\s*return\\s+True$",
-                    "hint": "Perform standard binary search on the identified row.",
-                    "solutionCode": "    row = (top + bot) // 2\n    l, r = 0, COLS - 1\n    while l <= r:\n        m = (l + r) // 2\n        if target > matrix[row][m]:\n            l = m + 1\n        elif target < matrix[row][m]:\n            r = m - 1\n        else:\n            return True"
+                    "instruction": "Check if the target is greater than the last element of the current row.",
+                    "placeholderCode": "        if target > matrix[row][-1]:",
+                    "validationRegex": "^\\s+if\\s+target\\s*>\\s+matrix\\[row\\]\\[-1\\]:$",
+                    "hint": "If the target is larger than the row's maximum, it must be in a row further down.",
+                    "solutionCode": "        if target > matrix[row][-1]:"
                 },
                 {
                     "id": 7,
-                    "instruction": "Return False if not found in row.",
+                    "instruction": "Move the top pointer to search in higher-indexed rows.",
+                    "placeholderCode": "            top = row + 1",
+                    "validationRegex": "^\\s+top\\s*=\\s*row\\s*\\+\\s*1$",
+                    "hint": "Discard the current row and everything above it.",
+                    "solutionCode": "            top = row + 1"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Check if the target is smaller than the first element of the current row.",
+                    "placeholderCode": "        elif target < matrix[row][0]:",
+                    "validationRegex": "^\\s+elif\\s+target\\s*<\\s+matrix\\[row\\]\\[0\\]:$",
+                    "hint": "If the target is smaller than the row's minimum, it must be in a row further up.",
+                    "solutionCode": "        elif target < matrix[row][0]:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Move the bottom pointer to search in lower-indexed rows.",
+                    "placeholderCode": "            bot = row - 1",
+                    "validationRegex": "^\\s+bot\\s*=\\s*row\\s*-\\s*1$",
+                    "hint": "Discard the current row and everything below it.",
+                    "solutionCode": "            bot = row - 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Break the loop if the target is within the range of the current row.",
+                    "placeholderCode": "        else:\n            break",
+                    "validationRegex": "^\\s+else:\\s*break$",
+                    "hint": "We've found the potential row! Exit the loop to proceed with the column search.",
+                    "solutionCode": "        else:\n            break"
+                },
+                {
+                    "id": 11,
+                    "instruction": "If no valid row was found, return False.",
+                    "placeholderCode": "    if not (top <= bot):\n        return False",
+                    "validationRegex": "^\\s+if\\s+not\\s*\\(top\\s*<=\\s*bot\\):\\s*return\\s+False$",
+                    "hint": "If the pointers crossed, the target doesn't fit in any row's range.",
+                    "solutionCode": "    if not (top <= bot):\n        return False"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Binary search for the target within the identified row.",
+                    "placeholderCode": "    row = (top + bot) // 2\n    l, r = 0, COLS - 1\n    while l <= r:\n        m = (l + r) // 2\n        if target > matrix[row][m]:\n            l = m + 1\n        elif target < matrix[row][m]:\n            r = m - 1\n        else:\n            return True",
+                    "validationRegex": "^\\s+row\\s*=\\s*\\(top\\s*\\+\\s*bot\\)\\s*//\\s*2\\s*l,\\s*r\\s*=\\s*0,\\s*COLS\\s*-\\s*1\\s*while\\s+l\\s*<=\\s*r:\\s*m\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*if\\s+target\\s*>\\s+matrix\\[row\\]\\[m\\]:\\s*l\\s*=\\s*m\\s*\\+\\s*1\\s*elif\\s+target\\s*<\\s+matrix\\[row\\]\\[m\\]:\\s*r\\s*=\\s*m\\s*-\\s*1\\s*else:\\s*return\\s+True$",
+                    "hint": "Now that we know which row to search, we use standard binary search on its elements.",
+                    "solutionCode": "    row = (top + bot) // 2\n    l, r = 0, COLS - 1\n    while l <= r:\n        m = (l + r) // 2\n        if target > matrix[row][m]:\n            l = m + 1\n        elif target < matrix[row][m]:\n            r = m - 1\n        else:\n            return True"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Return False if the target was not found in the identified row.",
                     "placeholderCode": "    return False",
                     "validationRegex": "^\\s+return\\s+False$",
-                    "hint": "Return False if not found.",
+                    "hint": "If the binary search completes without returning True, the target is not in the matrix.",
                     "solutionCode": "    return False"
                 }
             ]
