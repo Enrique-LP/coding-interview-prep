@@ -91,50 +91,74 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Calculate mid and check if it matches target.",
-                    "placeholderCode": "        mid = (l + r) // 2\n        if nums[mid] == target:\n            return mid",
-                    "validationRegex": "^\\s+mid\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*if\\s+nums\\[mid\\]\\s*==\\s*target:\\s*return\\s+mid$",
-                    "hint": "Calc mid. Return if matches target.",
-                    "solutionCode": "        mid = (l + r) // 2\n        if nums[mid] == target:\n            return mid"
+                    "instruction": "Calculate the middle index.",
+                    "placeholderCode": "        mid = (l + r) // 2",
+                    "validationRegex": "^\\s+mid\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2$",
+                    "hint": "Find the average of `l` and `r`.",
+                    "solutionCode": "        mid = (l + r) // 2"
                 },
                 {
                     "id": 5,
-                    "instruction": "Check if left half is sorted.",
-                    "placeholderCode": "        if nums[l] <= nums[mid]:",
-                    "validationRegex": "^\\s+if\\s+nums\\[l\\]\\s*<=\\s+nums\\[mid\\]:$",
-                    "hint": "Check if left half `nums[l] <= nums[mid]` is sorted.",
-                    "solutionCode": "        if nums[l] <= nums[mid]:"
+                    "instruction": "If the middle element is the target, return its index.",
+                    "placeholderCode": "        if nums[mid] == target:\n            return mid",
+                    "validationRegex": "^\\s+if\\s+nums\\[mid\\]\\s*==\\s*target:\\s*return\\s+mid$",
+                    "hint": "Check if we found the target right away.",
+                    "solutionCode": "        if nums[mid] == target:\n            return mid"
                 },
                 {
                     "id": 6,
-                    "instruction": "If the target is outside the sorted left half range, look in the right half.",
-                    "placeholderCode": "            if target > nums[mid] or target < nums[l]:\n                l = mid + 1",
-                    "validationRegex": "^\\s+if\\s+target\\s*>\\s+nums\\[mid\\]\\s+or\\s+target\\s*<\\s+nums\\[l\\]:\\s*l\\s*=\\s*mid\\s*\\+\\s*1$",
-                    "hint": "If the `target` is greater than our middle value OR smaller than our leftmost value, it can't be in this sorted left section.",
-                    "solutionCode": "            if target > nums[mid] or target < nums[l]:\n                l = mid + 1"
+                    "instruction": "Check if the left half is sorted.",
+                    "placeholderCode": "        if nums[l] <= nums[mid]:",
+                    "validationRegex": "^\\s+if\\s+nums\\[l\\]\\s*<=\\s+nums\\[mid\\]:$",
+                    "hint": "If `nums[l] <= nums[mid]`, the pivot must be in the right half.",
+                    "solutionCode": "        if nums[l] <= nums[mid]:"
                 },
                 {
                     "id": 7,
-                    "instruction": "Otherwise, the target must be in the left half, so move the right pointer.",
-                    "placeholderCode": "            else:\n                r = mid - 1",
-                    "validationRegex": "^\\s+else:\\s*r\\s*=\\s*mid\\s*-\\s*1$",
-                    "hint": "If the target is within the `nums[l]` and `nums[mid]` range, discard the right side.",
-                    "solutionCode": "            else:\n                r = mid - 1"
+                    "instruction": "If the target is outside the sorted left half range, look in the right half.",
+                    "placeholderCode": "            if target > nums[mid] or target < nums[l]:\n                l = mid + 1",
+                    "validationRegex": "^\\s+if\\s+target\\s*>\\s+nums\\[mid\\]\\s+or\\s+target\\s*<\\s+nums\\[l\\]:\\s*l\\s*=\\s*mid\\s*\\+\\s*1$",
+                    "hint": "If it's not in the left range, search the right half.",
+                    "solutionCode": "            if target > nums[mid] or target < nums[l]:\n                l = mid + 1"
                 },
                 {
                     "id": 8,
-                    "instruction": "Else (right half is sorted), check if target is in right half range.",
-                    "placeholderCode": "        else:\n            if target < nums[mid] or target > nums[r]:\n                r = mid - 1\n            else:\n                l = mid + 1",
-                    "validationRegex": "^\\s+else:\\s*if\\s+target\\s*<\\s+nums\\[mid\\]\\s+or\\s+target\\s*>\\s+nums\\[r\\]:\\s*r\\s*=\\s*mid\\s*-\\s*1\\s*else:\\s*l\\s*=\\s*mid\\s*\\+\\s*1$",
-                    "hint": "Perform the same logic for the cases where the pivot is in the left half.",
-                    "solutionCode": "        else:\n            if target < nums[mid] or target > nums[r]:\n                r = mid - 1\n            else:\n                l = mid + 1"
+                    "instruction": "Otherwise, the target must be in the left half, so move the right pointer.",
+                    "placeholderCode": "            else:\n                r = mid - 1",
+                    "validationRegex": "^\\s+else:\\s*r\\s*=\\s*mid\\s*-\\s*1$",
+                    "hint": "If it is in the left range, search the left half.",
+                    "solutionCode": "            else:\n                r = mid - 1"
                 },
                 {
                     "id": 9,
+                    "instruction": "If the left half was not sorted, the right half must be sorted.",
+                    "placeholderCode": "        else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "If the left side is broken, the right side must be continuous.",
+                    "solutionCode": "        else:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Check if target is outside the sorted right half range.",
+                    "placeholderCode": "            if target < nums[mid] or target > nums[r]:\n                r = mid - 1",
+                    "validationRegex": "^\\s+if\\s+target\\s*<\\s+nums\\[mid\\]\\s+or\\s+target\\s*>\\s+nums\\[r\\]:\\s*r\\s*=\\s*mid\\s*-\\s*1$",
+                    "hint": "Check if the target lies within the sorted right section.",
+                    "solutionCode": "            if target < nums[mid] or target > nums[r]:\n                r = mid - 1"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Otherwise, the target must be in the right half, so move the left pointer.",
+                    "placeholderCode": "            else:\n                l = mid + 1",
+                    "validationRegex": "^\\s+else:\\s*l\\s*=\\s*mid\\s*\\+\\s*1$",
+                    "hint": "Target is in the right half, move the left pointer.",
+                    "solutionCode": "            else:\n                l = mid + 1"
+                },
+                {
+                    "id": 12,
                     "instruction": "Return -1 if the target was never found.",
                     "placeholderCode": "    return -1",
                     "validationRegex": "^\\s+return\\s+-1$",
-                    "hint": "If the loop finishes without returning an index, the target is not in the array.",
+                    "hint": "Final return if target not found in loop.",
                     "solutionCode": "    return -1"
                 }
             ]
