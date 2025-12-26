@@ -56,27 +56,115 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the class TimeMap.",
-                    "placeholderCode": "class TimeMap:\n    def __init__(self):\n        self.store = collections.defaultdict(list)",
-                    "validationRegex": "^class\\s+TimeMap:\\s*def\\s+__init__\\(self\\):\\s*self\\.store\\s*=\\s*collections\\.defaultdict\\(list\\)$",
-                    "hint": "Initialize `self.store` as a defaultdict of lists.",
-                    "solutionCode": "class TimeMap:\n    def __init__(self):\n        self.store = collections.defaultdict(list)"
+                    "instruction": "Define the TimeMap class.",
+                    "placeholderCode": "class TimeMap:",
+                    "validationRegex": "^class\\s+TimeMap:$",
+                    "hint": "Start by defining the class using the `class` keyword.",
+                    "solutionCode": "class TimeMap:"
                 },
                 {
                     "id": 2,
-                    "instruction": "Implement set.",
-                    "placeholderCode": "    def set(self, key, value, timestamp):\n        self.store[key].append([value, timestamp])",
-                    "validationRegex": "^\\s+def\\s+set\\(self,\\s*key,\\s*value,\\s*timestamp\\):\\s*self\\.store\\[key\\]\\.append\\(\\[value,\\s*timestamp\\]\\)$",
-                    "hint": "Append `[value, timestamp]` to the list for `key`.",
-                    "solutionCode": "    def set(self, key, value, timestamp):\n        self.store[key].append([value, timestamp])"
+                    "instruction": "Initialize the class constructor.",
+                    "placeholderCode": "    def __init__(self):",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):$",
+                    "hint": "The `__init__` method is the constructor for the class.",
+                    "solutionCode": "    def __init__(self):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Implement get.",
-                    "placeholderCode": "    def get(self, key, timestamp):\n        res = \"\"\n        values = self.store.get(key, [])\n        l, r = 0, len(values) - 1\n        while l <= r:\n            m = (l + r) // 2\n            if values[m][1] <= timestamp:\n                res = values[m][0]\n                l = m + 1\n            else:\n                r = m - 1\n        return res",
-                    "validationRegex": "^\\s+def\\s+get\\(self,\\s*key,\\s*timestamp\\):\\s*res\\s*=\\s*\"\"\\s*values\\s*=\\s*self\\.store\\.get\\(key,\\s*\\[\\]\\)\\s*l,\\s*r\\s*=\\s*0,\\s*len\\(values\\)\\s*-\\s*1\\s*while\\s+l\\s*<=\\s*r:\\s*m\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*if\\s+values\\[m\\]\\[1\\]\\s*<=\\s*timestamp:\\s*res\\s*=\\s*values\\[m\\]\\[0\\]\\s*l\\s*=\\s*m\\s*\\+\\s*1\\s*else:\\s*r\\s*=\\s*m\\s*-\\s*1\\s*return\\s+res$",
-                    "hint": "Use binary search to find the largest timestamp <= input timestamp.\\n\\nExample:\\nValues=[(bar, 1), (bar2, 4)]. Get time=3.\\nMid=(bar, 1). 1 <= 3. Res=bar. Try right.\\nMid=(bar2, 4). 4 > 3. Try left. Final Res=bar.",
-                    "solutionCode": "    def get(self, key, timestamp):\n        res = \"\"\n        values = self.store.get(key, [])\n        l, r = 0, len(values) - 1\n        while l <= r:\n            m = (l + r) // 2\n            if values[m][1] <= timestamp:\n                res = values[m][0]\n                l = m + 1\n            else:\n                r = m - 1\n        return res"
+                    "instruction": "Initialize the data store in the constructor.",
+                    "placeholderCode": "        self.store = {}",
+                    "validationRegex": "^\\s+self\\.store\\s*=\\s*\\{\\}$",
+                    "hint": "We can use a normal dictionary to store our keys and their list of values.",
+                    "solutionCode": "        self.store = {}"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define the set function to store key-value pairs with timestamps.",
+                    "placeholderCode": "    def set(self, key, value, timestamp):",
+                    "validationRegex": "^\\s+def\\s+set\\(self,\\s*key,\\s*value,\\s*timestamp\\):$",
+                    "hint": "The `set` function takes the key, the value, and the timestamp as inputs.",
+                    "solutionCode": "    def set(self, key, value, timestamp):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if the key exists in the store, if not, initialize a list for it.",
+                    "placeholderCode": "        if key not in self.store:\n            self.store[key] = []",
+                    "validationRegex": "^\\s+if\\s+key\\s+not\\s+in\\s+self\\.store:\\s*self\\.store\\[key\\]\\s*=\\s*\\[\\]$",
+                    "hint": "Before appending, we must ensure the key has a list associated with it.",
+                    "solutionCode": "        if key not in self.store:\n            self.store[key] = []"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Append the [timestamp, value] pair to the key's list.",
+                    "placeholderCode": "        self.store[key].append([timestamp, value])",
+                    "validationRegex": "^\\s+self\\.store\\[key\\]\\.append\\(\\[timestamp,\\s*value\\]\\)$",
+                    "hint": "We store a list of pairs so we can binary search on the timestamps later.",
+                    "solutionCode": "        self.store[key].append([timestamp, value])"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Define the get function to retrieve values based on timestamp.",
+                    "placeholderCode": "    def get(self, key, timestamp):",
+                    "validationRegex": "^\\s+def\\s+get\\(self,\\s*key,\\s*timestamp\\):$",
+                    "hint": "The `get` function retrieves the value for a key at or before a specific timestamp.",
+                    "solutionCode": "    def get(self, key, timestamp):"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Initialize the result to an empty string and get the list of values for the key.",
+                    "placeholderCode": "        res, values = \"\", self.store.get(key, [])",
+                    "validationRegex": "^\\s+res,\\s*values\\s*=\\s*\"\",\\s*self\\.store\\.get\\(key,\\s*\\[\\]\\)$",
+                    "hint": "We start with an empty result. If the key doesn't exist, we'll return this empty string.",
+                    "solutionCode": "        res, values = \"\", self.store.get(key, [])"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Initialize the binary search range.",
+                    "placeholderCode": "        l, r = 0, len(values) - 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*0,\\s*len\\(values\\)\\s*-\\s*1$",
+                    "hint": "The range covers all historical entries for this specific key.",
+                    "solutionCode": "        l, r = 0, len(values) - 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Start the binary search loop (while l <= r).",
+                    "placeholderCode": "        while l <= r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<=\\s*r:$",
+                    "hint": "Standard binary search loop structure.",
+                    "solutionCode": "        while l <= r:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Calculate the middle index.",
+                    "placeholderCode": "            m = (l + r) // 2",
+                    "validationRegex": "^\\s+m\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2$",
+                    "hint": "Find the average of the left and right pointers.",
+                    "solutionCode": "            m = (l + r) // 2"
+                },
+                {
+                    "id": 12,
+                    "instruction": "If the current timestamp is less than or equal to our target, update the result and search the right half.",
+                    "placeholderCode": "            if values[m][0] <= timestamp:\n                res = values[m][1]\n                l = m + 1",
+                    "validationRegex": "^\\s+if\\s+values\\[m\\]\\[0\\]\\s*<=\\s*timestamp:\\s*res\\s*=\\s*values\\[m\\]\\[1\\]\\s*l\\s*=\\s*m\\s*\\+\\s*1$",
+                    "hint": "We found a valid timestamp! Save its value and look for an even closer one in the future (to the right).",
+                    "solutionCode": "            if values[m][0] <= timestamp:\n                res = values[m][1]\n                l = m + 1"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Otherwise, search the left half.",
+                    "placeholderCode": "            else:\n                r = m - 1",
+                    "validationRegex": "^\\s+else:\\s*r\\s*=\\s*m\\s*-\\s*1$",
+                    "hint": "The current timestamp is too new. We need to look at older entries in the past (to the left).",
+                    "solutionCode": "            else:\n                r = m - 1"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Return the final result found.",
+                    "placeholderCode": "        return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "After the loop finishes, `res` will hold the most recent value at or before the given timestamp.",
+                    "solutionCode": "        return res"
                 }
             ]
         }
