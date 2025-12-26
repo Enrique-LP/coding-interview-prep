@@ -28,10 +28,10 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function search that takes nums and target.",
+                    "instruction": "Define the function 'search' that takes 'nums' and 'target' as arguments.",
                     "placeholderCode": "def search(nums, target):",
                     "validationRegex": "^def\\s+search\\(nums,\\s*target\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Use `def` to define the function named `search`.",
                     "solutionCode": "def search(nums, target):"
                 },
                 {
@@ -67,10 +67,10 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function search that takes nums and target.",
+                    "instruction": "Define the function 'search' that takes 'nums' and 'target' as arguments.",
                     "placeholderCode": "def search(nums, target):",
                     "validationRegex": "^def\\s+search\\(nums,\\s*target\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Use `def` to define the function named `search`.",
                     "solutionCode": "def search(nums, target):"
                 },
                 {
