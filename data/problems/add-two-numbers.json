@@ -71,34 +71,122 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function add_two_numbers that takes l1 and l2.",
+                    "instruction": "Define the function 'add_two_numbers' that takes 'l1' and 'l2' as arguments.",
                     "placeholderCode": "def add_two_numbers(l1, l2):",
                     "validationRegex": "^def\\s+add_two_numbers\\(l1,\\s*l2\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Start by defining the function that will process the two linked lists.",
                     "solutionCode": "def add_two_numbers(l1, l2):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize dummy head and carry.",
-                    "placeholderCode": "    dummy = ListNode()\n    cur = dummy\n    carry = 0",
-                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(\\)\\s*cur\\s*=\\s*dummy\\s*carry\\s*=\\s*0$",
-                    "hint": "Init `dummy`, `cur`, and `carry`.",
-                    "solutionCode": "    dummy = ListNode()\n    cur = dummy\n    carry = 0"
+                    "instruction": "Initialize a dummy head node to start the result list.",
+                    "placeholderCode": "    dummy = ListNode()",
+                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(\\)$",
+                    "hint": "A dummy node simplifies the logic for adding the first digit of the sum.",
+                    "solutionCode": "    dummy = ListNode()"
                 },
                 {
                     "id": 3,
-                    "instruction": "Loop through lists.",
-                    "placeholderCode": "    while l1 or l2 or carry:\n        v1 = l1.val if l1 else 0\n        v2 = l2.val if l2 else 0\n        val = v1 + v2 + carry\n        carry = val // 10\n        val = val % 10\n        cur.next = ListNode(val)\n        cur = cur.next\n        l1 = l1.next if l1 else None\n        l2 = l2.next if l2 else None",
-                    "validationRegex": "^\\s+while\\s+l1\\s+or\\s+l2\\s+or\\s+carry:\\s*v1\\s*=\\s*l1\\.val\\s+if\\s+l1\\s+else\\s+0\\s*v2\\s*=\\s*l2\\.val\\s+if\\s+l2\\s+else\\s+0\\s*val\\s*=\\s*v1\\s*\\+\\s*v2\\s*\\+\\s*carry\\s*carry\\s*=\\s*val\\s*//\\s*10\\s*val\\s*=\\s*val\\s*%\\s*10\\s*cur\\.next\\s*=\\s*ListNode\\(val\\)\\s*cur\\s*=\\s*cur\\.next\\s*l1\\s*=\\s*l1\\.next\\s+if\\s+l1\\s+else\\s+None\\s*l2\\s*=\\s*l2\\.next\\s+if\\s+l2\\s+else\\s+None$",
-                    "hint": "Add values and carry. Update carry. Create new node.",
-                    "solutionCode": "    while l1 or l2 or carry:\n        v1 = l1.val if l1 else 0\n        v2 = l2.val if l2 else 0\n        val = v1 + v2 + carry\n        carry = val // 10\n        val = val % 10\n        cur.next = ListNode(val)\n        cur = cur.next\n        l1 = l1.next if l1 else None\n        l2 = l2.next if l2 else None"
+                    "instruction": "Initialize a 'cur' pointer to keep track of the current node in the result list.",
+                    "placeholderCode": "    cur = dummy",
+                    "validationRegex": "^\\s+cur\\s*=\\s*dummy$",
+                    "hint": "We use `cur` to append new sum nodes as we calculate them.",
+                    "solutionCode": "    cur = dummy"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Initialize the 'carry' variable to 0.",
+                    "placeholderCode": "    carry = 0",
+                    "validationRegex": "^\\s+carry\\s*=\\s*0$",
+                    "hint": "The carry will hold the 'tens' digit when the sum of two digits exceeds 9.",
+                    "solutionCode": "    carry = 0"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Start a loop that continues as long as there are digits to add or a remaining carry.",
+                    "placeholderCode": "    while l1 or l2 or carry:",
+                    "validationRegex": "^\\s+while\\s+l1\\s+or\\s+l2\\s+or\\s+carry:$",
+                    "hint": "We must continue until both lists are exhausted AND the carry is zero.",
+                    "solutionCode": "    while l1 or l2 or carry:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Extract the digit value from the first list, or 0 if exhausted.",
+                    "placeholderCode": "        v1 = l1.val if l1 else 0",
+                    "validationRegex": "^\\s+v1\\s*=\\s*l1\\.val\\s+if\\s+l1\\s+else\\s+0$",
+                    "hint": "If one list is shorter, we treat the missing digits as zero.",
+                    "solutionCode": "        v1 = l1.val if l1 else 0"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Extract the digit value from the second list, or 0 if exhausted.",
+                    "placeholderCode": "        v2 = l2.val if l2 else 0",
+                    "validationRegex": "^\\s+v2\\s*=\\s*l2\\.val\\s+if\\s+l2\\s+else\\s+0$",
+                    "hint": "Same as before, handle lists of different lengths by padding with zero.",
+                    "solutionCode": "        v2 = l2.val if l2 else 0"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Calculate the sum of the digits and the current carry.",
+                    "placeholderCode": "        val = v1 + v2 + carry",
+                    "validationRegex": "^\\s+val\\s*=\\s*v1\\s*\\+\\s*v2\\s*\\+\\s*carry$",
+                    "hint": "This is a standard column addition step.",
+                    "solutionCode": "        val = v1 + v2 + carry"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Calculate the new carry for the next position.",
+                    "placeholderCode": "        carry = val // 10",
+                    "validationRegex": "^\\s+carry\\s*=\\s*val\\s*//\\s*10$",
+                    "hint": "Integer division by 10 gives us the carry (e.g., 13 // 10 = 1).",
+                    "solutionCode": "        carry = val // 10"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Obtain the single digit for the current node.",
+                    "placeholderCode": "        val = val % 10",
+                    "validationRegex": "^\\s+val\\s*=\\s*val\\s*%\\s*10$",
+                    "hint": "The modulo 10 gives us the unit digit (e.g., 13 % 10 = 3).",
+                    "solutionCode": "        val = val % 10"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Create a new ListNode with the calculated digit and link it.",
+                    "placeholderCode": "        cur.next = ListNode(val)",
+                    "validationRegex": "^\\s+cur\\.next\\s*=\\s*ListNode\\(val\\)$",
+                    "hint": "Append the new digit to our resulting linked list.",
+                    "solutionCode": "        cur.next = ListNode(val)"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Move the 'cur' pointer forward to the newly created node.",
+                    "placeholderCode": "        cur = cur.next",
+                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.next$",
+                    "hint": "Advance our result pointer.",
+                    "solutionCode": "        cur = cur.next"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Move to the next node in the first list if it exists.",
+                    "placeholderCode": "        l1 = l1.next if l1 else None",
+                    "validationRegex": "^\\s+l1\\s*=\\s*l1\\.next\\s+if\\s+l1\\s+else\\s+None$",
+                    "hint": "Increment our pointer for the first number.",
+                    "solutionCode": "        l1 = l1.next if l1 else None"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Move to the next node in the second list if it exists.",
+                    "placeholderCode": "        l2 = l2.next if l2 else None",
+                    "validationRegex": "^\\s+l2\\s*=\\s*l2\\.next\\s+if\\s+l2\\s+else\\s+None$",
+                    "hint": "Increment our pointer for the second number.",
+                    "solutionCode": "        l2 = l2.next if l2 else None"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Return the head of the sum list (next of dummy).",
                     "placeholderCode": "    return dummy.next",
                     "validationRegex": "^\\s+return\\s+dummy\\.next$",
-                    "hint": "Return `dummy.next`.",
+                    "hint": "The `dummy` node itself is a placeholder; the real result starts at `dummy.next`.",
                     "solutionCode": "    return dummy.next"
                 }
             ]
