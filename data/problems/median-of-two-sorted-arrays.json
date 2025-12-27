@@ -109,11 +109,123 @@
                 },
                 {
                     "id": 7,
-                    "instruction": "Perform binary search to find the correct partition.",
-                    "placeholderCode": "    l, r = 0, len(A) - 1\n    while True:\n        i = (l + r) // 2\n        j = half - i - 2\n        Aleft = A[i] if i >= 0 else float(\"-infinity\")\n        Aright = A[i + 1] if (i + 1) < len(A) else float(\"infinity\")\n        Bleft = B[j] if j >= 0 else float(\"-infinity\")\n        Bright = B[j + 1] if (j + 1) < len(B) else float(\"infinity\")\n        if Aleft <= Bright and Bleft <= Aright:\n            if total % 2:\n                return min(Aright, Bright)\n            return (max(Aleft, Bleft) + min(Aright, Bright)) / 2\n        elif Aleft > Bright:\n            r = i - 1\n        else:\n            l = i + 1",
-                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*0,\\s*len\\(A\\)\\s*-\\s*1\\s*while\\s+True:\\s*i\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2\\s*j\\s*=\\s*half\\s*-\\s*i\\s*-\\s*2\\s*Aleft\\s*=\\s*A\\[i\\]\\s+if\\s+i\\s*>=\\s*0\\s+else\\s+float\\(\"-infinity\"\\)\\s*Aright\\s*=\\s*A\\[i\\s*\\+\\s*1\\]\\s+if\\s*\\(i\\s*\\+\\s*1\\)\\s*<\\s+len\\(A\\)\\s+else\\s+float\\(\"infinity\"\\)\\s*Bleft\\s*=\\s*B\\[j\\]\\s+if\\s+j\\s*>=\\s*0\\s+else\\s+float\\(\"-infinity\"\\)\\s*Bright\\s*=\\s*B\\[j\\s*\\+\\s*1\\]\\s+if\\s*\\(j\\s*\\+\\s*1\\)\\s*<\\s+len\\(B\\)\\s+else\\s+float\\(\"infinity\"\\)\\s*if\\s+Aleft\\s*<=\\s*Bright\\s+and\\s+Bleft\\s*<=\\s*Aright:\\s*if\\s+total\\s*%\\s*2:\\s*return\\s+min\\(Aright,\\s*Bright\\)\\s*return\\s*\\(max\\(Aleft,\\s*Bleft\\)\\s*\\+\\s*min\\(Aright,\\s*Bright\\)\\)\\s*/\\s*2\\s*elif\\s+Aleft\\s*>\\s*Bright:\\s*r\\s*=\\s*i\\s*-\\s*1\\s*else:\\s*l\\s*=\\s*i\\s*\\+\\s*1$",
-                    "hint": "Use binary search on the smaller array A to find the partition point where elements on the left are smaller than elements on the right in both arrays.",
-                    "solutionCode": "    l, r = 0, len(A) - 1\n    while True:\n        i = (l + r) // 2\n        j = half - i - 2\n        Aleft = A[i] if i >= 0 else float(\"-infinity\")\n        Aright = A[i + 1] if (i + 1) < len(A) else float(\"infinity\")\n        Bleft = B[j] if j >= 0 else float(\"-infinity\")\n        Bright = B[j + 1] if (j + 1) < len(B) else float(\"infinity\")\n        if Aleft <= Bright and Bleft <= Aright:\n            if total % 2:\n                return min(Aright, Bright)\n            return (max(Aleft, Bleft) + min(Aright, Bright)) / 2\n        elif Aleft > Bright:\n            r = i - 1\n        else:\n            l = i + 1"
+                    "instruction": "Initialize binary search pointers l and r for array A.",
+                    "placeholderCode": "    l, r = 0, len(A) - 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*0,\\s*len\\(A\\)\\s*-\\s*1$",
+                    "hint": "Set up the search space for our binary search on the smaller array.",
+                    "solutionCode": "    l, r = 0, len(A) - 1"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Start the infinite loop for binary search.",
+                    "placeholderCode": "    while True:",
+                    "validationRegex": "^\\s+while\\s+True:$",
+                    "hint": "We use an infinite loop because we are guaranteed to find a solution.",
+                    "solutionCode": "    while True:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Calculate partition index i for array A.",
+                    "placeholderCode": "        i = (l + r) // 2",
+                    "validationRegex": "^\\s+i\\s*=\\s*\\(l\\s*\\+\\s*r\\)\\s*//\\s*2$",
+                    "hint": "Find the middle of array A for our current search range.",
+                    "solutionCode": "        i = (l + r) // 2"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Calculate partition index j for array B.",
+                    "placeholderCode": "        j = half - i - 2",
+                    "validationRegex": "^\\s+j\\s*=\\s*half\\s*-\\s*i\\s*-\\s*2$",
+                    "hint": "Index j is derived from i to ensure we split the total elements into two equal halves.",
+                    "solutionCode": "        j = half - i - 2"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Determine the value to the left of the partition in A.",
+                    "placeholderCode": "        Aleft = A[i] if i >= 0 else float(\"-infinity\")",
+                    "validationRegex": "^\\s+Aleft\\s*=\\s*A\\[i\\]\\s+if\\s+i\\s*>=\\s*0\\s+else\\s+float\\(\"-infinity\"\\)$",
+                    "hint": "If i is out of bounds on the left, use negative infinity as a placeholder.",
+                    "solutionCode": "        Aleft = A[i] if i >= 0 else float(\"-infinity\")"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Determine the value to the right of the partition in A.",
+                    "placeholderCode": "        Aright = A[i + 1] if (i + 1) < len(A) else float(\"infinity\")",
+                    "validationRegex": "^\\s+Aright\\s*=\\s*A\\[i\\s*\\+\\s*1\\]\\s+if\\s*\\(i\\s*\\+\\s*1\\)\\s*<\\s+len\\(A\\)\\s+else\\s+float\\(\"infinity\"\\)$",
+                    "hint": "If i+1 is out of bounds on the right, use positive infinity as a placeholder.",
+                    "solutionCode": "        Aright = A[i + 1] if (i + 1) < len(A) else float(\"infinity\")"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Determine the value to the left of the partition in B.",
+                    "placeholderCode": "        Bleft = B[j] if j >= 0 else float(\"-infinity\")",
+                    "validationRegex": "^\\s+Bleft\\s*=\\s*B\\[j\\]\\s+if\\s+j\\s*>=\\s*0\\s+else\\s+float\\(\"-infinity\"\\)$",
+                    "hint": "Use negative infinity if the partition in B is at the very beginning.",
+                    "solutionCode": "        Bleft = B[j] if j >= 0 else float(\"-infinity\")"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Determine the value to the right of the partition in B.",
+                    "placeholderCode": "        Bright = B[j + 1] if (j + 1) < len(B) else float(\"infinity\")",
+                    "validationRegex": "^\\s+Bright\\s*=\\s*B\\[j\\s*\\+\\s*1\\]\\s+if\\s*\\(j\\s*\\+\\s*1\\)\\s*<\\s+len\\(B\\)\\s+else\\s+float\\(\"infinity\"\\)$",
+                    "hint": "Use positive infinity if the partition in B is at the very end.",
+                    "solutionCode": "        Bright = B[j + 1] if (j + 1) < len(B) else float(\"infinity\")"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Check if the current partition is valid.",
+                    "placeholderCode": "        if Aleft <= Bright and Bleft <= Aright:",
+                    "validationRegex": "^\\s+if\\s+Aleft\\s*<=\\s*Bright\\s+and\\s+Bleft\\s*<=\\s*Aright:$",
+                    "hint": "The partition is correct if every element on the left side is less than or equal to every element on the right side.",
+                    "solutionCode": "        if Aleft <= Bright and Bleft <= Aright:"
+                },
+                {
+                    "id": 16,
+                    "instruction": "If the total number of elements is odd, find the median.",
+                    "placeholderCode": "            if total % 2:",
+                    "validationRegex": "^\\s+if\\s+total\\s*%\\s*2:$",
+                    "hint": "For an odd number of elements, we just need the smallest value on the right side.",
+                    "solutionCode": "            if total % 2:"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Return the minimum of the two right values as the median.",
+                    "placeholderCode": "                return min(Aright, Bright)",
+                    "validationRegex": "^\\s+return\\s+min\\(Aright,\\s*Bright\\)$",
+                    "hint": "In an odd total, the median is the starting element of the right half.",
+                    "solutionCode": "                return min(Aright, Bright)"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Return the average of the maximum left and minimum right values for an even total.",
+                    "placeholderCode": "            return (max(Aleft, Bleft) + min(Aright, Bright)) / 2",
+                    "validationRegex": "^\\s+return\\s*\\(max\\(Aleft,\\s*Bleft\\)\\s*\\+\\s*min\\(Aright,\\s*Bright\\)\\)\\s*/\\s*2$",
+                    "hint": "For even totals, the median is the average of the two middle elements (the largest of the left and the smallest of the right).",
+                    "solutionCode": "            return (max(Aleft, Bleft) + min(Aright, Bright)) / 2"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Handle the case where the partition in A is too far to the right.",
+                    "placeholderCode": "        elif Aleft > Bright:",
+                    "validationRegex": "^\\s+elif\\s+Aleft\\s*>\\s*Bright:$",
+                    "hint": "If the value in A is too large, we need to move our search to the left.",
+                    "solutionCode": "        elif Aleft > Bright:"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Update the right pointer r to search the left side of the current range.",
+                    "placeholderCode": "            r = i - 1",
+                    "validationRegex": "^\\s+r\\s*=\\s*i\\s*-\\s*1$",
+                    "hint": "Narrow the search range in array A by moving the right pointer.",
+                    "solutionCode": "            r = i - 1"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Otherwise, move the left pointer l to search the right side of the current range.",
+                    "placeholderCode": "        else:\n            l = i + 1",
+                    "validationRegex": "^\\s+else:\\s*l\\s*=\\s*i\\s*\\+\\s*1$",
+                    "hint": "If the binary search didn't go left, it must go right.",
+                    "solutionCode": "        else:\n            l = i + 1"
                 }
             ]
         }
