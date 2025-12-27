@@ -97,7 +97,7 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Move the pointers to find the middle of the list.",
+                    "instruction": "Move the pointers until 'fast' reaches the end.",
                     "placeholderCode": "    while fast and fast.next:",
                     "validationRegex": "^\\s+while\\s+fast\\s+and\\s+fast\\.next:$",
                     "hint": "Loop while `fast` can still move two nodes forward.",
@@ -108,7 +108,7 @@
                     "instruction": "Advance 'slow' by one node.",
                     "placeholderCode": "        slow = slow.next",
                     "validationRegex": "^\\s+slow\\s*=\\s*slow\\.next$",
-                    "hint": "Standard middle-finding part.",
+                    "hint": "Slow moves 1 step.",
                     "solutionCode": "        slow = slow.next"
                 },
                 {
@@ -116,31 +116,31 @@
                     "instruction": "Advance 'fast' by two nodes.",
                     "placeholderCode": "        fast = fast.next.next",
                     "validationRegex": "^\\s+fast\\s*=\\s*fast\\.next\\.next$",
-                    "hint": "This makes `slow` reach the middle when `fast` reaches the end.",
+                    "hint": "Fast moves 2 steps.",
                     "solutionCode": "        fast = fast.next.next"
                 },
                 {
                     "id": 8,
-                    "instruction": "Identify the start of the second half.",
+                    "instruction": "Identify the head of the second half.",
                     "placeholderCode": "    second = slow.next",
                     "validationRegex": "^\\s+second\\s*=\\s*slow\\.next$",
-                    "hint": "The second half starts right after the `slow` pointer.",
+                    "hint": "The second half starts after the middle node.",
                     "solutionCode": "    second = slow.next"
                 },
                 {
                     "id": 9,
-                    "instruction": "Split the list into two halves.",
+                    "instruction": "Split the list into two halves and initialize 'prev'.",
                     "placeholderCode": "    prev = slow.next = None",
                     "validationRegex": "^\\s+prev\\s*=\\s*slow\\.next\\s*=\\s*None$",
-                    "hint": "Set `slow.next` to `None` to terminate the first half and initialize `prev` for reversal.",
+                    "hint": "Break the connection to the second half and start `prev` as `None`.",
                     "solutionCode": "    prev = slow.next = None"
                 },
                 {
                     "id": 10,
-                    "instruction": "Start reversing the second half.",
+                    "instruction": "Loop through the second half to reverse it.",
                     "placeholderCode": "    while second:",
                     "validationRegex": "^\\s+while\\s+second:$",
-                    "hint": "Iterate through the `second` half nodes.",
+                    "hint": "Standard list reversal loop.",
                     "solutionCode": "    while second:"
                 },
                 {
@@ -148,55 +148,55 @@
                     "instruction": "Save the next node temporarily.",
                     "placeholderCode": "        tmp = second.next",
                     "validationRegex": "^\\s+tmp\\s*=\\s*second\\.next$",
-                    "hint": "Keep track of the rest of the list before breaking the link.",
+                    "hint": "Store the rest of the list before you flip the arrow.",
                     "solutionCode": "        tmp = second.next"
                 },
                 {
                     "id": 12,
-                    "instruction": "Reverse the link of the current node.",
+                    "instruction": "Reverse the current node's pointer.",
                     "placeholderCode": "        second.next = prev",
                     "validationRegex": "^\\s+second\\.next\\s*=\\s*prev$",
-                    "hint": "Point the current node's `next` to the previous node.",
+                    "hint": "Point the current node to its previous node.",
                     "solutionCode": "        second.next = prev"
                 },
                 {
                     "id": 13,
-                    "instruction": "Move the 'prev' pointer forward.",
+                    "instruction": "Update 'prev' to be the current node.",
                     "placeholderCode": "        prev = second",
                     "validationRegex": "^\\s+prev\\s*=\\s*second$",
-                    "hint": "The current node becomes the `prev` for the next iteration.",
+                    "hint": "Shift the `prev` pointer one step forward.",
                     "solutionCode": "        prev = second"
                 },
                 {
                     "id": 14,
-                    "instruction": "Move to the next node in the original list.",
+                    "instruction": "Advance to the next node in the original sequence.",
                     "placeholderCode": "        second = tmp",
                     "validationRegex": "^\\s+second\\s*=\\s*tmp$",
-                    "hint": "Proceed with the saved `next` node.",
+                    "hint": "Shift the `second` pointer using your saved reference.",
                     "solutionCode": "        second = tmp"
                 },
                 {
                     "id": 15,
-                    "instruction": "Initialize pointers to the heads of both halves.",
+                    "instruction": "Set pointers to the beginning of both halves.",
                     "placeholderCode": "    first, second = head, prev",
                     "validationRegex": "^\\s+first,\\s*second\\s*=\\s*head,\\s*prev$",
-                    "hint": "The first half starts at `head`, the reversed second half starts at `prev`.",
+                    "hint": "Prepare for merging.",
                     "solutionCode": "    first, second = head, prev"
                 },
                 {
                     "id": 16,
-                    "instruction": "Merge the two halves interweaving nodes.",
+                    "instruction": "Start merging until the second half is empty.",
                     "placeholderCode": "    while second:",
                     "validationRegex": "^\\s+while\\s+second:$",
-                    "hint": "Continue interweaving as long as nodes remain in the second half.",
+                    "hint": "The second half will be shorter or equal to the first.",
                     "solutionCode": "    while second:"
                 },
                 {
                     "id": 17,
-                    "instruction": "Save the next pointers of both lists.",
+                    "instruction": "Store the original next pointers of both nodes.",
                     "placeholderCode": "        tmp1, tmp2 = first.next, second.next",
                     "validationRegex": "^\\s+tmp1,\\s*tmp2\\s*=\\s*first\\.next,\\s*second\\.next$",
-                    "hint": "Save the original next nodes of both halves.",
+                    "hint": "Save the 'future' connections.",
                     "solutionCode": "        tmp1, tmp2 = first.next, second.next"
                 },
                 {
@@ -204,23 +204,23 @@
                     "instruction": "Link the first half node to the second half node.",
                     "placeholderCode": "        first.next = second",
                     "validationRegex": "^\\s+first\\.next\\s*=\\s*second$",
-                    "hint": "Start the interweaving: L0 -> Ln.",
+                    "hint": "This is L0 -> Ln.",
                     "solutionCode": "        first.next = second"
                 },
                 {
                     "id": 19,
-                    "instruction": "Link the second half node back to the next node of the first half.",
+                    "instruction": "Link the second half node back to the original next node.",
                     "placeholderCode": "        second.next = tmp1",
                     "validationRegex": "^\\s+second\\.next\\s*=\\s*tmp1$",
-                    "hint": "Continue the interweaving: Ln -> L1.",
+                    "hint": "This is Ln -> L1.",
                     "solutionCode": "        second.next = tmp1"
                 },
                 {
                     "id": 20,
-                    "instruction": "Move the pointers forward to the next nodes to be processed.",
+                    "instruction": "Move both pointers forward to continue the merge.",
                     "placeholderCode": "        first, second = tmp1, tmp2",
                     "validationRegex": "^\\s+first,\\s*second\\s*=\\s*tmp1,\\s*tmp2$",
-                    "hint": "The next nodes to merge are the ones we saved in `tmp1` and `tmp2`.",
+                    "hint": "Shift pointers to the next nodes to be processed.",
                     "solutionCode": "        first, second = tmp1, tmp2"
                 }
             ]
