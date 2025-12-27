@@ -23,7 +23,7 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function copy_random_list that takes head.",
+                    "instruction": "Define the function 'copy_random_list' that takes 'head' as an argument.",
                     "placeholderCode": "def copy_random_list(head):",
                     "validationRegex": "^def\\s+copy_random_list\\(head\\):$",
                     "hint": "Use `def` to define the function.",
@@ -31,34 +31,98 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize map.",
-                    "placeholderCode": "    oldToCopy = {None: None}\n    cur = head",
-                    "validationRegex": "^\\s+oldToCopy\\s*=\\s*{None:\\s*None}\\s*cur\\s*=\\s*head$",
-                    "hint": "Create a dictionary `oldToCopy`.",
-                    "solutionCode": "    oldToCopy = {None: None}\n    cur = head"
+                    "instruction": "Initialize a dictionary to map old nodes to their copies, including None.",
+                    "placeholderCode": "    oldToCopy = {None: None}",
+                    "validationRegex": "^\\s+oldToCopy\\s*=\\s*{None:\\s*None}$",
+                    "hint": "Create a dictionary `oldToCopy` mapping `None` to `None`.",
+                    "solutionCode": "    oldToCopy = {None: None}"
                 },
                 {
                     "id": 3,
-                    "instruction": "Create copies.",
-                    "placeholderCode": "    while cur:\n        copy = Node(cur.val)\n        oldToCopy[cur] = copy\n        cur = cur.next",
-                    "validationRegex": "^\\s+while\\s+cur:\\s*copy\\s*=\\s*Node\\(cur\\.val\\)\\s*oldToCopy\\[cur\\]\\s*=\\s*copy\\s*cur\\s*=\\s*cur\\.next$",
-                    "hint": "Iterate and create new nodes, storing them in the map.",
-                    "solutionCode": "    while cur:\n        copy = Node(cur.val)\n        oldToCopy[cur] = copy\n        cur = cur.next"
+                    "instruction": "Initialize a pointer to the head of the list.",
+                    "placeholderCode": "    cur = head",
+                    "validationRegex": "^\\s+cur\\s*=\\s*head$",
+                    "hint": "Start traversing from the head.",
+                    "solutionCode": "    cur = head"
                 },
                 {
                     "id": 4,
-                    "instruction": "Link pointers.",
-                    "placeholderCode": "    cur = head\n    while cur:\n        copy = oldToCopy[cur]\n        copy.next = oldToCopy[cur.next]\n        copy.random = oldToCopy[cur.random]\n        cur = cur.next",
-                    "validationRegex": "^\\s+cur\\s*=\\s*head\\s*while\\s+cur:\\s*copy\\s*=\\s*oldToCopy\\[cur\\]\\s*copy\\.next\\s*=\\s*oldToCopy\\[cur\\.next\\]\\s*copy\\.random\\s*=\\s*oldToCopy\\[cur\\.random\\]\\s*cur\\s*=\\s*cur\\.next$",
-                    "hint": "Iterate again to set `next` and `random` pointers using the map.",
-                    "solutionCode": "    cur = head\n    while cur:\n        copy = oldToCopy[cur]\n        copy.next = oldToCopy[cur.next]\n        copy.random = oldToCopy[cur.random]\n        cur = cur.next"
+                    "instruction": "Iterate through the list to create copies of each node.",
+                    "placeholderCode": "    while cur:",
+                    "validationRegex": "^\\s+while\\s+cur:$",
+                    "hint": "Loop through the original list.",
+                    "solutionCode": "    while cur:"
                 },
                 {
                     "id": 5,
-                    "instruction": "Return head copy.",
+                    "instruction": "Create a new Node with the same value and store it in the map.",
+                    "placeholderCode": "        copy = Node(cur.val)\n        oldToCopy[cur] = copy",
+                    "validationRegex": "^\\s+copy\\s*=\\s*Node\\(cur\\.val\\)\\s*oldToCopy\\[cur\\]\\s*=\\s*copy$",
+                    "hint": "Create a copy and link it in the dictionary.",
+                    "solutionCode": "        copy = Node(cur.val)\n        oldToCopy[cur] = copy"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Move to the next node in the original list.",
+                    "placeholderCode": "        cur = cur.next",
+                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.next$",
+                    "hint": "Advance the pointer.",
+                    "solutionCode": "        cur = cur.next"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Reset the pointer to the head for the second pass.",
+                    "placeholderCode": "    cur = head",
+                    "validationRegex": "^\\s+cur\\s*=\\s*head$",
+                    "hint": "Prepare for linking pointers.",
+                    "solutionCode": "    cur = head"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Iterate again to link 'next' and 'random' pointers.",
+                    "placeholderCode": "    while cur:",
+                    "validationRegex": "^\\s+while\\s+cur:$",
+                    "hint": "Link the pointers of the copied nodes.",
+                    "solutionCode": "    while cur:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Get the copied node from the map.",
+                    "placeholderCode": "        copy = oldToCopy[cur]",
+                    "validationRegex": "^\\s+copy\\s*=\\s*oldToCopy\\[cur\\]$",
+                    "hint": "Retrieve the copy of the current node.",
+                    "solutionCode": "        copy = oldToCopy[cur]"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Set the 'next' pointer of the copy.",
+                    "placeholderCode": "        copy.next = oldToCopy[cur.next]",
+                    "validationRegex": "^\\s+copy\\.next\\s*=\\s*oldToCopy\\[cur\\.next\\]$",
+                    "hint": "The next node's copy is found in our dictionary.",
+                    "solutionCode": "        copy.next = oldToCopy[cur.next]"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Set the 'random' pointer of the copy.",
+                    "placeholderCode": "        copy.random = oldToCopy[cur.random]",
+                    "validationRegex": "^\\s+copy\\.random\\s*=\\s*oldToCopy\\[cur\\.random\\]$",
+                    "hint": "The random node's copy is also in the dictionary.",
+                    "solutionCode": "        copy.random = oldToCopy[cur.random]"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Move to the next node in the original list.",
+                    "placeholderCode": "        cur = cur.next",
+                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.next$",
+                    "hint": "Finish the pass.",
+                    "solutionCode": "        cur = cur.next"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Return the deep copy of the head node.",
                     "placeholderCode": "    return oldToCopy[head]",
                     "validationRegex": "^\\s+return\\s+oldToCopy\\[head\\]$",
-                    "hint": "Return the copy of the head.",
+                    "hint": "The map contains the copy of the original head.",
                     "solutionCode": "    return oldToCopy[head]"
                 }
             ]
@@ -70,7 +134,7 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function copy_random_list that takes head.",
+                    "instruction": "Define the function 'copy_random_list' that takes 'head' as an argument.",
                     "placeholderCode": "def copy_random_list(head):",
                     "validationRegex": "^def\\s+copy_random_list\\(head\\):$",
                     "hint": "Use `def` to define the function.",
@@ -78,34 +142,154 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Interweave nodes.",
-                    "placeholderCode": "    if not head: return None\n    cur = head\n    while cur:\n        new_node = Node(cur.val, cur.next)\n        cur.next = new_node\n        cur = new_node.next",
-                    "validationRegex": "^\\s+if\\s+not\\s+head:\\s*return\\s+None\\s*cur\\s*=\\s*head\\s*while\\s+cur:\\s*new_node\\s*=\\s*Node\\(cur\\.val,\\s*cur\\.next\\)\\s*cur\\.next\\s*=\\s*new_node\\s*cur\\s*=\\s*new_node\\.next$",
-                    "hint": "Insert copied nodes directly after original nodes.\\n\\nExample:\\nOriginal: A -> B.\\nCreate A'. Link A -> A' -> B.\\nCreate B'. Link A -> A' -> B -> B'.",
-                    "solutionCode": "    if not head: return None\n    cur = head\n    while cur:\n        new_node = Node(cur.val, cur.next)\n        cur.next = new_node\n        cur = new_node.next"
+                    "instruction": "Handle the base case where the input list is empty.",
+                    "placeholderCode": "    if not head: return None",
+                    "validationRegex": "^\\s+if\\s+not\\s+head:\\s*return\\s+None$",
+                    "hint": "An empty list has no nodes to copy.",
+                    "solutionCode": "    if not head: return None"
                 },
                 {
                     "id": 3,
-                    "instruction": "Assign random pointers.",
-                    "placeholderCode": "    cur = head\n    while cur:\n        if cur.random:\n            cur.next.random = cur.random.next\n        cur = cur.next.next",
-                    "validationRegex": "^\\s+cur\\s*=\\s*head\\s*while\\s+cur:\\s*if\\s+cur\\.random:\\s*cur\\.next\\.random\\s*=\\s*cur\\.random\\.next\\s*cur\\s*=\\s*cur\\.next\\.next$",
-                    "hint": "Set random pointers for new nodes.",
-                    "solutionCode": "    cur = head\n    while cur:\n        if cur.random:\n            cur.next.random = cur.random.next\n        cur = cur.next.next"
+                    "instruction": "Initialize a pointer 'cur' to the head.",
+                    "placeholderCode": "    cur = head",
+                    "validationRegex": "^\\s+cur\\s*=\\s*head$",
+                    "hint": "Start the interweaving process from the head.",
+                    "solutionCode": "    cur = head"
                 },
                 {
                     "id": 4,
-                    "instruction": "Separate lists.",
-                    "placeholderCode": "    cur = head\n    new_head = head.next\n    while cur:\n        temp = cur.next\n        cur.next = temp.next\n        if temp.next:\n            temp.next = temp.next.next\n        cur = cur.next",
-                    "validationRegex": "^\\s+cur\\s*=\\s*head\\s*new_head\\s*=\\s*head\\.next\\s*while\\s+cur:\\s*temp\\s*=\\s*cur\\.next\\s*cur\\.next\\s*=\\s*temp\\.next\\s*if\\s+temp\\.next:\\s*temp\\.next\\s*=\\s*temp\\.next\\.next\\s*cur\\s*=\\s*cur\\.next$",
-                    "hint": "Restore original list and extract copied list.",
-                    "solutionCode": "    cur = head\n    new_head = head.next\n    while cur:\n        temp = cur.next\n        cur.next = temp.next\n        if temp.next:\n            temp.next = temp.next.next\n        cur = cur.next"
+                    "instruction": "Start a loop to interweave copied nodes with original nodes.",
+                    "placeholderCode": "    while cur:",
+                    "validationRegex": "^\\s+while\\s+cur:$",
+                    "hint": "Iterate through the entire original list.",
+                    "solutionCode": "    while cur:"
                 },
                 {
                     "id": 5,
-                    "instruction": "Return new head.",
+                    "instruction": "Create a new node and link its 'next' to the original node's 'next'.",
+                    "placeholderCode": "        new_node = Node(cur.val, cur.next)",
+                    "validationRegex": "^\\s+new_node\\s*=\\s*Node\\(cur\\.val,\\s*cur\\.next\\)$",
+                    "hint": "The copy should initially point to what the original pointed to.",
+                    "solutionCode": "        new_node = Node(cur.val, cur.next)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Redirect the original node's 'next' to point to the new copied node.",
+                    "placeholderCode": "        cur.next = new_node",
+                    "validationRegex": "^\\s+cur\\.next\\s*=\\s*new_node$",
+                    "hint": "This inserts the copy directly after its original.",
+                    "solutionCode": "        cur.next = new_node"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Move the pointer to the next original node.",
+                    "placeholderCode": "        cur = new_node.next",
+                    "validationRegex": "^\\s+cur\\s*=\\s*new_node\\.next$",
+                    "hint": "Skip the copy we just added to reach the next original node.",
+                    "solutionCode": "        cur = new_node.next"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Reset the pointer 'cur' to head for the second pass (random pointers).",
+                    "placeholderCode": "    cur = head",
+                    "validationRegex": "^\\s+cur\\s*=\\s*head$",
+                    "hint": "Now that nodes are interweaved, we can easily set random pointers.",
+                    "solutionCode": "    cur = head"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Start a loop to assign random pointers to the copied nodes.",
+                    "placeholderCode": "    while cur:",
+                    "validationRegex": "^\\s+while\\s+cur:$",
+                    "hint": "Traverse the interweaved list.",
+                    "solutionCode": "    while cur:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Check if the original node has a random pointer.",
+                    "placeholderCode": "        if cur.random:",
+                    "validationRegex": "^\\s+if\\s+cur\\.random:$",
+                    "hint": "Only assign a random pointer to the copy if the original has one.",
+                    "solutionCode": "        if cur.random:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Set the copy's random pointer to point to the copy of the original's random node.",
+                    "placeholderCode": "            cur.next.random = cur.random.next",
+                    "validationRegex": "^\\s+cur\\.next\\.random\\s*=\\s*cur\\.random\\.next$",
+                    "hint": "The copy of `cur.random` is located at `cur.random.next`.",
+                    "solutionCode": "            cur.next.random = cur.random.next"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Move the pointer forward two steps to the next original node.",
+                    "placeholderCode": "        cur = cur.next.next",
+                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.next\\.next$",
+                    "hint": "Advance past the current copy and next original.",
+                    "solutionCode": "        cur = cur.next.next"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Reset 'cur' to head and initialize 'new_head' for the final separation pass.",
+                    "placeholderCode": "    cur = head\n    new_head = head.next",
+                    "validationRegex": "^\\s+cur\\s*=\\s*head\\s*new_head\\s*=\\s*head\\.next$",
+                    "hint": "We need to split the interweaved list and save the head of the copy.",
+                    "solutionCode": "    cur = head\n    new_head = head.next"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Start a loop to recover the original list and extract the copy.",
+                    "placeholderCode": "    while cur:",
+                    "validationRegex": "^\\s+while\\s+cur:$",
+                    "hint": "Separate the link-chains.",
+                    "solutionCode": "    while cur:"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Identify the copied node.",
+                    "placeholderCode": "        temp = cur.next",
+                    "validationRegex": "^\\s+temp\\s*=\\s*cur\\.next$",
+                    "hint": "Store the current copy in a temporary variable.",
+                    "solutionCode": "        temp = cur.next"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Restore the original node's 'next' pointer.",
+                    "placeholderCode": "        cur.next = temp.next",
+                    "validationRegex": "^\\s+cur\\.next\\s*=\\s*temp\\.next$",
+                    "hint": "Point original back to the next original node.",
+                    "solutionCode": "        cur.next = temp.next"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Check if there is another copied node ahead.",
+                    "placeholderCode": "        if temp.next:",
+                    "validationRegex": "^\\s+if\\s+temp\\.next:$",
+                    "hint": "Continue the link for the copied list if more nodes remain.",
+                    "solutionCode": "        if temp.next:"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Link the current copied node to the next copied node.",
+                    "placeholderCode": "            temp.next = temp.next.next",
+                    "validationRegex": "^\\s+temp\\.next\\s*=\\s*temp\\.next\\.next$",
+                    "hint": "Connect copied node to next copied node.",
+                    "solutionCode": "            temp.next = temp.next.next"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Move the 'cur' pointer to the next original node.",
+                    "placeholderCode": "        cur = cur.next",
+                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.next$",
+                    "hint": "Advance to the next original node to be processed.",
+                    "solutionCode": "        cur = cur.next"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Return the head of the newly created deep copy list.",
                     "placeholderCode": "    return new_head",
                     "validationRegex": "^\\s+return\\s+new_head$",
-                    "hint": "Return the head of the copied list.",
+                    "hint": "Final result of the process.",
                     "solutionCode": "    return new_head"
                 }
             ]
