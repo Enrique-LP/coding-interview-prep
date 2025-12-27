@@ -223,14 +223,38 @@
                 },
                 {
                     "id": 15,
-                    "instruction": "If the key exists, remove it from its position and re-insert it at the end.",
-                    "placeholderCode": "        if key in self.cache:\n            self.remove(self.cache[key])\n            self.insert(self.cache[key])\n            return self.cache[key].val",
-                    "validationRegex": "^\\s+if\\s+key\\s+in\\s+self\\.cache:\\s*self\\.remove\\(self\\.cache\\[key\\]\\)\\s*self\\.insert\\(self\\.cache\\[key\\]\\)\\s*return\\s+self\\.cache\\[key\\]\\.val$",
-                    "hint": "Move it to the 'most recent' position (right) and return the value.",
-                    "solutionCode": "        if key in self.cache:\n            self.remove(self.cache[key])\n            self.insert(self.cache[key])\n            return self.cache[key].val"
+                    "instruction": "Check if the key exists in our cache dictionary.",
+                    "placeholderCode": "        if key in self.cache:",
+                    "validationRegex": "^\\s+if\\s+key\\s+in\\s+self\\.cache:$",
+                    "hint": "We only process a 'get' request if the key is already stored.",
+                    "solutionCode": "        if key in self.cache:"
                 },
                 {
                     "id": 16,
+                    "instruction": "Remove the existing node from its current position in the list.",
+                    "placeholderCode": "            self.remove(self.cache[key])",
+                    "validationRegex": "^\\s+self\\.remove\\(self\\.cache\\[key\\]\\)$",
+                    "hint": "Since we just accessed it, we need to move it to the 'most recent' position.",
+                    "solutionCode": "            self.remove(self.cache[key])"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Re-insert the node at the rightmost position (most recent).",
+                    "placeholderCode": "            self.insert(self.cache[key])",
+                    "validationRegex": "^\\s+self\\.insert\\(self\\.cache\\[key\\]\\)$",
+                    "hint": "This updates the usage order.",
+                    "solutionCode": "            self.insert(self.cache[key])"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Return the value stored in the node.",
+                    "placeholderCode": "            return self.cache[key].val",
+                    "validationRegex": "^\\s+return\\s+self\\.cache\\[key\\]\\.val$",
+                    "hint": "The 'get' operation expects the value of the key.",
+                    "solutionCode": "            return self.cache[key].val"
+                },
+                {
+                    "id": 19,
                     "instruction": "Otherwise, return -1.",
                     "placeholderCode": "        return -1",
                     "validationRegex": "^\\s+return\\s*-1$",
@@ -238,7 +262,7 @@
                     "solutionCode": "        return -1"
                 },
                 {
-                    "id": 17,
+                    "id": 20,
                     "instruction": "Define the 'put' method that takes 'key' and 'value'.",
                     "placeholderCode": "    def put(self, key, value):",
                     "validationRegex": "^\\s+def\\s+put\\(self,\\s*key,\\s*value\\):$",
@@ -246,7 +270,7 @@
                     "solutionCode": "    def put(self, key, value):"
                 },
                 {
-                    "id": 18,
+                    "id": 21,
                     "instruction": "If the key already exists, remove the old node.",
                     "placeholderCode": "        if key in self.cache:\n            self.remove(self.cache[key])",
                     "validationRegex": "^\\s+if\\s+key\\s+in\\s+self\\.cache:\\s*self\\.remove\\(self\\.cache\\[key\\]\\)$",
@@ -254,7 +278,7 @@
                     "solutionCode": "        if key in self.cache:\n            self.remove(self.cache[key])"
                 },
                 {
-                    "id": 19,
+                    "id": 22,
                     "instruction": "Create a new node and insert it into both the cache and the list.",
                     "placeholderCode": "        self.cache[key] = Node(key, value)\n        self.insert(self.cache[key])",
                     "validationRegex": "^\\s+self\\.cache\\[key\\]\\s*=\\s*Node\\(key,\\s*value\\)\\s*self\\.insert\\(self\\.cache\\[key\\]\\)$",
@@ -262,7 +286,7 @@
                     "solutionCode": "        self.cache[key] = Node(key, value)\n        self.insert(self.cache[key])"
                 },
                 {
-                    "id": 20,
+                    "id": 23,
                     "instruction": "If capacity is exceeded, identify the LRU node (left.next).",
                     "placeholderCode": "        if len(self.cache) > self.cap:\n            lru = self.left.next",
                     "validationRegex": "^\\s+if\\s+len\\(self\\.cache\\)\\s*>\\s+self\\.cap:\\s*lru\\s*=\\s*self\\.left\\.next$",
@@ -270,7 +294,7 @@
                     "solutionCode": "        if len(self.cache) > self.cap:\n            lru = self.left.next"
                 },
                 {
-                    "id": 21,
+                    "id": 24,
                     "instruction": "Remove the LRU node from the list and delete it from the cache dictionary.",
                     "placeholderCode": "            self.remove(lru)\n            del self.cache[lru.key]",
                     "validationRegex": "^\\s+self\\.remove\\(lru\\)\\s*del\\s+self\\.cache\\[lru\\.key\\]$",
