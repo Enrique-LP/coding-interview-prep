@@ -26,10 +26,10 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function reorder_list that takes head.",
+                    "instruction": "Define the function 'reorder_list' that takes 'head' as an argument.",
                     "placeholderCode": "def reorder_list(head):",
                     "validationRegex": "^def\\s+reorder_list\\(head\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Use `def` to define the function named `reorder_list`.",
                     "solutionCode": "def reorder_list(head):"
                 },
                 {
@@ -65,35 +65,163 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function reorder_list that takes head.",
+                    "instruction": "Define the function 'reorder_list' that takes 'head' as an argument.",
                     "placeholderCode": "def reorder_list(head):",
                     "validationRegex": "^def\\s+reorder_list\\(head\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Use `def` to define the function named `reorder_list`.",
                     "solutionCode": "def reorder_list(head):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Find the middle of the list using slow and fast pointers.",
-                    "placeholderCode": "    slow, fast = head, head.next\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next",
-                    "validationRegex": "^\\s+slow,\\s*fast\\s*=\\s*head,\\s*head\\.next\\s*while\\s+fast\\s+and\\s+fast\\.next:\\s*slow\\s*=\\s*slow\\.next\\s*fast\\s*=\\s*fast\\.next\\.next$",
-                    "hint": "Use slow/fast pointers to find the middle.",
-                    "solutionCode": "    slow, fast = head, head.next\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next"
+                    "instruction": "Check if the list is empty (base case).",
+                    "placeholderCode": "    if not head: return",
+                    "validationRegex": "^\\s+if\\s+not\\s+head:\\s*return$",
+                    "hint": "If the list is empty, there's nothing to reorder.",
+                    "solutionCode": "    if not head: return"
                 },
                 {
                     "id": 3,
-                    "instruction": "Reverse the second half of the list.",
-                    "placeholderCode": "    second = slow.next\n    prev = slow.next = None\n    while second:\n        tmp = second.next\n        second.next = prev\n        prev = second\n        second = tmp",
-                    "validationRegex": "^\\s+second\\s*=\\s*slow\\.next\\s*prev\\s*=\\s*slow\\.next\\s*=\\s*None\\s*while\\s+second:\\s*tmp\\s*=\\s*second\\.next\\s*second\\.next\\s*=\\s*prev\\s*prev\\s*=\\s*second\\s*second\\s*=\\s*tmp$",
-                    "hint": "Reverse the list starting from `slow.next`.",
-                    "solutionCode": "    second = slow.next\n    prev = slow.next = None\n    while second:\n        tmp = second.next\n        second.next = prev\n        prev = second\n        second = tmp"
+                    "instruction": "Initialize the 'slow' pointer.",
+                    "placeholderCode": "    slow = head",
+                    "validationRegex": "^\\s+slow\\s*=\\s*head$",
+                    "hint": "Start the `slow` pointer at the head.",
+                    "solutionCode": "    slow = head"
                 },
                 {
                     "id": 4,
-                    "instruction": "Merge the two halves.",
-                    "placeholderCode": "    first, second = head, prev\n    while second:\n        tmp1, tmp2 = first.next, second.next\n        first.next = second\n        second.next = tmp1\n        first, second = tmp1, tmp2",
-                    "validationRegex": "^\\s+first,\\s*second\\s*=\\s*head,\\s*prev\\s*while\\s+second:\\s*tmp1,\\s*tmp2\\s*=\\s*first\\.next,\\s*second\\.next\\s*first\\.next\\s*=\\s*second\\s*second\\.next\\s*=\\s*tmp1\\s*first,\\s*second\\s*=\\s*tmp1,\\s*tmp2$",
-                    "hint": "Merge `first` and `second` lists node by node.\\n\\nExample:\\nFirst: 1->2, Second: 4->3.\\nLink 1->4. Link 4->2. Link 2->3.\\nResult: 1->4->2->3.",
-                    "solutionCode": "    first, second = head, prev\n    while second:\n        tmp1, tmp2 = first.next, second.next\n        first.next = second\n        second.next = tmp1\n        first, second = tmp1, tmp2"
+                    "instruction": "Initialize the 'fast' pointer.",
+                    "placeholderCode": "    fast = head.next",
+                    "validationRegex": "^\\s+fast\\s*=\\s*head\\.next$",
+                    "hint": "Start the `fast` pointer one node ahead of `slow`.",
+                    "solutionCode": "    fast = head.next"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Move the pointers to find the middle of the list.",
+                    "placeholderCode": "    while fast and fast.next:",
+                    "validationRegex": "^\\s+while\\s+fast\\s+and\\s+fast\\.next:$",
+                    "hint": "Loop while `fast` can still move two nodes forward.",
+                    "solutionCode": "    while fast and fast.next:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Advance 'slow' by one node.",
+                    "placeholderCode": "        slow = slow.next",
+                    "validationRegex": "^\\s+slow\\s*=\\s*slow\\.next$",
+                    "hint": "Standard middle-finding part.",
+                    "solutionCode": "        slow = slow.next"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Advance 'fast' by two nodes.",
+                    "placeholderCode": "        fast = fast.next.next",
+                    "validationRegex": "^\\s+fast\\s*=\\s*fast\\.next\\.next$",
+                    "hint": "This makes `slow` reach the middle when `fast` reaches the end.",
+                    "solutionCode": "        fast = fast.next.next"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Identify the start of the second half.",
+                    "placeholderCode": "    second = slow.next",
+                    "validationRegex": "^\\s+second\\s*=\\s*slow\\.next$",
+                    "hint": "The second half starts right after the `slow` pointer.",
+                    "solutionCode": "    second = slow.next"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Split the list into two halves.",
+                    "placeholderCode": "    prev = slow.next = None",
+                    "validationRegex": "^\\s+prev\\s*=\\s*slow\\.next\\s*=\\s*None$",
+                    "hint": "Set `slow.next` to `None` to terminate the first half and initialize `prev` for reversal.",
+                    "solutionCode": "    prev = slow.next = None"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Start reversing the second half.",
+                    "placeholderCode": "    while second:",
+                    "validationRegex": "^\\s+while\\s+second:$",
+                    "hint": "Iterate through the `second` half nodes.",
+                    "solutionCode": "    while second:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Save the next node temporarily.",
+                    "placeholderCode": "        tmp = second.next",
+                    "validationRegex": "^\\s+tmp\\s*=\\s*second\\.next$",
+                    "hint": "Keep track of the rest of the list before breaking the link.",
+                    "solutionCode": "        tmp = second.next"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Reverse the link of the current node.",
+                    "placeholderCode": "        second.next = prev",
+                    "validationRegex": "^\\s+second\\.next\\s*=\\s*prev$",
+                    "hint": "Point the current node's `next` to the previous node.",
+                    "solutionCode": "        second.next = prev"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Move the 'prev' pointer forward.",
+                    "placeholderCode": "        prev = second",
+                    "validationRegex": "^\\s+prev\\s*=\\s*second$",
+                    "hint": "The current node becomes the `prev` for the next iteration.",
+                    "solutionCode": "        prev = second"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Move to the next node in the original list.",
+                    "placeholderCode": "        second = tmp",
+                    "validationRegex": "^\\s+second\\s*=\\s*tmp$",
+                    "hint": "Proceed with the saved `next` node.",
+                    "solutionCode": "        second = tmp"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Initialize pointers to the heads of both halves.",
+                    "placeholderCode": "    first, second = head, prev",
+                    "validationRegex": "^\\s+first,\\s*second\\s*=\\s*head,\\s*prev$",
+                    "hint": "The first half starts at `head`, the reversed second half starts at `prev`.",
+                    "solutionCode": "    first, second = head, prev"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Merge the two halves interweaving nodes.",
+                    "placeholderCode": "    while second:",
+                    "validationRegex": "^\\s+while\\s+second:$",
+                    "hint": "Continue interweaving as long as nodes remain in the second half.",
+                    "solutionCode": "    while second:"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Save the next pointers of both lists.",
+                    "placeholderCode": "        tmp1, tmp2 = first.next, second.next",
+                    "validationRegex": "^\\s+tmp1,\\s*tmp2\\s*=\\s*first\\.next,\\s*second\\.next$",
+                    "hint": "Save the original next nodes of both halves.",
+                    "solutionCode": "        tmp1, tmp2 = first.next, second.next"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Link the first half node to the second half node.",
+                    "placeholderCode": "        first.next = second",
+                    "validationRegex": "^\\s+first\\.next\\s*=\\s*second$",
+                    "hint": "Start the interweaving: L0 -> Ln.",
+                    "solutionCode": "        first.next = second"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Link the second half node back to the next node of the first half.",
+                    "placeholderCode": "        second.next = tmp1",
+                    "validationRegex": "^\\s+second\\.next\\s*=\\s*tmp1$",
+                    "hint": "Continue the interweaving: Ln -> L1.",
+                    "solutionCode": "        second.next = tmp1"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Move the pointers forward to the next nodes to be processed.",
+                    "placeholderCode": "        first, second = tmp1, tmp2",
+                    "validationRegex": "^\\s+first,\\s*second\\s*=\\s*tmp1,\\s*tmp2$",
+                    "hint": "The next nodes to merge are the ones we saved in `tmp1` and `tmp2`.",
+                    "solutionCode": "        first, second = tmp1, tmp2"
                 }
             ]
         }
