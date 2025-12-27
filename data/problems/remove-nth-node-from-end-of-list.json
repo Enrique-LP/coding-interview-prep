@@ -28,10 +28,10 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function remove_nth_from_end that takes head and n.",
+                    "instruction": "Define the function 'remove_nth_from_end' that takes 'head' and 'n' as arguments.",
                     "placeholderCode": "def remove_nth_from_end(head, n):",
                     "validationRegex": "^def\\s+remove_nth_from_end\\(head,\\s*n\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Use `def` to define the function named `remove_nth_from_end`.",
                     "solutionCode": "def remove_nth_from_end(head, n):"
                 },
                 {
@@ -83,50 +83,66 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function remove_nth_from_end that takes head and n.",
+                    "instruction": "Define the function 'remove_nth_from_end' that takes 'head' and 'n' as arguments.",
                     "placeholderCode": "def remove_nth_from_end(head, n):",
                     "validationRegex": "^def\\s+remove_nth_from_end\\(head,\\s*n\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Use `def` to define the function named `remove_nth_from_end`.",
                     "solutionCode": "def remove_nth_from_end(head, n):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Use a dummy node to handle edge cases.",
-                    "placeholderCode": "    dummy = ListNode(0, head)\n    left = dummy\n    right = head",
-                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(0,\\s*head\\)\\s*left\\s*=\\s*dummy\\s*right\\s*=\\s*head$",
-                    "hint": "Create a dummy node pointing to head. Init `left` at dummy, `right` at head.",
-                    "solutionCode": "    dummy = ListNode(0, head)\n    left = dummy\n    right = head"
+                    "instruction": "Create a dummy node that points to the head of the list.",
+                    "placeholderCode": "    dummy = ListNode(0, head)",
+                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(0,\\s*head\\)$",
+                    "hint": "A dummy node helps handle edge cases like removing the very first node of the list.",
+                    "solutionCode": "    dummy = ListNode(0, head)"
                 },
                 {
                     "id": 3,
-                    "instruction": "Move right pointer n steps ahead.",
-                    "placeholderCode": "    while n > 0 and right:\n        right = right.next\n        n -= 1",
-                    "validationRegex": "^\\s+while\\s+n\\s*>\\s+0\\s+and\\s+right:\\s*right\\s*=\\s*right\\.next\\s*n\\s*-=\\s*1$",
-                    "hint": "Advance `right` by `n` steps.\\n\\nExample:\\nList: 1->2->3->4->5, n=2.\\nRight starts at 1. Move 2 steps -> Right at 3.\\nGap between Left (Dummy) and Right is now n+1 nodes effectively.",
-                    "solutionCode": "    while n > 0 and right:\n        right = right.next\n        n -= 1"
+                    "instruction": "Initialize the 'left' pointer at the dummy node.",
+                    "placeholderCode": "    left = dummy",
+                    "validationRegex": "^\\s+left\\s*=\\s*dummy$",
+                    "hint": "The `left` pointer will eventually be at the node right BEFORE the one we want to remove.",
+                    "solutionCode": "    left = dummy"
                 },
                 {
                     "id": 4,
-                    "instruction": "Move both pointers until right reaches the end.",
-                    "placeholderCode": "    while right:\n        left = left.next\n        right = right.next",
-                    "validationRegex": "^\\s+while\\s+right:\\s*left\\s*=\\s*left\\.next\\s*right\\s*=\\s*right\\.next$",
-                    "hint": "Move `left` and `right` together until `right` is null.",
-                    "solutionCode": "    while right:\n        left = left.next\n        right = right.next"
+                    "instruction": "Initialize the 'right' pointer at the head of the list.",
+                    "placeholderCode": "    right = head",
+                    "validationRegex": "^\\s+right\\s*=\\s*head$",
+                    "hint": "The `right` pointer will move ahead to create a gap of size `n` with `left`.",
+                    "solutionCode": "    right = head"
                 },
                 {
                     "id": 5,
-                    "instruction": "Remove the nth node.",
-                    "placeholderCode": "    left.next = left.next.next",
-                    "validationRegex": "^\\s+left\\.next\\s*=\\s*left\\.next\\.next$",
-                    "hint": "Set `left.next` to `left.next.next`.",
-                    "solutionCode": "    left.next = left.next.next"
+                    "instruction": "Move the 'right' pointer 'n' steps forward.",
+                    "placeholderCode": "    while n > 0 and right:\n        right = right.next\n        n -= 1",
+                    "validationRegex": "^\\s+while\\s+n\\s*>\\s+0\\s+and\\s+right:\\s*right\\s*=\\s*right\\.next\\s*n\\s*-=\\s*1$",
+                    "hint": "By moving `right` ahead by `n`, the distance between `left` and `right` becomes `n+1` nodes.",
+                    "solutionCode": "    while n > 0 and right:\n        right = right.next\n        n -= 1"
                 },
                 {
                     "id": 6,
-                    "instruction": "Return dummy.next.",
+                    "instruction": "Move both pointers until 'right' reaches the end of the list.",
+                    "placeholderCode": "    while right:\n        left = left.next\n        right = right.next",
+                    "validationRegex": "^\\s+while\\s+right:\\s*left\\s*=\\s*left\\.next\\s*right\\s*=\\s*right\\.next$",
+                    "hint": "Keep the gap constant until `right` falls off the end. `left` will now be right before the target node.",
+                    "solutionCode": "    while right:\n        left = left.next\n        right = right.next"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Remove the target node by skipping it.",
+                    "placeholderCode": "    left.next = left.next.next",
+                    "validationRegex": "^\\s+left\\.next\\s*=\\s*left\\.next\\.next$",
+                    "hint": "Link `left.next` directly to the node after the target.",
+                    "solutionCode": "    left.next = left.next.next"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return the head of the modified list using the dummy node's next pointer.",
                     "placeholderCode": "    return dummy.next",
                     "validationRegex": "^\\s+return\\s+dummy\\.next$",
-                    "hint": "Return `dummy.next`.",
+                    "hint": "The `dummy.next` always points to the correct new head.",
                     "solutionCode": "    return dummy.next"
                 }
             ]
