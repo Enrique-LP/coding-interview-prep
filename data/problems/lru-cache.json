@@ -20,78 +20,238 @@
         "brute-force": {
             "id": "brute-force",
             "name": "OrderedDict",
-            "description": "Use Python's OrderedDict.",
+            "description": "Use Python's OrderedDict to manage insertion order automatically.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the class LRUCache.",
-                    "placeholderCode": "class LRUCache:\n    def __init__(self, capacity):\n        self.cache = collections.OrderedDict()\n        self.capacity = capacity",
-                    "validationRegex": "^class\\s+LRUCache:\\s*def\\s+__init__\\(self,\\s*capacity\\):\\s*self\\.cache\\s*=\\s*collections\\.OrderedDict\\(\\)\\s*self\\.capacity\\s*=\\s*capacity$",
-                    "hint": "Initialize `self.cache` as `OrderedDict`.",
-                    "solutionCode": "class LRUCache:\n    def __init__(self, capacity):\n        self.cache = collections.OrderedDict()\n        self.capacity = capacity"
+                    "instruction": "Define the class 'LRUCache'.",
+                    "placeholderCode": "class LRUCache:",
+                    "validationRegex": "^class\\s+LRUCache:$",
+                    "hint": "Start by defining the main class.",
+                    "solutionCode": "class LRUCache:"
                 },
                 {
                     "id": 2,
-                    "instruction": "Implement get.",
-                    "placeholderCode": "    def get(self, key):\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]",
-                    "validationRegex": "^\\s+def\\s+get\\(self,\\s*key\\):\\s*if\\s+key\\s+not\\s+in\\s+self\\.cache:\\s*return\\s*-1\\s*self\\.cache\\.move_to_end\\(key\\)\\s*return\\s+self\\.cache\\[key\\]$",
-                    "hint": "Return -1 if not found. Move to end if found.",
-                    "solutionCode": "    def get(self, key):\n        if key not in self.cache:\n            return -1\n        self.cache.move_to_end(key)\n        return self.cache[key]"
+                    "instruction": "Define the '__init__' method that takes 'capacity'.",
+                    "placeholderCode": "    def __init__(self, capacity):",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self,\\s*capacity\\):$",
+                    "hint": "Set up the initial state of the cache.",
+                    "solutionCode": "    def __init__(self, capacity):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Implement put.",
-                    "placeholderCode": "    def put(self, key, value):\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)",
-                    "validationRegex": "^\\s+def\\s+put\\(self,\\s*key,\\s*value\\):\\s*if\\s+key\\s+in\\s+self\\.cache:\\s*self\\.cache\\.move_to_end\\(key\\)\\s*self\\.cache\\[key\\]\\s*=\\s*value\\s*if\\s+len\\(self\\.cache\\)\\s*>\\s*self\\.capacity:\\s*self\\.cache\\.popitem\\(last=False\\)$",
-                    "hint": "Update value and move to end. Pop first item if over capacity.",
-                    "solutionCode": "    def put(self, key, value):\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)"
+                    "instruction": "Initialize the ordered dictionary and the capacity.",
+                    "placeholderCode": "        self.cache = collections.OrderedDict()\n        self.capacity = capacity",
+                    "validationRegex": "^\\s+self\\.cache\\s*=\\s*collections\\.OrderedDict\\(\\)\\s*self\\.capacity\\s*=\\s*capacity$",
+                    "hint": "Use `collections.OrderedDict()` to keep track of key order.",
+                    "solutionCode": "        self.cache = collections.OrderedDict()\n        self.capacity = capacity"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define the 'get' method that takes 'key'.",
+                    "placeholderCode": "    def get(self, key):",
+                    "validationRegex": "^\\s+def\\s+get\\(self,\\s*key\\):$",
+                    "hint": "This method retrieves a value and marks it as recently used.",
+                    "solutionCode": "    def get(self, key):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return -1 if the key is not in the cache.",
+                    "placeholderCode": "        if key not in self.cache:\n            return -1",
+                    "validationRegex": "^\\s+if\\s+key\\s+not\\s+in\\s+self\\.cache:\\s*return\\s*-1$",
+                    "hint": "Standard check for existence.",
+                    "solutionCode": "        if key not in self.cache:\n            return -1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Move the key to the end to mark it as most recently used and return its value.",
+                    "placeholderCode": "        self.cache.move_to_end(key)\n        return self.cache[key]",
+                    "validationRegex": "^\\s+self\\.cache\\.move_to_end\\(key\\)\\s*return\\s+self\\.cache\\[key\\]$",
+                    "hint": "`move_to_end` is a specific method of `OrderedDict`.",
+                    "solutionCode": "        self.cache.move_to_end(key)\n        return self.cache[key]"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Define the 'put' method that takes 'key' and 'value'.",
+                    "placeholderCode": "    def put(self, key, value):",
+                    "validationRegex": "^\\s+def\\s+put\\(self,\\s*key,\\s*value\\):$",
+                    "hint": "This method adds or updates values.",
+                    "solutionCode": "    def put(self, key, value):"
+                },
+                {
+                    "id": 8,
+                    "instruction": "If the key exists, move it to the end before updating.",
+                    "placeholderCode": "        if key in self.cache:\n            self.cache.move_to_end(key)",
+                    "validationRegex": "^\\s+if\\s+key\\s+in\\s+self\\.cache:\\s*self\\.cache\\.move_to_end\\(key\\)$",
+                    "hint": "Updated keys also become 'recently used'.",
+                    "solutionCode": "        if key in self.cache:\n            self.cache.move_to_end(key)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Set the key to the new value.",
+                    "placeholderCode": "        self.cache[key] = value",
+                    "validationRegex": "^\\s+self\\.cache\\[key\\]\\s*=\\s*value$",
+                    "hint": "Assign the value in the dictionary.",
+                    "solutionCode": "        self.cache[key] = value"
+                },
+                {
+                    "id": 10,
+                    "instruction": "If over capacity, remove the least recently used item.",
+                    "placeholderCode": "        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)",
+                    "validationRegex": "^\\s+if\\s+len\\(self\\.cache\\)\\s*>\\s+self\\.capacity:\\s*self\\.cache\\.popitem\\(last=False\\)$",
+                    "hint": "`popitem(last=False)` removes the first (oldest) item.",
+                    "solutionCode": "        if len(self.cache) > self.capacity:\n            self.cache.popitem(last=False)"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
             "name": "Doubly Linked List + HashMap",
-            "description": "Custom implementation for O(1) operations.",
+            "description": "Custom implementation using a dummy-head/tail Doubly Linked List and a HashMap for O(1) performance.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define Node class.",
-                    "placeholderCode": "class Node:\n    def __init__(self, key, val):\n        self.key, self.val = key, val\n        self.prev, self.next = None, None",
-                    "validationRegex": "^class\\s+Node:\\s*def\\s+__init__\\(self,\\s*key,\\s*val\\):\\s*self\\.key,\\s*self\\.val\\s*=\\s*key,\\s*val\\s*self\\.prev,\\s*self\\.next\\s*=\\s*None,\\s*None$",
-                    "hint": "Define a doubly linked list node.",
-                    "solutionCode": "class Node:\n    def __init__(self, key, val):\n        self.key, self.val = key, val\n        self.prev, self.next = None, None"
+                    "instruction": "Define the helper 'Node' class for the doubly linked list.",
+                    "placeholderCode": "class Node:",
+                    "validationRegex": "^class\\s+Node:$",
+                    "hint": "We need a class to represent each element in the cache.",
+                    "solutionCode": "class Node:"
                 },
                 {
                     "id": 2,
-                    "instruction": "Define LRUCache class.",
-                    "placeholderCode": "class LRUCache:\n    def __init__(self, capacity):\n        self.cap = capacity\n        self.cache = {}\n        self.left, self.right = Node(0, 0), Node(0, 0)\n        self.left.next, self.right.prev = self.right, self.left",
-                    "validationRegex": "^class\\s+LRUCache:\\s*def\\s+__init__\\(self,\\s*capacity\\):\\s*self\\.cap\\s*=\\s*capacity\\s*self\\.cache\\s*=\\s*{}\\s*self\\.left,\\s*self\\.right\\s*=\\s*Node\\(0,\\s*0\\),\\s*Node\\(0,\\s*0\\)\\s*self\\.left\\.next,\\s*self\\.right\\.prev\\s*=\\s*self\\.right,\\s*self\\.left$",
-                    "hint": "Init hash map and dummy head/tail nodes.",
-                    "solutionCode": "class LRUCache:\n    def __init__(self, capacity):\n        self.cap = capacity\n        self.cache = {}\n        self.left, self.right = Node(0, 0), Node(0, 0)\n        self.left.next, self.right.prev = self.right, self.left"
+                    "instruction": "Define the constructor for 'Node' that takes 'key' and 'val'.",
+                    "placeholderCode": "    def __init__(self, key, val):",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self,\\s*key,\\s*val\\):$",
+                    "hint": "The node needs to store both the key and the value.",
+                    "solutionCode": "    def __init__(self, key, val):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Implement helper methods.",
-                    "placeholderCode": "    def remove(self, node):\n        prev, nxt = node.prev, node.next\n        prev.next, nxt.prev = nxt, prev\n    def insert(self, node):\n        prev, nxt = self.right.prev, self.right\n        prev.next = nxt.prev = node\n        node.next, node.prev = nxt, prev",
-                    "validationRegex": "^\\s+def\\s+remove\\(self,\\s*node\\):\\s*prev,\\s*nxt\\s*=\\s*node\\.prev,\\s*node\\.next\\s*prev\\.next,\\s*nxt\\.prev\\s*=\\s*nxt,\\s*prev\\s*def\\s+insert\\(self,\\s*node\\):\\s*prev,\\s*nxt\\s*=\\s*self\\.right\\.prev,\\s*self\\.right\\s*prev\\.next\\s*=\\s*nxt\\.prev\\s*=\\s*node\\s*node\\.next,\\s*node\\.prev\\s*=\\s*nxt,\\s*prev$",
-                    "hint": "Implement `remove` (unlink node) and `insert` (add to right).",
-                    "solutionCode": "    def remove(self, node):\n        prev, nxt = node.prev, node.next\n        prev.next, nxt.prev = nxt, prev\n    def insert(self, node):\n        prev, nxt = self.right.prev, self.right\n        prev.next = nxt.prev = node\n        node.next, node.prev = nxt, prev"
+                    "instruction": "Initialize the node's key, value, and the 'prev' and 'next' pointers.",
+                    "placeholderCode": "        self.key, self.val = key, val\n        self.prev, self.next = None, None",
+                    "validationRegex": "^\\s+self\\.key,\\s*self\\.val\\s*=\\s*key,\\s*val\\s*self\\.prev,\\s*self\\.next\\s*=\\s*None,\\s*None$",
+                    "hint": "The pointers `prev` and `next` allow for O(1) removal.",
+                    "solutionCode": "        self.key, self.val = key, val\n        self.prev, self.next = None, None"
                 },
                 {
                     "id": 4,
-                    "instruction": "Implement get.",
-                    "placeholderCode": "    def get(self, key):\n        if key in self.cache:\n            self.remove(self.cache[key])\n            self.insert(self.cache[key])\n            return self.cache[key].val\n        return -1",
-                    "validationRegex": "^\\s+def\\s+get\\(self,\\s*key\\):\\s*if\\s+key\\s+in\\s+self\\.cache:\\s*self\\.remove\\(self\\.cache\\[key\\]\\)\\s*self\\.insert\\(self\\.cache\\[key\\]\\)\\s*return\\s+self\\.cache\\[key\\]\\.val\\s*return\\s*-1$",
-                    "hint": "If found, move to right (most recently used) and return value.",
-                    "solutionCode": "    def get(self, key):\n        if key in self.cache:\n            self.remove(self.cache[key])\n            self.insert(self.cache[key])\n            return self.cache[key].val\n        return -1"
+                    "instruction": "Define the main 'LRUCache' class.",
+                    "placeholderCode": "class LRUCache:",
+                    "validationRegex": "^class\\s+LRUCache:$",
+                    "hint": "This class will manage the hash map and the linked list.",
+                    "solutionCode": "class LRUCache:"
                 },
                 {
                     "id": 5,
-                    "instruction": "Implement put.",
-                    "placeholderCode": "    def put(self, key, value):\n        if key in self.cache:\n            self.remove(self.cache[key])\n        self.cache[key] = Node(key, value)\n        self.insert(self.cache[key])\n        if len(self.cache) > self.cap:\n            lru = self.left.next\n            self.remove(lru)\n            del self.cache[lru.key]",
-                    "validationRegex": "^\\s+def\\s+put\\(self,\\s*key,\\s*value\\):\\s*if\\s+key\\s+in\\s+self\\.cache:\\s*self\\.remove\\(self\\.cache\\[key\\]\\)\\s*self\\.cache\\[key\\]\\s*=\\s*Node\\(key,\\s*value\\)\\s*self\\.insert\\(self\\.cache\\[key\\]\\)\\s*if\\s+len\\(self\\.cache\\)\\s*>\\s*self\\.cap:\\s*lru\\s*=\\s*self\\.left\\.next\\s*self\\.remove\\(lru\\)\\s*del\\s+self\\.cache\\[lru\\.key\\]$",
-                    "hint": "Insert new node. Remove LRU (left.next) if over capacity.",
-                    "solutionCode": "    def put(self, key, value):\n        if key in self.cache:\n            self.remove(self.cache[key])\n        self.cache[key] = Node(key, value)\n        self.insert(self.cache[key])\n        if len(self.cache) > self.cap:\n            lru = self.left.next\n            self.remove(lru)\n            del self.cache[lru.key]"
+                    "instruction": "Define the constructor for 'LRUCache' that takes 'capacity'.",
+                    "placeholderCode": "    def __init__(self, capacity):",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self,\\s*capacity\\):$",
+                    "hint": "The capacity determines when to evict nodes.",
+                    "solutionCode": "    def __init__(self, capacity):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Initialize capacity, the cache dictionary, and dummy head/tail nodes.",
+                    "placeholderCode": "        self.cap = capacity\n        self.cache = {}\n        self.left, self.right = Node(0, 0), Node(0, 0)\n        self.left.next, self.right.prev = self.right, self.left",
+                    "validationRegex": "^\\s+self\\.cap\\s*=\\s*capacity\\s*self\\.cache\\s*=\\s*{}\\s*self\\.left,\\s*self\\.right\\s*=\\s*Node\\(0,\\s*0\\),\\s*Node\\(0,\\s*0\\)\\s*self\\.left\\.next,\\s*self\\.right\\.prev\\s*=\\s*self\\.right,\\s*self\\.left$",
+                    "hint": "Dummy nodes (left and right) eliminate edge cases for empty lists.",
+                    "solutionCode": "        self.cap = capacity\n        self.cache = {}\n        self.left, self.right = Node(0, 0), Node(0, 0)\n        self.left.next, self.right.prev = self.right, self.left"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Define the 'remove' helper method to unlink a node from the list.",
+                    "placeholderCode": "    def remove(self, node):",
+                    "validationRegex": "^\\s+def\\s+remove\\(self,\\s*node\\):$",
+                    "hint": "This method removes a node from its current position in the list.",
+                    "solutionCode": "    def remove(self, node):"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Update the pointers of the surrounding nodes to bypass the current node.",
+                    "placeholderCode": "        prev, nxt = node.prev, node.next\n        prev.next, nxt.prev = nxt, prev",
+                    "validationRegex": "^\\s+prev,\\s*nxt\\s*=\\s*node\\.prev,\\s*node\\.next\\s*prev\\.next,\\s*nxt\\.prev\\s*=\\s*nxt,\\s*prev$",
+                    "hint": "Link the previous node directly to the next node.",
+                    "solutionCode": "        prev, nxt = node.prev, node.next\n        prev.next, nxt.prev = nxt, prev"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Define the 'insert' helper method to add a node to the right (most recent).",
+                    "placeholderCode": "    def insert(self, node):",
+                    "validationRegex": "^\\s+def\\s+insert\\(self,\\s*node\\):$",
+                    "hint": "New nodes or recently used nodes are always moved to the right dummy.",
+                    "solutionCode": "    def insert(self, node):"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Link the node between the current last node and the right dummy.",
+                    "placeholderCode": "        prev, nxt = self.right.prev, self.right\n        prev.next = nxt.prev = node\n        node.next, node.prev = nxt, prev",
+                    "validationRegex": "^\\s+prev,\\s*nxt\\s*=\\s*self\\.right\\.prev,\\s*self\\.right\\s*prev\\.next\\s*=\\s*nxt\\.prev\\s*=\\s*node\\s*node\\.next,\\s*node\\.prev\\s*=\\s*nxt,\\s*prev$",
+                    "hint": "Update 4 pointers in total to complete the insertion.",
+                    "solutionCode": "        prev, nxt = self.right.prev, self.right\n        prev.next = nxt.prev = node\n        node.next, node.prev = nxt, prev"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Define the 'get' method that takes 'key'.",
+                    "placeholderCode": "    def get(self, key):",
+                    "validationRegex": "^\\s+def\\s+get\\(self,\\s*key\\):$",
+                    "hint": "Seeking a value also updates its 'recency'.",
+                    "solutionCode": "    def get(self, key):"
+                },
+                {
+                    "id": 12,
+                    "instruction": "If the key exists, remove it from its position and re-insert it at the end.",
+                    "placeholderCode": "        if key in self.cache:\n            self.remove(self.cache[key])\n            self.insert(self.cache[key])\n            return self.cache[key].val",
+                    "validationRegex": "^\\s+if\\s+key\\s+in\\s+self\\.cache:\\s*self\\.remove\\(self\\.cache\\[key\\]\\)\\s*self\\.insert\\(self\\.cache\\[key\\]\\)\\s*return\\s+self\\.cache\\[key\\]\\.val$",
+                    "hint": "Move it to the 'most recent' position (right) and return the value.",
+                    "solutionCode": "        if key in self.cache:\n            self.remove(self.cache[key])\n            self.insert(self.cache[key])\n            return self.cache[key].val"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Otherwise, return -1.",
+                    "placeholderCode": "        return -1",
+                    "validationRegex": "^\\s+return\\s*-1$",
+                    "hint": "Standard return when the key is missing.",
+                    "solutionCode": "        return -1"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Define the 'put' method that takes 'key' and 'value'.",
+                    "placeholderCode": "    def put(self, key, value):",
+                    "validationRegex": "^\\s+def\\s+put\\(self,\\s*key,\\s*value\\):$",
+                    "hint": "This is where we handle insertions and evictions.",
+                    "solutionCode": "    def put(self, key, value):"
+                },
+                {
+                    "id": 15,
+                    "instruction": "If the key already exists, remove the old node.",
+                    "placeholderCode": "        if key in self.cache:\n            self.remove(self.cache[key])",
+                    "validationRegex": "^\\s+if\\s+key\\s+in\\s+self\\.cache:\\s*self\\.remove\\(self\\.cache\\[key\\]\\)$",
+                    "hint": "We remove it to update its position or value.",
+                    "solutionCode": "        if key in self.cache:\n            self.remove(self.cache[key])"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Create a new node and insert it into both the cache and the list.",
+                    "placeholderCode": "        self.cache[key] = Node(key, value)\n        self.insert(self.cache[key])",
+                    "validationRegex": "^\\s+self\\.cache\\[key\\]\\s*=\\s*Node\\(key,\\s*value\\)\\s*self\\.insert\\(self\\.cache\\[key\\]\\)$",
+                    "hint": "Every new entry becomes the 'most recent'.",
+                    "solutionCode": "        self.cache[key] = Node(key, value)\n        self.insert(self.cache[key])"
+                },
+                {
+                    "id": 17,
+                    "instruction": "If capacity is exceeded, identify the LRU node (left.next).",
+                    "placeholderCode": "        if len(self.cache) > self.cap:\n            lru = self.left.next",
+                    "validationRegex": "^\\s+if\\s+len\\(self\\.cache\\)\\s*>\\s+self\\.cap:\\s*lru\\s*=\\s*self\\.left\\.next$",
+                    "hint": "The node after the left dummy is ALWAYS the oldest.",
+                    "solutionCode": "        if len(self.cache) > self.cap:\n            lru = self.left.next"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Remove the LRU node from the list and delete it from the cache dictionary.",
+                    "placeholderCode": "            self.remove(lru)\n            del self.cache[lru.key]",
+                    "validationRegex": "^\\s+self\\.remove\\(lru\\)\\s*del\\s+self\\.cache\\[lru\\.key\\]$",
+                    "hint": "This step frees up space for new entries.",
+                    "solutionCode": "            self.remove(lru)\n            del self.cache[lru.key]"
                 }
             ]
         }
