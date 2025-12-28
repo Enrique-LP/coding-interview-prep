@@ -54,38 +54,150 @@
         "optimal": {
             "id": "optimal",
             "name": "Iterative",
-            "description": "Reverse groups iteratively.",
+            "description": "Reverse groups iteratively using a dummy node and a helper to find the k-th node.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function reverse_k_group that takes head and k.",
+                    "instruction": "Define the function 'reverse_k_group' that takes 'head' and 'k'.",
                     "placeholderCode": "def reverse_k_group(head, k):",
                     "validationRegex": "^def\\s+reverse_k_group\\(head,\\s*k\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "This is the main function to reverse the list in groups.",
                     "solutionCode": "def reverse_k_group(head, k):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize dummy.",
-                    "placeholderCode": "    dummy = ListNode(0, head)\n    groupPrev = dummy",
-                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(0,\\s*head\\)\\s*groupPrev\\s*=\\s*dummy$",
-                    "hint": "Init dummy node and `groupPrev`.",
-                    "solutionCode": "    dummy = ListNode(0, head)\n    groupPrev = dummy"
+                    "instruction": "Initialize a dummy node pointing to the head.",
+                    "placeholderCode": "    dummy = ListNode(0, head)",
+                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(0,\\s*head\\)$",
+                    "hint": "A dummy node helps manage the new head of the list.",
+                    "solutionCode": "    dummy = ListNode(0, head)"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate and reverse groups.",
-                    "placeholderCode": "    while True:\n        kth = self.getKth(groupPrev, k)\n        if not kth:\n            break\n        groupNext = kth.next\n        prev, curr = kth.next, groupPrev.next\n        while curr != groupNext:\n            tmp = curr.next\n            curr.next = prev\n            prev = curr\n            curr = tmp\n        tmp = groupPrev.next\n        groupPrev.next = kth\n        groupPrev = tmp",
-                    "validationRegex": "^\\s*while\\s+True:\\s*kth\\s*=\\s*self\\.getKth\\(groupPrev,\\s*k\\)\\s*if\\s+not\\s+kth:\\s*break\\s*groupNext\\s*=\\s*kth\\.next\\s*prev,\\s*curr\\s*=\\s*kth\\.next,\\s*groupPrev\\.next\\s*while\\s+curr\\s*!=\\s*groupNext:\\s*tmp\\s*=\\s*curr\\.next\\s*curr\\.next\\s*=\\s*prev\\s*prev\\s*=\\s*curr\\s*curr\\s*=\\s*tmp\\s*tmp\\s*=\\s*groupPrev\\.next\\s*groupPrev\\.next\\s*=\\s*kth\\s*groupPrev\\s*=\\s*tmp$",
-                    "hint": "Get kth node. If not exists, break. Else reverse group between `groupPrev` and `groupNext`.",
-                    "solutionCode": "    while True:\n        kth = self.getKth(groupPrev, k)\n        if not kth:\n            break\n        groupNext = kth.next\n        prev, curr = kth.next, groupPrev.next\n        while curr != groupNext:\n            tmp = curr.next\n            curr.next = prev\n            prev = curr\n            curr = tmp\n        tmp = groupPrev.next\n        groupPrev.next = kth\n        groupPrev = tmp"
+                    "instruction": "Initialize 'groupPrev' to point to the dummy node.",
+                    "placeholderCode": "    groupPrev = dummy",
+                    "validationRegex": "^\\s+groupPrev\\s*=\\s*dummy$",
+                    "hint": "This pointer track the node immediately before the current group.",
+                    "solutionCode": "    groupPrev = dummy"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Start an infinite loop to process each group of k nodes.",
+                    "placeholderCode": "    while True:",
+                    "validationRegex": "^\\s+while\\s+True:$",
+                    "hint": "We will exit the loop manually when we don't have k nodes left.",
+                    "solutionCode": "    while True:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Find the k-th node from the current 'groupPrev'.",
+                    "placeholderCode": "        kth = self.getKth(groupPrev, k)",
+                    "validationRegex": "^\\s+kth\\s*=\\s*self\\.getKth\\(groupPrev,\\s*k\\)$",
+                    "hint": "You'll need a helper method to traverse k steps forward.",
+                    "solutionCode": "        kth = self.getKth(groupPrev, k)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check if the k-th node exists.",
+                    "placeholderCode": "        if not kth:",
+                    "validationRegex": "^\\s+if\\s+not\\s+kth:$",
+                    "hint": "If kth is None, it means we don't have a full group left to reverse.",
+                    "solutionCode": "        if not kth:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Break the loop if a full group of k nodes is not found.",
+                    "placeholderCode": "            break",
+                    "validationRegex": "^\\s+break$",
+                    "hint": "Exit the loop to conclude the process.",
+                    "solutionCode": "            break"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Identify the node immediately after the current group.",
+                    "placeholderCode": "        groupNext = kth.next",
+                    "validationRegex": "^\\s+groupNext\\s*=\\s*kth\\.next$",
+                    "hint": "We need to save this to link the reversed group later.",
+                    "solutionCode": "        groupNext = kth.next"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Initialize 'prev' and 'curr' for the group reversal process.",
+                    "placeholderCode": "        prev, curr = kth.next, groupPrev.next",
+                    "validationRegex": "^\\s+prev,\\s*curr\\s*=\\s*kth\\.next,\\s*groupPrev\\.next$",
+                    "hint": "'prev' starts as groupNext to link the group's end properly.",
+                    "solutionCode": "        prev, curr = kth.next, groupPrev.next"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Start a loop to reverse the nodes within the k-group.",
+                    "placeholderCode": "        while curr != groupNext:",
+                    "validationRegex": "^\\s+while\\s+curr\\s*!=\\s*groupNext:$",
+                    "hint": "We repeat this until we reach the start of the next group.",
+                    "solutionCode": "        while curr != groupNext:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Temporarily store the next node.",
+                    "placeholderCode": "            tmp = curr.next",
+                    "validationRegex": "^\\s+tmp\\s*=\\s*curr\\.next$",
+                    "hint": "Don't lose the link to the rest of the list.",
+                    "solutionCode": "            tmp = curr.next"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Point the current node's next to the previous node.",
+                    "placeholderCode": "            curr.next = prev",
+                    "validationRegex": "^\\s+curr\\.next\\s*=\\s*prev$",
+                    "hint": "This is the actual reversal step.",
+                    "solutionCode": "            curr.next = prev"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Move 'prev' pointer forward to the current node.",
+                    "placeholderCode": "            prev = curr",
+                    "validationRegex": "^\\s+prev\\s*=\\s*curr$",
+                    "hint": "Prepare 'prev' for the next iteration.",
+                    "solutionCode": "            prev = curr"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Move 'curr' pointer forward to the next node.",
+                    "placeholderCode": "            curr = tmp",
+                    "validationRegex": "^\\s+curr\\s*=\\s*tmp$",
+                    "hint": "Advance 'curr' using our temporary variable.",
+                    "solutionCode": "            curr = tmp"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Identify the node that will become the new end of the group.",
+                    "placeholderCode": "        tmp = groupPrev.next",
+                    "validationRegex": "^\\s+tmp\\s*=\\s*groupPrev\\.next$",
+                    "hint": "The current head of the group will be its tail after reversal.",
+                    "solutionCode": "        tmp = groupPrev.next"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Connect the end of the previous group to the new head of this group.",
+                    "placeholderCode": "        groupPrev.next = kth",
+                    "validationRegex": "^\\s+groupPrev\\.next\\s*=\\s*kth$",
+                    "hint": "Update the link from the preceding group.",
+                    "solutionCode": "        groupPrev.next = kth"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Move 'groupPrev' to the end of the newly reversed group.",
+                    "placeholderCode": "        groupPrev = tmp",
+                    "validationRegex": "^\\s+groupPrev\\s*=\\s*tmp$",
+                    "hint": "This node is now the predecessor for the next group.",
+                    "solutionCode": "        groupPrev = tmp"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Return the modified linked list through the dummy's next pointer.",
                     "placeholderCode": "    return dummy.next",
                     "validationRegex": "^\\s+return\\s+dummy\\.next$",
-                    "hint": "Return `dummy.next`.",
+                    "hint": "The dummy node's next points to the final modified head.",
                     "solutionCode": "    return dummy.next"
                 }
             ]
