@@ -65,19 +65,19 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Import the 'heapq' library at the top to use a min-heap.",
-                    "placeholderCode": "import heapq",
-                    "validationRegex": "^import\\s+heapq$",
-                    "hint": "Python's `heapq` module provides an efficient priority queue implementation.",
-                    "solutionCode": "import heapq"
-                },
-                {
-                    "id": 2,
                     "instruction": "Define the function 'merge_k_lists' that takes 'lists' as an argument.",
                     "placeholderCode": "def merge_k_lists(lists):",
                     "validationRegex": "^def\\s+merge_k_lists\\(lists\\):$",
                     "hint": "The input is a list of k sorted linked lists.",
                     "solutionCode": "def merge_k_lists(lists):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Import the 'heapq' library at the very top of your file (above the function).",
+                    "placeholderCode": "import heapq",
+                    "validationRegex": "^import\\s+heapq$",
+                    "hint": "Python's `heapq` module provides an efficient priority queue implementation.",
+                    "solutionCode": "import heapq"
                 },
                 {
                     "id": 3,
