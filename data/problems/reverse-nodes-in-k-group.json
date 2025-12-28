@@ -199,6 +199,46 @@
                     "validationRegex": "^\\s+return\\s+dummy\\.next$",
                     "hint": "The dummy node's next points to the final modified head.",
                     "solutionCode": "    return dummy.next"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Define the helper method 'getKth' that takes 'curr' and 'k'.",
+                    "placeholderCode": "def getKth(self, curr, k):",
+                    "validationRegex": "^def\\s+getKth\\(self,\\s*curr,\\s*k\\):$",
+                    "hint": "This method helps find the node 'k' positions ahead.",
+                    "solutionCode": "def getKth(self, curr, k):"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Iterate while the current node exists and k is greater than zero.",
+                    "placeholderCode": "    while curr and k > 0:",
+                    "validationRegex": "^\\s+while\\s+curr\\s+and\\s+k\\s*>\\s*0:$",
+                    "hint": "We need both conditions to safely traverse the list.",
+                    "solutionCode": "    while curr and k > 0:"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Move the 'curr' pointer forward.",
+                    "placeholderCode": "        curr = curr.next",
+                    "validationRegex": "^\\s+curr\\s*=\\s*curr\\.next$",
+                    "hint": "Advance one node at a time.",
+                    "solutionCode": "        curr = curr.next"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Decrement k.",
+                    "placeholderCode": "        k -= 1",
+                    "validationRegex": "^\\s+k\\s*-=\\s*1$",
+                    "hint": "Track how many more steps we need to take.",
+                    "solutionCode": "        k -= 1"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Return the k-th node found.",
+                    "placeholderCode": "    return curr",
+                    "validationRegex": "^\\s+return\\s+curr$",
+                    "hint": "This will return the node at the end of the group or None.",
+                    "solutionCode": "    return curr"
                 }
             ]
         }
