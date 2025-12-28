@@ -67,7 +67,7 @@
                     "id": 1,
                     "instruction": "Define the function 'merge_k_lists' that takes 'lists' as an argument.",
                     "placeholderCode": "def merge_k_lists(lists):",
-                    "validationRegex": "^def\\s+merge_k_lists\\(lists\\):$",
+                    "validationRegex": "def\\s+merge_k_lists\\(lists\\):",
                     "hint": "The input is a list of k sorted linked lists.",
                     "solutionCode": "def merge_k_lists(lists):"
                 },
@@ -75,8 +75,8 @@
                     "id": 2,
                     "instruction": "Import the 'heapq' library at the very top of your file (above the function).",
                     "placeholderCode": "import heapq",
-                    "validationRegex": "^import\\s+heapq$",
-                    "hint": "Python's `heapq` module provides an efficient priority queue implementation.",
+                    "validationRegex": "^import\\s+heapq[\\s\\S]*def\\s+merge_k_lists",
+                    "hint": "Python standard dictates that imports should be at the top of the file.",
                     "solutionCode": "import heapq"
                 },
                 {
