@@ -65,34 +65,122 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function merge_k_lists that takes lists.",
+                    "instruction": "Define the function 'merge_k_lists' that takes 'lists' as an argument.",
                     "placeholderCode": "def merge_k_lists(lists):",
                     "validationRegex": "^def\\s+merge_k_lists\\(lists\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "The input is a list of k sorted linked lists.",
                     "solutionCode": "def merge_k_lists(lists):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize heap.",
-                    "placeholderCode": "    import heapq\n    heap = []\n    for i, l in enumerate(lists):\n        if l:\n            heapq.heappush(heap, (l.val, i, l))",
-                    "validationRegex": "^\\s+import\\s+heapq\\s*heap\\s*=\\s*\\[\\]\\s*for\\s+i,\\s*l\\s+in\\s+enumerate\\(lists\\):\\s*if\\s+l:\\s*heapq\\.heappush\\(heap,\\s*\\(l\\.val,\\s*i,\\s*l\\)\\)$",
-                    "hint": "Push the head of each list into the heap.",
-                    "solutionCode": "    import heapq\n    heap = []\n    for i, l in enumerate(lists):\n        if l:\n            heapq.heappush(heap, (l.val, i, l))"
+                    "instruction": "Import the 'heapq' library to use a min-heap.",
+                    "placeholderCode": "    import heapq",
+                    "validationRegex": "^\\s+import\\s+heapq$",
+                    "hint": "Python's `heapq` module provides an efficient priority queue implementation.",
+                    "solutionCode": "    import heapq"
                 },
                 {
                     "id": 3,
-                    "instruction": "Process heap and build result list.",
-                    "placeholderCode": "    dummy = ListNode(0)\n    curr = dummy\n    while heap:\n        val, i, node = heapq.heappop(heap)\n        curr.next = node\n        curr = curr.next\n        if node.next:\n            heapq.heappush(heap, (node.next.val, i, node.next))",
-                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(0\\)\\s*curr\\s*=\\s*dummy\\s*while\\s+heap:\\s*val,\\s*i,\\s*node\\s*=\\s*heapq\\.heappop\\(heap\\)\\s*curr\\.next\\s*=\\s*node\\s*curr\\s*=\\s*curr\\.next\\s*if\\s+node\\.next:\\s*heapq\\.heappush\\(heap,\\s*\\(node\\.next\\.val,\\s*i,\\s*node\\.next\\)\\)$",
-                    "hint": "Extract minimum from heap, append to result, and push next node of extracted list.",
-                    "solutionCode": "    dummy = ListNode(0)\n    curr = dummy\n    while heap:\n        val, i, node = heapq.heappop(heap)\n        curr.next = node\n        curr = curr.next\n        if node.next:\n            heapq.heappush(heap, (node.next.val, i, node.next))"
+                    "instruction": "Initialize an empty list to serve as our min-heap.",
+                    "placeholderCode": "    heap = []",
+                    "validationRegex": "^\\s+heap\\s*=\\s*\\[\\]$",
+                    "hint": "This heap will store the current smallest nodes from each list.",
+                    "solutionCode": "    heap = []"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Iterate through each linked list with its index.",
+                    "placeholderCode": "    for i, l in enumerate(lists):",
+                    "validationRegex": "^\\s+for\\s+i,\\s*l\\s+in\\s+enumerate\\(lists\\):$",
+                    "hint": "We use `enumerate` to get a unique index `i` for each list `l`.",
+                    "solutionCode": "    for i, l in enumerate(lists):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if the current linked list is not empty.",
+                    "placeholderCode": "        if l:",
+                    "validationRegex": "^\\s+if\\s+l:$",
+                    "hint": "Only non-empty lists should be added to the heap initally.",
+                    "solutionCode": "        if l:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Push a tuple containing the value, index, and the node into the heap.",
+                    "placeholderCode": "            heapq.heappush(heap, (l.val, i, l))",
+                    "validationRegex": "^\\s+heapq\\.heappush\\(heap,\\s*\\(l\\.val,\\s*i,\\s*l\\)\\)$",
+                    "hint": "The tuple `(val, i, node)` ensures nodes are sorted by value, using `i` as a tie-breaker.",
+                    "solutionCode": "            heapq.heappush(heap, (l.val, i, l))"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Initialize a dummy node to act as the head of the merged list.",
+                    "placeholderCode": "    dummy = ListNode(0)",
+                    "validationRegex": "^\\s+dummy\\s*=\\s*ListNode\\(0\\)$",
+                    "hint": "A dummy node simplifies the logic for building the result list.",
+                    "solutionCode": "    dummy = ListNode(0)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Initialize a 'curr' pointer at the dummy node.",
+                    "placeholderCode": "    curr = dummy",
+                    "validationRegex": "^\\s+curr\\s*=\\s*dummy$",
+                    "hint": "We use `curr` to append the smallest nodes as we find them.",
+                    "solutionCode": "    curr = dummy"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Continue extracting nodes from the heap while it is not empty.",
+                    "placeholderCode": "    while heap:",
+                    "validationRegex": "^\\s+while\\s+heap:$",
+                    "hint": "The smallest value across all lists is always at the top of the heap.",
+                    "solutionCode": "    while heap:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Pop the smallest node (tuple) from the heap.",
+                    "placeholderCode": "        val, i, node = heapq.heappop(heap)",
+                    "validationRegex": "^\\s+val,\\s*i,\\s*node\\s*=\\s*heapq\\.heappop\\(heap\\)$",
+                    "hint": "Extract the node with the minimum value currently in the heap.",
+                    "solutionCode": "        val, i, node = heapq.heappop(heap)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Link the extracted node to our resulting list.",
+                    "placeholderCode": "        curr.next = node",
+                    "validationRegex": "^\\s+curr\\.next\\s*=\\s*node$",
+                    "hint": "Append the node to the end of our growing merged list.",
+                    "solutionCode": "        curr.next = node"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Move the 'curr' pointer forward.",
+                    "placeholderCode": "        curr = curr.next",
+                    "validationRegex": "^\\s+curr\\s*=\\s*curr\\.next$",
+                    "hint": "Advance the pointer to the newly added node.",
+                    "solutionCode": "        curr = curr.next"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Check if the extracted node has a siguiente node.",
+                    "placeholderCode": "        if node.next:",
+                    "validationRegex": "^\\s+if\\s+node\\.next:$",
+                    "hint": "If more nodes remain in the list we just popped from, we need to add the next one.",
+                    "solutionCode": "        if node.next:"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Push the next node of that list into the heap.",
+                    "placeholderCode": "            heapq.heappush(heap, (node.next.val, i, node.next))",
+                    "validationRegex": "^\\s+heapq\\.heappush\\(heap,\\s*\\(node\\.next\\.val,\\s*i,\\s*node\\.next\\)\\)$",
+                    "hint": "This keeps the heap updated with the candidates for the next minimum.",
+                    "solutionCode": "            heapq.heappush(heap, (node.next.val, i, node.next))"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Return the merged list starting from dummy.next.",
                     "placeholderCode": "    return dummy.next",
                     "validationRegex": "^\\s+return\\s+dummy\\.next$",
-                    "hint": "Return `dummy.next`.",
+                    "hint": "Discard the initial placeholder dummy node.",
                     "solutionCode": "    return dummy.next"
                 }
             ]
