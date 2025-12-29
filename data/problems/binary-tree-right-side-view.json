@@ -5,15 +5,22 @@
     "examples": [
         {
             "input": "root = [1,2,3,null,5,null,4]",
-            "output": "[1,3,4]"
+            "output": [
+                1,
+                3,
+                4
+            ]
         },
         {
             "input": "root = [1,null,3]",
-            "output": "[1,3]"
+            "output": [
+                1,
+                3
+            ]
         },
         {
             "input": "root = []",
-            "output": "[]"
+            "output": []
         }
     ],
     "constraints": [
@@ -25,63 +32,207 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "BFS",
-            "description": "Level order traversal, take last element.",
+            "name": "Level Order Traversal (BFS)",
+            "description": "Traverse the tree level by level and collect the last node seen at each level.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function right_side_view that takes root.",
+                    "instruction": "Define the function 'right_side_view' that takes 'root' as an argument.",
                     "placeholderCode": "def right_side_view(root):",
-                    "validationRegex": "^def\\s+right_side_view\\(root\\):$"
+                    "validationRegex": "^def\\s+right_side_view\\(root\\):$",
+                    "hint": "The input is the root of a binary tree.",
+                    "solutionCode": "def right_side_view(root):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize queue and result.",
-                    "placeholderCode": "    res = []\n    q = collections.deque([root])",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*q\\s*=\\s*collections\\.deque\\(\\[root\\]\\)$"
+                    "instruction": "Initialize the result list 'res' and a queue 'q' with the root node if it exists.",
+                    "placeholderCode": "    res = []\n    q = collections.deque([root] if root else [])",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*q\\s*=\\s*collections\\.deque\\(\\[root\\]\\s+if\\s+root\\s+else\\s*\\[\\]\\)$",
+                    "hint": "Use `collections.deque` for efficient $O(1)$ pops from the left.",
+                    "solutionCode": "    res = []\n    q = collections.deque([root] if root else [])"
                 },
                 {
                     "id": 3,
-                    "instruction": "Process levels.",
-                    "placeholderCode": "    while q:\n        rightSide = None\n        qLen = len(q)\n        for i in range(qLen):\n            node = q.popleft()\n            if node:\n                rightSide = node\n                q.append(node.left)\n                q.append(node.right)\n        if rightSide:\n            res.append(rightSide.val)",
-                    "validationRegex": "^\\s+while\\s+q:\\s*rightSide\\s*=\\s*None\\s*qLen\\s*=\\s*len\\(q\\)\\s*for\\s+i\\s+in\\s+range\\(qLen\\):\\s*node\\s*=\\s*q\\.popleft\\(\\)\\s*if\\s+node:\\s*rightSide\\s*=\\s*node\\s*q\\.append\\(node\\.left\\)\\s*q\\.append\\(node\\.right\\)\\s*if\\s+rightSide:\\s*res\\.append\\(rightSide\\.val\\)$"
+                    "instruction": "Start a loop that runs while the queue is not empty.",
+                    "placeholderCode": "    while q:",
+                    "validationRegex": "^\\s+while\\s+q:$",
+                    "hint": "This loop processes the tree level by level.",
+                    "solutionCode": "    while q:"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Get the number of nodes at the current level.",
+                    "placeholderCode": "        level_size = len(q)",
+                    "validationRegex": "^\\s+level_size\\s*=\\s*len\\(q\\)$",
+                    "hint": "The size of the queue at the start of each while-loop iteration is the number of nodes in the current level.",
+                    "solutionCode": "        level_size = len(q)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate through all nodes at the current level.",
+                    "placeholderCode": "        for i in range(level_size):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(level_size\\):$",
+                    "hint": "Use a for-loop to process exactly 'level_size' nodes.",
+                    "solutionCode": "        for i in range(level_size):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Pop the node from the front of the queue.",
+                    "placeholderCode": "            node = q.popleft()",
+                    "validationRegex": "^\\s+node\\s*=\\s*q\\.popleft\\(\\)$",
+                    "hint": "Get the next node to process from the current level.",
+                    "solutionCode": "            node = q.popleft()"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check if the current node is the last node of the level.",
+                    "placeholderCode": "            if i == level_size - 1:",
+                    "validationRegex": "^\\s+if\\s+i\\s*==\\s*level_size\\s*-\\s*1:$",
+                    "hint": "The last node processed in the inner loop is the one visible from the right side.",
+                    "solutionCode": "            if i == level_size - 1:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Add the value of the last node of the level to the result list.",
+                    "placeholderCode": "                res.append(node.val)",
+                    "validationRegex": "^\\s+res\\.append\\(node\\.val\\)$",
+                    "hint": "The right-side view consists of these last nodes from each level.",
+                    "solutionCode": "                res.append(node.val)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if the left child exists and add it to the queue.",
+                    "placeholderCode": "            if node.left: q.append(node.left)",
+                    "validationRegex": "^\\s+if\\s+node\\.left:\\s*q\\.append\\(node\\.left\\)$",
+                    "hint": "Standard BFS: add children for the next level processing.",
+                    "solutionCode": "            if node.left: q.append(node.left)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Check if the right child exists and add it to the queue.",
+                    "placeholderCode": "            if node.right: q.append(node.right)",
+                    "validationRegex": "^\\s+if\\s+node\\.right:\\s*q\\.append\\(node\\.right\\)$",
+                    "hint": "Adding children to the queue will build the next level.",
+                    "solutionCode": "            if node.right: q.append(node.right)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Return the final result list.",
                     "placeholderCode": "    return res",
-                    "validationRegex": "^\\s+return\\s+res$"
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "The list now contains values from top to bottom as seen from the right side.",
+                    "solutionCode": "    return res"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
-            "name": "BFS",
-            "description": "Same as brute force.",
+            "name": "Breadth-First Search (Granular)",
+            "description": "Level order traversal using a queue to efficiently identify the rightmost node of each level.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function right_side_view that takes root.",
+                    "instruction": "Define the'right_side_view' function with 'root' as parameter.",
                     "placeholderCode": "def right_side_view(root):",
-                    "validationRegex": "^def\\s+right_side_view\\(root\\):$"
+                    "validationRegex": "^def\\s+right_side_view\\(root\\):$",
+                    "hint": "Start by defining the main function.",
+                    "solutionCode": "def right_side_view(root):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize queue and result.",
-                    "placeholderCode": "    res = []\n    q = collections.deque([root])",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*q\\s*=\\s*collections\\.deque\\(\\[root\\]\\)$"
+                    "instruction": "Check if the root is None and return an empty list if so.",
+                    "placeholderCode": "    if not root: return []",
+                    "validationRegex": "^\\s+if\\s+not\\s+root:\\s*return\\s*\\[\\]$",
+                    "hint": "Edge case: handle an empty tree immediately.",
+                    "solutionCode": "    if not root: return []"
                 },
                 {
                     "id": 3,
-                    "instruction": "Process levels.",
-                    "placeholderCode": "    while q:\n        rightSide = None\n        qLen = len(q)\n        for i in range(qLen):\n            node = q.popleft()\n            if node:\n                rightSide = node\n                q.append(node.left)\n                q.append(node.right)\n        if rightSide:\n            res.append(rightSide.val)",
-                    "validationRegex": "^\\s+while\\s+q:\\s*rightSide\\s*=\\s*None\\s*qLen\\s*=\\s*len\\(q\\)\\s*for\\s+i\\s+in\\s+range\\(qLen\\):\\s*node\\s*=\\s*q\\.popleft\\(\\)\\s*if\\s+node:\\s*rightSide\\s*=\\s*node\\s*q\\.append\\(node\\.left\\)\\s*q\\.append\\(node\\.right\\)\\s*if\\s+rightSide:\\s*res\\.append\\(rightSide\\.val\\)$"
+                    "instruction": "Initialize the result list 'res' to store visible nodes.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "You will append one value for each level to this list.",
+                    "solutionCode": "    res = []"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Initialize a double-ended queue 'q' with the root node.",
+                    "placeholderCode": "    q = collections.deque([root])",
+                    "validationRegex": "^\\s+q\\s*=\\s*collections\\.deque\\(\\[root\\]\\)$",
+                    "hint": "A deque allows for efficient node extraction during traversal.",
+                    "solutionCode": "    q = collections.deque([root])"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Enter a loop that continues as long as there are nodes in the queue.",
+                    "placeholderCode": "    while q:",
+                    "validationRegex": "^\\s+while\\s+q:$",
+                    "hint": "Each iteration of this loop represents one level of the tree.",
+                    "solutionCode": "    while q:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Determine the number of nodes at the current level.",
+                    "placeholderCode": "        level_size = len(q)",
+                    "validationRegex": "^\\s+level_size\\s*=\\s*len\\(q\\)$",
+                    "hint": "This helps in processing all nodes of the current level before moving to the next.",
+                    "solutionCode": "        level_size = len(q)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Begin a loop to process all nodes at the current level.",
+                    "placeholderCode": "        for i in range(level_size):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(level_size\\):$",
+                    "hint": "We iterate 'level_size' times to empty the current level from the queue.",
+                    "solutionCode": "        for i in range(level_size):"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Extract the front node from the queue.",
+                    "placeholderCode": "            node = q.popleft()",
+                    "validationRegex": "^\\s+node\\s*=\\s*q\\.popleft\\(\\)$",
+                    "hint": "Use popleft to get nodes in the order they were added.",
+                    "solutionCode": "            node = q.popleft()"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if this node is the last node of the level (rightmost).",
+                    "placeholderCode": "            if i == level_size - 1:",
+                    "validationRegex": "^\\s+if\\s+i\\s*==\\s*level_size\\s*-\\s*1:$",
+                    "hint": "In a level-order traversal, the last node of each level is the one farthest to the right.",
+                    "solutionCode": "            if i == level_size - 1:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Append the rightmost node's value to the result list.",
+                    "placeholderCode": "                res.append(node.val)",
+                    "validationRegex": "^\\s+res\\.append\\(node\\.val\\)$",
+                    "hint": "Store this value as it's part of the right side view.",
+                    "solutionCode": "                res.append(node.val)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Add the left child to the queue if it exists.",
+                    "placeholderCode": "            if node.left: q.append(node.left)",
+                    "validationRegex": "^\\s+if\\s+node\\.left:\\s*q\\.append\\(node\\.left\\)$",
+                    "hint": "Append children to the queue for the next level traversal.",
+                    "solutionCode": "            if node.left: q.append(node.left)"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Add the right child to the queue if it exists.",
+                    "placeholderCode": "            if node.right: q.append(node.right)",
+                    "validationRegex": "^\\s+if\\s+node\\.right:\\s*q\\.append\\(node\\.right\\)$",
+                    "hint": "Ensure both children are added to maintain the level structure.",
+                    "solutionCode": "            if node.right: q.append(node.right)"
+                },
+                {
+                    "id": 13,
+                    "instruction": "After processing all levels, return the result list.",
                     "placeholderCode": "    return res",
-                    "validationRegex": "^\\s+return\\s+res$"
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "This completes the traversal and returns the collected values.",
+                    "solutionCode": "    return res"
                 }
             ]
         }
