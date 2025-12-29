@@ -22,51 +22,175 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "DFS",
-            "description": "Traverse tree tracking max value.",
+            "name": "Recursive DFS",
+            "description": "Standard recursive DFS to visit all nodes while maintaining the maximum value seen in the path.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function good_nodes that takes root.",
+                    "instruction": "Define the main function 'good_nodes' that takes the root of the tree.",
                     "placeholderCode": "def good_nodes(root):",
-                    "validationRegex": "^def\\s+good_nodes\\(root\\):$"
+                    "validationRegex": "^def\\s+good_nodes\\(root\\):$",
+                    "hint": "The function will return an integer representing the count of good nodes.",
+                    "solutionCode": "def good_nodes(root):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Define DFS helper.",
-                    "placeholderCode": "    def dfs(node, maxVal):\n        if not node: return 0\n        res = 1 if node.val >= maxVal else 0\n        maxVal = max(maxVal, node.val)\n        res += dfs(node.left, maxVal)\n        res += dfs(node.right, maxVal)\n        return res",
-                    "validationRegex": "^\\s+def\\s+dfs\\(node,\\s*maxVal\\):\\s*if\\s+not\\s+node:\\s*return\\s*0\\s*res\\s*=\\s*1\\s+if\\s+node\\.val\\s*>=\\s*maxVal\\s+else\\s*0\\s*maxVal\\s*=\\s*max\\(maxVal,\\s*node\\.val\\)\\s*res\\s*\\+=\\s*dfs\\(node\\.left,\\s*maxVal\\)\\s*res\\s*\\+=\\s*dfs\\(node\\.right,\\s*maxVal\\)\\s*return\\s+res$"
+                    "instruction": "Define an inner helper function 'dfs' that takes the current node and the maximum value seen so far.",
+                    "placeholderCode": "    def dfs(node, max_val):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(node,\\s*max_val\\):$",
+                    "hint": "This helper will carry the 'max_val' down each path of the tree.",
+                    "solutionCode": "    def dfs(node, max_val):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Call DFS.",
+                    "instruction": "Check if the current node is null (base case).",
+                    "placeholderCode": "        if not node:",
+                    "validationRegex": "^\\s+if\\s+not\\s+node:$",
+                    "hint": "Recursion must stop when we reach an empty branch.",
+                    "solutionCode": "        if not node:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Return 0 if the node is null.",
+                    "placeholderCode": "            return 0",
+                    "validationRegex": "^\\s+return\\s+0$",
+                    "hint": "An empty node cannot be a good node.",
+                    "solutionCode": "            return 0"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Determine if the current node is 'good' by comparing its value with the max seen so far.",
+                    "placeholderCode": "        res = 1 if node.val >= max_val else 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*1\\s+if\\s+node\\.val\\s*>=\\s*max_val\\s+else\\s*0$",
+                    "hint": "A node is good if its value is greater than or equal to the maximum value in its path from the root.",
+                    "solutionCode": "        res = 1 if node.val >= max_val else 0"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update the maximum value for the current path.",
+                    "placeholderCode": "        max_val = max(max_val, node.val)",
+                    "validationRegex": "^\\s+max_val\\s*=\\s*max\\(max_val,\\s*node\\.val\\)$",
+                    "hint": "The new max value for children will be either the previous max or the current node's value.",
+                    "solutionCode": "        max_val = max(max_val, node.val)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Recursively call DFS for the left child and add the result to 'res'.",
+                    "placeholderCode": "        res += dfs(node.left, max_val)",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*dfs\\(node\\.left,\\s*max_val\\)$",
+                    "hint": "Count good nodes in the left subtree.",
+                    "solutionCode": "        res += dfs(node.left, max_val)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Recursively call DFS for the right child and add the result to 'res'.",
+                    "placeholderCode": "        res += dfs(node.right, max_val)",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*dfs\\(node\\.right,\\s*max_val\\)$",
+                    "hint": "Count good nodes in the right subtree.",
+                    "solutionCode": "        res += dfs(node.right, max_val)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return the final count from the helper function.",
+                    "placeholderCode": "        return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "This returns the total good nodes found in this subtree.",
+                    "solutionCode": "        return res"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Start the DFS traversal from the root with its own value as the initial maximum.",
                     "placeholderCode": "    return dfs(root, root.val)",
-                    "validationRegex": "^\\s+return\\s+dfs\\(root,\\s*root\\.val\\)$"
+                    "validationRegex": "^\\s+return\\s+dfs\\(root,\\s*root\\.val\\)$",
+                    "hint": "The root node is always good, so starting with `root.val` as max is safe.",
+                    "solutionCode": "    return dfs(root, root.val)"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
-            "name": "DFS",
-            "description": "Same as brute force.",
+            "name": "Recursive DFS (Single Path)",
+            "description": "Optimized DFS that tracks the maximum value along each path from the root to the leaf without extra work.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function good_nodes that takes root.",
+                    "instruction": "Define the main function 'good_nodes' that takes the root of the tree.",
                     "placeholderCode": "def good_nodes(root):",
-                    "validationRegex": "^def\\s+good_nodes\\(root\\):$"
+                    "validationRegex": "^def\\s+good_nodes\\(root\\):$",
+                    "hint": "This is the entry point for our binary tree traversal.",
+                    "solutionCode": "def good_nodes(root):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Define DFS helper.",
-                    "placeholderCode": "    def dfs(node, maxVal):\n        if not node: return 0\n        res = 1 if node.val >= maxVal else 0\n        maxVal = max(maxVal, node.val)\n        res += dfs(node.left, maxVal)\n        res += dfs(node.right, maxVal)\n        return res",
-                    "validationRegex": "^\\s+def\\s+dfs\\(node,\\s*maxVal\\):\\s*if\\s+not\\s+node:\\s*return\\s*0\\s*res\\s*=\\s*1\\s+if\\s+node\\.val\\s*>=\\s*maxVal\\s+else\\s*0\\s*maxVal\\s*=\\s*max\\(maxVal,\\s*node\\.val\\)\\s*res\\s*\\+=\\s*dfs\\(node\\.left,\\s*maxVal\\)\\s*res\\s*\\+=\\s*dfs\\(node\\.right,\\s*maxVal\\)\\s*return\\s+res$"
+                    "instruction": "Define the 'dfs' helper function to carry the path's maximum value.",
+                    "placeholderCode": "    def dfs(node, max_val):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(node,\\s*max_val\\):$",
+                    "hint": "The 'max_val' parameter keeps track of the largest node encountered on the way down.",
+                    "solutionCode": "    def dfs(node, max_val):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Call DFS.",
+                    "instruction": "Handle the base case: return 0 if the current node is null.",
+                    "placeholderCode": "        if not node:",
+                    "validationRegex": "^\\s+if\\s+not\\s+node:$",
+                    "hint": "Null nodes don't contribute to the count.",
+                    "solutionCode": "        if not node:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Stop recursion for this branch.",
+                    "placeholderCode": "            return 0",
+                    "validationRegex": "^\\s+return\\s+0$",
+                    "hint": "Return 0 to indicate no good nodes at this leaf.",
+                    "solutionCode": "            return 0"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if the current node is 'good' (its value >= path's maximum).",
+                    "placeholderCode": "        res = 1 if node.val >= max_val else 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*1\\s+if\\s+node\\.val\\s*>=\\s*max_val\\s+else\\s*0$",
+                    "hint": "If the current node's value is the highest seen in its path, it is a good node.",
+                    "solutionCode": "        res = 1 if node.val >= max_val else 0"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update the maximum value found so far for the children's paths.",
+                    "placeholderCode": "        max_val = max(max_val, node.val)",
+                    "validationRegex": "^\\s+max_val\\s*=\\s*max\\(max_val,\\s*node\\.val\\)$",
+                    "hint": "Children of this node will compare their values against this updated maximum.",
+                    "solutionCode": "        max_val = max(max_val, node.val)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Accumulate good nodes found in the left child's path.",
+                    "placeholderCode": "        res += dfs(node.left, max_val)",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*dfs\\(node\\.left,\\s*max_val\\)$",
+                    "hint": "Pass the current 'max_val' down to the left child.",
+                    "solutionCode": "        res += dfs(node.left, max_val)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Accumulate good nodes found in the right child's path.",
+                    "placeholderCode": "        res += dfs(node.right, max_val)",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*dfs\\(node\\.right,\\s*max_val\\)$",
+                    "hint": "Pass the current 'max_val' down to the right child.",
+                    "solutionCode": "        res += dfs(node.right, max_val)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return the total number of good nodes in this subtree.",
+                    "placeholderCode": "        return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the result up to the parent caller.",
+                    "solutionCode": "        return res"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Initial call to the DFS helper starting with the root and its value as the maximum.",
                     "placeholderCode": "    return dfs(root, root.val)",
-                    "validationRegex": "^\\s+return\\s+dfs\\(root,\\s*root\\.val\\)$"
+                    "validationRegex": "^\\s+return\\s+dfs\\(root,\\s*root\\.val\\)$",
+                    "hint": "Start the process with the root node and its own value.",
+                    "solutionCode": "    return dfs(root, root.val)"
                 }
             ]
         }
