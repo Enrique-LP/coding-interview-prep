@@ -5,12 +5,12 @@
     "examples": [
         {
             "input": "root = [1,2,3]",
-            "output": "6",
+            "output": 6,
             "explanation": "The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6."
         },
         {
             "input": "root = [-10,9,20,null,null,15,7]",
-            "output": "42",
+            "output": 42,
             "explanation": "The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42."
         }
     ],
@@ -23,79 +23,191 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "DFS",
-            "description": "Compute max path sum at each node.",
+            "name": "Recursive DFS",
+            "description": "Post-order traversal to calculate the maximum contribution of each subtree while updating a global maximum path sum.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function max_path_sum that takes root.",
+                    "instruction": "Define the 'max_path_sum' function with 'root' as parameter.",
                     "placeholderCode": "def max_path_sum(root):",
                     "validationRegex": "^def\\s+max_path_sum\\(root\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Start the main function definition.",
                     "solutionCode": "def max_path_sum(root):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize global max.",
+                    "instruction": "Initialize a mutable list 'res' with the root's value to store our global maximum.",
                     "placeholderCode": "    res = [root.val]",
                     "validationRegex": "^\\s+res\\s*=\\s*\\[root\\.val\\]$",
-                    "hint": "Use a list to store the global maximum.",
+                    "hint": "Using a list allows us to modify the global maximum inside our nested helper function.",
                     "solutionCode": "    res = [root.val]"
                 },
                 {
                     "id": 3,
-                    "instruction": "Define DFS helper.",
-                    "placeholderCode": "    def dfs(root):\n        if not root: return 0\n        leftMax = dfs(root.left)\n        rightMax = dfs(root.right)\n        leftMax = max(leftMax, 0)\n        rightMax = max(rightMax, 0)\n        res[0] = max(res[0], root.val + leftMax + rightMax)\n        return root.val + max(leftMax, rightMax)",
-                    "validationRegex": "^\\s+def\\s+dfs\\(root\\):\\s*if\\s+not\\s+root:\\s*return\\s*0\\s*leftMax\\s*=\\s*dfs\\(root\\.left\\)\\s*rightMax\\s*=\\s*dfs\\(root\\.right\\)\\s*leftMax\\s*=\\s*max\\(leftMax,\\s*0\\)\\s*rightMax\\s*=\\s*max\\(rightMax,\\s*0\\)\\s*res\\[0\\]\\s*=\\s*max\\(res\\[0\\],\\s*root\\.val\\s*\\+\\s*leftMax\\s*\\+\\s*rightMax\\)\\s*return\\s+root\\.val\\s*\\+\\s*max\\(leftMax,\\s*rightMax\\)$",
-                    "hint": "Calculate max path sum including current node and update global max.\\n\\nExample:\\nNode=1. LeftMax=2, RightMax=3.\\nPath through Node: 2 + 1 + 3 = 6. Update Global Max.\\nReturn to parent: 1 + max(2, 3) = 4.",
-                    "solutionCode": "    def dfs(root):\n        if not root: return 0\n        leftMax = dfs(root.left)\n        rightMax = dfs(root.right)\n        leftMax = max(leftMax, 0)\n        rightMax = max(rightMax, 0)\n        res[0] = max(res[0], root.val + leftMax + rightMax)\n        return root.val + max(leftMax, rightMax)"
+                    "instruction": "Define the 'dfs' helper function that takes the current node.",
+                    "placeholderCode": "    def dfs(curr):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(curr\\):$",
+                    "hint": "This function will calculate the max path starting from the current node going downwards.",
+                    "solutionCode": "    def dfs(curr):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Call DFS and return result.",
-                    "placeholderCode": "    dfs(root)\n    return res[0]",
-                    "validationRegex": "^\\s+dfs\\(root\\)\\s*return\\s+res\\[0\\]$",
-                    "hint": "Start the DFS traversal.",
-                    "solutionCode": "    dfs(root)\n    return res[0]"
+                    "instruction": "Handle the base case: return 0 if the current node is null.",
+                    "placeholderCode": "        if not curr: return 0",
+                    "validationRegex": "^\\s+if\\s+not\\s+curr:\\s*return\\s*0$",
+                    "hint": "An empty node adds 0 to the path sum.",
+                    "solutionCode": "        if not curr: return 0"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Recursively find the maximum path sum from the left child.",
+                    "placeholderCode": "        leftMax = dfs(curr.left)",
+                    "validationRegex": "^\\s+leftMax\\s*=\\s*dfs\\(curr\\.left\\)$",
+                    "hint": "Travel down to the left subtree.",
+                    "solutionCode": "        leftMax = dfs(curr.left)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Recursively find the maximum path sum from the right child.",
+                    "placeholderCode": "        rightMax = dfs(curr.right)",
+                    "validationRegex": "^\\s+rightMax\\s*=\\s*dfs\\(curr\\.right\\)$",
+                    "hint": "Travel down to the right subtree.",
+                    "solutionCode": "        rightMax = dfs(curr.right)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Ignore negative path sums from the left child by taking the max with 0.",
+                    "placeholderCode": "        leftMax = max(leftMax, 0)",
+                    "validationRegex": "^\\s+leftMax\\s*=\\s*max\\(leftMax,\\s*0\\)$",
+                    "hint": "If a subtree has a negative total, it's better not to include it in our path.",
+                    "solutionCode": "        leftMax = max(leftMax, 0)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Ignore negative path sums from the right child by taking the max with 0.",
+                    "placeholderCode": "        rightMax = max(rightMax, 0)",
+                    "validationRegex": "^\\s+rightMax\\s*=\\s*max\\(rightMax,\\s*0\\)$",
+                    "hint": "Similarly, discard negative contributions from the right.",
+                    "solutionCode": "        rightMax = max(rightMax, 0)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Update the global maximum by considering the current node as the 'peak' of a path.",
+                    "placeholderCode": "        res[0] = max(res[0], curr.val + leftMax + rightMax)",
+                    "validationRegex": "^\\s+res\\[0\\]\\s*=\\s*max\\(res\\[0\\],\\s*curr\\.val\\s*\\+\\s*leftMax\\s*\\+\\s*rightMax\\)$",
+                    "hint": "A path can 'bridge' through the current node, combining left and right subtrees.",
+                    "solutionCode": "        res[0] = max(res[0], curr.val + leftMax + rightMax)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Return the maximum single path reaching this node to the parent caller.",
+                    "placeholderCode": "        return curr.val + max(leftMax, rightMax)",
+                    "validationRegex": "^\\s+return\\s+curr\\.val\\s*\\+\\s*max\\(leftMax,\\s*rightMax\\)$",
+                    "hint": "A parent can only extend a path through one of its children (not both).",
+                    "solutionCode": "        return curr.val + max(leftMax, rightMax)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Kick off the DFS traversal starting from the root.",
+                    "placeholderCode": "    dfs(root)",
+                    "validationRegex": "^\\s+dfs\\(root\\)$",
+                    "hint": "Call your helper function to process the entire tree.",
+                    "solutionCode": "    dfs(root)"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Return the first element of the 'res' list as the final result.",
+                    "placeholderCode": "    return res[0]",
+                    "validationRegex": "^\\s+return\\s+res\\[0\\]$",
+                    "hint": "The answer is stored in our mutable list at index 0.",
+                    "solutionCode": "    return res[0]"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
-            "name": "DFS",
-            "description": "Same as brute force.",
+            "name": "One-Pass DFS (Path Contribution)",
+            "description": "Highly efficient DFS that calculates both the maximum contribution of a node to its parent and updates the worldwide maximum sum at each step.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function max_path_sum that takes root.",
+                    "instruction": "Start the 'max_path_sum' function definition.",
                     "placeholderCode": "def max_path_sum(root):",
                     "validationRegex": "^def\\s+max_path_sum\\(root\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "hint": "Input is the root of the binary tree.",
                     "solutionCode": "def max_path_sum(root):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize global max.",
+                    "instruction": "Create a list 'res' starting with root value to maintain the maximum path sum found.",
                     "placeholderCode": "    res = [root.val]",
                     "validationRegex": "^\\s+res\\s*=\\s*\\[root\\.val\\]$",
-                    "hint": "Use a list to store the global maximum.",
+                    "hint": "Using a list wrapper allows the nested function to update this variable.",
                     "solutionCode": "    res = [root.val]"
                 },
                 {
                     "id": 3,
-                    "instruction": "Define DFS helper.",
-                    "placeholderCode": "    def dfs(root):\n        if not root: return 0\n        leftMax = dfs(root.left)\n        rightMax = dfs(root.right)\n        leftMax = max(leftMax, 0)\n        rightMax = max(rightMax, 0)\n        res[0] = max(res[0], root.val + leftMax + rightMax)\n        return root.val + max(leftMax, rightMax)",
-                    "validationRegex": "^\\s+def\\s+dfs\\(root\\):\\s*if\\s+not\\s+root:\\s*return\\s*0\\s*leftMax\\s*=\\s*dfs\\(root\\.left\\)\\s*rightMax\\s*=\\s*dfs\\(root\\.right\\)\\s*leftMax\\s*=\\s*max\\(leftMax,\\s*0\\)\\s*rightMax\\s*=\\s*max\\(rightMax,\\s*0\\)\\s*res\\[0\\]\\s*=\\s*max\\(res\\[0\\],\\s*root\\.val\\s*\\+\\s*leftMax\\s*\\+\\s*rightMax\\)\\s*return\\s+root\\.val\\s*\\+\\s*max\\(leftMax,\\s*rightMax\\)$",
-                    "hint": "Calculate max path sum including current node and update global max.",
-                    "solutionCode": "    def dfs(root):\n        if not root: return 0\n        leftMax = dfs(root.left)\n        rightMax = dfs(root.right)\n        leftMax = max(leftMax, 0)\n        rightMax = max(rightMax, 0)\n        res[0] = max(res[0], root.val + leftMax + rightMax)\n        return root.val + max(leftMax, rightMax)"
+                    "instruction": "Define a helper 'dfs' to traverse the tree and calculate path sums.",
+                    "placeholderCode": "    def dfs(curr):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(curr\\):$",
+                    "hint": "This helper will return the maximum 'one-sided' path sum.",
+                    "solutionCode": "    def dfs(curr):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Call DFS and return result.",
-                    "placeholderCode": "    dfs(root)\n    return res[0]",
-                    "validationRegex": "^\\s+dfs\\(root\\)\\s*return\\s+res\\[0\\]$",
-                    "hint": "Start the DFS traversal.",
-                    "solutionCode": "    dfs(root)\n    return res[0]"
+                    "instruction": "Return 0 if the current node is None.",
+                    "placeholderCode": "        if not curr: return 0",
+                    "validationRegex": "^\\s+if\\s+not\\s+curr:\\s*return\\s*0$",
+                    "hint": "Base case for the recursive traversal.",
+                    "solutionCode": "        if not curr: return 0"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Calculate the maximum contribution from the left subtree, ensuring it is at least 0.",
+                    "placeholderCode": "        leftMax = max(dfs(curr.left), 0)",
+                    "validationRegex": "^\\s+leftMax\\s*=\\s*max\\(dfs\\(curr\\.left\\),\\s*0\\)$",
+                    "hint": "Combine recursive call and negative handling in one step.",
+                    "solutionCode": "        leftMax = max(dfs(curr.left), 0)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Calculate the maximum contribution from the right subtree, ensuring it is at least 0.",
+                    "placeholderCode": "        rightMax = max(dfs(curr.right), 0)",
+                    "validationRegex": "^\\s+rightMax\\s*=\\s*max\\(dfs\\(curr\\.right\\),\\s*0\\)$",
+                    "hint": "Recursively get right side max; ignore if negative.",
+                    "solutionCode": "        rightMax = max(dfs(curr.right), 0)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Compute the path sum passing through the current node and update the global max.",
+                    "placeholderCode": "        res[0] = max(res[0], curr.val + leftMax + rightMax)",
+                    "validationRegex": "^\\s+res\\[0\\]\\s*=\\s*max\\(res\\[0\\],\\s*curr\\.val\\s*\\+\\s*leftMax\\s*\\+\\s*rightMax\\)$",
+                    "hint": "This represents a path that splits into both left and right branches at this node.",
+                    "solutionCode": "        res[0] = max(res[0], curr.val + leftMax + rightMax)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Return the current node's value plus the best contribution from either the left or right side.",
+                    "placeholderCode": "        return curr.val + max(leftMax, rightMax)",
+                    "validationRegex": "^\\s+return\\s+curr\\.val\\s*\\+\\s*max\\(leftMax,\\s*rightMax\\)$",
+                    "hint": "A path passed back to a parent cannot include both left and right children.",
+                    "solutionCode": "        return curr.val + max(leftMax, rightMax)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Initiate the recursive search.",
+                    "placeholderCode": "    dfs(root)",
+                    "validationRegex": "^\\s+dfs\\(root\\)$",
+                    "hint": "Run the helper function.",
+                    "solutionCode": "    dfs(root)"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Return the final maximum path sum found during the traversal.",
+                    "placeholderCode": "    return res[0]",
+                    "validationRegex": "^\\s+return\\s+res\\[0\\]$",
+                    "hint": "Retrieve the optimized result from the list wrapper.",
+                    "solutionCode": "    return res[0]"
                 }
             ]
         }
