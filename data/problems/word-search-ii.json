@@ -151,14 +151,30 @@
                 },
                 {
                     "id": 13,
-                    "instruction": "Initialize root and build the Trie.",
-                    "placeholderCode": "    root = TrieNode()\n    for w in words:\n        root.addWord(w)",
-                    "validationRegex": "^\\s+root\\s*=\\s*TrieNode\\(\\)\\s*for\\s+w\\s+in\\s+words:\\s*root\\.addWord\\(w\\)$",
-                    "hint": "Insert all target words into a root TrieNode.",
-                    "solutionCode": "    root = TrieNode()\n    for w in words:\n        root.addWord(w)"
+                    "instruction": "Initialize the root 'TrieNode'.",
+                    "placeholderCode": "    root = TrieNode()",
+                    "validationRegex": "^\\s+root\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Every trie starts with a base root node.",
+                    "solutionCode": "    root = TrieNode()"
                 },
                 {
                     "id": 14,
+                    "instruction": "Iterate through each word 'w' in the input words list.",
+                    "placeholderCode": "    for w in words:",
+                    "validationRegex": "^\\s+for\\s+w\\s+in\\s+words:$",
+                    "hint": "Preparation phase: we need to insert all target words into our trie.",
+                    "solutionCode": "    for w in words:"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Add the current word 'w' to the Trie starting from the root.",
+                    "placeholderCode": "        root.addWord(w)",
+                    "validationRegex": "^\\s+root\\.addWord\\(w\\)$",
+                    "hint": "Utilize the 'addWord' helper we defined in the node class.",
+                    "solutionCode": "        root.addWord(w)"
+                },
+                {
+                    "id": 16,
                     "instruction": "Implement the DFS traversal on the board.",
                     "placeholderCode": "    ROWS, COLS = len(board), len(board[0])\n    res, visit = set(), set()\n    def dfs(r, c, node, word):\n        if (r < 0 or c < 0 or r == ROWS or c == COLS or\n            (r, c) in visit or board[r][c] not in node.children):\n            return\n        visit.add((r, c))\n        node = node.children[board[r][c]]\n        word += board[r][c]\n        if node.isWord:\n            res.add(word)\n        dfs(r + 1, c, node, word)\n        dfs(r - 1, c, node, word)\n        dfs(r, c + 1, node, word)\n        dfs(r, c - 1, node, word)\n        visit.remove((r, c))\n    for r in range(ROWS):\n        for c in range(COLS):\n            dfs(r, c, root, \"\")\n    return list(res)",
                     "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)\\s*res,\\s*visit\\s*=\\s*set\\(\\),\\s*set\\(\\)\\s*def\\s+dfs\\(r,\\s*c,\\s*node,\\s*word\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*ROWS\\s+or\\s+c\\s*==\\s*COLS\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+board\\[r\\]\\[c\\]\\s+not\\s+in\\s+node\\.children\\):\\s*return\\s*visit\\.add\\(\\(\\(r,\\s*c\\)\\)\\)\\s*node\\s*=\\s*node\\.children\\[board\\[r\\]\\[c\\]\\]\\s*word\\s*\\+=\\s*board\\[r\\]\\[c\\]\\s*if\\s+node\\.isWord:\\s*res\\.add\\(word\\)\\s*dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*node,\\s*word\\)\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*node,\\s*word\\)\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*node,\\s*word\\)\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*node,\\s*word\\)\\s*visit\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)\\s*for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*dfs\\(r,\\s*c,\\s*root,\\s*\"\"\\)\\s*return\\s+list\\(res\\)$",
