@@ -122,11 +122,99 @@
                 },
                 {
                     "id": 12,
-                    "instruction": "Implement deserialize.",
-                    "placeholderCode": "    def deserialize(self, data):\n        vals = data.split(\",\")\n        self.i = 0\n        def dfs():\n            if vals[self.i] == \"N\":\n                self.i += 1\n                return None\n            node = TreeNode(int(vals[self.i]))\n            self.i += 1\n            node.left = dfs()\n            node.right = dfs()\n            return node\n        return dfs()",
-                    "validationRegex": "^\\s+def\\s+deserialize\\(self,\\s*data\\):\\s*vals\\s*=\\s*data\\.split\\(\",\"\\)\\s*self\\.i\\s*=\\s*0\\s*def\\s+dfs\\(\\):\\s*if\\s+vals\\[self\\.i\\]\\s*==\\s*\"N\":\\s*self\\.i\\s*\\+=\\s*1\\s*return\\s+None\\s*node\\s*=\\s*TreeNode\\(int\\(vals\\[self\\.i\\]\\)\\)\\s*self\\.i\\s*\\+=\\s*1\\s*node\\.left\\s*=\\s*dfs\\(\\)\\s*node\\.right\\s*=\\s*dfs\\(\\)\\s*return\\s+node\\s*return\\s+dfs\\(\\)$",
-                    "hint": "Reconstruct the tree using the same preorder logic.",
-                    "solutionCode": "    def deserialize(self, data):\n        vals = data.split(\",\")\n        self.i = 0\n        def dfs():\n            if vals[self.i] == \"N\":\n                self.i += 1\n                return None\n            node = TreeNode(int(vals[self.i]))\n            self.i += 1\n            node.left = dfs()\n            node.right = dfs()\n            return node\n        return dfs()"
+                    "instruction": "Define the 'deserialize' method that takes the serialized data string.",
+                    "placeholderCode": "    def deserialize(self, data):",
+                    "validationRegex": "^\\s+def\\s+deserialize\\(self,\\s*data\\):$",
+                    "hint": "This method reconstructs the binary tree from the string.",
+                    "solutionCode": "    def deserialize(self, data):"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Split the data string by commas into a list of values.",
+                    "placeholderCode": "        vals = data.split(\",\")",
+                    "validationRegex": "^\\s+vals\\s*=\\s*data\\.split\\(\",\"\\)$",
+                    "hint": "This converts our string back into a manageable list of node values.",
+                    "solutionCode": "        vals = data.split(\",\")"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Initialize a global index 'self.i' to track current position in the list.",
+                    "placeholderCode": "        self.i = 0",
+                    "validationRegex": "^\\s+self\\.i\\s*=\\s*0$",
+                    "hint": "We use a class variable so the nested recursive helper can update it correctly.",
+                    "solutionCode": "        self.i = 0"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Define a nested 'dfs' helper function for tree reconstruction.",
+                    "placeholderCode": "        def dfs():",
+                    "validationRegex": "^\\s+def\\s+dfs\\(\\):$",
+                    "hint": "This helper will build the tree in preorder fashion.",
+                    "solutionCode": "        def dfs():"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Check if the current value in 'vals' is 'N' (null).",
+                    "placeholderCode": "            if vals[self.i] == \"N\":",
+                    "validationRegex": "^\\s+if\\s+vals\\[self\\.i\\]\\s*==\\s*\"N\":$",
+                    "hint": "If we see 'N', it means this branch is empty.",
+                    "solutionCode": "            if vals[self.i] == \"N\":"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Increment the index and return None for the null node.",
+                    "placeholderCode": "                self.i += 1\n                return None",
+                    "validationRegex": "^\\s+self\\.i\\s*\\+=\\s*1\\s*return\\s*None$",
+                    "hint": "Move to the next element and stop the current recursion.",
+                    "solutionCode": "                self.i += 1\n                return None"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Create a new TreeNode using the current integer value.",
+                    "placeholderCode": "            node = TreeNode(int(vals[self.i]))",
+                    "validationRegex": "^\\s+node\\s*=\\s*TreeNode\\(int\\(vals\\[self\\.i\\]\\)\\)$",
+                    "hint": "Convert the stored string back into an integer for the node value.",
+                    "solutionCode": "            node = TreeNode(int(vals[self.i]))"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Increment the index after consuming a value.",
+                    "placeholderCode": "            self.i += 1",
+                    "validationRegex": "^\\s+self\\.i\\s*\\+=\\s*1$",
+                    "hint": "Advance our global pointer to the next element.",
+                    "solutionCode": "            self.i += 1"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Recursively build and link the left subtree.",
+                    "placeholderCode": "            node.left = dfs()",
+                    "validationRegex": "^\\s+node\\.left\\s*=\\s*dfs\\(\\)$",
+                    "hint": "Following preorder, the next elements in the list belong to the left child.",
+                    "solutionCode": "            node.left = dfs()"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Recursively build and link the right subtree.",
+                    "placeholderCode": "            node.right = dfs()",
+                    "validationRegex": "^\\s+node\\.right\\s*=\\s*dfs\\(\\)$",
+                    "hint": "The subsequent elements after the left child's recursion belong to the right child.",
+                    "solutionCode": "            node.right = dfs()"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Return the reconstructed node.",
+                    "placeholderCode": "            return node",
+                    "validationRegex": "^\\s+return\\s+node$",
+                    "hint": "Pass the completed subtree back to the parent caller.",
+                    "solutionCode": "            return node"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Initiate the reconstruction process from the starting index.",
+                    "placeholderCode": "        return dfs()",
+                    "validationRegex": "^\\s+return\\s+dfs\\(\\)$",
+                    "hint": "Returns the root of the fully reconstructed tree.",
+                    "solutionCode": "        return dfs()"
                 }
             ]
         },
@@ -225,11 +313,99 @@
                 },
                 {
                     "id": 12,
-                    "instruction": "Implement deserialize.",
-                    "placeholderCode": "    def deserialize(self, data):\n        vals = data.split(\",\")\n        self.i = 0\n        def dfs():\n            if vals[self.i] == \"N\":\n                self.i += 1\n                return None\n            node = TreeNode(int(vals[self.i]))\n            self.i += 1\n            node.left = dfs()\n            node.right = dfs()\n            return node\n        return dfs()",
-                    "validationRegex": "^\\s+def\\s+deserialize\\(self,\\s*data\\):\\s*vals\\s*=\\s*data\\.split\\(\",\"\\)\\s*self\\.i\\s*=\\s*0\\s*def\\s+dfs\\(\\):\\s*if\\s+vals\\[self\\.i\\]\\s*==\\s*\"N\":\\s*self\\.i\\s*\\+=\\s*1\\s*return\\s+None\\s*node\\s*=\\s*TreeNode\\(int\\(vals\\[self\\.i\\]\\)\\)\\s*self\\.i\\s*\\+=\\s*1\\s*node\\.left\\s*=\\s*dfs\\(\\)\\s*node\\.right\\s*=\\s*dfs\\(\\)\\s*return\\s+node\\s*return\\s+dfs\\(\\)$",
-                    "hint": "Reconstruct the tree using the same preorder logic.",
-                    "solutionCode": "    def deserialize(self, data):\n        vals = data.split(\",\")\n        self.i = 0\n        def dfs():\n            if vals[self.i] == \"N\":\n                self.i += 1\n                return None\n            node = TreeNode(int(vals[self.i]))\n            self.i += 1\n            node.left = dfs()\n            node.right = dfs()\n            return node\n        return dfs()"
+                    "instruction": "Define the 'deserialize' method using the result string.",
+                    "placeholderCode": "    def deserialize(self, data):",
+                    "validationRegex": "^\\s+def\\s+deserialize\\(self,\\s*data\\):$",
+                    "hint": "Transform the string back into a tree object.",
+                    "solutionCode": "    def deserialize(self, data):"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Convert the input string into a list of node labels.",
+                    "placeholderCode": "        vals = data.split(\",\")",
+                    "validationRegex": "^\\s+vals\\s*=\\s*data\\.split\\(\",\"\\)$",
+                    "hint": "Split by the delimiter used during serialization.",
+                    "solutionCode": "        vals = data.split(\",\")"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Set an index 'self.i' to keep track of our progress in the list.",
+                    "placeholderCode": "        self.i = 0",
+                    "validationRegex": "^\\s+self\\.i\\s*=\\s*0$",
+                    "hint": "Keeping 'i' at the class level ensures all recursive calls share the same pointer.",
+                    "solutionCode": "        self.i = 0"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Define a helper function 'dfs' to rebuild the nodes.",
+                    "placeholderCode": "        def dfs():",
+                    "validationRegex": "^\\s+def\\s+dfs\\(\\):$",
+                    "hint": "This helper will be called recursively for each part of the tree.",
+                    "solutionCode": "        def dfs():"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Check if the current label represents a null node.",
+                    "placeholderCode": "            if vals[self.i] == \"N\":",
+                    "validationRegex": "^\\s+if\\s+vals\\[self\\.i\\]\\s*==\\s*\"N\":$",
+                    "hint": "Check the value at the current index.",
+                    "solutionCode": "            if vals[self.i] == \"N\":"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Increment index and return None if a null node is found.",
+                    "placeholderCode": "                self.i += 1\n                return None",
+                    "validationRegex": "^\\s+self\\.i\\s*\\+=\\s*1\\s*return\\s*None$",
+                    "hint": "Advance the pointer and exit the current branch.",
+                    "solutionCode": "                self.i += 1\n                return None"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Initialize a new TreeNode with the integer value from 'vals'.",
+                    "placeholderCode": "            node = TreeNode(int(vals[self.i]))",
+                    "validationRegex": "^\\s+node\\s*=\\s*TreeNode\\(int\\(vals\\[self\\.i\\]\\)\\)$",
+                    "hint": "Construct the current root node of the sub-tree.",
+                    "solutionCode": "            node = TreeNode(int(vals[self.i]))"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Advance the index after processing the node's value.",
+                    "placeholderCode": "            self.i += 1",
+                    "validationRegex": "^\\s+self\\.i\\s*\\+=\\s*1$",
+                    "hint": "Move the pointer to prepare for child construction.",
+                    "solutionCode": "            self.i += 1"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Recursively reconstruct the left subtree.",
+                    "placeholderCode": "            node.left = dfs()",
+                    "validationRegex": "^\\s+node\\.left\\s*=\\s*dfs\\(\\)$",
+                    "hint": "Follow preorder rule: Root, then Left.",
+                    "solutionCode": "            node.left = dfs()"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Recursively reconstruct the right subtree.",
+                    "placeholderCode": "            node.right = dfs()",
+                    "validationRegex": "^\\s+node\\.right\\s*=\\s*dfs\\(\\)$",
+                    "hint": "After the left branch is finished, rebuild the right branch.",
+                    "solutionCode": "            node.right = dfs()"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Return the current node up to its parent.",
+                    "placeholderCode": "            return node",
+                    "validationRegex": "^\\s+return\\s+node$",
+                    "hint": "The node is now fully connected with its descendants.",
+                    "solutionCode": "            return node"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Begin the deserialization process and return the resulting root.",
+                    "placeholderCode": "        return dfs()",
+                    "validationRegex": "^\\s+return\\s+dfs\\(\\)$",
+                    "hint": "This final call starts the cascade and returns the complete tree.",
+                    "solutionCode": "        return dfs()"
                 }
             ]
         }
