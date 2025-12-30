@@ -55,34 +55,114 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define TrieNode.",
-                    "placeholderCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.isWord = False\n    def addWord(self, word):\n        cur = self\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.isWord = True",
-                    "validationRegex": "^class\\s+TrieNode:\\s*def\\s+__init__\\(self\\):\\s*self\\.children\\s*=\\s*{}\\s*self\\.isWord\\s*=\\s*False\\s*def\\s+addWord\\(self,\\s*word\\):\\s*cur\\s*=\\s*self\\s*for\\s+c\\s+in\\s+word:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*cur\\.isWord\\s*=\\s*True$",
-                    "hint": "Define a TrieNode class with children and isWord flag, and an addWord method.",
-                    "solutionCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.isWord = False\n    def addWord(self, word):\n        cur = self\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.isWord = True"
+                    "instruction": "Define the 'TrieNode' class.",
+                    "placeholderCode": "class TrieNode:",
+                    "validationRegex": "^class\\s+TrieNode:$",
+                    "hint": "Standard class definition for a Trie junction.",
+                    "solutionCode": "class TrieNode:"
                 },
                 {
                     "id": 2,
-                    "instruction": "Define find_words.",
-                    "placeholderCode": "def find_words(board, words):",
-                    "validationRegex": "^def\\s+find_words\\(board,\\s*words\\):$",
-                    "hint": "Use `def` to define the function.",
-                    "solutionCode": "def find_words(board, words):"
+                    "instruction": "Define the 'TrieNode' constructor.",
+                    "placeholderCode": "    def __init__(self):",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):$",
+                    "hint": "Initialize the internal state of each node.",
+                    "solutionCode": "    def __init__(self):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Build Trie.",
-                    "placeholderCode": "    root = TrieNode()\n    for w in words:\n        root.addWord(w)",
-                    "validationRegex": "^\\s+root\\s*=\\s*TrieNode\\(\\)\\s*for\\s+w\\s+in\\s+words:\\s*root\\.addWord\\(w\\)$",
-                    "hint": "Insert all words into the Trie.",
-                    "solutionCode": "    root = TrieNode()\n    for w in words:\n        root.addWord(w)"
+                    "instruction": "Initialize the children dictionary.",
+                    "placeholderCode": "        self.children = {}",
+                    "validationRegex": "^\\s+self\\.children\\s*=\\s*{}$",
+                    "hint": "This will store the mappings from characters to children nodes.",
+                    "solutionCode": "        self.children = {}"
                 },
                 {
                     "id": 4,
-                    "instruction": "DFS on board.",
+                    "instruction": "Initialize the 'isWord' flag to False.",
+                    "placeholderCode": "        self.isWord = False",
+                    "validationRegex": "^\\s+self\\.isWord\\s*=\\s*False$",
+                    "hint": "Used to identify if a node marks the end of a valid word.",
+                    "solutionCode": "        self.isWord = False"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Define the 'addWord' method.",
+                    "placeholderCode": "    def addWord(self, word):",
+                    "validationRegex": "^\\s+def\\s+addWord\\(self,\\s*word\\):$",
+                    "hint": "Method to insert a word into the Trie.",
+                    "solutionCode": "    def addWord(self, word):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Initialize a pointer 'cur' to the current node.",
+                    "placeholderCode": "        cur = self",
+                    "validationRegex": "^\\s+cur\\s*=\\s*self$",
+                    "hint": "Start the insertion process from the node itself.",
+                    "solutionCode": "        cur = self"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Iterate through each character 'c' in the word.",
+                    "placeholderCode": "        for c in word:",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+word:$",
+                    "hint": "Process the word one character at a time.",
+                    "solutionCode": "        for c in word:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Check if 'c' is not in current children.",
+                    "placeholderCode": "            if c not in cur.children:",
+                    "validationRegex": "^\\s+if\\s+c\\s+not\\s+in\\s+cur\\.children:$",
+                    "hint": "Verify if the character branch already exists.",
+                    "solutionCode": "            if c not in cur.children:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Create a new 'TrieNode' if the character doesn't exist.",
+                    "placeholderCode": "                cur.children[c] = TrieNode()",
+                    "validationRegex": "^\\s+cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Extend the Trie path with a new node.",
+                    "solutionCode": "                cur.children[c] = TrieNode()"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Move the pointer 'cur' to the child node.",
+                    "placeholderCode": "            cur = cur.children[c]",
+                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.children\\[c\\]$",
+                    "hint": "Advance forward in the Trie structure.",
+                    "solutionCode": "            cur = cur.children[c]"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Set 'isWord' to True at the final node.",
+                    "placeholderCode": "        cur.isWord = True",
+                    "validationRegex": "^\\s+cur\\.isWord\\s*=\\s*True$",
+                    "hint": "Mark the completion of a stored word.",
+                    "solutionCode": "        cur.isWord = True"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Define the 'find_words' function.",
+                    "placeholderCode": "def find_words(board, words):",
+                    "validationRegex": "^def\\s+find_words\\(board,\\s*words\\):$",
+                    "hint": "This is the main function to solve the problem.",
+                    "solutionCode": "def find_words(board, words):"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Initialize root and build the Trie.",
+                    "placeholderCode": "    root = TrieNode()\n    for w in words:\n        root.addWord(w)",
+                    "validationRegex": "^\\s+root\\s*=\\s*TrieNode\\(\\)\\s*for\\s+w\\s+in\\s+words:\\s*root\\.addWord\\(w\\)$",
+                    "hint": "Insert all target words into a root TrieNode.",
+                    "solutionCode": "    root = TrieNode()\n    for w in words:\n        root.addWord(w)"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Implement the DFS traversal on the board.",
                     "placeholderCode": "    ROWS, COLS = len(board), len(board[0])\n    res, visit = set(), set()\n    def dfs(r, c, node, word):\n        if (r < 0 or c < 0 or r == ROWS or c == COLS or\n            (r, c) in visit or board[r][c] not in node.children):\n            return\n        visit.add((r, c))\n        node = node.children[board[r][c]]\n        word += board[r][c]\n        if node.isWord:\n            res.add(word)\n        dfs(r + 1, c, node, word)\n        dfs(r - 1, c, node, word)\n        dfs(r, c + 1, node, word)\n        dfs(r, c - 1, node, word)\n        visit.remove((r, c))\n    for r in range(ROWS):\n        for c in range(COLS):\n            dfs(r, c, root, \"\")\n    return list(res)",
                     "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)\\s*res,\\s*visit\\s*=\\s*set\\(\\),\\s*set\\(\\)\\s*def\\s+dfs\\(r,\\s*c,\\s*node,\\s*word\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*ROWS\\s+or\\s+c\\s*==\\s*COLS\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+board\\[r\\]\\[c\\]\\s+not\\s+in\\s+node\\.children\\):\\s*return\\s*visit\\.add\\(\\(\\(r,\\s*c\\)\\)\\)\\s*node\\s*=\\s*node\\.children\\[board\\[r\\]\\[c\\]\\]\\s*word\\s*\\+=\\s*board\\[r\\]\\[c\\]\\s*if\\s+node\\.isWord:\\s*res\\.add\\(word\\)\\s*dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*node,\\s*word\\)\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*node,\\s*word\\)\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*node,\\s*word\\)\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*node,\\s*word\\)\\s*visit\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)\\s*for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*dfs\\(r,\\s*c,\\s*root,\\s*\"\"\\)\\s*return\\s+list\\(res\\)$",
-                    "hint": "Perform DFS on the board, traversing the Trie simultaneously.\\n\\nExample:\\nBoard: [['o','a'],['e','t']]. Trie has \"oath\".\\nStart at 'o'. Trie has 'o'. Move to 'a'. Trie has 'a'...\\nIf node.isWord, add to result. Mark visited to avoid cycles.",
+                    "hint": "Use backtracking to explore all directions on the board, following the Trie paths.",
                     "solutionCode": "    ROWS, COLS = len(board), len(board[0])\n    res, visit = set(), set()\n    def dfs(r, c, node, word):\n        if (r < 0 or c < 0 or r == ROWS or c == COLS or\n            (r, c) in visit or board[r][c] not in node.children):\n            return\n        visit.add((r, c))\n        node = node.children[board[r][c]]\n        word += board[r][c]\n        if node.isWord:\n            res.add(word)\n        dfs(r + 1, c, node, word)\n        dfs(r - 1, c, node, word)\n        dfs(r, c + 1, node, word)\n        dfs(r, c - 1, node, word)\n        visit.remove((r, c))\n    for r in range(ROWS):\n        for c in range(COLS):\n            dfs(r, c, root, \"\")\n    return list(res)"
                 }
             ]
