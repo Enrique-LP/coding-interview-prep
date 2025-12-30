@@ -91,10 +91,10 @@
                 {
                     "id": 8,
                     "instruction": "Initialize a pointer 'cur' to the root.",
-                    "placeholderCode": "        cur = self.root",
-                    "validationRegex": "^\\s+cur\\s*=\\s*self\\.root$",
+                    "placeholderCode": "        curr = self.root",
+                    "validationRegex": "^\\s+curr\\s*=\\s*self\\.root$",
                     "hint": "Start at the root for every word insertion.",
-                    "solutionCode": "        cur = self.root"
+                    "solutionCode": "        curr = self.root"
                 },
                 {
                     "id": 9,
@@ -178,14 +178,30 @@
                 },
                 {
                     "id": 19,
-                    "instruction": "If it's a dot, recursively call 'dfs' for every child node.",
-                    "placeholderCode": "                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True",
-                    "validationRegex": "^\\s+for\\s+child\\s+in\\s+cur\\.children\\.values\\(\\):\\s*if\\s+dfs\\(i\\s*\\+\\s*1,\\s*child\\):\\s*return\\s+True$",
-                    "hint": "Try all possible character branches to find a match.",
-                    "solutionCode": "                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True"
+                    "instruction": "If it is a dot, iterate through all child nodes in the current children dictionary.",
+                    "placeholderCode": "                    for child in cur.children.values():",
+                    "validationRegex": "^\\s+for\\s+child\\s+in\\s+cur\\.children\\.values\\(\\):$",
+                    "hint": "Examine every possible character branch.",
+                    "solutionCode": "                    for child in cur.children.values():"
                 },
                 {
                     "id": 20,
+                    "instruction": "Recursively call 'dfs' for the current child node starting from the next character.",
+                    "placeholderCode": "                        if dfs(i + 1, child):",
+                    "validationRegex": "^\\s+if\\s+dfs\\(i\\s*\\+\\s*1,\\s*child\\):$",
+                    "hint": "Check if the rest of the word matches this specific branch.",
+                    "solutionCode": "                        if dfs(i + 1, child):"
+                },
+                {
+                    "id": 21,
+                    "instruction": "If any recursive call returns True, return True for the current search.",
+                    "placeholderCode": "                            return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "We found at least one path that matches the entire word.",
+                    "solutionCode": "                            return True"
+                },
+                {
+                    "id": 22,
                     "instruction": "If no branches match the dot, return False.",
                     "placeholderCode": "                    return False",
                     "validationRegex": "^\\s+return\\s+False$",
@@ -193,7 +209,7 @@
                     "solutionCode": "                    return False"
                 },
                 {
-                    "id": 21,
+                    "id": 23,
                     "instruction": "If it's not a dot, check if the character exists in cur.children.",
                     "placeholderCode": "                else:\n                    if c not in cur.children:\n                        return False",
                     "validationRegex": "^\\s+else:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False$",
@@ -201,7 +217,7 @@
                     "solutionCode": "                else:\n                    if c not in cur.children:\n                        return False"
                 },
                 {
-                    "id": 22,
+                    "id": 24,
                     "instruction": "Move the pointer to the matching child node.",
                     "placeholderCode": "                    cur = cur.children[c]",
                     "validationRegex": "^\\s+cur\\s*=\\s*cur\\.children\\[c\\]$",
@@ -209,7 +225,7 @@
                     "solutionCode": "                    cur = cur.children[c]"
                 },
                 {
-                    "id": 23,
+                    "id": 25,
                     "instruction": "After the loop, return whether the current node marks the end of a word.",
                     "placeholderCode": "            return cur.word",
                     "validationRegex": "^\\s+return\\s+cur\\.word$",
@@ -217,7 +233,7 @@
                     "solutionCode": "            return cur.word"
                 },
                 {
-                    "id": 24,
+                    "id": 26,
                     "instruction": "Start the DFS process from index 0 and root.",
                     "placeholderCode": "        return dfs(0, self.root)",
                     "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*self\\.root\\)$",
@@ -377,14 +393,30 @@
                 },
                 {
                     "id": 19,
-                    "instruction": "Loop through all values in 'cur.children' and call DFS recursively.",
-                    "placeholderCode": "                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True",
-                    "validationRegex": "^\\s+for\\s+child\\s+in\\s+cur\\.children\\.values\\(\\):\\s*if\\s+dfs\\(i\\s*\\+\\s*1,\\s*child\\):\\s*return\\s+True$",
-                    "hint": "Exhaustively check all paths for the dot wildcard.",
-                    "solutionCode": "                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True"
+                    "instruction": "Initialize a loop to traverse every child node of the current 'cur' node.",
+                    "placeholderCode": "                    for child in cur.children.values():",
+                    "validationRegex": "^\\s+for\\s+child\\s+in\\s+cur\\.children\\.values\\(\\):$",
+                    "hint": "Iterate through each branch to find if any match the wildcard.",
+                    "solutionCode": "                    for child in cur.children.values():"
                 },
                 {
                     "id": 20,
+                    "instruction": "Perform a recursive 'dfs' call for the next character index and the current child node.",
+                    "placeholderCode": "                        if dfs(i + 1, child):",
+                    "validationRegex": "^\\s+if\\s+dfs\\(i\\s*\\+\\s*1,\\s*child\\):$",
+                    "hint": "Recursion allows us to verify if this branch fulfills the rest of the pattern.",
+                    "solutionCode": "                        if dfs(i + 1, child):"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Immediately return True if any child branch successfully matches the remaining word.",
+                    "placeholderCode": "                            return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "Success on any branch means the entire word is found.",
+                    "solutionCode": "                            return True"
+                },
+                {
+                    "id": 22,
                     "instruction": "Return False if no branch successfully resolved the dot.",
                     "placeholderCode": "                    return False",
                     "validationRegex": "^\\s+return\\s+False$",
@@ -392,7 +424,7 @@
                     "solutionCode": "                    return False"
                 },
                 {
-                    "id": 21,
+                    "id": 23,
                     "instruction": "Handle standard character searching in the else block.",
                     "placeholderCode": "                else:\n                    if c not in cur.children:\n                        return False",
                     "validationRegex": "^\\s+else:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False$",
@@ -400,7 +432,7 @@
                     "solutionCode": "                else:\n                    if c not in cur.children:\n                        return False"
                 },
                 {
-                    "id": 22,
+                    "id": 24,
                     "instruction": "Update 'cur' to jump to the matching child.",
                     "placeholderCode": "                    cur = cur.children[c]",
                     "validationRegex": "^\\s+cur\\s*=\\s*cur\\.children\\[c\\]$",
@@ -408,7 +440,7 @@
                     "solutionCode": "                    cur = cur.children[c]"
                 },
                 {
-                    "id": 23,
+                    "id": 25,
                     "instruction": "Return the node's word completion status.",
                     "placeholderCode": "            return cur.word",
                     "validationRegex": "^\\s+return\\s+cur\\.word$",
@@ -416,7 +448,7 @@
                     "solutionCode": "            return cur.word"
                 },
                 {
-                    "id": 24,
+                    "id": 26,
                     "instruction": "Begin logic execution with the first char and root node.",
                     "placeholderCode": "        return dfs(0, self.root)",
                     "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*self\\.root\\)$",
