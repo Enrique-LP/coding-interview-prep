@@ -163,34 +163,50 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Calculate the maximum contribution from the left subtree, ensuring it is at least 0.",
-                    "placeholderCode": "        leftMax = max(dfs(curr.left), 0)",
-                    "validationRegex": "^\\s+leftMax\\s*=\\s*max\\(dfs\\(curr\\.left\\),\\s*0\\)$",
-                    "hint": "Combine recursive call and negative handling in one step.",
-                    "solutionCode": "        leftMax = max(dfs(curr.left), 0)"
+                    "instruction": "Calculate the maximum path sum from the left subtree.",
+                    "placeholderCode": "        leftMax = dfs(curr.left)",
+                    "validationRegex": "^\\s+leftMax\\s*=\\s*dfs\\(curr\\.left\\)$",
+                    "hint": "Recursively visit the left child.",
+                    "solutionCode": "        leftMax = dfs(curr.left)"
                 },
                 {
                     "id": 6,
-                    "instruction": "Calculate the maximum contribution from the right subtree, ensuring it is at least 0.",
-                    "placeholderCode": "        rightMax = max(dfs(curr.right), 0)",
-                    "validationRegex": "^\\s+rightMax\\s*=\\s*max\\(dfs\\(curr\\.right\\),\\s*0\\)$",
-                    "hint": "Recursively get right side max; ignore if negative.",
-                    "solutionCode": "        rightMax = max(dfs(curr.right), 0)"
+                    "instruction": "Calculate the maximum path sum from the right subtree.",
+                    "placeholderCode": "        rightMax = dfs(curr.right)",
+                    "validationRegex": "^\\s+rightMax\\s*=\\s*dfs\\(curr\\.right\\)$",
+                    "hint": "Recursively visit the right child.",
+                    "solutionCode": "        rightMax = dfs(curr.right)"
                 },
                 {
                     "id": 7,
+                    "instruction": "Ensure the left contribution is non-negative.",
+                    "placeholderCode": "        leftMax = max(leftMax, 0)",
+                    "validationRegex": "^\\s+leftMax\\s*=\\s*max\\(leftMax,\\s*0\\)$",
+                    "hint": "If the path sum is negative, it's better not to include it.",
+                    "solutionCode": "        leftMax = max(leftMax, 0)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Ensure the right contribution is non-negative.",
+                    "placeholderCode": "        rightMax = max(rightMax, 0)",
+                    "validationRegex": "^\\s+rightMax\\s*=\\s*max\\(rightMax,\\s*0\\)$",
+                    "hint": "Only add positive contributions from the right branch.",
+                    "solutionCode": "        rightMax = max(rightMax, 0)"
+                },
+                {
+                    "id": 9,
                     "instruction": "Compute the path sum passing through the current node and update the global max.",
                     "placeholderCode": "        res[0] = max(res[0], curr.val + leftMax + rightMax)",
                     "validationRegex": "^\\s+res\\[0\\]\\s*=\\s*max\\(res\\[0\\],\\s*curr\\.val\\s*\\+\\s*leftMax\\s*\\+\\s*rightMax\\)$",
-                    "hint": "This represents a path that splits into both left and right branches at this node.",
+                    "hint": "Check if a path through this node is larger than our current global maximum.",
                     "solutionCode": "        res[0] = max(res[0], curr.val + leftMax + rightMax)"
                 },
                 {
                     "id": 10,
-                    "instruction": "Return the current node's value plus the best contribution from either the left or right side.",
+                    "instruction": "Return the current node's value plus the best contribution from either side.",
                     "placeholderCode": "        return curr.val + max(leftMax, rightMax)",
                     "validationRegex": "^\\s+return\\s+curr\\.val\\s*\\+\\s*max\\(leftMax,\\s*rightMax\\)$",
-                    "hint": "A path passed back to a parent cannot include both left and right children.",
+                    "hint": "Return the maximum path that can be extended by the parent node.",
                     "solutionCode": "        return curr.val + max(leftMax, rightMax)"
                 },
                 {
@@ -198,7 +214,7 @@
                     "instruction": "Initiate the recursive search.",
                     "placeholderCode": "    dfs(root)",
                     "validationRegex": "^\\s+dfs\\(root\\)$",
-                    "hint": "Run the helper function.",
+                    "hint": "Start processing the tree from the root node.",
                     "solutionCode": "    dfs(root)"
                 },
                 {
@@ -206,7 +222,7 @@
                     "instruction": "Return the final maximum path sum found during the traversal.",
                     "placeholderCode": "    return res[0]",
                     "validationRegex": "^\\s+return\\s+res\\[0\\]$",
-                    "hint": "Retrieve the optimized result from the list wrapper.",
+                    "hint": "Retrieve the final result stored in the mutable list.",
                     "solutionCode": "    return res[0]"
                 }
             ]
