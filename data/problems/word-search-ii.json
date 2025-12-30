@@ -175,11 +175,163 @@
                 },
                 {
                     "id": 16,
-                    "instruction": "Implement the DFS traversal on the board.",
-                    "placeholderCode": "    ROWS, COLS = len(board), len(board[0])\n    res, visit = set(), set()\n    def dfs(r, c, node, word):\n        if (r < 0 or c < 0 or r == ROWS or c == COLS or\n            (r, c) in visit or board[r][c] not in node.children):\n            return\n        visit.add((r, c))\n        node = node.children[board[r][c]]\n        word += board[r][c]\n        if node.isWord:\n            res.add(word)\n        dfs(r + 1, c, node, word)\n        dfs(r - 1, c, node, word)\n        dfs(r, c + 1, node, word)\n        dfs(r, c - 1, node, word)\n        visit.remove((r, c))\n    for r in range(ROWS):\n        for c in range(COLS):\n            dfs(r, c, root, \"\")\n    return list(res)",
-                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)\\s*res,\\s*visit\\s*=\\s*set\\(\\),\\s*set\\(\\)\\s*def\\s+dfs\\(r,\\s*c,\\s*node,\\s*word\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*ROWS\\s+or\\s+c\\s*==\\s*COLS\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+board\\[r\\]\\[c\\]\\s+not\\s+in\\s+node\\.children\\):\\s*return\\s*visit\\.add\\(\\(\\(r,\\s*c\\)\\)\\)\\s*node\\s*=\\s*node\\.children\\[board\\[r\\]\\[c\\]\\]\\s*word\\s*\\+=\\s*board\\[r\\]\\[c\\]\\s*if\\s+node\\.isWord:\\s*res\\.add\\(word\\)\\s*dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*node,\\s*word\\)\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*node,\\s*word\\)\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*node,\\s*word\\)\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*node,\\s*word\\)\\s*visit\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)\\s*for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*dfs\\(r,\\s*c,\\s*root,\\s*\"\"\\)\\s*return\\s+list\\(res\\)$",
-                    "hint": "Use backtracking to explore all directions on the board, following the Trie paths.",
-                    "solutionCode": "    ROWS, COLS = len(board), len(board[0])\n    res, visit = set(), set()\n    def dfs(r, c, node, word):\n        if (r < 0 or c < 0 or r == ROWS or c == COLS or\n            (r, c) in visit or board[r][c] not in node.children):\n            return\n        visit.add((r, c))\n        node = node.children[board[r][c]]\n        word += board[r][c]\n        if node.isWord:\n            res.add(word)\n        dfs(r + 1, c, node, word)\n        dfs(r - 1, c, node, word)\n        dfs(r, c + 1, node, word)\n        dfs(r, c - 1, node, word)\n        visit.remove((r, c))\n    for r in range(ROWS):\n        for c in range(COLS):\n            dfs(r, c, root, \"\")\n    return list(res)"
+                    "instruction": "Get the dimensions of the board (ROWS and COLS).",
+                    "placeholderCode": "    ROWS, COLS = len(board), len(board[0])",
+                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)$",
+                    "hint": "Calculate limits for our board traversal.",
+                    "solutionCode": "    ROWS, COLS = len(board), len(board[0])"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Initialize an empty set for the result and another for visited cells.",
+                    "placeholderCode": "    res, visit = set(), set()",
+                    "validationRegex": "^\\s+res,\\s*visit\\s*=\\s*set\\(\\),\\s*set\\(\\)$",
+                    "hint": "Sets allow for O(1) lookups and ensure unique results.",
+                    "solutionCode": "    res, visit = set(), set()"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Define the nested 'dfs' function header.",
+                    "placeholderCode": "    def dfs(r, c, node, word):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c,\\s*node,\\s*word\\):$",
+                    "hint": "The function tracks coordinates, the Trie path, and the word built so far.",
+                    "solutionCode": "    def dfs(r, c, node, word):"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Check boundary conditions for the current row and column.",
+                    "placeholderCode": "        if (r < 0 or c < 0 or r == ROWS or c == COLS or",
+                    "validationRegex": "^\\s+if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*ROWS\\s+or\\s+c\\s*==\\s*COLS\\s+or$",
+                    "hint": "Ensure the current cell is within board limits.",
+                    "solutionCode": "        if (r < 0 or c < 0 or r == ROWS or c == COLS or"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Check if the cell is visited or the character is not in the Trie node's children.",
+                    "placeholderCode": "            (r, c) in visit or board[r][c] not in node.children):",
+                    "validationRegex": "^\\s+\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+board\\[r\\]\\[c\\]\\s+not\\s+in\\s+node\\.children\\):$",
+                    "hint": "Avoid infinite loops or searching invalid character paths.",
+                    "solutionCode": "            (r, c) in visit or board[r][c] not in node.children):"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Return early if any of the invalid conditions are met.",
+                    "placeholderCode": "            return",
+                    "validationRegex": "^\\s+return$",
+                    "hint": "Base case: stopping the recursion for this branch.",
+                    "solutionCode": "            return"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Mark the current board cell as visited.",
+                    "placeholderCode": "        visit.add((r, c))",
+                    "validationRegex": "^\\s+visit\\.add\\(\\(\\(r,\\s*c\\)\\)\\)$",
+                    "hint": "Record this cell so we don't reuse it in the same word.",
+                    "solutionCode": "        visit.add((r, c))"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Advance the 'node' pointer to the character's child node.",
+                    "placeholderCode": "        node = node.children[board[r][c]]",
+                    "validationRegex": "^\\s+node\\s*=\\s*node\\.children\\[board\\[r\\]\\[c\\]\\]$",
+                    "hint": "Synchronize the board character with the Trie depth.",
+                    "solutionCode": "        node = node.children[board[r][c]]"
+                },
+                {
+                    "id": 24,
+                    "instruction": "Append the current board character to the 'word' string.",
+                    "placeholderCode": "        word += board[r][c]",
+                    "validationRegex": "^\\s+word\\s*\\+=\\s*board\\[r\\]\\[c\\]$",
+                    "hint": "Building the string candidate to check against our target list.",
+                    "solutionCode": "        word += board[r][c]"
+                },
+                {
+                    "id": 25,
+                    "instruction": "Check if the current node completes a stored word.",
+                    "placeholderCode": "        if node.isWord:",
+                    "validationRegex": "^\\s+if\\s+node\\.isWord:$",
+                    "hint": "Using the 'isWord' flag defined in our TrieNode.",
+                    "solutionCode": "        if node.isWord:"
+                },
+                {
+                    "id": 26,
+                    "instruction": "If a word is found, add it to the result set.",
+                    "placeholderCode": "            res.add(word)",
+                    "validationRegex": "^\\s+res\\.add\\(word\\)$",
+                    "hint": "Found a target word on the board!",
+                    "solutionCode": "            res.add(word)"
+                },
+                {
+                    "id": 27,
+                    "instruction": "Recursively explore the cell below.",
+                    "placeholderCode": "        dfs(r + 1, c, node, word)",
+                    "validationRegex": "^\\s+dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*node,\\s*word\\)$",
+                    "hint": "Move along the Y axis downwards.",
+                    "solutionCode": "        dfs(r + 1, c, node, word)"
+                },
+                {
+                    "id": 28,
+                    "instruction": "Recursively explore the cell above.",
+                    "placeholderCode": "        dfs(r - 1, c, node, word)",
+                    "validationRegex": "^\\s+dfs\\(r\\s*-\\s*1,\\s*c,\\s*node,\\s*word\\)$",
+                    "hint": "Move along the Y axis upwards.",
+                    "solutionCode": "        dfs(r - 1, c, node, word)"
+                },
+                {
+                    "id": 29,
+                    "instruction": "Recursively explore the cell to the right.",
+                    "placeholderCode": "        dfs(r, c + 1, node, word)",
+                    "validationRegex": "^\\s+dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*node,\\s*word\\)$",
+                    "hint": "Move along the X axis to the right.",
+                    "solutionCode": "        dfs(r, c + 1, node, word)"
+                },
+                {
+                    "id": 30,
+                    "instruction": "Recursively explore the cell to the left.",
+                    "placeholderCode": "        dfs(r, c - 1, node, word)",
+                    "validationRegex": "^\\s+dfs\\(r,\\s*c\\s*-\\s*1,\\s*node,\\s*word\\)$",
+                    "hint": "Move along the X axis to the left.",
+                    "solutionCode": "        dfs(r, c - 1, node, word)"
+                },
+                {
+                    "id": 31,
+                    "instruction": "Remove the current cell from visit set (Backtrack).",
+                    "placeholderCode": "        visit.remove((r, c))",
+                    "validationRegex": "^\\s+visit\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)$",
+                    "hint": "Cleanup step to allow this cell to be used in other word candidates.",
+                    "solutionCode": "        visit.remove((r, c))"
+                },
+                {
+                    "id": 32,
+                    "instruction": "Iterate through every row index 'r' on the board.",
+                    "placeholderCode": "    for r in range(ROWS):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):$",
+                    "hint": "Scanning the board row by row.",
+                    "solutionCode": "    for r in range(ROWS):"
+                },
+                {
+                    "id": 33,
+                    "instruction": "Iterate through every column index 'c' in the row.",
+                    "placeholderCode": "        for c in range(COLS):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(COLS\\):$",
+                    "hint": "Scanning each cell within the current row.",
+                    "solutionCode": "        for c in range(COLS):"
+                },
+                {
+                    "id": 34,
+                    "instruction": "Initiate the DFS traversal for the current cell starting from the Trie root.",
+                    "placeholderCode": "            dfs(r, c, root, \"\")",
+                    "validationRegex": "^\\s+dfs\\(r,\\s*c,\\s*root,\\s*\"\"\\)$",
+                    "hint": "Every board cell is a potential starting point for a word.",
+                    "solutionCode": "            dfs(r, c, root, \"\")"
+                },
+                {
+                    "id": 35,
+                    "instruction": "Return the final results converted from a set to a list.",
+                    "placeholderCode": "    return list(res)",
+                    "validationRegex": "^\\s+return\\s+list\\(res\\)$",
+                    "hint": "Deliver the final list of discovered words.",
+                    "solutionCode": "    return list(res)"
                 }
             ]
         }
