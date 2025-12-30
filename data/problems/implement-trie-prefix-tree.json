@@ -103,30 +103,38 @@
                 },
                 {
                     "id": 10,
-                    "instruction": "If the character is not in current node's children, create a new node.",
-                    "placeholderCode": "            if char not in curr.children:\n                curr.children[char] = TrieNode()",
-                    "validationRegex": "^\\s+if\\s+char\\s+not\\s+in\\s+curr\\.children:\\s*curr\\.children\\[char\\]\\s*=\\s*TrieNode\\(\\)$",
-                    "hint": "Expand the trie dynamically as needed.",
-                    "solutionCode": "            if char not in curr.children:\n                curr.children[char] = TrieNode()"
+                    "instruction": "Check if the character is NOT currently in the current node's children.",
+                    "placeholderCode": "            if char not in curr.children:",
+                    "validationRegex": "^\\s+if\\s+char\\s+not\\s+in\\s+curr\\.children:$",
+                    "hint": "We only need to create a new node if this specific character doesn't have a branch yet.",
+                    "solutionCode": "            if char not in curr.children:"
                 },
                 {
                     "id": 11,
-                    "instruction": "Move 'curr' to the child node corresponding to the character.",
-                    "placeholderCode": "            curr = curr.children[char]",
-                    "validationRegex": "^\\s+curr\\s*=\\s*curr\\.children\\[char\\]$",
-                    "hint": "Advance the pointer forward.",
-                    "solutionCode": "            curr = curr.children[char]"
+                    "instruction": "Create a new TrieNode and assign it to that character in the children dictionary.",
+                    "placeholderCode": "                curr.children[char] = TrieNode()",
+                    "validationRegex": "^\\s+curr\\.children\\[char\\]\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "This expands the path of the trie with a new node representing the character.",
+                    "solutionCode": "                curr.children[char] = TrieNode()"
                 },
                 {
                     "id": 12,
-                    "instruction": "Mark the current node as the end of a word.",
-                    "placeholderCode": "        curr.end_of_word = True",
-                    "validationRegex": "^\\s+curr\\.end_of_word\\s*=\\s*True$",
-                    "hint": "Set the flag after processing all characters.",
-                    "solutionCode": "        curr.end_of_word = True"
+                    "instruction": "Move 'curr' to the child node corresponding to the character.",
+                    "placeholderCode": "            curr = curr.children[char]",
+                    "validationRegex": "^\\s+curr\\s*=\\s*curr\\.children\\[char\\]$",
+                    "hint": "Advance the pointer forward to process the next character.",
+                    "solutionCode": "            curr = curr.children[char]"
                 },
                 {
                     "id": 13,
+                    "instruction": "Mark the current node as the end of a word.",
+                    "placeholderCode": "        curr.end_of_word = True",
+                    "validationRegex": "^\\s+curr\\.end_of_word\\s*=\\s*True$",
+                    "hint": "Set the flag after processing all characters to indicate a valid completion.",
+                    "solutionCode": "        curr.end_of_word = True"
+                },
+                {
+                    "id": 14,
                     "instruction": "Define the 'search' method.",
                     "placeholderCode": "    def search(self, word):",
                     "validationRegex": "^\\s+def\\s+search\\(self,\\s*word\\):$",
@@ -134,7 +142,7 @@
                     "solutionCode": "    def search(self, word):"
                 },
                 {
-                    "id": 14,
+                    "id": 15,
                     "instruction": "Initialize 'curr' pointer for searching.",
                     "placeholderCode": "        curr = self.root",
                     "validationRegex": "^\\s+curr\\s*=\\s*self\\.root$",
@@ -142,7 +150,7 @@
                     "solutionCode": "        curr = self.root"
                 },
                 {
-                    "id": 15,
+                    "id": 16,
                     "instruction": "Iterate through the word characters.",
                     "placeholderCode": "        for char in word:",
                     "validationRegex": "^\\s+for\\s+char\\s+in\\s+word:$",
@@ -150,7 +158,7 @@
                     "solutionCode": "        for char in word:"
                 },
                 {
-                    "id": 16,
+                    "id": 17,
                     "instruction": "Return False if a character node is missing.",
                     "placeholderCode": "            if char not in curr.children: return False",
                     "validationRegex": "^\\s+if\\s+char\\s+not\\s+in\\s+curr\\.children:\\s*return\\s+False$",
@@ -158,7 +166,7 @@
                     "solutionCode": "            if char not in curr.children: return False"
                 },
                 {
-                    "id": 17,
+                    "id": 18,
                     "instruction": "Move to the next node.",
                     "placeholderCode": "            curr = curr.children[char]",
                     "validationRegex": "^\\s+curr\\s*=\\s*curr\\.children\\[char\\]$",
@@ -166,7 +174,7 @@
                     "solutionCode": "            curr = curr.children[char]"
                 },
                 {
-                    "id": 18,
+                    "id": 19,
                     "instruction": "Return the value of the 'end_of_word' flag.",
                     "placeholderCode": "        return curr.end_of_word",
                     "validationRegex": "^\\s+return\\s+curr\\.end_of_word$",
@@ -174,7 +182,7 @@
                     "solutionCode": "        return curr.end_of_word"
                 },
                 {
-                    "id": 19,
+                    "id": 20,
                     "instruction": "Define the 'startsWith' method.",
                     "placeholderCode": "    def startsWith(self, prefix):",
                     "validationRegex": "^\\s+def\\s+startsWith\\(self,\\s*prefix\\):$",
@@ -182,7 +190,7 @@
                     "solutionCode": "    def startsWith(self, prefix):"
                 },
                 {
-                    "id": 20,
+                    "id": 21,
                     "instruction": "Initialize 'curr' for prefix checking.",
                     "placeholderCode": "        curr = self.root",
                     "validationRegex": "^\\s+curr\\s*=\\s*self\\.root$",
@@ -190,7 +198,7 @@
                     "solutionCode": "        curr = self.root"
                 },
                 {
-                    "id": 21,
+                    "id": 22,
                     "instruction": "Iterate through prefix characters.",
                     "placeholderCode": "        for char in prefix:",
                     "validationRegex": "^\\s+for\\s+char\\s+in\\s+prefix:$",
@@ -198,7 +206,7 @@
                     "solutionCode": "        for char in prefix:"
                 },
                 {
-                    "id": 22,
+                    "id": 23,
                     "instruction": "Return False if any prefix character is missing.",
                     "placeholderCode": "            if char not in curr.children: return False",
                     "validationRegex": "^\\s+if\\s+char\\s+not\\s+in\\s+curr\\.children:\\s*return\\s+False$",
@@ -206,7 +214,7 @@
                     "solutionCode": "            if char not in curr.children: return False"
                 },
                 {
-                    "id": 23,
+                    "id": 24,
                     "instruction": "Advance the 'curr' pointer.",
                     "placeholderCode": "            curr = curr.children[char]",
                     "validationRegex": "^\\s+curr\\s*=\\s*curr\\.children\\[char\\]$",
@@ -214,7 +222,7 @@
                     "solutionCode": "            curr = curr.children[char]"
                 },
                 {
-                    "id": 24,
+                    "id": 25,
                     "instruction": "Return True if the entire prefix was found.",
                     "placeholderCode": "        return True",
                     "validationRegex": "^\\s+return\\s+True$",
@@ -302,14 +310,22 @@
                 },
                 {
                     "id": 10,
-                    "instruction": "Check if the character exists in child nodes; if not, create it.",
-                    "placeholderCode": "            if char not in curr.children:\n                curr.children[char] = TrieNode()",
-                    "validationRegex": "^\\s+if\\s+char\\s+not\\s+in\\s+curr\\.children:\\s*curr\\.children\\[char\\]\\s*=\\s*TrieNode\\(\\)$",
-                    "hint": "Add new nodes only when a character isn't already present.",
-                    "solutionCode": "            if char not in curr.children:\n                curr.children[char] = TrieNode()"
+                    "instruction": "Check if the current character node exists in the current node's children.",
+                    "placeholderCode": "            if char not in curr.children:",
+                    "validationRegex": "^\\s+if\\s+char\\s+not\\s+in\\s+curr\\.children:$",
+                    "hint": "Conditional check for path extension.",
+                    "solutionCode": "            if char not in curr.children:"
                 },
                 {
                     "id": 11,
+                    "instruction": "Create a new TrieNode if the character wasn't found in current children.",
+                    "placeholderCode": "                curr.children[char] = TrieNode()",
+                    "validationRegex": "^\\s+curr\\.children\\[char\\]\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Extend the tree by adding a new node for the new character.",
+                    "solutionCode": "                curr.children[char] = TrieNode()"
+                },
+                {
+                    "id": 12,
                     "instruction": "Advance the current node pointer to the next character's node.",
                     "placeholderCode": "            curr = curr.children[char]",
                     "validationRegex": "^\\s+curr\\s*=\\s*curr\\.children\\[char\\]$",
@@ -317,7 +333,7 @@
                     "solutionCode": "            curr = curr.children[char]"
                 },
                 {
-                    "id": 12,
+                    "id": 13,
                     "instruction": "Set 'end_of_word' to True on the final character's node.",
                     "placeholderCode": "        curr.end_of_word = True",
                     "validationRegex": "^\\s+curr\\.end_of_word\\s*=\\s*True$",
@@ -325,7 +341,7 @@
                     "solutionCode": "        curr.end_of_word = True"
                 },
                 {
-                    "id": 13,
+                    "id": 14,
                     "instruction": "Define the 'search' method.",
                     "placeholderCode": "    def search(self, word):",
                     "validationRegex": "^\\s+def\\s+search\\(self,\\s*word\\):$",
@@ -333,7 +349,7 @@
                     "solutionCode": "    def search(self, word):"
                 },
                 {
-                    "id": 14,
+                    "id": 15,
                     "instruction": "Set 'curr' to root to begin search.",
                     "placeholderCode": "        curr = self.root",
                     "validationRegex": "^\\s+curr\\s*=\\s*self\\.root$",
@@ -341,7 +357,7 @@
                     "solutionCode": "        curr = self.root"
                 },
                 {
-                    "id": 15,
+                    "id": 16,
                     "instruction": "Iterate over the word's characters.",
                     "placeholderCode": "        for char in word:",
                     "validationRegex": "^\\s+for\\s+char\\s+in\\s+word:$",
@@ -349,7 +365,7 @@
                     "solutionCode": "        for char in word:"
                 },
                 {
-                    "id": 16,
+                    "id": 17,
                     "instruction": "If a character is missing, return False.",
                     "placeholderCode": "            if char not in curr.children: return False",
                     "validationRegex": "^\\s+if\\s+char\\s+not\\s+in\\s+curr\\.children:\\s*return\\s+False$",
@@ -357,7 +373,7 @@
                     "solutionCode": "            if char not in curr.children: return False"
                 },
                 {
-                    "id": 17,
+                    "id": 18,
                     "instruction": "Update 'curr' to the child node.",
                     "placeholderCode": "            curr = curr.children[char]",
                     "validationRegex": "^\\s+curr\\s*=\\s*curr\\.children\\[char\\]$",
@@ -365,7 +381,7 @@
                     "solutionCode": "            curr = curr.children[char]"
                 },
                 {
-                    "id": 18,
+                    "id": 19,
                     "instruction": "Return the status of 'end_of_word' from the final node.",
                     "placeholderCode": "        return curr.end_of_word",
                     "validationRegex": "^\\s+return\\s+curr\\.end_of_word$",
@@ -373,7 +389,7 @@
                     "solutionCode": "        return curr.end_of_word"
                 },
                 {
-                    "id": 19,
+                    "id": 20,
                     "instruction": "Define the 'startsWith' method.",
                     "placeholderCode": "    def startsWith(self, prefix):",
                     "validationRegex": "^\\s+def\\s+startsWith\\(self,\\s*prefix\\):$",
@@ -381,7 +397,7 @@
                     "solutionCode": "    def startsWith(self, prefix):"
                 },
                 {
-                    "id": 20,
+                    "id": 21,
                     "instruction": "Initialize 'curr' at the root.",
                     "placeholderCode": "        curr = self.root",
                     "validationRegex": "^\\s+curr\\s*=\\s*self\\.root$",
@@ -389,7 +405,7 @@
                     "solutionCode": "        curr = self.root"
                 },
                 {
-                    "id": 21,
+                    "id": 22,
                     "instruction": "Loop through each character in the prefix.",
                     "placeholderCode": "        for char in prefix:",
                     "validationRegex": "^\\s+for\\s+char\\s+in\\s+prefix:$",
@@ -397,7 +413,7 @@
                     "solutionCode": "        for char in prefix:"
                 },
                 {
-                    "id": 22,
+                    "id": 23,
                     "instruction": "If a prefix character is absent, return False.",
                     "placeholderCode": "            if char not in curr.children: return False",
                     "validationRegex": "^\\s+if\\s+char\\s+not\\s+in\\s+curr\\.children:\\s*return\\s+False$",
@@ -405,7 +421,7 @@
                     "solutionCode": "            if char not in curr.children: return False"
                 },
                 {
-                    "id": 23,
+                    "id": 24,
                     "instruction": "Move the pointer to the child node.",
                     "placeholderCode": "            curr = curr.children[char]",
                     "validationRegex": "^\\s+curr\\s*=\\s*curr\\.children\\[char\\]$",
@@ -413,7 +429,7 @@
                     "solutionCode": "            curr = curr.children[char]"
                 },
                 {
-                    "id": 24,
+                    "id": 25,
                     "instruction": "Return True if all characters were successfully matched.",
                     "placeholderCode": "        return True",
                     "validationRegex": "^\\s+return\\s+True$",
