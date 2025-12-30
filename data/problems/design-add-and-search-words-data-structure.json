@@ -5,7 +5,16 @@
     "examples": [
         {
             "input": "[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]\n[[],[\"bad\"],[\"dad\"],[\"mad\"],[\"pad\"],[\"bad\"],[\".ad\"],[\"b..\"]]",
-            "output": "[null,null,null,null,false,true,true,true]"
+            "output": [
+                null,
+                null,
+                null,
+                null,
+                false,
+                true,
+                true,
+                true
+            ]
         }
     ],
     "constraints": [
@@ -21,78 +30,382 @@
         "brute-force": {
             "id": "brute-force",
             "name": "Trie with DFS",
-            "description": "Use Trie, handle '.' with DFS.",
+            "description": "Use a standard Trie for storing words and DFS to handle character wildcards ('.').",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define TrieNode.",
-                    "placeholderCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.word = False",
-                    "validationRegex": "^class\\s+TrieNode:\\s*def\\s+__init__\\(self\\):\\s*self\\.children\\s*=\\s*{}\\s*self\\.word\\s*=\\s*False$",
-                    "hint": "Create a node class with children map and word flag.",
-                    "solutionCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.word = False"
+                    "instruction": "Define the 'TrieNode' class.",
+                    "placeholderCode": "class TrieNode:",
+                    "validationRegex": "^class\\s+TrieNode:$",
+                    "hint": "This class represents each junction in our prefix tree.",
+                    "solutionCode": "class TrieNode:"
                 },
                 {
                     "id": 2,
-                    "instruction": "Define WordDictionary.",
-                    "placeholderCode": "class WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()",
-                    "validationRegex": "^class\\s+WordDictionary:\\s*def\\s+__init__\\(self\\):\\s*self\\.root\\s*=\\s*TrieNode\\(\\)$",
-                    "hint": "Initialize with a root node.",
-                    "solutionCode": "class WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()"
+                    "instruction": "Initialize the 'TrieNode' with a constructor.",
+                    "placeholderCode": "    def __init__(self):",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):$",
+                    "hint": "Define the initial state for every node.",
+                    "solutionCode": "    def __init__(self):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Implement addWord.",
-                    "placeholderCode": "    def addWord(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.word = True",
-                    "validationRegex": "^\\s+def\\s+addWord\\(self,\\s*word\\):\\s*cur\\s*=\\s*self\\.root\\s*for\\s+c\\s+in\\s+word:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*cur\\.word\\s*=\\s*True$",
-                    "hint": "Standard Trie insertion.",
-                    "solutionCode": "    def addWord(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.word = True"
+                    "instruction": "Initialize the 'children' dictionary for the node.",
+                    "placeholderCode": "        self.children = {}",
+                    "validationRegex": "^\\s+self\\.children\\s*=\\s*{}$",
+                    "hint": "This will map characters to their corresponding child TrieNodes.",
+                    "solutionCode": "        self.children = {}"
                 },
                 {
                     "id": 4,
-                    "instruction": "Implement search.",
-                    "placeholderCode": "    def search(self, word):\n        def dfs(j, root):\n            cur = root\n            for i in range(j, len(word)):\n                c = word[i]\n                if c == \".\":\n                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True\n                    return False\n                else:\n                    if c not in cur.children:\n                        return False\n                    cur = cur.children[c]\n            return cur.word\n        return dfs(0, self.root)",
-                    "validationRegex": "^\\s+def\\s+search\\(self,\\s*word\\):\\s*def\\s+dfs\\(j,\\s*root\\):\\s*cur\\s*=\\s*root\\s*for\\s+i\\s+in\\s+range\\(j,\\s*len\\(word\\)\\):\\s*c\\s*=\\s*word\\[i\\]\\s*if\\s+c\\s*==\\s*\"\\.\":\\s*for\\s+child\\s+in\\s+cur\\.children\\.values\\(\\):\\s*if\\s+dfs\\(i\\s*\\+\\s*1,\\s*child\\):\\s*return\\s+True\\s*return\\s+False\\s*else:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*return\\s+cur\\.word\\s*return\\s+dfs\\(0,\\s*self\\.root\\)$",
-                    "hint": "Use DFS to handle '.' wildcard by checking all children.\\n\\nExample:\\nSearch \"b.d\".\\n'b' matches? Yes. Next is '.'.\\nCheck all children of 'b' (e.g., 'a', 'o').\\nIf 'a' leads to 'd' (end), return True.",
-                    "solutionCode": "    def search(self, word):\n        def dfs(j, root):\n            cur = root\n            for i in range(j, len(word)):\n                c = word[i]\n                if c == \".\":\n                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True\n                    return False\n                else:\n                    if c not in cur.children:\n                        return False\n                    cur = cur.children[c]\n            return cur.word\n        return dfs(0, self.root)"
+                    "instruction": "Initialize a 'word' boolean flag to False.",
+                    "placeholderCode": "        self.word = False",
+                    "validationRegex": "^\\s+self\\.word\\s*=\\s*False$",
+                    "hint": "This flag marks the end of a complete word.",
+                    "solutionCode": "        self.word = False"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Define the 'WordDictionary' class.",
+                    "placeholderCode": "class WordDictionary:",
+                    "validationRegex": "^class\\s+WordDictionary:$",
+                    "hint": "This is the main class that the user will interact with.",
+                    "solutionCode": "class WordDictionary:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Initialize the 'WordDictionary' with a root node.",
+                    "placeholderCode": "    def __init__(self):\n        self.root = TrieNode()",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):\\s*self\\.root\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Every dictionary starts with an empty root node.",
+                    "solutionCode": "    def __init__(self):\n        self.root = TrieNode()"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Define the 'addWord' method.",
+                    "placeholderCode": "    def addWord(self, word):",
+                    "validationRegex": "^\\s+def\\s+addWord\\(self,\\s*word\\):$",
+                    "hint": "This method follows standard Trie insertion logic.",
+                    "solutionCode": "    def addWord(self, word):"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Initialize a pointer 'cur' to the root.",
+                    "placeholderCode": "        cur = self.root",
+                    "validationRegex": "^\\s+cur\\s*=\\s*self\\.root$",
+                    "hint": "Start at the root for every word insertion.",
+                    "solutionCode": "        cur = self.root"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Iterate through each character in the word.",
+                    "placeholderCode": "        for c in word:",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+word:$",
+                    "hint": "Each character is a step deeper into the tree.",
+                    "solutionCode": "        for c in word:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "If a character is not in current children, create a new TrieNode.",
+                    "placeholderCode": "            if c not in cur.children:\n                cur.children[c] = TrieNode()",
+                    "validationRegex": "^\\s+if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Extend the trie path for new character sequences.",
+                    "solutionCode": "            if c not in cur.children:\n                cur.children[c] = TrieNode()"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Move the 'cur' pointer to the child node.",
+                    "placeholderCode": "            cur = cur.children[c]",
+                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.children\\[c\\]$",
+                    "hint": "Advance the pointer forward.",
+                    "solutionCode": "            cur = cur.children[c]"
+                },
+                {
+                    "id": 12,
+                    "instruction": "At the end of the word, set the 'word' flag to True.",
+                    "placeholderCode": "        cur.word = True",
+                    "validationRegex": "^\\s+cur\\.word\\s*=\\s*True$",
+                    "hint": "Indicate that a valid word sequence exists up to this point.",
+                    "solutionCode": "        cur.word = True"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Define the 'search' method.",
+                    "placeholderCode": "    def search(self, word):",
+                    "validationRegex": "^\\s+def\\s+search\\(self,\\s*word\\):$",
+                    "hint": "The search process must handle wildcards using recursion.",
+                    "solutionCode": "    def search(self, word):"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Define a helper 'dfs' function that takes a starting index and a node.",
+                    "placeholderCode": "        def dfs(j, root):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(j,\\s*root\\):$",
+                    "hint": "Recursion allows us to explore multiple branches when encountering a dot.",
+                    "solutionCode": "        def dfs(j, root):"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Initialize 'cur' to the provided root in the helper.",
+                    "placeholderCode": "            cur = root",
+                    "validationRegex": "^\\s+cur\\s*=\\s*root$",
+                    "hint": "Each DFS call starts from a specific node in the trie.",
+                    "solutionCode": "            cur = root"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Loop through characters from index 'j' to the end of the word.",
+                    "placeholderCode": "            for i in range(j, len(word)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(j,\\s*len\\(word\\)\\):$",
+                    "hint": "Process the remainder of the word from the current depth.",
+                    "solutionCode": "            for i in range(j, len(word)):"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Check if the current character is a '.' wildcard.",
+                    "placeholderCode": "                c = word[i]\n                if c == \".\":",
+                    "validationRegex": "^\\s+c\\s*=\\s*word\\[i\\]\\s*if\\s+c\\s*==\\s*\"\\.\":$",
+                    "hint": "A dot can match *any* child of the current node.",
+                    "solutionCode": "                c = word[i]\n                if c == \".\":"
+                },
+                {
+                    "id": 18,
+                    "instruction": "If it's a dot, recursively call 'dfs' for every child node.",
+                    "placeholderCode": "                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True",
+                    "validationRegex": "^\\s+for\\s+child\\s+in\\s+cur\\.children\\.values\\(\\):\\s*if\\s+dfs\\(i\\s*\\+\\s*1,\\s*child\\):\\s*return\\s+True$",
+                    "hint": "Try all possible character branches to find a match.",
+                    "solutionCode": "                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True"
+                },
+                {
+                    "id": 19,
+                    "instruction": "If no branches match the dot, return False.",
+                    "placeholderCode": "                    return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "If the dot can't be resolved through any child, the path is invalid.",
+                    "solutionCode": "                    return False"
+                },
+                {
+                    "id": 20,
+                    "instruction": "If it's not a dot, check if the character exists in cur.children.",
+                    "placeholderCode": "                else:\n                    if c not in cur.children:\n                        return False",
+                    "validationRegex": "^\\s+else:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False$",
+                    "hint": "Handle standard character matching logic.",
+                    "solutionCode": "                else:\n                    if c not in cur.children:\n                        return False"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Move the pointer to the matching child node.",
+                    "placeholderCode": "                    cur = cur.children[c]",
+                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.children\\[c\\]$",
+                    "hint": "Continue the search path.",
+                    "solutionCode": "                    cur = cur.children[c]"
+                },
+                {
+                    "id": 22,
+                    "instruction": "After the loop, return whether the current node marks the end of a word.",
+                    "placeholderCode": "            return cur.word",
+                    "validationRegex": "^\\s+return\\s+cur\\.word$",
+                    "hint": "Check the word flag at our final destination.",
+                    "solutionCode": "            return cur.word"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Start the DFS process from index 0 and root.",
+                    "placeholderCode": "        return dfs(0, self.root)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*self\\.root\\)$",
+                    "hint": "Launch the initial recursive search.",
+                    "solutionCode": "        return dfs(0, self.root)"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
-            "name": "Trie with DFS",
-            "description": "Same as brute force.",
+            "name": "Line-by-Line DFS Trie",
+            "description": "Granular implementation focusing on clear separate steps for node initialization and recursive search logic.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define TrieNode.",
-                    "placeholderCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.word = False",
-                    "validationRegex": "^class\\s+TrieNode:\\s*def\\s+__init__\\(self\\):\\s*self\\.children\\s*=\\s*{}\\s*self\\.word\\s*=\\s*False$",
-                    "hint": "Create a node class with children map and word flag.",
-                    "solutionCode": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.word = False"
+                    "instruction": "Begin the 'TrieNode' class definition.",
+                    "placeholderCode": "class TrieNode:",
+                    "validationRegex": "^class\\s+TrieNode:$",
+                    "hint": "Standard node class for prefix trees.",
+                    "solutionCode": "class TrieNode:"
                 },
                 {
                     "id": 2,
-                    "instruction": "Define WordDictionary.",
-                    "placeholderCode": "class WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()",
-                    "validationRegex": "^class\\s+WordDictionary:\\s*def\\s+__init__\\(self\\):\\s*self\\.root\\s*=\\s*TrieNode\\(\\)$",
-                    "hint": "Initialize with a root node.",
-                    "solutionCode": "class WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()"
+                    "instruction": "Define 'TrieNode' constructor.",
+                    "placeholderCode": "    def __init__(self):",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):$",
+                    "hint": "Prepare internal storage for the node.",
+                    "solutionCode": "    def __init__(self):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Implement addWord.",
-                    "placeholderCode": "    def addWord(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.word = True",
-                    "validationRegex": "^\\s+def\\s+addWord\\(self,\\s*word\\):\\s*cur\\s*=\\s*self\\.root\\s*for\\s+c\\s+in\\s+word:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*cur\\.word\\s*=\\s*True$",
-                    "hint": "Standard Trie insertion.",
-                    "solutionCode": "    def addWord(self, word):\n        cur = self.root\n        for c in word:\n            if c not in cur.children:\n                cur.children[c] = TrieNode()\n            cur = cur.children[c]\n        cur.word = True"
+                    "instruction": "Initialize 'self.children' to an empty dictionary.",
+                    "placeholderCode": "        self.children = {}",
+                    "validationRegex": "^\\s+self\\.children\\s*=\\s*{}$",
+                    "hint": "Dictionary keys will be characters, values will be nodes.",
+                    "solutionCode": "        self.children = {}"
                 },
                 {
                     "id": 4,
-                    "instruction": "Implement search.",
-                    "placeholderCode": "    def search(self, word):\n        def dfs(j, root):\n            cur = root\n            for i in range(j, len(word)):\n                c = word[i]\n                if c == \".\":\n                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True\n                    return False\n                else:\n                    if c not in cur.children:\n                        return False\n                    cur = cur.children[c]\n            return cur.word\n        return dfs(0, self.root)",
-                    "validationRegex": "^\\s+def\\s+search\\(self,\\s*word\\):\\s*def\\s+dfs\\(j,\\s*root\\):\\s*cur\\s*=\\s*root\\s*for\\s+i\\s+in\\s+range\\(j,\\s*len\\(word\\)\\):\\s*c\\s*=\\s*word\\[i\\]\\s*if\\s+c\\s*==\\s*\"\\.\":\\s*for\\s+child\\s+in\\s+cur\\.children\\.values\\(\\):\\s*if\\s+dfs\\(i\\s*\\+\\s*1,\\s*child\\):\\s*return\\s+True\\s*return\\s+False\\s*else:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False\\s*cur\\s*=\\s*cur\\.children\\[c\\]\\s*return\\s+cur\\.word\\s*return\\s+dfs\\(0,\\s*self\\.root\\)$",
-                    "hint": "Use DFS to handle '.' wildcard by checking all children.",
-                    "solutionCode": "    def search(self, word):\n        def dfs(j, root):\n            cur = root\n            for i in range(j, len(word)):\n                c = word[i]\n                if c == \".\":\n                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True\n                    return False\n                else:\n                    if c not in cur.children:\n                        return False\n                    cur = cur.children[c]\n            return cur.word\n        return dfs(0, self.root)"
+                    "instruction": "Initialize 'self.word' to the boolean False.",
+                    "placeholderCode": "        self.word = False",
+                    "validationRegex": "^\\s+self\\.word\\s*=\\s*False$",
+                    "hint": "Used to differentiate between a prefix and a stored word.",
+                    "solutionCode": "        self.word = False"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Establish the 'WordDictionary' class.",
+                    "placeholderCode": "class WordDictionary:",
+                    "validationRegex": "^class\\s+WordDictionary:$",
+                    "hint": "This class will manage insertions and wildcard searches.",
+                    "solutionCode": "class WordDictionary:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Implement '__init__' by assigning a root 'TrieNode'.",
+                    "placeholderCode": "    def __init__(self):\n        self.root = TrieNode()",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):\\s*self\\.root\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Start with a clean root node.",
+                    "solutionCode": "    def __init__(self):\n        self.root = TrieNode()"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Define the 'addWord' logic.",
+                    "placeholderCode": "    def addWord(self, word):",
+                    "validationRegex": "^\\s+def\\s+addWord\\(self,\\s*word\\):$",
+                    "hint": "Takes a character string as input.",
+                    "solutionCode": "    def addWord(self, word):"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Initialize the traversal pointer at the root.",
+                    "placeholderCode": "        cur = self.root",
+                    "validationRegex": "^\\s+cur\\s*=\\s*self\\.root$",
+                    "hint": "Traversing starts from the very top node.",
+                    "solutionCode": "        cur = self.root"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Traverse each character 'c' in the word.",
+                    "placeholderCode": "        for c in word:",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+word:$",
+                    "hint": "Step through the word character by character.",
+                    "solutionCode": "        for c in word:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Check if character exists; if not, add it as a new node.",
+                    "placeholderCode": "            if c not in cur.children:\n                cur.children[c] = TrieNode()",
+                    "validationRegex": "^\\s+if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)$",
+                    "hint": "Dynamically build the tree branches.",
+                    "solutionCode": "            if c not in cur.children:\n                cur.children[c] = TrieNode()"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Update 'cur' to point to the character's child node.",
+                    "placeholderCode": "            cur = cur.children[c]",
+                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.children\\[c\\]$",
+                    "hint": "Walk forward down the tree.",
+                    "solutionCode": "            cur = cur.children[c]"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Mark the final node's 'word' flag to signify insertion success.",
+                    "placeholderCode": "        cur.word = True",
+                    "validationRegex": "^\\s+cur\\.word\\s*=\\s*True$",
+                    "hint": "Finish by marking the word end.",
+                    "solutionCode": "        cur.word = True"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Define the 'search' method for the Trie.",
+                    "placeholderCode": "    def search(self, word):",
+                    "validationRegex": "^\\s+def\\s+search\\(self,\\s*word\\):$",
+                    "hint": "The search must recursively explore dots.",
+                    "solutionCode": "    def search(self, word):"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Define the 'dfs' helper inside search.",
+                    "placeholderCode": "        def dfs(j, root):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(j,\\s*root\\):$",
+                    "hint": "J is the index, root is the starting node for this search branch.",
+                    "solutionCode": "        def dfs(j, root):"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Initialize local 'cur' to the provided starting node.",
+                    "placeholderCode": "            cur = root",
+                    "validationRegex": "^\\s+cur\\s*=\\s*root$",
+                    "hint": "Define the scope for the current search depth.",
+                    "solutionCode": "            cur = root"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Iterate from index 'j' through the length of the word.",
+                    "placeholderCode": "            for i in range(j, len(word)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(j,\\s*len\\(word\\)\\):$",
+                    "hint": "Process each remaining character or dot.",
+                    "solutionCode": "            for i in range(j, len(word)):"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Check for wildcard dots and handle them.",
+                    "placeholderCode": "                c = word[i]\n                if c == \".\":",
+                    "validationRegex": "^\\s+c\\s*=\\s*word\\[i\\]\\s*if\\s+c\\s*==\\s*\"\\.\":$",
+                    "hint": "A dot means a branching point for search.",
+                    "solutionCode": "                c = word[i]\n                if c == \".\":"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Loop through all values in 'cur.children' and call DFS recursively.",
+                    "placeholderCode": "                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True",
+                    "validationRegex": "^\\s+for\\s+child\\s+in\\s+cur\\.children\\.values\\(\\):\\s*if\\s+dfs\\(i\\s*\\+\\s*1,\\s*child\\):\\s*return\\s+True$",
+                    "hint": "Exhaustively check all paths for the dot wildcard.",
+                    "solutionCode": "                    for child in cur.children.values():\n                        if dfs(i + 1, child):\n                            return True"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Return False if no branch successfully resolved the dot.",
+                    "placeholderCode": "                    return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "If all recursive paths fail, return false.",
+                    "solutionCode": "                    return False"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Handle standard character searching in the else block.",
+                    "placeholderCode": "                else:\n                    if c not in cur.children:\n                        return False",
+                    "validationRegex": "^\\s+else:\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children:\\s*return\\s+False$",
+                    "hint": "Characters must match existing children keys.",
+                    "solutionCode": "                else:\n                    if c not in cur.children:\n                        return False"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Update 'cur' to jump to the matching child.",
+                    "placeholderCode": "                    cur = cur.children[c]",
+                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.children\\[c\\]$",
+                    "hint": "Follow the character path.",
+                    "solutionCode": "                    cur = cur.children[c]"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Return the node's word completion status.",
+                    "placeholderCode": "            return cur.word",
+                    "validationRegex": "^\\s+return\\s+cur\\.word$",
+                    "hint": "Final verification of word existence.",
+                    "solutionCode": "            return cur.word"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Begin logic execution with the first char and root node.",
+                    "placeholderCode": "        return dfs(0, self.root)",
+                    "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*self\\.root\\)$",
+                    "hint": "Start the search cascade.",
+                    "solutionCode": "        return dfs(0, self.root)"
                 }
             ]
         }
