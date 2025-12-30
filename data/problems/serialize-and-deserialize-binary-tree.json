@@ -5,11 +5,19 @@
     "examples": [
         {
             "input": "root = [1,2,3,null,null,4,5]",
-            "output": "[1,2,3,null,null,4,5]"
+            "output": [
+                1,
+                2,
+                3,
+                null,
+                null,
+                4,
+                5
+            ]
         },
         {
             "input": "root = []",
-            "output": "[]"
+            "output": []
         }
     ],
     "constraints": [
@@ -34,14 +42,86 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Implement serialize.",
-                    "placeholderCode": "    def serialize(self, root):\n        res = []\n        def dfs(node):\n            if not node:\n                res.append(\"N\")\n                return\n            res.append(str(node.val))\n            dfs(node.left)\n            dfs(node.right)\n        dfs(root)\n        return \",\".join(res)",
-                    "validationRegex": "^\\s+def\\s+serialize\\(self,\\s*root\\):\\s*res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(node\\):\\s*if\\s+not\\s+node:\\s*res\\.append\\(\"N\"\\)\\s*return\\s*res\\.append\\(str\\(node\\.val\\)\\)\\s*dfs\\(node\\.left\\)\\s*dfs\\(node\\.right\\)\\s*dfs\\(root\\)\\s*return\\s*\",\"\\.join\\(res\\)$",
-                    "hint": "Use preorder traversal to build a comma-separated string.\\n\\nExample:\\nTree: 1 -> (2, 3). Preorder: 1, 2, N, N, 3, N, N.\\nString: \"1,2,N,N,3,N,N\".",
-                    "solutionCode": "    def serialize(self, root):\n        res = []\n        def dfs(node):\n            if not node:\n                res.append(\"N\")\n                return\n            res.append(str(node.val))\n            dfs(node.left)\n            dfs(node.right)\n        dfs(root)\n        return \",\".join(res)"
+                    "instruction": "Define the serialize method that takes the root of the tree.",
+                    "placeholderCode": "    def serialize(self, root):",
+                    "validationRegex": "^\\s+def\\s+serialize\\(self,\\s*root\\):$",
+                    "hint": "This method converts the tree into a single string.",
+                    "solutionCode": "    def serialize(self, root):"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize an empty list 'res' to store the serialized values.",
+                    "placeholderCode": "        res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "A list is more efficient than string concatenation for building the result.",
+                    "solutionCode": "        res = []"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define a nested 'dfs' helper function that takes a node.",
+                    "placeholderCode": "        def dfs(node):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(node\\):$",
+                    "hint": "This helper will perform a preorder traversal (Root -> Left -> Right).",
+                    "solutionCode": "        def dfs(node):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if the current node is None.",
+                    "placeholderCode": "            if not node:",
+                    "validationRegex": "^\\s+if\\s+not\\s+node:$",
+                    "hint": "Base case for the recursion.",
+                    "solutionCode": "            if not node:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Append a placeholder like 'N' for null nodes and return.",
+                    "placeholderCode": "                res.append(\"N\")\n                return",
+                    "validationRegex": "^\\s+res\\.append\\(\"N\"\\)\\s*return$",
+                    "hint": "We must record null pointers to reconstruct the tree structure correctly.",
+                    "solutionCode": "                res.append(\"N\")\n                return"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Append the string value of the current node to 'res'.",
+                    "placeholderCode": "            res.append(str(node.val))",
+                    "validationRegex": "^\\s+res\\.append\\(str\\(node\\.val\\)\\)$",
+                    "hint": "Store the current node's value as a string.",
+                    "solutionCode": "            res.append(str(node.val))"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Recursively call 'dfs' for the left child.",
+                    "placeholderCode": "            dfs(node.left)",
+                    "validationRegex": "^\\s+dfs\\(node\\.left\\)$",
+                    "hint": "Traverse down the left branch.",
+                    "solutionCode": "            dfs(node.left)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Recursively call 'dfs' for the right child.",
+                    "placeholderCode": "            dfs(node.right)",
+                    "validationRegex": "^\\s+dfs\\(node\\.right\\)$",
+                    "hint": "Traverse down the right branch.",
+                    "solutionCode": "            dfs(node.right)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Start the DFS traversal from the root.",
+                    "placeholderCode": "        dfs(root)",
+                    "validationRegex": "^\\s+dfs\\(root\\)$",
+                    "hint": "Call the helper function to populate the 'res' list.",
+                    "solutionCode": "        dfs(root)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Join the list elements into a single string separated by commas.",
+                    "placeholderCode": "        return \",\".join(res)",
+                    "validationRegex": "^\\s+return\\s+\",\"\\.join\\(res\\)$",
+                    "hint": "This produces the final serialized string result.",
+                    "solutionCode": "        return \",\".join(res)"
+                },
+                {
+                    "id": 12,
                     "instruction": "Implement deserialize.",
                     "placeholderCode": "    def deserialize(self, data):\n        vals = data.split(\",\")\n        self.i = 0\n        def dfs():\n            if vals[self.i] == \"N\":\n                self.i += 1\n                return None\n            node = TreeNode(int(vals[self.i]))\n            self.i += 1\n            node.left = dfs()\n            node.right = dfs()\n            return node\n        return dfs()",
                     "validationRegex": "^\\s+def\\s+deserialize\\(self,\\s*data\\):\\s*vals\\s*=\\s*data\\.split\\(\",\"\\)\\s*self\\.i\\s*=\\s*0\\s*def\\s+dfs\\(\\):\\s*if\\s+vals\\[self\\.i\\]\\s*==\\s*\"N\":\\s*self\\.i\\s*\\+=\\s*1\\s*return\\s+None\\s*node\\s*=\\s*TreeNode\\(int\\(vals\\[self\\.i\\]\\)\\)\\s*self\\.i\\s*\\+=\\s*1\\s*node\\.left\\s*=\\s*dfs\\(\\)\\s*node\\.right\\s*=\\s*dfs\\(\\)\\s*return\\s+node\\s*return\\s+dfs\\(\\)$",
@@ -52,27 +132,99 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DFS Preorder",
-            "description": "Same as brute force.",
+            "name": "DFS Preorder (Granular)",
+            "description": "Standard DFS Preorder approach descomposed into line-by-line logical steps to ensure clarity in pointer management and tree reconstruction.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define Codec class.",
+                    "instruction": "Define the Codec class.",
                     "placeholderCode": "class Codec:",
                     "validationRegex": "^class\\s+Codec:$",
-                    "hint": "Define the class.",
+                    "hint": "This class will handle both serialization and deserialization.",
                     "solutionCode": "class Codec:"
                 },
                 {
                     "id": 2,
-                    "instruction": "Implement serialize.",
-                    "placeholderCode": "    def serialize(self, root):\n        res = []\n        def dfs(node):\n            if not node:\n                res.append(\"N\")\n                return\n            res.append(str(node.val))\n            dfs(node.left)\n            dfs(node.right)\n        dfs(root)\n        return \",\".join(res)",
-                    "validationRegex": "^\\s+def\\s+serialize\\(self,\\s*root\\):\\s*res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(node\\):\\s*if\\s+not\\s+node:\\s*res\\.append\\(\"N\"\\)\\s*return\\s*res\\.append\\(str\\(node\\.val\\)\\)\\s*dfs\\(node\\.left\\)\\s*dfs\\(node\\.right\\)\\s*dfs\\(root\\)\\s*return\\s*\",\"\\.join\\(res\\)$",
-                    "hint": "Use preorder traversal to build a comma-separated string.",
-                    "solutionCode": "    def serialize(self, root):\n        res = []\n        def dfs(node):\n            if not node:\n                res.append(\"N\")\n                return\n            res.append(str(node.val))\n            dfs(node.left)\n            dfs(node.right)\n        dfs(root)\n        return \",\".join(res)"
+                    "instruction": "Start implementing the 'serialize' method.",
+                    "placeholderCode": "    def serialize(self, root):",
+                    "validationRegex": "^\\s+def\\s+serialize\\(self,\\s*root\\):$",
+                    "hint": "We need to turn the binary tree into a traversal string.",
+                    "solutionCode": "    def serialize(self, root):"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize a 'res' list to accumulate node values as strings.",
+                    "placeholderCode": "        res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "Appending to a list is $O(1)$ while string concat can be $O(N)$.",
+                    "solutionCode": "        res = []"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define a 'dfs' helper to perform the traversal.",
+                    "placeholderCode": "        def dfs(node):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(node\\):$",
+                    "hint": "Nested function to recursive through the tree branches.",
+                    "solutionCode": "        def dfs(node):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check for null nodes (the base case).",
+                    "placeholderCode": "            if not node:",
+                    "validationRegex": "^\\s+if\\s+not\\s+node:$",
+                    "hint": "Empty nodes are part of the serialized data to maintain structure.",
+                    "solutionCode": "            if not node:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Append 'N' to 'res' for null nodes and return.",
+                    "placeholderCode": "                res.append(\"N\")\n                return",
+                    "validationRegex": "^\\s+res\\.append\\(\"N\"\\)\\s*return$",
+                    "hint": "Returning here stops the current recursive branch.",
+                    "solutionCode": "                res.append(\"N\")\n                return"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Append the current node's value (as a string) to the result list.",
+                    "placeholderCode": "            res.append(str(node.val))",
+                    "validationRegex": "^\\s+res\\.append\\(str\\(node\\.val\\)\\)$",
+                    "hint": "Record the current root value first (Preorder).",
+                    "solutionCode": "            res.append(str(node.val))"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Recursively visit the left child.",
+                    "placeholderCode": "            dfs(node.left)",
+                    "validationRegex": "^\\s+dfs\\(node\\.left\\)$",
+                    "hint": "Standard preorder: visit root then left child.",
+                    "solutionCode": "            dfs(node.left)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Recursively visit the right child.",
+                    "placeholderCode": "            dfs(node.right)",
+                    "validationRegex": "^\\s+dfs\\(node\\.right\\)$",
+                    "hint": "Standard preorder: finally visit the right child.",
+                    "solutionCode": "            dfs(node.right)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Launch the DFS process starting from the provided root.",
+                    "placeholderCode": "        dfs(root)",
+                    "validationRegex": "^\\s+dfs\\(root\\)$",
+                    "hint": "Trigger the helper function execution.",
+                    "solutionCode": "        dfs(root)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Return the serialized string by joining 'res' with commas.",
+                    "placeholderCode": "        return \",\".join(res)",
+                    "validationRegex": "^\\s+return\\s+\",\"\\.join\\(res\\)$",
+                    "hint": "Join the collected values into the final format.",
+                    "solutionCode": "        return \",\".join(res)"
+                },
+                {
+                    "id": 12,
                     "instruction": "Implement deserialize.",
                     "placeholderCode": "    def deserialize(self, data):\n        vals = data.split(\",\")\n        self.i = 0\n        def dfs():\n            if vals[self.i] == \"N\":\n                self.i += 1\n                return None\n            node = TreeNode(int(vals[self.i]))\n            self.i += 1\n            node.left = dfs()\n            node.right = dfs()\n            return node\n        return dfs()",
                     "validationRegex": "^\\s+def\\s+deserialize\\(self,\\s*data\\):\\s*vals\\s*=\\s*data\\.split\\(\",\"\\)\\s*self\\.i\\s*=\\s*0\\s*def\\s+dfs\\(\\):\\s*if\\s+vals\\[self\\.i\\]\\s*==\\s*\"N\":\\s*self\\.i\\s*\\+=\\s*1\\s*return\\s+None\\s*node\\s*=\\s*TreeNode\\(int\\(vals\\[self\\.i\\]\\)\\)\\s*self\\.i\\s*\\+=\\s*1\\s*node\\.left\\s*=\\s*dfs\\(\\)\\s*node\\.right\\s*=\\s*dfs\\(\\)\\s*return\\s+node\\s*return\\s+dfs\\(\\)$",
