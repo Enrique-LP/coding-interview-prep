@@ -65,18 +65,90 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Define QuickSelect.",
-                    "placeholderCode": "    def quickSelect(l, r):\n        pivot, p = nums[r], l\n        for i in range(l, r):\n            if nums[i] <= pivot:\n                nums[p], nums[i] = nums[i], nums[p]\n                p += 1\n        nums[p], nums[r] = nums[r], nums[p]\n        if p > k: return quickSelect(l, p - 1)\n        elif p < k: return quickSelect(p + 1, r)\n        else: return nums[p]",
-                    "validationRegex": "^\\s+def\\s+quickSelect\\(l,\\s*r\\):\\s*pivot,\\s*p\\s*=\\s*nums\\[r\\],\\s*l\\s*for\\s+i\\s+in\\s+range\\(l,\\s*r\\):\\s*if\\s+nums\\[i\\]\\s*<=\\s*pivot:\\s*nums\\[p\\],\\s*nums\\[i\\]\\s*=\\s*nums\\[i\\],\\s*nums\\[p\\]\\s*p\\s*\\+=\\s*1\\s*nums\\[p\\],\\s*nums\\[r\\]\\s*=\\s*nums\\[r\\],\\s*nums\\[p\\]\\s*if\\s+p\\s*>\\s*k:\\s*return\\s+quickSelect\\(l,\\s*p\\s*-\\s*1\\)\\s*elif\\s+p\\s*<\\s*k:\\s*return\\s+quickSelect\\(p\\s*\\+\\s*1,\\s*r\\)\\s*else:\\s*return\\s+nums\\[p\\]$",
-                    "hint": "Implement the partition logic similar to QuickSort.\\n\\nExample:\\nPivot=4. Array=[3, 2, 1, 5, 6, 4].\\nMove smaller elements (3, 2, 1) to left.\\nArray becomes [3, 2, 1, 4, 6, 5]. Pivot index is 3.",
-                    "solutionCode": "    def quickSelect(l, r):\n        pivot, p = nums[r], l\n        for i in range(l, r):\n            if nums[i] <= pivot:\n                nums[p], nums[i] = nums[i], nums[p]\n                p += 1\n        nums[p], nums[r] = nums[r], nums[p]\n        if p > k: return quickSelect(l, p - 1)\n        elif p < k: return quickSelect(p + 1, r)\n        else: return nums[p]"
+                    "instruction": "Define the nested 'quickSelect' function.",
+                    "placeholderCode": "    def quickSelect(l, r):",
+                    "validationRegex": "^\\s+def\\s+quickSelect\\(\\s*l\\s*,\\s*r\\s*\\)\\s*:$",
+                    "hint": "Define a helper for range-based searching.",
+                    "solutionCode": "    def quickSelect(l, r):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Call QuickSelect.",
+                    "instruction": "Initialize 'pivot' from the right edge and partition pointer 'p' at the left edge.",
+                    "placeholderCode": "        pivot, p = nums[r], l",
+                    "validationRegex": "^\\s+pivot\\s*,\\s*p\\s*=\\s*nums\\[r\\]\\s*,\\s*l$",
+                    "hint": "Standard QuickSelect partition initialization.",
+                    "solutionCode": "        pivot, p = nums[r], l"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Loop through the range from 'l' to 'r'.",
+                    "placeholderCode": "        for i in range(l, r):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(\\s*l\\s*,\\s*r\\s*\\)\\s*:$",
+                    "hint": "Iterate to compare elements with the pivot.",
+                    "solutionCode": "        for i in range(l, r):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check if the current element is less than or equal to the pivot.",
+                    "placeholderCode": "            if nums[i] <= pivot:",
+                    "validationRegex": "^\\s+if\\s+nums\\[i\\]\\s*<=\\s*pivot\\s*:$",
+                    "hint": "Condition to move smaller elements to the left partition.",
+                    "solutionCode": "            if nums[i] <= pivot:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Swap the current element with the element at the partition pointer.",
+                    "placeholderCode": "                nums[p], nums[i] = nums[i], nums[p]",
+                    "validationRegex": "^\\s+nums\\[p\\]\\s*,\\s*nums\\[i\\]\\s*=\\s*nums\\[i\\]\\s*,\\s*nums\\[p\\]$",
+                    "hint": "Typical swap logic for partitioning.",
+                    "solutionCode": "                nums[p], nums[i] = nums[i], nums[p]"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Increment the partition pointer.",
+                    "placeholderCode": "                p += 1",
+                    "validationRegex": "^\\s+p\\s*\\+=\\s*1$",
+                    "hint": "Move the boundary for smaller elements.",
+                    "solutionCode": "                p += 1"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Move the pivot into its final sorted position.",
+                    "placeholderCode": "        nums[p], nums[r] = nums[r], nums[p]",
+                    "validationRegex": "^\\s+nums\\[p\\]\\s*,\\s*nums\\[r\\]\\s*=\\s*nums\\[r\\]\\s*,\\s*nums\\[p\\]$",
+                    "hint": "The pivot stays at index 'p' permanently.",
+                    "solutionCode": "        nums[p], nums[r] = nums[r], nums[p]"
+                },
+                {
+                    "id": 10,
+                    "instruction": "If the pivot index 'p' is greater than our target 'k', search the left side.",
+                    "placeholderCode": "        if p > k: return quickSelect(l, p - 1)",
+                    "validationRegex": "^\\s+if\\s+p\\s*>\\s*k\\s*:\\s*return\\s+quickSelect\\(\\s*l\\s*,\\s*p\\s*-\\s*1\\s*\\)$",
+                    "hint": "Recurse on the lower half.",
+                    "solutionCode": "        if p > k: return quickSelect(l, p - 1)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "If the pivot index 'p' is less than 'k', search the right side.",
+                    "placeholderCode": "        elif p < k: return quickSelect(p + 1, r)",
+                    "validationRegex": "^\\s+elif\\s+p\\s*<\\s*k\\s*:\\s*return\\s+quickSelect\\(\\s*p\\s*\\+\\s*1\\s*,\\s*r\\s*\\)$",
+                    "hint": "Recurse on the upper half.",
+                    "solutionCode": "        elif p < k: return quickSelect(p + 1, r)"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Otherwise, the target index 'k' matches 'p'; return the element.",
+                    "placeholderCode": "        else: return nums[p]",
+                    "validationRegex": "^\\s+else\\s*:\\s*return\\s+nums\\[p\\]$",
+                    "hint": "We found the kth largest element.",
+                    "solutionCode": "        else: return nums[p]"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Initiate the recursive algorithm from index 0 to the end of the array.",
                     "placeholderCode": "    return quickSelect(0, len(nums) - 1)",
                     "validationRegex": "^\\s+return\\s+quickSelect\\(0,\\s*len\\(nums\\)\\s*-\\s*1\\)$",
-                    "hint": "Start QuickSelect on the entire array.",
+                    "hint": "Start the divide-and-conquer process.",
                     "solutionCode": "    return quickSelect(0, len(nums) - 1)"
                 }
             ]
