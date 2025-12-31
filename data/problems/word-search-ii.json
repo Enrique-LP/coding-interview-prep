@@ -34,7 +34,7 @@
                     "id": 1,
                     "instruction": "Define the function find_words that takes board and words.",
                     "placeholderCode": "def find_words(board, words):",
-                    "validationRegex": "^def\\s+find_words\\(board,\\s*words\\):$",
+                    "validationRegex": "^def\\s+find_words\\s*\\(\\s*board\\s*,\\s*words\\s*\\)\\s*:$",
                     "hint": "Use `def` to define the function.",
                     "solutionCode": "def find_words(board, words):"
                 },
@@ -42,7 +42,7 @@
                     "id": 2,
                     "instruction": "Iterate words and board.",
                     "placeholderCode": "    res = []\n    for word in words:\n        # Check if word exists on board (omitted for brevity)\n        pass",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*for\\s+word\\s+in\\s+words:\\s*pass$",
+                    "validationRegex": "^\\s*res\\s*=\\s*\\[\\s*\\]\\s*for\\s+word\\s+in\\s+words\\s*:\\s*pass\\s*$",
                     "hint": "Iterate through each word and check if it exists on the board using DFS.",
                     "solutionCode": "    res = []\n    for word in words:\n        # Check if word exists on board (omitted for brevity)\n        pass"
                 }
@@ -57,7 +57,7 @@
                     "id": 1,
                     "instruction": "Define the 'TrieNode' class.",
                     "placeholderCode": "class TrieNode:",
-                    "validationRegex": "^class\\s+TrieNode:$",
+                    "validationRegex": "^class\\s+TrieNode\\s*:$",
                     "hint": "Standard class definition for a Trie junction.",
                     "solutionCode": "class TrieNode:"
                 },
@@ -65,215 +65,215 @@
                     "id": 2,
                     "instruction": "Define the 'TrieNode' constructor.",
                     "placeholderCode": "    def __init__(self):",
-                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):$",
-                    "hint": "Prepare the node's internal properties.",
+                    "validationRegex": "^\\s*def\\s+__init__\\s*\\(\\s*self\\s*\\)\\s*:$",
+                    "hint": "Initialize the internal state of each node.",
                     "solutionCode": "    def __init__(self):"
                 },
                 {
                     "id": 3,
                     "instruction": "Initialize the children dictionary.",
                     "placeholderCode": "        self.children = {}",
-                    "validationRegex": "^\\s+self\\.children\\s*=\\s*{}$",
-                    "hint": "Use a dictionary to map characters to child nodes.",
+                    "validationRegex": "^\\s*self\\.children\\s*=\\s*\\{\\s*\\}\\s*$",
+                    "hint": "This will store the mappings from characters to children nodes.",
                     "solutionCode": "        self.children = {}"
                 },
                 {
                     "id": 4,
                     "instruction": "Initialize the 'isWord' flag to False.",
                     "placeholderCode": "        self.isWord = False",
-                    "validationRegex": "^\\s+self\\.isWord\\s*=\\s*False$",
-                    "hint": "Flag used to mark the terminal character of a word.",
+                    "validationRegex": "^\\s*self\\.isWord\\s*=\\s*False\\s*$",
+                    "hint": "Used to identify if a node marks the end of a valid word.",
                     "solutionCode": "        self.isWord = False"
                 },
                 {
                     "id": 5,
                     "instruction": "Define the 'addWord' method.",
                     "placeholderCode": "    def addWord(self, word):",
-                    "validationRegex": "^\\s+def\\s+addWord\\(self,\\s*word\\):$",
-                    "hint": "Method signature to insert a word into the Trie.",
+                    "validationRegex": "^\\s*def\\s+addWord\\s*\\(\\s*self\\s*,\\s*word\\s*\\)\\s*:$",
+                    "hint": "Method to insert a word into the Trie.",
                     "solutionCode": "    def addWord(self, word):"
                 },
                 {
                     "id": 6,
                     "instruction": "Initialize a pointer 'cur' to the current node.",
                     "placeholderCode": "        cur = self",
-                    "validationRegex": "^\\s+cur\\s*=\\s*self$",
-                    "hint": "Start traversing from the current node object.",
+                    "validationRegex": "^\\s*cur\\s*=\\s*self\\s*$",
+                    "hint": "Start the insertion process from the node itself.",
                     "solutionCode": "        cur = self"
                 },
                 {
                     "id": 7,
                     "instruction": "Iterate through each character 'c' in the word.",
                     "placeholderCode": "        for c in word:",
-                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+word:$",
-                    "hint": "Standard loop for Trie insertion.",
+                    "validationRegex": "^\\s*for\\s+c\\s+in\\s+word\\s*:$",
+                    "hint": "Process the word one character at a time.",
                     "solutionCode": "        for c in word:"
                 },
                 {
                     "id": 8,
                     "instruction": "Check if 'c' is not in current children.",
                     "placeholderCode": "            if c not in cur.children:",
-                    "validationRegex": "^\\s+if\\s+c\\s+not\\s+in\\s+cur\\.children:$",
-                    "hint": "Determine if we need to create a new branch.",
+                    "validationRegex": "^\\s*if\\s+c\\s+not\\s+in\\s+cur\\.children\\s*:$",
+                    "hint": "Verify if the character branch already exists.",
                     "solutionCode": "            if c not in cur.children:"
                 },
                 {
                     "id": 9,
                     "instruction": "Create a new 'TrieNode' if the character doesn't exist.",
                     "placeholderCode": "                cur.children[c] = TrieNode()",
-                    "validationRegex": "^\\s+cur\\.children\\[c\\]\\s*=\\s*TrieNode\\(\\)$",
-                    "hint": "Assign a new node to the character key.",
+                    "validationRegex": "^\\s*cur\\.children\\s*\\[\\s*c\\s*\\]\\s*=\\s*TrieNode\\s*\\(\\s*\\)\\s*$",
+                    "hint": "Extend the Trie path with a new node.",
                     "solutionCode": "                cur.children[c] = TrieNode()"
                 },
                 {
                     "id": 10,
                     "instruction": "Move the pointer 'cur' to the child node.",
                     "placeholderCode": "            cur = cur.children[c]",
-                    "validationRegex": "^\\s+cur\\s*=\\s*cur\\.children\\[c\\]$",
-                    "hint": "Advance the pointer forward to the next depth level.",
+                    "validationRegex": "^\\s*cur\\s*=\\s*cur\\.children\\s*\\[\\s*c\\s*\\]\\s*$",
+                    "hint": "Advance forward in the Trie structure.",
                     "solutionCode": "            cur = cur.children[c]"
                 },
                 {
                     "id": 11,
                     "instruction": "Set 'isWord' to True at the final node.",
                     "placeholderCode": "        cur.isWord = True",
-                    "validationRegex": "^\\s+cur\\.isWord\\s*=\\s*True$",
-                    "hint": "Mark the node as the end of the word after the loop ends.",
+                    "validationRegex": "^\\s*cur\\.isWord\\s*=\\s*True\\s*$",
+                    "hint": "Mark the completion of a stored word.",
                     "solutionCode": "        cur.isWord = True"
                 },
                 {
                     "id": 12,
                     "instruction": "Define the 'find_words' function.",
                     "placeholderCode": "def find_words(board, words):",
-                    "validationRegex": "^def\\s+find_words\\(board,\\s*words\\):$",
-                    "hint": "Global function definition for solving the board.",
+                    "validationRegex": "^def\\s+find_words\\s*\\(\\s*board\\s*,\\s*words\\s*\\)\\s*:$",
+                    "hint": "This is the main function to solve the problem.",
                     "solutionCode": "def find_words(board, words):"
                 },
                 {
                     "id": 13,
                     "instruction": "Initialize the root 'TrieNode'.",
                     "placeholderCode": "    root = TrieNode()",
-                    "validationRegex": "^\\s+root\\s*=\\s*TrieNode\\(\\)$",
-                    "hint": "Every word list needs a root entry point.",
+                    "validationRegex": "^\\s*root\\s*=\\s*TrieNode\\s*\\(\\s*\\)\\s*$",
+                    "hint": "Every trie starts with a base root node.",
                     "solutionCode": "    root = TrieNode()"
                 },
                 {
                     "id": 14,
                     "instruction": "Iterate through each word 'w' in the input words list.",
                     "placeholderCode": "    for w in words:",
-                    "validationRegex": "^\\s+for\\s+w\\s+in\\s+words:$",
-                    "hint": "Build the prefix tree word by word.",
+                    "validationRegex": "^\\s*for\\s+w\\s+in\\s+words\\s*:$",
+                    "hint": "Preparation phase: we need to insert all target words into our trie.",
                     "solutionCode": "    for w in words:"
                 },
                 {
                     "id": 15,
                     "instruction": "Add the current word 'w' to the Trie starting from the root.",
                     "placeholderCode": "        root.addWord(w)",
-                    "validationRegex": "^\\s+root\\.addWord\\(w\\)$",
-                    "hint": "Call the instance method on the root node.",
+                    "validationRegex": "^\\s*root\\.addWord\\s*\\(\\s*w\\s*\\)\\s*$",
+                    "hint": "Utilize the 'addWord' helper we defined in the node class.",
                     "solutionCode": "        root.addWord(w)"
                 },
                 {
                     "id": 16,
                     "instruction": "Get the dimensions of the board (ROWS and COLS).",
                     "placeholderCode": "    ROWS, COLS = len(board), len(board[0])",
-                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)$",
-                    "hint": "Store board size to avoid repeated length calls.",
+                    "validationRegex": "^\\s*ROWS\\s*,\\s*COLS\\s*=\\s*len\\s*\\(\\s*board\\s*\\)\\s*,\\s*len\\s*\\(\\s*board\\s*\\[\\s*0\\s*\\]\\s*\\)\\s*$",
+                    "hint": "Calculate limits for our board traversal.",
                     "solutionCode": "    ROWS, COLS = len(board), len(board[0])"
                 },
                 {
                     "id": 17,
                     "instruction": "Initialize an empty set for the result and another for visited cells.",
                     "placeholderCode": "    res, visit = set(), set()",
-                    "validationRegex": "^\\s+res,\\s*visit\\s*=\\s*set\\(\\),\\s*set\\(\\)$",
-                    "hint": "Prepare storage for discovered words and traversed coordinates.",
+                    "validationRegex": "^\\s*res\\s*,\\s*visit\\s*=\\s*set\\s*\\(\\s*\\)\\s*,\\s*set\\s*\\(\\s*\\)\\s*$",
+                    "hint": "Sets allow for O(1) lookups and ensure unique results.",
                     "solutionCode": "    res, visit = set(), set()"
                 },
                 {
                     "id": 18,
                     "instruction": "Define the nested 'dfs' function header.",
                     "placeholderCode": "    def dfs(r, c, node, word):",
-                    "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c,\\s*node,\\s*word\\):$",
-                    "hint": "CRITICAL: The DFS must be defined INSIDE 'find_words' and indented accordingly.",
+                    "validationRegex": "^\\s*def\\s+dfs\\s*\\(\\s*r\\s*,\\s*c\\s*,\\s*node\\s*,\\s*word\\s*\\)\\s*:$",
+                    "hint": "The function tracks coordinates, the Trie path, and the word built so far.",
                     "solutionCode": "    def dfs(r, c, node, word):"
                 },
                 {
                     "id": 19,
                     "instruction": "Check if the current coordinates 'r' or 'c' are out of the board boundaries.",
                     "placeholderCode": "        if r < 0 or c < 0 or r == ROWS or c == COLS:",
-                    "validationRegex": "^\\s+if\\s+r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*ROWS\\s+or\\s+c\\s*==\\s*COLS:$",
-                    "hint": "Boundary check: indices must be within [0, ROWS-1] and [0, COLS-1].",
+                    "validationRegex": "^\\s*if\\s+r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*ROWS\\s+or\\s+c\\s*==\\s*COLS\\s*:$",
+                    "hint": "A cell is invalid if its indices are negative or reach the dimensions.",
                     "solutionCode": "        if r < 0 or c < 0 or r == ROWS or c == COLS:"
                 },
                 {
                     "id": 20,
                     "instruction": "Return if the current cell is out of bounds.",
                     "placeholderCode": "            return",
-                    "validationRegex": "^\\s+return$",
-                    "hint": "Base case: exit recursion if indices are invalid.",
+                    "validationRegex": "^\\s*return\\s*$",
+                    "hint": "Stop searching this branch if we move outside the board.",
                     "solutionCode": "            return"
                 },
                 {
                     "id": 21,
                     "instruction": "Check if the cell has been visited or the board character is not in the Trie children.",
                     "placeholderCode": "        if (r, c) in visit or board[r][c] not in node.children:",
-                    "validationRegex": "^\\s+if\\s+\\(\\s*r,\\s*c\\s*\\)\\s+in\\s+visit\\s+or\\s+board\\[r\\]\\[c\\]\\s+not\\s+in\\s+node\\.children:$",
-                    "hint": "Check for cycles or prefix existence in the Trie. Note: (r, c) syntax is sensitive.",
+                    "validationRegex": "^\\s*if\\s*\\(\\s*r\\s*,\\s*c\\s*\\)\\s+in\\s+visit\\s+or\\s+board\\s*\\[\\s*r\\s*\\]\\s*\\[\\s*c\\s*\\]\\s+not\\s+in\\s+node\\.children\\s*:$",
+                    "hint": "We can't reuse cells in a single word, and we stop if the path doesn't exist in the Trie.",
                     "solutionCode": "        if (r, c) in visit or board[r][c] not in node.children:"
                 },
                 {
                     "id": 22,
                     "instruction": "Return if the character path is invalid or already used.",
                     "placeholderCode": "            return",
-                    "validationRegex": "^\\s+return$",
-                    "hint": "Exit recursion if the character doesn't lead to a target word.",
+                    "validationRegex": "^\\s*return\\s*$",
+                    "hint": "Early exit for redundant or non-matching paths.",
                     "solutionCode": "            return"
                 },
                 {
                     "id": 23,
                     "instruction": "Mark the current board cell as visited.",
                     "placeholderCode": "        visit.add((r, c))",
-                    "validationRegex": "^\\s+visit\\.add\\(\\s*\\(\\s*r,\\s*c\\s*\\)\\s*\\)$",
-                    "hint": "Add the current coordinate tuple to the 'visit' set.",
+                    "validationRegex": "^\\s*visit\\.add\\s*\\(\\s*\\(\\s*r\\s*,\\s*c\\s*\\)\\s*\\)\\s*$",
+                    "hint": "Record this cell so we don't reuse it in the same word.",
                     "solutionCode": "        visit.add((r, c))"
                 },
                 {
                     "id": 24,
                     "instruction": "Advance the 'node' pointer to the character's child node.",
                     "placeholderCode": "        node = node.children[board[r][c]]",
-                    "validationRegex": "^\\s+node\\s*=\\s*node\\.children\\[board\\[r\\]\\[c\\]\\]$",
-                    "hint": "Descend into the Trie using the current board character.",
+                    "validationRegex": "^\\s*node\\s*=\\s*node\\.children\\s*\\[\\s*board\\s*\\[\\s*r\\s*\\]\\s*\\[\\s*c\\s*\\]\\s*\\]\\s*$",
+                    "hint": "Synchronize the board character with the Trie depth.",
                     "solutionCode": "        node = node.children[board[r][c]]"
                 },
                 {
                     "id": 25,
                     "instruction": "Append the current board character to the 'word' string.",
                     "placeholderCode": "        word += board[r][c]",
-                    "validationRegex": "^\\s+word\\s*\\+=\\s*board\\[r\\]\\[c\\]$",
-                    "hint": "Concat the character to our running prefix string.",
+                    "validationRegex": "^\\s*word\\s*\\+=\\s*board\\s*\\[\\s*r\\s*\\]\\s*\\[\\s*c\\s*\\]\\s*$",
+                    "hint": "Building the string candidate to check against our target list.",
                     "solutionCode": "        word += board[r][c]"
                 },
                 {
                     "id": 26,
                     "instruction": "Check if the current node completes a stored word.",
                     "placeholderCode": "        if node.isWord:",
-                    "validationRegex": "^\\s+if\\s+node\\.isWord:$",
-                    "hint": "Verify if the current Trie path represents a full word from the input list.",
+                    "validationRegex": "^\\s*if\\s+node\\.isWord\\s*:$",
+                    "hint": "Using the 'isWord' flag defined in our TrieNode.",
                     "solutionCode": "        if node.isWord:"
                 },
                 {
                     "id": 27,
                     "instruction": "If a word is found, add it to the result set.",
                     "placeholderCode": "            res.add(word)",
-                    "validationRegex": "^\\s+res\\.add\\(word\\)$",
-                    "hint": "Collect the discovered word in the 'res' set.",
+                    "validationRegex": "^\\s*res\\.add\\s*\\(\\s*word\\s*\\)\\s*$",
+                    "hint": "Found a target word on the board!",
                     "solutionCode": "            res.add(word)"
                 },
                 {
                     "id": 28,
                     "instruction": "Recursively explore the cell below.",
                     "placeholderCode": "        dfs(r + 1, c, node, word)",
-                    "validationRegex": "^\\s+dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*node,\\s*word\\)$",
+                    "validationRegex": "^\\s*dfs\\s*\\(\\s*r\\s*\\+\\s*1\\s*,\\s*c\\s*,\\s*node\\s*,\\s*word\\s*\\)\\s*$",
                     "hint": "Continue the DFS downward (r + 1).",
                     "solutionCode": "        dfs(r + 1, c, node, word)"
                 },
@@ -281,7 +281,7 @@
                     "id": 29,
                     "instruction": "Recursively explore the cell above.",
                     "placeholderCode": "        dfs(r - 1, c, node, word)",
-                    "validationRegex": "^\\s+dfs\\(r\\s*-\\s*1,\\s*c,\\s*node,\\s*word\\)$",
+                    "validationRegex": "^\\s*dfs\\s*\\(\\s*r\\s*-\\s*1\\s*,\\s*c\\s*,\\s*node\\s*,\\s*word\\s*\\)\\s*$",
                     "hint": "Continue the DFS upward (r - 1).",
                     "solutionCode": "        dfs(r - 1, c, node, word)"
                 },
@@ -289,7 +289,7 @@
                     "id": 30,
                     "instruction": "Recursively explore the cell to the right.",
                     "placeholderCode": "        dfs(r, c + 1, node, word)",
-                    "validationRegex": "^\\s+dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*node,\\s*word\\)$",
+                    "validationRegex": "^\\s*dfs\\s*\\(\\s*r\\s*,\\s*c\\s*\\+\\s*1\\s*,\\s*node\\s*,\\s*word\\s*\\)\\s*$",
                     "hint": "Continue the DFS to the right (c + 1).",
                     "solutionCode": "        dfs(r, c + 1, node, word)"
                 },
@@ -297,7 +297,7 @@
                     "id": 31,
                     "instruction": "Recursively explore the cell to the left.",
                     "placeholderCode": "        dfs(r, c - 1, node, word)",
-                    "validationRegex": "^\\s+dfs\\(r,\\s*c\\s*-\\s*1,\\s*node,\\s*word\\)$",
+                    "validationRegex": "^\\s*dfs\\s*\\(\\s*r\\s*,\\s*c\\s*-\\s*1\\s*,\\s*node\\s*,\\s*word\\s*\\)\\s*$",
                     "hint": "Continue the DFS to the left (c - 1).",
                     "solutionCode": "        dfs(r, c - 1, node, word)"
                 },
@@ -305,40 +305,40 @@
                     "id": 32,
                     "instruction": "Remove the current cell from visit set (Backtrack).",
                     "placeholderCode": "        visit.remove((r, c))",
-                    "validationRegex": "^\\s+visit\\.remove\\(\\s*\\(\\s*r,\\s*c\\s*\\)\\s*\\)$",
-                    "hint": "Crucial: remove the coordinates from 'visit' to allow other paths to use this cell.",
+                    "validationRegex": "^\\s*visit\\.remove\\s*\\(\\s*\\(\\s*r\\s*,\\s*c\\s*\\)\\s*\\)\\s*$",
+                    "hint": "Cleanup step to allow this cell to be used in other word candidates.",
                     "solutionCode": "        visit.remove((r, c))"
                 },
                 {
                     "id": 33,
                     "instruction": "Iterate through every row index 'r' on the board.",
                     "placeholderCode": "    for r in range(ROWS):",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):$",
-                    "hint": "Outer loop to start DFS from every cell on the board.",
+                    "validationRegex": "^\\s*for\\s+r\\s+in\\s+range\\s*\\(\\s*ROWS\\s*\\)\\s*:$",
+                    "hint": "Scanning the board row by row.",
                     "solutionCode": "    for r in range(ROWS):"
                 },
                 {
                     "id": 34,
                     "instruction": "Iterate through every column index 'c' in the row.",
                     "placeholderCode": "        for c in range(COLS):",
-                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(COLS\\):$",
-                    "hint": "Inner loop to start DFS from every cell on the board.",
+                    "validationRegex": "^\\s*for\\s+c\\s+in\\s+range\\s*\\(\\s*COLS\\s*\\)\\s*:$",
+                    "hint": "Scanning each cell within the current row.",
                     "solutionCode": "        for c in range(COLS):"
                 },
                 {
                     "id": 35,
                     "instruction": "Initiate the DFS traversal for the current cell starting from the Trie root.",
                     "placeholderCode": "            dfs(r, c, root, \"\")",
-                    "validationRegex": "^\\s+dfs\\(r,\\s*c,\\s*root,\\s*\"\"\\)$",
-                    "hint": "Trigger the initial DFS call from the root and empty string.",
+                    "validationRegex": "^\\s*dfs\\s*\\(\\s*r\\s*,\\s*c\\s*,\\s*root\\s*,\\s*\"\"\\s*\\)\\s*$",
+                    "hint": "Every board cell is a potential starting point for a word.",
                     "solutionCode": "            dfs(r, c, root, \"\")"
                 },
                 {
                     "id": 36,
                     "instruction": "Return the final results converted from a set to a list.",
                     "placeholderCode": "    return list(res)",
-                    "validationRegex": "^\\s+return\\s+list\\(res\\)$",
-                    "hint": "Format final set of results into a list for the caller.",
+                    "validationRegex": "^\\s*return\\s+list\\s*\\(\\s*res\\s*\\)\\s*$",
+                    "hint": "Deliver the final list of discovered words.",
                     "solutionCode": "    return list(res)"
                 }
             ]
