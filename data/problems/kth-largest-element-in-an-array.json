@@ -52,7 +52,7 @@
         },
         "heap-strategy": {
             "id": "heap-strategy",
-            "name": "Max-Heap Logic with Min-Heap",
+            "name": "Heap (Standard Priority Queue)",
             "description": "Maintain a Min-Heap of size k to store the k largest elements. The smallest in the heap is our result. Time: O(n log k).",
             "steps": [
                 {
@@ -181,6 +181,22 @@
                     "validationRegex": "^\\s+nums\\s*\\[\\s*p\\s*\\]\\s*,\\s*nums\\s*\\[\\s*i\\s*\\]\\s*=\\s*nums\\s*\\[\\s*i\\s*\\]\\s*,\\s*nums\\s*\\[\\s*p\\s*\\]\\s*$",
                     "hint": "Typical swap logic for partitioning.",
                     "solutionCode": "                nums[p], nums[i] = nums[i], nums[p]"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Increment the partition pointer.",
+                    "placeholderCode": "                p += 1",
+                    "validationRegex": "^\\s+p\\s*\\+=\\s*1\\s*$",
+                    "hint": "Move the partition boundary to the right.",
+                    "solutionCode": "                p += 1"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Move the pivot into its final sorted position.",
+                    "placeholderCode": "        nums[p], nums[r] = nums[r], nums[p]",
+                    "validationRegex": "^\\s+nums\\s*\\[\\s*p\\s*\\]\\s*,\\s*nums\\s*\\[\\s*r\\s*\\]\\s*=\\s*nums\\s*\\[\\s*r\\s*\\]\\s*,\\s*nums\\s*\\[\\s*p\\s*\\]\\s*$",
+                    "hint": "Place the pivot element at its correct index 'p'.",
+                    "solutionCode": "        nums[p], nums[r] = nums[r], nums[p]"
                 },
                 {
                     "id": 10,
