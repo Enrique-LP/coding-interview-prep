@@ -199,30 +199,38 @@
                 },
                 {
                     "id": 19,
-                    "instruction": "Check boundary conditions for the current row and column.",
-                    "placeholderCode": "        if (r < 0 or c < 0 or r == ROWS or c == COLS or",
-                    "validationRegex": "^\\s+if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*ROWS\\s+or\\s+c\\s*==\\s*COLS\\s+or$",
-                    "hint": "Ensure the current cell is within board limits.",
-                    "solutionCode": "        if (r < 0 or c < 0 or r == ROWS or c == COLS or"
+                    "instruction": "Check if the current coordinates 'r' or 'c' are out of the board boundaries.",
+                    "placeholderCode": "        if r < 0 or c < 0 or r == ROWS or c == COLS:",
+                    "validationRegex": "^\\s+if\\s+r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*ROWS\\s+or\\s+c\\s*==\\s*COLS:$",
+                    "hint": "A cell is invalid if its indices are negative or reach the dimensions.",
+                    "solutionCode": "        if r < 0 or c < 0 or r == ROWS or c == COLS:"
                 },
                 {
                     "id": 20,
-                    "instruction": "Check if the cell is visited or the character is not in the Trie node's children.",
-                    "placeholderCode": "            (r, c) in visit or board[r][c] not in node.children):",
-                    "validationRegex": "^\\s+\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+board\\[r\\]\\[c\\]\\s+not\\s+in\\s+node\\.children\\):$",
-                    "hint": "Avoid infinite loops or searching invalid character paths.",
-                    "solutionCode": "            (r, c) in visit or board[r][c] not in node.children):"
-                },
-                {
-                    "id": 21,
-                    "instruction": "Return early if any of the invalid conditions are met.",
+                    "instruction": "Return if the current cell is out of bounds.",
                     "placeholderCode": "            return",
                     "validationRegex": "^\\s+return$",
-                    "hint": "Base case: stopping the recursion for this branch.",
+                    "hint": "Stop searching this branch if we move outside the board.",
                     "solutionCode": "            return"
                 },
                 {
+                    "id": 21,
+                    "instruction": "Check if the cell has been visited or the board character is not in the Trie children.",
+                    "placeholderCode": "        if (r, c) in visit or board[r][c] not in node.children:",
+                    "validationRegex": "^\\s+if\\s+\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+board\\[r\\]\\[c\\]\\s+not\\s+in\\s+node\\.children:$",
+                    "hint": "We can't reuse cells in a single word, and we stop if the path doesn't exist in the Trie.",
+                    "solutionCode": "        if (r, c) in visit or board[r][c] not in node.children:"
+                },
+                {
                     "id": 22,
+                    "instruction": "Return if the character path is invalid or already used.",
+                    "placeholderCode": "            return",
+                    "validationRegex": "^\\s+return$",
+                    "hint": "Early exit for redundant or non-matching paths.",
+                    "solutionCode": "            return"
+                },
+                {
+                    "id": 23,
                     "instruction": "Mark the current board cell as visited.",
                     "placeholderCode": "        visit.add((r, c))",
                     "validationRegex": "^\\s+visit\\.add\\(\\(\\(r,\\s*c\\)\\)\\)$",
@@ -230,7 +238,7 @@
                     "solutionCode": "        visit.add((r, c))"
                 },
                 {
-                    "id": 23,
+                    "id": 24,
                     "instruction": "Advance the 'node' pointer to the character's child node.",
                     "placeholderCode": "        node = node.children[board[r][c]]",
                     "validationRegex": "^\\s+node\\s*=\\s*node\\.children\\[board\\[r\\]\\[c\\]\\]$",
@@ -238,7 +246,7 @@
                     "solutionCode": "        node = node.children[board[r][c]]"
                 },
                 {
-                    "id": 24,
+                    "id": 25,
                     "instruction": "Append the current board character to the 'word' string.",
                     "placeholderCode": "        word += board[r][c]",
                     "validationRegex": "^\\s+word\\s*\\+=\\s*board\\[r\\]\\[c\\]$",
@@ -246,7 +254,7 @@
                     "solutionCode": "        word += board[r][c]"
                 },
                 {
-                    "id": 25,
+                    "id": 26,
                     "instruction": "Check if the current node completes a stored word.",
                     "placeholderCode": "        if node.isWord:",
                     "validationRegex": "^\\s+if\\s+node\\.isWord:$",
@@ -254,7 +262,7 @@
                     "solutionCode": "        if node.isWord:"
                 },
                 {
-                    "id": 26,
+                    "id": 27,
                     "instruction": "If a word is found, add it to the result set.",
                     "placeholderCode": "            res.add(word)",
                     "validationRegex": "^\\s+res\\.add\\(word\\)$",
@@ -262,7 +270,7 @@
                     "solutionCode": "            res.add(word)"
                 },
                 {
-                    "id": 27,
+                    "id": 28,
                     "instruction": "Recursively explore the cell below.",
                     "placeholderCode": "        dfs(r + 1, c, node, word)",
                     "validationRegex": "^\\s+dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*node,\\s*word\\)$",
@@ -270,7 +278,7 @@
                     "solutionCode": "        dfs(r + 1, c, node, word)"
                 },
                 {
-                    "id": 28,
+                    "id": 29,
                     "instruction": "Recursively explore the cell above.",
                     "placeholderCode": "        dfs(r - 1, c, node, word)",
                     "validationRegex": "^\\s+dfs\\(r\\s*-\\s*1,\\s*c,\\s*node,\\s*word\\)$",
@@ -278,7 +286,7 @@
                     "solutionCode": "        dfs(r - 1, c, node, word)"
                 },
                 {
-                    "id": 29,
+                    "id": 30,
                     "instruction": "Recursively explore the cell to the right.",
                     "placeholderCode": "        dfs(r, c + 1, node, word)",
                     "validationRegex": "^\\s+dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*node,\\s*word\\)$",
@@ -286,7 +294,7 @@
                     "solutionCode": "        dfs(r, c + 1, node, word)"
                 },
                 {
-                    "id": 30,
+                    "id": 31,
                     "instruction": "Recursively explore the cell to the left.",
                     "placeholderCode": "        dfs(r, c - 1, node, word)",
                     "validationRegex": "^\\s+dfs\\(r,\\s*c\\s*-\\s*1,\\s*node,\\s*word\\)$",
@@ -294,7 +302,7 @@
                     "solutionCode": "        dfs(r, c - 1, node, word)"
                 },
                 {
-                    "id": 31,
+                    "id": 32,
                     "instruction": "Remove the current cell from visit set (Backtrack).",
                     "placeholderCode": "        visit.remove((r, c))",
                     "validationRegex": "^\\s+visit\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)$",
@@ -302,7 +310,7 @@
                     "solutionCode": "        visit.remove((r, c))"
                 },
                 {
-                    "id": 32,
+                    "id": 33,
                     "instruction": "Iterate through every row index 'r' on the board.",
                     "placeholderCode": "    for r in range(ROWS):",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):$",
@@ -310,7 +318,7 @@
                     "solutionCode": "    for r in range(ROWS):"
                 },
                 {
-                    "id": 33,
+                    "id": 34,
                     "instruction": "Iterate through every column index 'c' in the row.",
                     "placeholderCode": "        for c in range(COLS):",
                     "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(COLS\\):$",
@@ -318,7 +326,7 @@
                     "solutionCode": "        for c in range(COLS):"
                 },
                 {
-                    "id": 34,
+                    "id": 35,
                     "instruction": "Initiate the DFS traversal for the current cell starting from the Trie root.",
                     "placeholderCode": "            dfs(r, c, root, \"\")",
                     "validationRegex": "^\\s+dfs\\(r,\\s*c,\\s*root,\\s*\"\"\\)$",
@@ -326,7 +334,7 @@
                     "solutionCode": "            dfs(r, c, root, \"\")"
                 },
                 {
-                    "id": 35,
+                    "id": 36,
                     "instruction": "Return the final results converted from a set to a list.",
                     "placeholderCode": "    return list(res)",
                     "validationRegex": "^\\s+return\\s+list\\(res\\)$",
