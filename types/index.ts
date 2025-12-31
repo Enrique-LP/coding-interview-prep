@@ -1,4 +1,4 @@
-export type StrategyType = 'brute-force' | 'optimal';
+export type StrategyType = string;
 
 export interface Step {
   id: number;
@@ -12,7 +12,7 @@ export interface Step {
 }
 
 export interface Strategy {
-  id: StrategyType;
+  id: string;
   name: string;
   description: string;
   steps: Step[];
@@ -33,6 +33,6 @@ export interface Problem {
   difficulty: 'Easy' | 'Medium' | 'Hard';
   topic: string;
   strategies: {
-    [key in StrategyType]: Strategy;
+    [key: string]: Strategy;
   };
 }

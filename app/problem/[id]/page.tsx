@@ -410,7 +410,7 @@ export default function ProblemPage() {
                     </div>
 
                     <ProgressBar currentStep={currentStepIndex} totalSteps={strategy.steps.length} />
-                    <StrategySelector selectedStrategy={currentStrategy} onSelectStrategy={setStrategy} />
+                    <StrategySelector selectedStrategy={currentStrategy} onSelectStrategy={setStrategy} strategies={problem.strategies} />
 
                     <div className="space-y-4 pb-8 mt-6">
                         {strategy.steps.map((step, index) => (
