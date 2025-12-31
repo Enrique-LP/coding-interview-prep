@@ -22,36 +22,115 @@
         "brute-force": {
             "id": "brute-force",
             "name": "Sorting",
-            "description": "Sort and pick kth element.",
+            "description": "Sort the entire array and return the element at the target index. Time: O(n log n).",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function find_kth_largest that takes nums and k.",
                     "placeholderCode": "def find_kth_largest(nums, k):",
-                    "validationRegex": "^def\\s+find_kth_largest\\(nums,\\s*k\\):$",
-                    "hint": "Use `def` to define the function.",
+                    "validationRegex": "^def\\s+find_kth_largest\\s*\\(\\s*nums\\s*,\\s*k\\s*\\)\\s*:$",
+                    "hint": "Start by defining the standard function signature.",
                     "solutionCode": "def find_kth_largest(nums, k):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Sort and return.",
-                    "placeholderCode": "    nums.sort()\n    return nums[len(nums) - k]",
-                    "validationRegex": "^\\s+nums\\.sort\\(\\)\\s*return\\s+nums\\[len\\(nums\\)\\s*-\\s*k\\]$",
-                    "hint": "Sort the array and return the element at index len(nums) - k.",
-                    "solutionCode": "    nums.sort()\n    return nums[len(nums) - k]"
+                    "instruction": "Sort the array in ascending order.",
+                    "placeholderCode": "    nums.sort()",
+                    "validationRegex": "^\\s*nums\\.sort\\s*\\(\\s*\\)\\s*$",
+                    "hint": "Python's built-in sort() method is highly efficient (Timsort).",
+                    "solutionCode": "    nums.sort()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Return the kth element from the end of the sorted array.",
+                    "placeholderCode": "    return nums[len(nums) - k]",
+                    "validationRegex": "^\\s*return\\s+nums\\s*\\[\\s*len\\s*\\(\\s*nums\\s*\\)\\s*-\\s*k\\s*\\]\\s*$",
+                    "hint": "For the 1st largest, return the last element; for the kth, go k steps back.",
+                    "solutionCode": "    return nums[len(nums) - k]"
+                }
+            ]
+        },
+        "heap-strategy": {
+            "id": "heap-strategy",
+            "name": "Max-Heap Logic with Min-Heap",
+            "description": "Maintain a Min-Heap of size k to store the k largest elements. The smallest in the heap is our result. Time: O(n log k).",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Import the 'heapq' library.",
+                    "placeholderCode": "import heapq",
+                    "validationRegex": "^import\\s+heapq\\s*$",
+                    "hint": "Python's built-in library for priority queue operations.",
+                    "solutionCode": "import heapq"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Define the function find_kth_largest.",
+                    "placeholderCode": "def find_kth_largest(nums, k):",
+                    "validationRegex": "^def\\s+find_kth_largest\\s*\\(\\s*nums\\s*,\\s*k\\s*\\)\\s*:$",
+                    "hint": "Function takes the array and 'k'.",
+                    "solutionCode": "def find_kth_largest(nums, k):"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize a min-heap using the first 'k' elements of the list.",
+                    "placeholderCode": "    min_heap = nums[:k]",
+                    "validationRegex": "^\\s*min_heap\\s*=\\s*nums\\s*\\[\\s*:\\s*k\\s*\\]\\s*$",
+                    "hint": "Slice the array to get our initial 'container'.",
+                    "solutionCode": "    min_heap = nums[:k]"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Transform the list into a structured heap.",
+                    "placeholderCode": "    heapq.heapify(min_heap)",
+                    "validationRegex": "^\\s*heapq\\.heapify\\s*\\(\\s*min_heap\\s*\\)\\s*$",
+                    "hint": "This organizes the list in-place so the smallest element is at index 0.",
+                    "solutionCode": "    heapq.heapify(min_heap)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate through the remaining elements of 'nums'.",
+                    "placeholderCode": "    for i in range(k, len(nums)):",
+                    "validationRegex": "^\\s*for\\s+i\\s+in\\s+range\\s*\\(\\s*k\\s*,\\s*len\\s*\\(\\s*nums\\s*\\)\\s*\\)\\s*:$",
+                    "hint": "We start from index 'k' since we already handled the first 'k' elements.",
+                    "solutionCode": "    for i in range(k, len(nums)):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check if the current number is greater than the smallest number in the heap.",
+                    "placeholderCode": "        if nums[i] > min_heap[0]:",
+                    "validationRegex": "^\\s*if\\s+nums\\s*\\[\\s*i\\s*\\]\\s*>\\s*min_heap\\s*\\[\\s*0\\s*\\]\\s*:$",
+                    "hint": "If it's larger, it belongs in our 'top k' collection.",
+                    "solutionCode": "        if nums[i] > min_heap[0]:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Replace the smallest element with the current larger element and re-heapify.",
+                    "placeholderCode": "            heapq.heapreplace(min_heap, nums[i])",
+                    "validationRegex": "^\\s*heapq\\.heapreplace\\s*\\(\\s*min_heap\\s*,\\s*nums\\s*\\[\\s*i\\s*\\]\\s*\\)\\s*$",
+                    "hint": "heapreplace is more efficient than a separate push and pop.",
+                    "solutionCode": "            heapq.heapreplace(min_heap, nums[i])"
+                },
+                {
+                    "id": 8,
+                    "instruction": "After the loop, return the element at the top of the heap.",
+                    "placeholderCode": "    return min_heap[0]",
+                    "validationRegex": "^\\s*return\\s+min_heap\\s*\\[\\s*0\\s*\\]\\s*$",
+                    "hint": "The smallest in our min-heap of size k is the kth largest overall.",
+                    "solutionCode": "    return min_heap[0]"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
             "name": "QuickSelect",
-            "description": "Use QuickSelect algorithm (average O(n)).",
+            "description": "Use QuickSelect algorithm (average O(n)). Best for space and average time.",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function find_kth_largest that takes nums and k.",
                     "placeholderCode": "def find_kth_largest(nums, k):",
-                    "validationRegex": "^def\\s+find_kth_largest\\(nums,\\s*k\\):$",
+                    "validationRegex": "^def\\s+find_kth_largest\\s*\\(\\s*nums\\s*,\\s*k\\s*\\)\\s*:$",
                     "hint": "Use `def` to define the function.",
                     "solutionCode": "def find_kth_largest(nums, k):"
                 },
@@ -59,7 +138,7 @@
                     "id": 2,
                     "instruction": "Set target index.",
                     "placeholderCode": "    k = len(nums) - k",
-                    "validationRegex": "^\\s+k\\s*=\\s*len\\(nums\\)\\s*-\\s*k$",
+                    "validationRegex": "^\\s*k\\s*=\\s*len\\s*\\(\\s*nums\\s*\\)\\s*-\\s*k\\s*$",
                     "hint": "Convert kth largest to index in sorted array.",
                     "solutionCode": "    k = len(nums) - k"
                 },
@@ -75,7 +154,7 @@
                     "id": 4,
                     "instruction": "Initialize 'pivot' from the right edge and partition pointer 'p' at the left edge.",
                     "placeholderCode": "        pivot, p = nums[r], l",
-                    "validationRegex": "^\\s+pivot\\s*,\\s*p\\s*=\\s*nums\\[r\\]\\s*,\\s*l$",
+                    "validationRegex": "^\\s+pivot\\s*,\\s*p\\s*=\\s*nums\\s*\\[\\s*r\\s*\\]\\s*,\\s*l\\s*$",
                     "hint": "Standard QuickSelect partition initialization.",
                     "solutionCode": "        pivot, p = nums[r], l"
                 },
@@ -83,7 +162,7 @@
                     "id": 5,
                     "instruction": "Loop through the range from 'l' to 'r'.",
                     "placeholderCode": "        for i in range(l, r):",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(\\s*l\\s*,\\s*r\\s*\\)\\s*:$",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\s*\\(\\s*l\\s*,\\s*r\\s*\\)\\s*:$",
                     "hint": "Iterate to compare elements with the pivot.",
                     "solutionCode": "        for i in range(l, r):"
                 },
@@ -91,7 +170,7 @@
                     "id": 6,
                     "instruction": "Check if the current element is less than or equal to the pivot.",
                     "placeholderCode": "            if nums[i] <= pivot:",
-                    "validationRegex": "^\\s+if\\s+nums\\[i\\]\\s*<=\\s*pivot\\s*:$",
+                    "validationRegex": "^\\s+if\\s+nums\\s*\\[\\s*i\\s*\\]\\s*<=\\s*pivot\\s*:$",
                     "hint": "Condition to move smaller elements to the left partition.",
                     "solutionCode": "            if nums[i] <= pivot:"
                 },
@@ -99,31 +178,15 @@
                     "id": 7,
                     "instruction": "Swap the current element with the element at the partition pointer.",
                     "placeholderCode": "                nums[p], nums[i] = nums[i], nums[p]",
-                    "validationRegex": "^\\s+nums\\[p\\]\\s*,\\s*nums\\[i\\]\\s*=\\s*nums\\[i\\]\\s*,\\s*nums\\[p\\]$",
+                    "validationRegex": "^\\s+nums\\s*\\[\\s*p\\s*\\]\\s*,\\s*nums\\s*\\[\\s*i\\s*\\]\\s*=\\s*nums\\s*\\[\\s*i\\s*\\]\\s*,\\s*nums\\s*\\[\\s*p\\s*\\]\\s*$",
                     "hint": "Typical swap logic for partitioning.",
                     "solutionCode": "                nums[p], nums[i] = nums[i], nums[p]"
-                },
-                {
-                    "id": 8,
-                    "instruction": "Increment the partition pointer.",
-                    "placeholderCode": "                p += 1",
-                    "validationRegex": "^\\s+p\\s*\\+=\\s*1$",
-                    "hint": "Move the boundary for smaller elements.",
-                    "solutionCode": "                p += 1"
-                },
-                {
-                    "id": 9,
-                    "instruction": "Move the pivot into its final sorted position.",
-                    "placeholderCode": "        nums[p], nums[r] = nums[r], nums[p]",
-                    "validationRegex": "^\\s+nums\\[p\\]\\s*,\\s*nums\\[r\\]\\s*=\\s*nums\\[r\\]\\s*,\\s*nums\\[p\\]$",
-                    "hint": "The pivot stays at index 'p' permanently.",
-                    "solutionCode": "        nums[p], nums[r] = nums[r], nums[p]"
                 },
                 {
                     "id": 10,
                     "instruction": "If the pivot index 'p' is greater than our target 'k', search the left side.",
                     "placeholderCode": "        if p > k: return quickSelect(l, p - 1)",
-                    "validationRegex": "^\\s+if\\s+p\\s*>\\s*k\\s*:\\s*return\\s+quickSelect\\(\\s*l\\s*,\\s*p\\s*-\\s*1\\s*\\)$",
+                    "validationRegex": "^\\s+if\\s+p\\s*>\\s*k\\s*:\\s*return\\s+quickSelect\\(\\s*l\\s*,\\s*p\\s*-\\s*1\\s*\\)\\s*$",
                     "hint": "Recurse on the lower half.",
                     "solutionCode": "        if p > k: return quickSelect(l, p - 1)"
                 },
@@ -131,7 +194,7 @@
                     "id": 11,
                     "instruction": "If the pivot index 'p' is less than 'k', search the right side.",
                     "placeholderCode": "        elif p < k: return quickSelect(p + 1, r)",
-                    "validationRegex": "^\\s+elif\\s+p\\s*<\\s*k\\s*:\\s*return\\s+quickSelect\\(\\s*p\\s*\\+\\s*1\\s*,\\s*r\\s*\\)$",
+                    "validationRegex": "^\\s+elif\\s+p\\s*<\\s*k\\s*:\\s*return\\s+quickSelect\\(\\s*p\\s*\\+\\s*1\\s*,\\s*r\\s*\\)\\s*$",
                     "hint": "Recurse on the upper half.",
                     "solutionCode": "        elif p < k: return quickSelect(p + 1, r)"
                 },
@@ -139,7 +202,7 @@
                     "id": 12,
                     "instruction": "Otherwise, the target index 'k' matches 'p'; return the element.",
                     "placeholderCode": "        else: return nums[p]",
-                    "validationRegex": "^\\s+else\\s*:\\s*return\\s+nums\\[p\\]$",
+                    "validationRegex": "^\\s+else\\s*:\\s*return\\s+nums\\s*\\[\\s*p\\s*\\]\\s*$",
                     "hint": "We found the kth largest element.",
                     "solutionCode": "        else: return nums[p]"
                 },
@@ -147,7 +210,7 @@
                     "id": 13,
                     "instruction": "Initiate the recursive algorithm from index 0 to the end of the array.",
                     "placeholderCode": "    return quickSelect(0, len(nums) - 1)",
-                    "validationRegex": "^\\s+return\\s+quickSelect\\(0,\\s*len\\(nums\\)\\s*-\\s*1\\)$",
+                    "validationRegex": "^\\s+return\\s+quickSelect\\s*\\(\\s*0\\s*,\\s*len\\s*\\(\\s*nums\\s*\\)\\s*-\\s*1\\s*\\)\\s*$",
                     "hint": "Start the divide-and-conquer process.",
                     "solutionCode": "    return quickSelect(0, len(nums) - 1)"
                 }
