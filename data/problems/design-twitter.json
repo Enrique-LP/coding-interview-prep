@@ -63,34 +63,50 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define Twitter class.",
-                    "placeholderCode": "class Twitter:\n    def __init__(self):\n        self.count = 0\n        self.tweetMap = collections.defaultdict(list)\n        self.followMap = collections.defaultdict(set)",
-                    "validationRegex": "^class\\s+Twitter:\\s*def\\s+__init__\\(self\\):\\s*self\\.count\\s*=\\s*0\\s*self\\.tweetMap\\s*=\\s*collections\\.defaultdict\\(list\\)\\s*self\\.followMap\\s*=\\s*collections\\.defaultdict\\(set\\)$",
-                    "hint": "Initialize data structures to store tweets and follow relationships.",
-                    "solutionCode": "class Twitter:\n    def __init__(self):\n        self.count = 0\n        self.tweetMap = collections.defaultdict(list)\n        self.followMap = collections.defaultdict(set)"
+                    "instruction": "Define the Twitter class and initialize a global count to track tweet order.",
+                    "placeholderCode": "class Twitter:\n    def __init__(self):\n        self.count = 0",
+                    "validationRegex": "^class\\s+Twitter:\\s*def\\s+__init__\\(self\\):\\s*self\\.count\\s*=\\s*0$",
+                    "hint": "Start the class and use a counter as a timestamp for tweets.",
+                    "solutionCode": "class Twitter:\n    def __init__(self):\n        self.count = 0"
                 },
                 {
                     "id": 2,
-                    "instruction": "Implement postTweet.",
-                    "placeholderCode": "    def postTweet(self, userId, tweetId):\n        self.tweetMap[userId].append([self.count, tweetId])\n        self.count -= 1",
-                    "validationRegex": "^\\s+def\\s+postTweet\\(self,\\s*userId,\\s*tweetId\\):\\s*self\\.tweetMap\\[userId\\]\\.append\\(\\[self\\.count,\\s*tweetId\\]\\)\\s*self\\.count\\s*-=\\s*1$",
-                    "hint": "Store the tweet with a timestamp (or decrementing counter) for ordering.",
-                    "solutionCode": "    def postTweet(self, userId, tweetId):\n        self.tweetMap[userId].append([self.count, tweetId])\n        self.count -= 1"
+                    "instruction": "Initialize a map to store tweets for each user.",
+                    "placeholderCode": "        self.tweetMap = collections.defaultdict(list)",
+                    "validationRegex": "^\\s+self\\.tweetMap\\s*=\\s*collections\\.defaultdict\\(list\\)$",
+                    "hint": "A dictionary mapping user IDs to a list of their tweets.",
+                    "solutionCode": "        self.tweetMap = collections.defaultdict(list)"
                 },
                 {
                     "id": 3,
-                    "instruction": "Implement getNewsFeed.",
-                    "placeholderCode": "    def getNewsFeed(self, userId):\n        res = []\n        minHeap = []\n        self.followMap[userId].add(userId)\n        for followeeId in self.followMap[userId]:\n            if followeeId in self.tweetMap:\n                index = len(self.tweetMap[followeeId]) - 1\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        while minHeap and len(res) < 10:\n            count, tweetId, followeeId, index = heapq.heappop(minHeap)\n            res.append(tweetId)\n            if index >= 0:\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        return res",
-                    "validationRegex": "^\\s+def\\s+getNewsFeed\\(self,\\s*userId\\):\\s*res\\s*=\\s*\\[\\]\\s*minHeap\\s*=\\s*\\[\\]\\s*self\\.followMap\\[userId\\]\\.add\\(userId\\)\\s*for\\s+followeeId\\s+in\\s+self\\.followMap\\[userId\\]:\\s*if\\s+followeeId\\s+in\\s+self\\.tweetMap:\\s*index\\s*=\\s*len\\(self\\.tweetMap\\[followeeId\\]\\)\\s*-\\s*1\\s*count,\\s*tweetId\\s*=\\s*self\\.tweetMap\\[followeeId\\]\\[index\\]\\s*heapq\\.heappush\\(minHeap,\\s*\\[count,\\s*tweetId,\\s*followeeId,\\s*index\\s*-\\s*1\\]\\)\\s*while\\s+minHeap\\s+and\\s+len\\(res\\)\\s*<\\s*10:\\s*count,\\s*tweetId,\\s*followeeId,\\s*index\\s*=\\s*heapq\\.heappop\\(minHeap\\)\\s*res\\.append\\(tweetId\\)\\s*if\\s+index\\s*>=\\s*0:\\s*count,\\s*tweetId\\s*=\\s*self\\.tweetMap\\[followeeId\\]\\[index\\]\\s*heapq\\.heappush\\(minHeap,\\s*\\[count,\\s*tweetId,\\s*followeeId,\\s*index\\s*-\\s*1\\]\\)\\s*return\\s+res$",
-                    "hint": "Use a min-heap to merge the most recent tweets from the user and their followees.",
-                    "solutionCode": "    def getNewsFeed(self, userId):\n        res = []\n        minHeap = []\n        self.followMap[userId].add(userId)\n        for followeeId in self.followMap[userId]:\n            if followeeId in self.tweetMap:\n                index = len(self.tweetMap[followeeId]) - 1\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        while minHeap and len(res) < 10:\n            count, tweetId, followeeId, index = heapq.heappop(minHeap)\n            res.append(tweetId)\n            if index >= 0:\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        return res"
+                    "instruction": "Initialize a map to store follow relationships.",
+                    "placeholderCode": "        self.followMap = collections.defaultdict(set)",
+                    "validationRegex": "^\\s+self\\.followMap\\s*=\\s*collections\\.defaultdict\\(set\\)$",
+                    "hint": "A dictionary mapping user IDs to a set of user IDs they follow.",
+                    "solutionCode": "        self.followMap = collections.defaultdict(set)"
                 },
                 {
                     "id": 4,
-                    "instruction": "Implement follow/unfollow.",
+                    "instruction": "Implement postTweet by appending the tweet and decrementing the global count.",
+                    "placeholderCode": "    def postTweet(self, userId, tweetId):\n        self.tweetMap[userId].append([self.count, tweetId])\n        self.count -= 1",
+                    "validationRegex": "^\\s+def\\s+postTweet\\(self,\\s*userId,\\s*tweetId\\):\\s*self\\.tweetMap\\[userId\\]\\.append\\(\\[self\\.count,\\s*tweetId\\]\\)\\s*self\\.count\\s*-=\\s*1$",
+                    "hint": "Decrementing the count allows us to use it in a min-heap to get the most recent tweets.",
+                    "solutionCode": "    def postTweet(self, userId, tweetId):\n        self.tweetMap[userId].append([self.count, tweetId])\n        self.count -= 1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Implement getNewsFeed by merging tweets from the user and their followees using a heap.",
+                    "placeholderCode": "    def getNewsFeed(self, userId):\n        res = []\n        minHeap = []\n        self.followMap[userId].add(userId)\n        for followeeId in self.followMap[userId]:\n            if followeeId in self.tweetMap:\n                index = len(self.tweetMap[followeeId]) - 1\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        while minHeap and len(res) < 10:\n            count, tweetId, followeeId, index = heapq.heappop(minHeap)\n            res.append(tweetId)\n            if index >= 0:\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        return res",
+                    "validationRegex": "^\\s+def\\s+getNewsFeed\\(self,\\s*userId\\):\\s*res\\s*=\\s*\\[\\]\\s*minHeap\\s*=\\s*\\[\\]\\s*self\\.followMap\\[userId\\]\\.add\\(userId\\)\\s*for\\s+followeeId\\s+in\\s+self\\.followMap\\[userId\\]:\\s*if\\s+followeeId\\s+in\\s+self\\.tweetMap:\\s*index\\s*=\\s*len\\(self\\.tweetMap\\[followeeId\\]\\)\\s*-\\s*1\\s*count,\\s*tweetId\\s*=\\s*self\\.tweetMap\\[followeeId\\]\\[index\\]\\s*heapq\\.heappush\\(minHeap,\\s*\\[count,\\s*tweetId,\\s*followeeId,\\s*index\\s*-\\s*1\\]\\)\\s*while\\s+minHeap\\s+and\\s+len\\(res\\)\\s*<\\s*10:\\s*count,\\s*tweetId,\\s*followeeId,\\s*index\\s*=\\s*heapq\\.heappop\\(minHeap\\)\\s*res\\.append\\(tweetId\\)\\s*if\\s+index\\s*>=\\s*0:\\s*count,\\s*tweetId\\s*=\\s*self\\.tweetMap\\[followeeId\\]\\[index\\]\\s*heapq\\.heappush\\(minHeap,\\s*\\[count,\\s*tweetId,\\s*followeeId,\\s*index\\s*-\\s*1\\]\\)\\s*return\\s+res$",
+                    "hint": "This is the core logic: merging k sorted lists.",
+                    "solutionCode": "    def getNewsFeed(self, userId):\n        res = []\n        minHeap = []\n        self.followMap[userId].add(userId)\n        for followeeId in self.followMap[userId]:\n            if followeeId in self.tweetMap:\n                index = len(self.tweetMap[followeeId]) - 1\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        while minHeap and len(res) < 10:\n            count, tweetId, followeeId, index = heapq.heappop(minHeap)\n            res.append(tweetId)\n            if index >= 0:\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        return res"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Implement follow and unfollow methods.",
                     "placeholderCode": "    def follow(self, followerId, followeeId):\n        self.followMap[followerId].add(followeeId)\n    def unfollow(self, followerId, followeeId):\n        if followeeId in self.followMap[followerId]:\n            self.followMap[followerId].remove(followeeId)",
                     "validationRegex": "^\\s+def\\s+follow\\(self,\\s*followerId,\\s*followeeId\\):\\s*self\\.followMap\\[followerId\\]\\.add\\(followeeId\\)\\s*def\\s+unfollow\\(self,\\s*followerId,\\s*followeeId\\):\\s*if\\s+followeeId\\s+in\\s+self\\.followMap\\[followerId\\]:\\s*self\\.followMap\\[followerId\\]\\.remove\\(followeeId\\)$",
-                    "hint": "Update the follow map to add or remove relationships.",
+                    "hint": "Simply update the set of followees.",
                     "solutionCode": "    def follow(self, followerId, followeeId):\n        self.followMap[followerId].add(followeeId)\n    def unfollow(self, followerId, followeeId):\n        if followeeId in self.followMap[followerId]:\n            self.followMap[followerId].remove(followeeId)"
                 }
             ]
