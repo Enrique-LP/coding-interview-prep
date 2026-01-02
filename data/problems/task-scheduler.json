@@ -75,18 +75,34 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Calculate max frequency.",
-                    "placeholderCode": "    count = collections.Counter(tasks)\n    max_freq = max(count.values())\n    max_freq_count = list(count.values()).count(max_freq)",
-                    "validationRegex": "^\\s+count\\s*=\\s*collections\\.Counter\\(tasks\\)\\s*max_freq\\s*=\\s*max\\(count\\.values\\(\\)\\)\\s*max_freq_count\\s*=\\s*list\\(count\\.values\\(\\)\\)\\.count\\(max_freq\\)$",
-                    "hint": "Find the maximum frequency and how many tasks have that frequency.",
-                    "solutionCode": "    count = collections.Counter(tasks)\n    max_freq = max(count.values())\n    max_freq_count = list(count.values()).count(max_freq)"
+                    "instruction": "Count the frequency of each task in the array.",
+                    "placeholderCode": "    count = collections.Counter(tasks)",
+                    "validationRegex": "^\\s+count\\s*=\\s*collections\\.Counter\\(tasks\\)$",
+                    "hint": "Use collections.Counter to get a frequency map of the tasks.",
+                    "solutionCode": "    count = collections.Counter(tasks)"
                 },
                 {
                     "id": 3,
-                    "instruction": "Calculate result.",
+                    "instruction": "Find the maximum frequency among all tasks.",
+                    "placeholderCode": "    max_freq = max(count.values())",
+                    "validationRegex": "^\\s+max_freq\\s*=\\s*max\\(count\\.values\\(\\)\\)$",
+                    "hint": "Look for the highest value in your frequency counter.",
+                    "solutionCode": "    max_freq = max(count.values())"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Count how many tasks have that maximum frequency.",
+                    "placeholderCode": "    max_freq_count = list(count.values()).count(max_freq)",
+                    "validationRegex": "^\\s+max_freq_count\\s*=\\s*list\\(count\\.values\\(\\)\\)\\.count\\(max_freq\\)$",
+                    "hint": "We need this to know if there are multiple tasks sharing the 'peak' frequency.",
+                    "solutionCode": "    max_freq_count = list(count.values()).count(max_freq)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Calculate the total minimum time using the math formula.",
                     "placeholderCode": "    part_count = max_freq - 1\n    part_length = n - (max_freq_count - 1)\n    empty_slots = part_count * part_length\n    available_tasks = len(tasks) - max_freq * max_freq_count\n    idles = max(0, empty_slots - available_tasks)\n    return len(tasks) + idles",
                     "validationRegex": "^\\s+part_count\\s*=\\s*max_freq\\s*-\\s*1\\s*part_length\\s*=\\s*n\\s*-\\s*\\(max_freq_count\\s*-\\s*1\\)\\s*empty_slots\\s*=\\s*part_count\\s*\\*\\s*part_length\\s*available_tasks\\s*=\\s*len\\(tasks\\)\\s*-\\s*max_freq\\s*\\*\\s*max_freq_count\\s*idles\\s*=\\s*max\\(0,\\s*empty_slots\\s*-\\s*available_tasks\\)\\s*return\\s+len\\(tasks\\)\\s*\\+\\s*idles$",
-                    "hint": "Calculate idle slots based on the most frequent task and fill them with other tasks.\\n\\nExample:\\nTasks=[A, A, A, B, B], n=2.\\nMaxFreq(A)=3. PartCount=2. PartLen=2.\\nEmptySlots = 2 * 2 = 4 (A _ _ A _ _ A).\\nAvailable(B)=2. Idles = 4 - 2 = 2.\\nTotal = 5 + 2 = 7.",
+                    "hint": "Calculate idle slots based on the most frequent task. Example: A _ _ A _ _ A. Space between 'A's is part_length.",
                     "solutionCode": "    part_count = max_freq - 1\n    part_length = n - (max_freq_count - 1)\n    empty_slots = part_count * part_length\n    available_tasks = len(tasks) - max_freq * max_freq_count\n    idles = max(0, empty_slots - available_tasks)\n    return len(tasks) + idles"
                 }
             ]
