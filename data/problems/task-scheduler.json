@@ -99,11 +99,51 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Calculate the total minimum time using the math formula.",
-                    "placeholderCode": "    part_count = max_freq - 1\n    part_length = n - (max_freq_count - 1)\n    empty_slots = part_count * part_length\n    available_tasks = len(tasks) - max_freq * max_freq_count\n    idles = max(0, empty_slots - available_tasks)\n    return len(tasks) + idles",
-                    "validationRegex": "^\\s+part_count\\s*=\\s*max_freq\\s*-\\s*1\\s*part_length\\s*=\\s*n\\s*-\\s*\\(max_freq_count\\s*-\\s*1\\)\\s*empty_slots\\s*=\\s*part_count\\s*\\*\\s*part_length\\s*available_tasks\\s*=\\s*len\\(tasks\\)\\s*-\\s*max_freq\\s*\\*\\s*max_freq_count\\s*idles\\s*=\\s*max\\(0,\\s*empty_slots\\s*-\\s*available_tasks\\)\\s*return\\s+len\\(tasks\\)\\s*\\+\\s*idles$",
-                    "hint": "Calculate idle slots based on the most frequent task. Example: A _ _ A _ _ A. Space between 'A's is part_length.",
-                    "solutionCode": "    part_count = max_freq - 1\n    part_length = n - (max_freq_count - 1)\n    empty_slots = part_count * part_length\n    available_tasks = len(tasks) - max_freq * max_freq_count\n    idles = max(0, empty_slots - available_tasks)\n    return len(tasks) + idles"
+                    "instruction": "Calculate the number of gaps (parts) between the most frequent tasks.",
+                    "placeholderCode": "    part_count = max_freq - 1",
+                    "validationRegex": "^\\s+part_count\\s*=\\s*max_freq\\s*-\\s*1$",
+                    "hint": "If A is the max freq and appears 3 times, there are 2 gaps between them.",
+                    "solutionCode": "    part_count = max_freq - 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Calculate the available length of each gap after placing other tasks with the same maximum frequency.",
+                    "placeholderCode": "    part_length = n - (max_freq_count - 1)",
+                    "validationRegex": "^\\s+part_length\\s*=\\s*n\\s*-\\s*\\(max_freq_count\\s*-\\s*1\\)$",
+                    "hint": "If 'n' is 2 and we have A and B with max freq, the gap 'A B _' has only 1 slot left.",
+                    "solutionCode": "    part_length = n - (max_freq_count - 1)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Calculate the total number of empty slots available in all gaps.",
+                    "placeholderCode": "    empty_slots = part_count * part_length",
+                    "validationRegex": "^\\s+empty_slots\\s*=\\s*part_count\\s*\\*\\s*part_length$",
+                    "hint": "Multiply the number of gaps by the length of each gap.",
+                    "solutionCode": "    empty_slots = part_count * part_length"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Calculate the number of remaining tasks that can be used to fill these empty slots.",
+                    "placeholderCode": "    available_tasks = len(tasks) - max_freq * max_freq_count",
+                    "validationRegex": "^\\s+available_tasks\\s*=\\s*len\\(tasks\\)\\s*-\\s*max_freq\\s*\\*\\s*max_freq_count$",
+                    "hint": "Subtract all tasks with the maximum frequency from the total count.",
+                    "solutionCode": "    available_tasks = len(tasks) - max_freq * max_freq_count"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Determine the number of idle units that couldn't be filled by available tasks.",
+                    "placeholderCode": "    idles = max(0, empty_slots - available_tasks)",
+                    "validationRegex": "^\\s+idles\\s*=\\s*max\\(0,\\s*empty_slots\\s*-\\s*available_tasks\\)$",
+                    "hint": "If we have more empty slots than tasks, the difference remains as idle time.",
+                    "solutionCode": "    idles = max(0, empty_slots - available_tasks)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Return the total time required, which is the sum of tasks and idles.",
+                    "placeholderCode": "    return len(tasks) + idles",
+                    "validationRegex": "^\\s+return\\s+len\\(tasks\\)\\s*\\+\\s*idles$",
+                    "hint": "The answer is the original task count plus the remaining idle units.",
+                    "solutionCode": "    return len(tasks) + idles"
                 }
             ]
         }
