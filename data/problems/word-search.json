@@ -28,7 +28,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "DFS",
+            "name": "Brute Force",
             "description": "DFS from every cell.",
             "steps": [
                 {
@@ -44,7 +44,7 @@
                     "instruction": "Define DFS.",
                     "placeholderCode": "    ROWS, COLS = len(board), len(board[0])\n    path = set()\n    def dfs(r, c, i):\n        if i == len(word):\n            return True\n        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or\n            word[i] != board[r][c] or (r, c) in path):\n            return False\n        path.add((r, c))\n        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))\n        path.remove((r, c))\n        return res",
                     "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)\\s*path\\s*=\\s*set\\(\\)\\s*def\\s+dfs\\(r,\\s*c,\\s*i\\):\\s*if\\s+i\\s*==\\s*len\\(word\\):\\s*return\\s+True\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*>=\\s*ROWS\\s+or\\s+c\\s*>=\\s*COLS\\s+or\\s*word\\[i\\]\\s*!=\\s*board\\[r\\]\\[c\\]\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+path\\):\\s*return\\s+False\\s*path\\.add\\(\\(\\(r,\\s*c\\)\\)\\)\\s*res\\s*=\\s*\\(dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*i\\s*\\+\\s*1\\)\\)\\s*path\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)\\s*return\\s+res$",
-                    "hint": "Implement DFS to check adjacent cells. Use a set to track visited cells in the current path.\\n\\nExample:\\nWord=\"AB\". Board=[['A', 'B']].\\nStart at (0,0) 'A'. Match! Path={(0,0)}.\\nCheck neighbors. (0,1) is 'B'. Match!\\nWord found.",
+                    "hint": "Implement DFS to check adjacent cells. Use a set to track visited cells in the current path.",
                     "solutionCode": "    ROWS, COLS = len(board), len(board[0])\n    path = set()\n    def dfs(r, c, i):\n        if i == len(word):\n            return True\n        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or\n            word[i] != board[r][c] or (r, c) in path):\n            return False\n        path.add((r, c))\n        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))\n        path.remove((r, c))\n        return res"
                 },
                 {
@@ -59,8 +59,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DFS",
-            "description": "Same as brute force.",
+            "name": "Optimal",
+            "description": "DFS with backtracking.",
             "steps": [
                 {
                     "id": 1,
@@ -72,19 +72,131 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Define DFS.",
-                    "placeholderCode": "    ROWS, COLS = len(board), len(board[0])\n    path = set()\n    def dfs(r, c, i):\n        if i == len(word):\n            return True\n        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or\n            word[i] != board[r][c] or (r, c) in path):\n            return False\n        path.add((r, c))\n        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))\n        path.remove((r, c))\n        return res",
-                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(board\\),\\s*len\\(board\\[0\\]\\)\\s*path\\s*=\\s*set\\(\\)\\s*def\\s+dfs\\(r,\\s*c,\\s*i\\):\\s*if\\s+i\\s*==\\s*len\\(word\\):\\s*return\\s+True\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*>=\\s*ROWS\\s+or\\s+c\\s*>=\\s*COLS\\s+or\\s*word\\[i\\]\\s*!=\\s*board\\[r\\]\\[c\\]\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+path\\):\\s*return\\s+False\\s*path\\.add\\(\\(\\(r,\\s*c\\)\\)\\)\\s*res\\s*=\\s*\\(dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*i\\s*\\+\\s*1\\)\\)\\s*path\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)\\s*return\\s+res$",
-                    "hint": "Implement DFS to check adjacent cells. Use a set to track visited cells in the current path.\\n\\nExample:\\nWord=\"AB\". Board=[['A', 'B']].\\nStart at (0,0) 'A'. Match! Path={(0,0)}.\\nCheck neighbors. (0,1) is 'B'. Match!\\nWord found.",
-                    "solutionCode": "    ROWS, COLS = len(board), len(board[0])\n    path = set()\n    def dfs(r, c, i):\n        if i == len(word):\n            return True\n        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or\n            word[i] != board[r][c] or (r, c) in path):\n            return False\n        path.add((r, c))\n        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))\n        path.remove((r, c))\n        return res"
+                    "instruction": "Initialze 'ROWS' with the number of rows: len(board).",
+                    "placeholderCode": "    ROWS = len(board)",
+                    "validationRegex": "^\\s+ROWS\\s*=\\s*len\\(board\\)$",
+                    "hint": "Allows us to check boundary limits.",
+                    "solutionCode": "    ROWS = len(board)"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate grid.",
-                    "placeholderCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True\n    return False",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*if\\s+dfs\\(r,\\s*c,\\s*0\\):\\s*return\\s+True\\s*return\\s+False$",
-                    "hint": "Start DFS from every cell in the grid.",
-                    "solutionCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True\n    return False"
+                    "instruction": "Initialize 'COLS' with the number of columns: len(board[0]).",
+                    "placeholderCode": "    COLS = len(board[0])",
+                    "validationRegex": "^\\s+COLS\\s*=\\s*len\\(board\\[0\\]\\)$",
+                    "hint": "Allows us to check boundary limits.",
+                    "solutionCode": "    COLS = len(board[0])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Initialize the 'path' set tracking visited positions.",
+                    "placeholderCode": "    path = set()",
+                    "validationRegex": "^\\s+path\\s*=\\s*set\\(\\)$",
+                    "hint": "Prevents visiting the same cell twice in one path.",
+                    "solutionCode": "    path = set()"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Define the helper function 'dfs(r, c, i)'.",
+                    "placeholderCode": "    def dfs(r, c, i):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c,\\s*i\\):$",
+                    "hint": "Parameters are current cell (r, c) and word index 'i'.",
+                    "solutionCode": "    def dfs(r, c, i):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check if index 'i' is at the end of the word.",
+                    "placeholderCode": "        if i == len(word):",
+                    "validationRegex": "^\\s+if\\s+i\\s*==\\s*len\\(word\\):$",
+                    "hint": "This is our success base case.",
+                    "solutionCode": "        if i == len(word):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return True when the entire word is found.",
+                    "placeholderCode": "            return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "Stop searching on success.",
+                    "solutionCode": "            return True"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Validate if row/column are within board boundaries.",
+                    "placeholderCode": "        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or",
+                    "validationRegex": "^\\s+if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*>=\\s*ROWS\\s+or\\s+c\\s*>=\\s*COLS\\s+or$",
+                    "hint": "Standard bounds checking.",
+                    "solutionCode": "        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if current board character matches word[i].",
+                    "placeholderCode": "            word[i] != board[r][c] or",
+                    "validationRegex": "^\\s+word\\[i\\]\\s*!=\\s*board\\[r\\]\\[c\\]\\s+or$",
+                    "hint": "Ensure the character is the one we're looking for.",
+                    "solutionCode": "            word[i] != board[r][c] or"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Check if the cell (r, c) is already in the 'path' set.",
+                    "placeholderCode": "            (r, c) in path):",
+                    "validationRegex": "^\\s*\\(r,\\s*c\\)\\s+in\\s+path\\):$",
+                    "hint": "Prevent re-using cells.",
+                    "solutionCode": "            (r, c) in path):"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Return False if any validation check fails.",
+                    "placeholderCode": "            return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "This stops the current search branch.",
+                    "solutionCode": "            return False"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Add the current cell to the 'path' set.",
+                    "placeholderCode": "        path.add((r, c))",
+                    "validationRegex": "^\\s+path\\.add\\(\\(\\(r,\\s*c\\)\\)\\)$",
+                    "hint": "Mark as visited.",
+                    "solutionCode": "        path.add((r, c))"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Explore neighbors recursively in four directions.",
+                    "placeholderCode": "        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\(dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*i\\s*\\+\\s*1\\)\\)$",
+                    "hint": "Check down, up, right, left.",
+                    "solutionCode": "        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Remove the current cell from the 'path' to backtrack.",
+                    "placeholderCode": "        path.remove((r, c))",
+                    "validationRegex": "^\\s+path\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)$",
+                    "hint": "Allows other paths to use this cell.",
+                    "solutionCode": "        path.remove((r, c))"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Return the discovery status 'res'.",
+                    "placeholderCode": "        return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "True if word path was found, False otherwise.",
+                    "solutionCode": "        return res"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Iterate through every cell (r, c) on the board.",
+                    "placeholderCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*if\\s+dfs\\(r,\\s*c,\\s*0\\):\\s*return\\s+True$",
+                    "hint": "Start DFS from every possible starting character.",
+                    "solutionCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Final result: return False word not found.",
+                    "placeholderCode": "    return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "If loops finish without finding True, it's False.",
+                    "solutionCode": "    return False"
                 }
             ]
         }
