@@ -21,7 +21,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Backtracking",
+            "name": "Brute Force",
             "description": "Place queens row by row, checking validity.",
             "steps": [
                 {
@@ -34,7 +34,7 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize sets.",
+                    "instruction": "Initialize sets and board.",
                     "placeholderCode": "    col = set()\n    posDiag = set() # (r + c)\n    negDiag = set() # (r - c)\n    res = []\n    board = [[\".\"] * n for i in range(n)]",
                     "validationRegex": "^\\s+col\\s*=\\s*set\\(\\)\\s*posDiag\\s*=\\s*set\\(\\)\\s*negDiag\\s*=\\s*set\\(\\)\\s*res\\s*=\\s*\\[\\]\\s*board\\s*=\\s*\\[\\[\"\\.\"\\]\\s*\\*\\s*n\\s+for\\s+i\\s+in\\s+range\\(n\\)\\]$",
                     "hint": "Use sets to track occupied columns, positive diagonals, and negative diagonals.",
@@ -42,25 +42,25 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Define backtrack.",
+                    "instruction": "Define the recursive backtrack function.",
                     "placeholderCode": "    def backtrack(r):\n        if r == n:\n            copy = [\"\".join(row) for row in board]\n            res.append(copy)\n            return\n        for c in range(n):\n            if c in col or (r + c) in posDiag or (r - c) in negDiag:\n                continue\n            col.add(c)\n            posDiag.add(r + c)\n            negDiag.add(r - c)\n            board[r][c] = \"Q\"\n            backtrack(r + 1)\n            col.remove(c)\n            posDiag.remove(r + c)\n            negDiag.remove(r - c)\n            board[r][c] = \".\"",
                     "validationRegex": "^\\s+def\\s+backtrack\\(r\\):\\s*if\\s+r\\s*==\\s*n:\\s*copy\\s*=\\s*\\[\"\"\\.join\\(row\\)\\s+for\\s+row\\s+in\\s+board\\]\\s*res\\.append\\(copy\\)\\s*return\\s*for\\s+c\\s+in\\s+range\\(n\\):\\s*if\\s+c\\s+in\\s+col\\s+or\\s*\\(r\\s*\\+\\s*c\\)\\s+in\\s+posDiag\\s+or\\s*\\(r\\s*-\\s*c\\)\\s+in\\s+negDiag:\\s*continue\\s*col\\.add\\(c\\)\\s*posDiag\\.add\\(r\\s*\\+\\s*c\\)\\s*negDiag\\.add\\(r\\s*-\\s*c\\)\\s*board\\[r\\]\\[c\\]\\s*=\\s*\"Q\"\\s*backtrack\\(r\\s*\\+\\s*1\\)\\s*col\\.remove\\(c\\)\\s*posDiag\\.remove\\(r\\s*\\+\\s*c\\)\\s*negDiag\\.remove\\(r\\s*-\\s*c\\)\\s*board\\[r\\]\\[c\\]\\s*=\\s*\"\\.\":$",
-                    "hint": "Implement backtracking. Place a queen, update sets, recurse, then backtrack (remove queen and update sets).\\n\\nExample:\\nRow 0. Place Q at (0,0). Cols={0}, PosDiag={0}, NegDiag={0}.\\nRow 1. Try (1,0) -> Col 0 used. Skip.\\nTry (1,1) -> NegDiag 0 used (1-1=0). Skip.\\nTry (1,2) -> OK. Place Q.",
+                    "hint": "Implement backtracking logic to place queens.",
                     "solutionCode": "    def backtrack(r):\n        if r == n:\n            copy = [\"\".join(row) for row in board]\n            res.append(copy)\n            return\n        for c in range(n):\n            if c in col or (r + c) in posDiag or (r - c) in negDiag:\n                continue\n            col.add(c)\n            posDiag.add(r + c)\n            negDiag.add(r - c)\n            board[r][c] = \"Q\"\n            backtrack(r + 1)\n            col.remove(c)\n            posDiag.remove(r + c)\n            negDiag.remove(r - c)\n            board[r][c] = \".\""
                 },
                 {
                     "id": 4,
-                    "instruction": "Call backtrack.",
+                    "instruction": "Call backtrack starting from row 0 and return results.",
                     "placeholderCode": "    backtrack(0)\n    return res",
                     "validationRegex": "^\\s+backtrack\\(0\\)\\s*return\\s+res$",
-                    "hint": "Start backtracking from the first row.",
+                    "hint": "Trigger the recursion.",
                     "solutionCode": "    backtrack(0)\n    return res"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
-            "name": "Backtracking",
+            "name": "Optimal",
             "description": "Same as brute force.",
             "steps": [
                 {
@@ -73,26 +73,106 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize sets.",
-                    "placeholderCode": "    col = set()\n    posDiag = set() # (r + c)\n    negDiag = set() # (r - c)\n    res = []\n    board = [[\".\"] * n for i in range(n)]",
-                    "validationRegex": "^\\s+col\\s*=\\s*set\\(\\)\\s*posDiag\\s*=\\s*set\\(\\)\\s*negDiag\\s*=\\s*set\\(\\)\\s*res\\s*=\\s*\\[\\]\\s*board\\s*=\\s*\\[\\[\"\\.\"\\]\\s*\\*\\s*n\\s+for\\s+i\\s+in\\s+range\\(n\\)\\]$",
-                    "hint": "Use sets to track occupied columns, positive diagonals, and negative diagonals.",
-                    "solutionCode": "    col = set()\n    posDiag = set() # (r + c)\n    negDiag = set() # (r - c)\n    res = []\n    board = [[\".\"] * n for i in range(n)]"
+                    "instruction": "Initialize the occupied columns set.",
+                    "placeholderCode": "    col = set()",
+                    "validationRegex": "^\\s+col\\s*=\\s*set\\(\\)$",
+                    "hint": "Keeps track of which columns already have a queen.",
+                    "solutionCode": "    col = set()"
                 },
                 {
                     "id": 3,
-                    "instruction": "Define backtrack.",
-                    "placeholderCode": "    def backtrack(r):\n        if r == n:\n            copy = [\"\".join(row) for row in board]\n            res.append(copy)\n            return\n        for c in range(n):\n            if c in col or (r + c) in posDiag or (r - c) in negDiag:\n                continue\n            col.add(c)\n            posDiag.add(r + c)\n            negDiag.add(r - c)\n            board[r][c] = \"Q\"\n            backtrack(r + 1)\n            col.remove(c)\n            posDiag.remove(r + c)\n            negDiag.remove(r - c)\n            board[r][c] = \".\"",
-                    "validationRegex": "^\\s+def\\s+backtrack\\(r\\):\\s*if\\s+r\\s*==\\s*n:\\s*copy\\s*=\\s*\\[\"\"\\.join\\(row\\)\\s+for\\s+row\\s+in\\s+board\\]\\s*res\\.append\\(copy\\)\\s*return\\s*for\\s+c\\s+in\\s+range\\(n\\):\\s*if\\s+c\\s+in\\s+col\\s+or\\s*\\(r\\s*\\+\\s*c\\)\\s+in\\s+posDiag\\s+or\\s*\\(r\\s*-\\s*c\\)\\s+in\\s+negDiag:\\s*continue\\s*col\\.add\\(c\\)\\s*posDiag\\.add\\(r\\s*\\+\\s*c\\)\\s*negDiag\\.add\\(r\\s*-\\s*c\\)\\s*board\\[r\\]\\[c\\]\\s*=\\s*\"Q\"\\s*backtrack\\(r\\s*\\+\\s*1\\)\\s*col\\.remove\\(c\\)\\s*posDiag\\.remove\\(r\\s*\\+\\s*c\\)\\s*negDiag\\.remove\\(r\\s*-\\s*c\\)\\s*board\\[r\\]\\[c\\]\\s*=\\s*\"\\.\":$",
-                    "hint": "Implement backtracking. Place a queen, update sets, recurse, then backtrack (remove queen and update sets).\\n\\nExample:\\nRow 0. Place Q at (0,0). Cols={0}, PosDiag={0}, NegDiag={0}.\\nRow 1. Try (1,0) -> Col 0 used. Skip.\\nTry (1,1) -> NegDiag 0 used (1-1=0). Skip.\\nTry (1,2) -> OK. Place Q.",
-                    "solutionCode": "    def backtrack(r):\n        if r == n:\n            copy = [\"\".join(row) for row in board]\n            res.append(copy)\n            return\n        for c in range(n):\n            if c in col or (r + c) in posDiag or (r - c) in negDiag:\n                continue\n            col.add(c)\n            posDiag.add(r + c)\n            negDiag.add(r - c)\n            board[r][c] = \"Q\"\n            backtrack(r + 1)\n            col.remove(c)\n            posDiag.remove(r + c)\n            negDiag.remove(r - c)\n            board[r][c] = \".\""
+                    "instruction": "Initialize the positive diagonals set (r + c).",
+                    "placeholderCode": "    posDiag = set()",
+                    "validationRegex": "^\\s+posDiag\\s*=\\s*set\\(\\)$",
+                    "hint": "Positive diagonals have a constant sum of row and column indices.",
+                    "solutionCode": "    posDiag = set()"
                 },
                 {
                     "id": 4,
-                    "instruction": "Call backtrack.",
+                    "instruction": "Initialize the negative diagonals set (r - c).",
+                    "placeholderCode": "    negDiag = set()",
+                    "validationRegex": "^\\s+negDiag\\s*=\\s*set\\(\\)$",
+                    "hint": "Negative diagonals have a constant difference of row and column indices.",
+                    "solutionCode": "    negDiag = set()"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Initialize the results list 'res'.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "This will store all valid board configurations.",
+                    "solutionCode": "    res = []"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Initialize the n x n board with dots.",
+                    "placeholderCode": "    board = [[\".\"] * n for i in range(n)]",
+                    "validationRegex": "^\\s+board\\s*=\\s*\\[\\[\"\\.\"\\]\\s*\\*\\s*n\\s+for\\s+i\\s+in\\s+range\\(n\\)\\]$",
+                    "hint": "Representation of the chessboard.",
+                    "solutionCode": "    board = [[\".\"] * n for i in range(n)]"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Define the recursive 'backtrack' function.",
+                    "placeholderCode": "    def backtrack(r):",
+                    "validationRegex": "^\\s+def\\s+backtrack\\(r\\):$",
+                    "hint": "'r' is the current row index.",
+                    "solutionCode": "    def backtrack(r):"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Base Case: If r equals n, add board copy to res.",
+                    "placeholderCode": "        if r == n:\n            copy = [\"\".join(row) for row in board]\n            res.append(copy)\n            return",
+                    "validationRegex": "^\\s+if\\s+r\\s*==\\s*n:\\s*copy\\s*=\\s*\\[\"\"\\.join\\(row\\)\\s+for\\s+row\\s+in\\s+board\\]\\s*res\\.append\\(copy\\)\\s*return$",
+                    "hint": "We've successfully placed n queens.",
+                    "solutionCode": "        if r == n:\n            copy = [\"\".join(row) for row in board]\n            res.append(copy)\n            return"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Iterate through each column in the current row.",
+                    "placeholderCode": "        for c in range(n):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(n\\):$",
+                    "hint": "Try placing a queen in each column of row 'r'.",
+                    "solutionCode": "        for c in range(n):"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Check if placement is valid using sets.",
+                    "placeholderCode": "            if c in col or (r + c) in posDiag or (r - c) in negDiag:\n                continue",
+                    "validationRegex": "^\\s+if\\s+c\\s+in\\s+col\\s+or\\s*\\(r\\s*\\+\\s*c\\)\\s+in\\s+posDiag\\s+or\\s*\\(r\\s*-\\s*c\\)\\s+in\\s+negDiag:\\s*continue$",
+                    "hint": "Prune the search if col, posDiag, or negDiag is attacked.",
+                    "solutionCode": "            if c in col or (r + c) in posDiag or (r - c) in negDiag:\n                continue"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Place the queen and update occupied sets.",
+                    "placeholderCode": "            col.add(c)\n            posDiag.add(r + c)\n            negDiag.add(r - c)\n            board[r][c] = \"Q\"",
+                    "validationRegex": "^\\s+col\\.add\\(c\\)\\s*posDiag\\.add\\(r\\s*\\+\\s*c\\)\\s*negDiag\\.add\\(r\\s*-\\s*c\\)\\s*board\\[r\\]\\[c\\]\\s*=\\s*\"Q\"$",
+                    "hint": "Mark the position as occupied.",
+                    "solutionCode": "            col.add(c)\n            posDiag.add(r + c)\n            negDiag.add(r - c)\n            board[r][c] = \"Q\""
+                },
+                {
+                    "id": 12,
+                    "instruction": "Recurse to the next row.",
+                    "placeholderCode": "            backtrack(r + 1)",
+                    "validationRegex": "^\\s+backtrack\\(r\\s*\\+\\s*1\\)$",
+                    "hint": "Try placing a queen in row r + 1.",
+                    "solutionCode": "            backtrack(r + 1)"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Backtrack by removing the queen and updating sets.",
+                    "placeholderCode": "            col.remove(c)\n            posDiag.remove(r + c)\n            negDiag.remove(r - c)\n            board[r][c] = \".\"",
+                    "validationRegex": "^\\s+col\\.remove\\(c\\)\\s*posDiag\\.remove\\(r\\s*\\+\\s*c\\)\\s*negDiag\\.remove\\(r\\s*-\\s*c\\)\\s*board\\[r\\]\\[c\\]\\s*=\\s*\"\\.\"$",
+                    "hint": "Undo the changes to explore other possibilities.",
+                    "solutionCode": "            col.remove(c)\n            posDiag.remove(r + c)\n            negDiag.remove(r - c)\n            board[r][c] = \".\""
+                },
+                {
+                    "id": 14,
+                    "instruction": "Call backtrack(0) and return results.",
                     "placeholderCode": "    backtrack(0)\n    return res",
                     "validationRegex": "^\\s+backtrack\\(0\\)\\s*return\\s+res$",
-                    "hint": "Start backtracking from the first row.",
+                    "hint": "Start the search process.",
                     "solutionCode": "    backtrack(0)\n    return res"
                 }
             ]
