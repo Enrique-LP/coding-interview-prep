@@ -255,11 +255,43 @@
                 },
                 {
                     "id": 25,
-                    "instruction": "Implement follow and unfollow methods.",
-                    "placeholderCode": "    def follow(self, followerId, followeeId):\n        self.followMap[followerId].add(followeeId)\n    def unfollow(self, followerId, followeeId):\n        if followeeId in self.followMap[followerId]:\n            self.followMap[followerId].remove(followeeId)",
-                    "validationRegex": "^\\s+def\\s+follow\\(self,\\s*followerId,\\s*followeeId\\):\\s*self\\.followMap\\[followerId\\]\\.add\\(followeeId\\)\\s*def\\s+unfollow\\(self,\\s*followerId,\\s*followeeId\\):\\s*if\\s+followeeId\\s+in\\s+self\\.followMap\\[followerId\\]:\\s*self\\.followMap\\[followerId\\]\\.remove\\(followeeId\\)$",
-                    "hint": "Simply update the set of followees.",
-                    "solutionCode": "    def follow(self, followerId, followeeId):\n        self.followMap[followerId].add(followeeId)\n    def unfollow(self, followerId, followeeId):\n        if followeeId in self.followMap[followerId]:\n            self.followMap[followerId].remove(followeeId)"
+                    "instruction": "Define the follow method signature.",
+                    "placeholderCode": "    def follow(self, followerId, followeeId):",
+                    "validationRegex": "^\\s+def\\s+follow\\(self,\\s*followerId,\\s*followeeId\\):$",
+                    "hint": "Method to establish a one-way follow relationship.",
+                    "solutionCode": "    def follow(self, followerId, followeeId):"
+                },
+                {
+                    "id": 26,
+                    "instruction": "Add the followeeId to the follower's set in the followMap.",
+                    "placeholderCode": "        self.followMap[followerId].add(followeeId)",
+                    "validationRegex": "^\\s+self\\.followMap\\[followerId\\]\\.add\\(followeeId\\)$",
+                    "hint": "Sets automatically handle duplicates, so we don't need to check if they already follow.",
+                    "solutionCode": "        self.followMap[followerId].add(followeeId)"
+                },
+                {
+                    "id": 27,
+                    "instruction": "Define the unfollow method signature.",
+                    "placeholderCode": "    def unfollow(self, followerId, followeeId):",
+                    "validationRegex": "^\\s+def\\s+unfollow\\(self,\\s*followerId,\\s*followeeId\\):$",
+                    "hint": "Method to remove a follow relationship.",
+                    "solutionCode": "    def unfollow(self, followerId, followeeId):"
+                },
+                {
+                    "id": 28,
+                    "instruction": "Check if the followeeId exists in the follower's set to avoid errors during removal.",
+                    "placeholderCode": "        if followeeId in self.followMap[followerId]:",
+                    "validationRegex": "^\\s+if\\s+followeeId\\s+in\\s+self\\.followMap\\[followerId\\]:$",
+                    "hint": "Removing a non-existent element from a set raises a KeyError.",
+                    "solutionCode": "        if followeeId in self.followMap[followerId]:"
+                },
+                {
+                    "id": 29,
+                    "instruction": "Remove the followeeId from the follower's set.",
+                    "placeholderCode": "            self.followMap[followerId].remove(followeeId)",
+                    "validationRegex": "^\\s+self\\.followMap\\[followerId\\]\\.remove\\(followeeId\\)$",
+                    "hint": "Use the remove method to officially unfollow.",
+                    "solutionCode": "            self.followMap[followerId].remove(followeeId)"
                 }
             ]
         }
