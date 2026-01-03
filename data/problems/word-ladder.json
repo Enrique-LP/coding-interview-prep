@@ -167,18 +167,106 @@
                 },
                 {
                     "id": 13,
-                    "instruction": "BFS loop.",
-                    "placeholderCode": "    while q:\n        for i in range(len(q)):\n            word = q.popleft()\n            if word == endWord:\n                return res\n            for j in range(len(word)):\n                pattern = word[:j] + \"*\" + word[j + 1 :]\n                for neighbor in nei[pattern]:\n                    if neighbor not in visit:\n                        visit.add(neighbor)\n                        q.append(neighbor)\n        res += 1",
-                    "validationRegex": "^\\s+while\\s+q:\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*word\\s*=\\s*q\\.popleft\\(\\)\\s*if\\s+word\\s*==\\s*endWord:\\s*return\\s+res\\s*for\\s+j\\s+in\\s+range\\(len\\(word\\)\\):\\s*pattern\\s*=\\s*word\\[:j\\]\\s*\\+\\s*\"\\*\"\\s*\\+\\s*word\\[j\\s*\\+\\s*1\\s*:\\]\\s*for\\s+neighbor\\s+in\\s+nei\\[pattern\\]:\\s*if\\s+neighbor\\s+not\\s+in\\s+visit:\\s*visit\\.add\\(neighbor\\)\\s*q\\.append\\(neighbor\\)\\s*res\\s*\\+=\\s*1$",
-                    "hint": "Standard BFS. For each word, generate patterns, find neighbors, and add unvisited ones to queue. Increment result level by level.",
-                    "solutionCode": "    while q:\n        for i in range(len(q)):\n            word = q.popleft()\n            if word == endWord:\n                return res\n            for j in range(len(word)):\n                pattern = word[:j] + \"*\" + word[j + 1 :]\n                for neighbor in nei[pattern]:\n                    if neighbor not in visit:\n                        visit.add(neighbor)\n                        q.append(neighbor)\n        res += 1"
+                    "instruction": "Initiate the BFS while the queue is not empty.",
+                    "placeholderCode": "    while q:",
+                    "validationRegex": "^\\s+while\\s+q:$",
+                    "hint": "Continue searching as long as there are words to explore.",
+                    "solutionCode": "    while q:"
                 },
                 {
                     "id": 14,
-                    "instruction": "Return 0.",
+                    "instruction": "Iterate through all words currently in the queue for the current level.",
+                    "placeholderCode": "        for i in range(len(q)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):$",
+                    "hint": "This ensures we process the graph level by level (one transformation at a time).",
+                    "solutionCode": "        for i in range(len(q)):"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Pop the first word from the left of the queue.",
+                    "placeholderCode": "            word = q.popleft()",
+                    "validationRegex": "^\\s+word\\s*=\\s*q\\.popleft\\(\\)$",
+                    "hint": "Standard deque operation to get the next element.",
+                    "solutionCode": "            word = q.popleft()"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Check if the current word is the target 'endWord'.",
+                    "placeholderCode": "            if word == endWord:",
+                    "validationRegex": "^\\s+if\\s+word\\s*==\\s*endWord:$",
+                    "hint": "We check every word we extract from the queue.",
+                    "solutionCode": "            if word == endWord:"
+                },
+                {
+                    "id": 17,
+                    "instruction": "If found, return the current step count 'res'.",
+                    "placeholderCode": "                return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Success! The first time we reach the endWord, it's guaranteed to be the shortest path.",
+                    "solutionCode": "                return res"
+                },
+                {
+                    "id": 18,
+                    "instruction": "For each character position 'j', find all possible neighbors.",
+                    "placeholderCode": "            for j in range(len(word)):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(len\\(word\\)\\):$",
+                    "hint": "We check all possible 1-letter variations.",
+                    "solutionCode": "            for j in range(len(word)):"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Generate the pattern for the current word at position 'j'.",
+                    "placeholderCode": "                pattern = word[:j] + \"*\" + word[j + 1 :]",
+                    "validationRegex": "^\\s+pattern\\s*=\\s*word\\[:j\\]\\s*\\+\\s*\"\\*\"\\s*\\+\\s*word\\[j\\s*\\+\\s*1\\s*:\\]$",
+                    "hint": "Match the logic used in preprocessing (Step 8).",
+                    "solutionCode": "                pattern = word[:j] + \"*\" + word[j + 1 :]"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Iterate through every neighbor associated with that pattern.",
+                    "placeholderCode": "                for neighbor in nei[pattern]:",
+                    "validationRegex": "^\\s+for\\s+neighbor\\s+in\\s+nei\\[pattern\\]:$",
+                    "hint": "Our precomputed 'nei' dictionary gives us these words in O(1).",
+                    "solutionCode": "                for neighbor in nei[pattern]:"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Check if the neighbor haven't been visited yet.",
+                    "placeholderCode": "                    if neighbor not in visit:",
+                    "validationRegex": "^\\s+if\\s+neighbor\\s+not\\s+in\\s+visit:$",
+                    "hint": "Essential to avoid cycles and redundant work.",
+                    "solutionCode": "                    if neighbor not in visit:"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Add the neighbor to the 'visit' set.",
+                    "placeholderCode": "                        visit.add(neighbor)",
+                    "validationRegex": "^\\s+visit\\.add\\(neighbor\\)$",
+                    "hint": "Mark it immediately so other paths don't try to add it again.",
+                    "solutionCode": "                        visit.add(neighbor)"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Append the neighbor to the queue for the next level.",
+                    "placeholderCode": "                        q.append(neighbor)",
+                    "validationRegex": "^\\s+q\\.append\\(neighbor\\)$",
+                    "hint": "The neighbor will be processed in the next level of BFS.",
+                    "solutionCode": "                        q.append(neighbor)"
+                },
+                {
+                    "id": 24,
+                    "instruction": "After processing the entire current level, increment 'res'.",
+                    "placeholderCode": "        res += 1",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*1$",
+                    "hint": "Move to the next transformation level.",
+                    "solutionCode": "        res += 1"
+                },
+                {
+                    "id": 25,
+                    "instruction": "If the queue is empty and endWord was not found, return 0.",
                     "placeholderCode": "    return 0",
                     "validationRegex": "^\\s+return\\s+0$",
-                    "hint": "If queue empty and endWord not found, return 0.",
+                    "hint": "If the loop finishes without a return, no path exists.",
                     "solutionCode": "    return 0"
                 }
             ]
