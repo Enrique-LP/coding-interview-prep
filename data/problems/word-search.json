@@ -120,82 +120,66 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "Validate if row/column are within board boundaries.",
-                    "placeholderCode": "        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or",
-                    "validationRegex": "^\\s+if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*>=\\s*ROWS\\s+or\\s+c\\s*>=\\s*COLS\\s+or$",
-                    "hint": "Standard bounds checking.",
-                    "solutionCode": "        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or"
+                    "instruction": "Check for out-of-bounds, character mismatch, or if the cell is already visited.",
+                    "placeholderCode": "        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or\n            word[i] != board[r][c] or (r, c) in path):",
+                    "validationRegex": "^\\s+if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*>=\\s*ROWS\\s+or\\s+c\\s*>=\\s*COLS\\s+or\\s*word\\[i\\]\\s*!=\\s*board\\[r\\]\\[c\\]\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+path\\):$",
+                    "hint": "This is a single combined check to stop the current recursive path.",
+                    "solutionCode": "        if (r < 0 or c < 0 or r >= ROWS or c >= COLS or\n            word[i] != board[r][c] or (r, c) in path):"
                 },
                 {
                     "id": 9,
-                    "instruction": "Check if current board character matches word[i].",
-                    "placeholderCode": "            word[i] != board[r][c] or",
-                    "validationRegex": "^\\s+word\\[i\\]\\s*!=\\s*board\\[r\\]\\[c\\]\\s+or$",
-                    "hint": "Ensure the character is the one we're looking for.",
-                    "solutionCode": "            word[i] != board[r][c] or"
-                },
-                {
-                    "id": 10,
-                    "instruction": "Check if the cell (r, c) is already in the 'path' set.",
-                    "placeholderCode": "            (r, c) in path):",
-                    "validationRegex": "^\\s*\\(r,\\s*c\\)\\s+in\\s+path\\):$",
-                    "hint": "Prevent re-using cells.",
-                    "solutionCode": "            (r, c) in path):"
-                },
-                {
-                    "id": 11,
-                    "instruction": "Return False if any validation check fails.",
+                    "instruction": "Return False if the condition is met.",
                     "placeholderCode": "            return False",
                     "validationRegex": "^\\s+return\\s+False$",
-                    "hint": "This stops the current search branch.",
+                    "hint": "The current path is invalid, so backtrack.",
                     "solutionCode": "            return False"
                 },
                 {
-                    "id": 12,
+                    "id": 10,
                     "instruction": "Add the current cell to the 'path' set.",
                     "placeholderCode": "        path.add((r, c))",
                     "validationRegex": "^\\s+path\\.add\\(\\(\\(r,\\s*c\\)\\)\\)$",
-                    "hint": "Mark as visited.",
+                    "hint": "Mark the cell as visited for this branch.",
                     "solutionCode": "        path.add((r, c))"
                 },
                 {
-                    "id": 13,
+                    "id": 11,
                     "instruction": "Explore neighbors recursively in four directions.",
                     "placeholderCode": "        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))",
                     "validationRegex": "^\\s+res\\s*=\\s*\\(dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*i\\s*\\+\\s*1\\)\\s+or\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*i\\s*\\+\\s*1\\)\\)$",
-                    "hint": "Check down, up, right, left.",
+                    "hint": "Search Down, Up, Right, and Left.",
                     "solutionCode": "        res = (dfs(r + 1, c, i + 1) or\n               dfs(r - 1, c, i + 1) or\n               dfs(r, c + 1, i + 1) or\n               dfs(r, c - 1, i + 1))"
                 },
                 {
-                    "id": 14,
-                    "instruction": "Remove the current cell from the 'path' to backtrack.",
+                    "id": 12,
+                    "instruction": "Backtrack by removing the current cell from 'path'.",
                     "placeholderCode": "        path.remove((r, c))",
                     "validationRegex": "^\\s+path\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)$",
-                    "hint": "Allows other paths to use this cell.",
+                    "hint": "Cleanup for the next possible starting point.",
                     "solutionCode": "        path.remove((r, c))"
                 },
                 {
-                    "id": 15,
-                    "instruction": "Return the discovery status 'res'.",
+                    "id": 13,
+                    "instruction": "Return the final discovery status 'res'.",
                     "placeholderCode": "        return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "True if word path was found, False otherwise.",
+                    "hint": "True if the word was found, False otherwise.",
                     "solutionCode": "        return res"
                 },
                 {
-                    "id": 16,
-                    "instruction": "Iterate through every cell (r, c) on the board.",
+                    "id": 14,
+                    "instruction": "Traverse the board with nested loops and start DFS from each cell.",
                     "placeholderCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*if\\s+dfs\\(r,\\s*c,\\s*0\\):\\s*return\\s+True$",
-                    "hint": "Start DFS from every possible starting character.",
+                    "hint": "Visit every (r, c) on the board.",
                     "solutionCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True"
                 },
                 {
-                    "id": 17,
-                    "instruction": "Final result: return False word not found.",
+                    "id": 15,
+                    "instruction": "Return False if the word is not found in the entire board.",
                     "placeholderCode": "    return False",
                     "validationRegex": "^\\s+return\\s+False$",
-                    "hint": "If loops finish without finding True, it's False.",
+                    "hint": "The word doesn't exist.",
                     "solutionCode": "    return False"
                 }
             ]
