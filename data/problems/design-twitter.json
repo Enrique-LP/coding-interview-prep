@@ -127,14 +127,134 @@
                 },
                 {
                     "id": 9,
-                    "instruction": "Implement getNewsFeed by merging tweets from the user and their followees using a heap.",
-                    "placeholderCode": "    def getNewsFeed(self, userId):\n        res = []\n        minHeap = []\n        self.followMap[userId].add(userId)\n        for followeeId in self.followMap[userId]:\n            if followeeId in self.tweetMap:\n                index = len(self.tweetMap[followeeId]) - 1\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        while minHeap and len(res) < 10:\n            count, tweetId, followeeId, index = heapq.heappop(minHeap)\n            res.append(tweetId)\n            if index >= 0:\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        return res",
-                    "validationRegex": "^\\s+def\\s+getNewsFeed\\(self,\\s*userId\\):\\s*res\\s*=\\s*\\[\\]\\s*minHeap\\s*=\\s*\\[\\]\\s*self\\.followMap\\[userId\\]\\.add\\(userId\\)\\s*for\\s+followeeId\\s+in\\s+self\\.followMap\\[userId\\]:\\s*if\\s+followeeId\\s+in\\s+self\\.tweetMap:\\s*index\\s*=\\s*len\\(self\\.tweetMap\\[followeeId\\]\\)\\s*-\\s*1\\s*count,\\s*tweetId\\s*=\\s*self\\.tweetMap\\[followeeId\\]\\[index\\]\\s*heapq\\.heappush\\(minHeap,\\s*\\[count,\\s*tweetId,\\s*followeeId,\\s*index\\s*-\\s*1\\]\\)\\s*while\\s+minHeap\\s+and\\s+len\\(res\\)\\s*<\\s*10:\\s*count,\\s*tweetId,\\s*followeeId,\\s*index\\s*=\\s*heapq\\.heappop\\(minHeap\\)\\s*res\\.append\\(tweetId\\)\\s*if\\s+index\\s*>=\\s*0:\\s*count,\\s*tweetId\\s*=\\s*self\\.tweetMap\\[followeeId\\]\\[index\\]\\s*heapq\\.heappush\\(minHeap,\\s*\\[count,\\s*tweetId,\\s*followeeId,\\s*index\\s*-\\s*1\\]\\)\\s*return\\s+res$",
-                    "hint": "This is the core logic: merging k sorted lists.",
-                    "solutionCode": "    def getNewsFeed(self, userId):\n        res = []\n        minHeap = []\n        self.followMap[userId].add(userId)\n        for followeeId in self.followMap[userId]:\n            if followeeId in self.tweetMap:\n                index = len(self.tweetMap[followeeId]) - 1\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        while minHeap and len(res) < 10:\n            count, tweetId, followeeId, index = heapq.heappop(minHeap)\n            res.append(tweetId)\n            if index >= 0:\n                count, tweetId = self.tweetMap[followeeId][index]\n                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])\n        return res"
+                    "instruction": "Define the getNewsFeed method.",
+                    "placeholderCode": "    def getNewsFeed(self, userId):",
+                    "validationRegex": "^\\s+def\\s+getNewsFeed\\(self,\\s*userId\\):$",
+                    "hint": "Method to retrieve the 10 most recent tweets from the user and followees.",
+                    "solutionCode": "    def getNewsFeed(self, userId):"
                 },
                 {
                     "id": 10,
+                    "instruction": "Initialize an empty list for the result.",
+                    "placeholderCode": "        res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "This will store the tweet IDs to return.",
+                    "solutionCode": "        res = []"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Initialize an empty list for the heap.",
+                    "placeholderCode": "        minHeap = []",
+                    "validationRegex": "^\\s+minHeap\\s*=\\s*\\[\\]$",
+                    "hint": "A heap is perfect for merging multiple sorted lists (tweets per user).",
+                    "solutionCode": "        minHeap = []"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Ensure the user is in their own follow map.",
+                    "placeholderCode": "        self.followMap[userId].add(userId)",
+                    "validationRegex": "^\\s+self\\.followMap\\[userId\\]\\.add\\(userId\\)$",
+                    "hint": "Users should see their own tweets in their news feed.",
+                    "solutionCode": "        self.followMap[userId].add(userId)"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Iterate over all followee IDs.",
+                    "placeholderCode": "        for followeeId in self.followMap[userId]:",
+                    "validationRegex": "^\\s+for\\s+followeeId\\s+in\\s+self\\.followMap\\[userId\\]:$",
+                    "hint": "Loop through everyone the user follows (including themselves).",
+                    "solutionCode": "        for followeeId in self.followMap[userId]:"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Check if the followee has posted any tweets.",
+                    "placeholderCode": "            if followeeId in self.tweetMap:",
+                    "validationRegex": "^\\s+if\\s+followeeId\\s+in\\s+self\\.tweetMap:$",
+                    "hint": "Skip followees who haven't tweeted anything yet.",
+                    "solutionCode": "            if followeeId in self.tweetMap:"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Get the index of the followee's most recent tweet.",
+                    "placeholderCode": "                index = len(self.tweetMap[followeeId]) - 1",
+                    "validationRegex": "^\\s+index\\s*=\\s*len\\(self\\.tweetMap\\[followeeId\\]\\)\\s*-\\s*1$",
+                    "hint": "Tweets are appended, so the last element is the most recent.",
+                    "solutionCode": "                index = len(self.tweetMap[followeeId]) - 1"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Retrieve the tweet data at that index.",
+                    "placeholderCode": "                count, tweetId = self.tweetMap[followeeId][index]",
+                    "validationRegex": "^\\s+count,\\s*tweetId\\s*=\\s*self\\.tweetMap\\[followeeId\\]\\[index\\]$",
+                    "hint": "Each tweet is a list/tuple of [count, tweetId].",
+                    "solutionCode": "                count, tweetId = self.tweetMap[followeeId][index]"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Push the tweet onto the heap along with its metadata.",
+                    "placeholderCode": "                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])",
+                    "validationRegex": "^\\s+heapq\\.heappush\\(minHeap,\\s*\\[count,\\s*tweetId,\\s*followeeId,\\s*index\\s*-\\s*1\\]\\)$",
+                    "hint": "Include 'index - 1' so we know where to find the next tweet if this one is popped.",
+                    "solutionCode": "                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Start a loop to pop the top 10 tweets.",
+                    "placeholderCode": "        while minHeap and len(res) < 10:",
+                    "validationRegex": "^\\s+while\\s+minHeap\\s+and\\s+len\\(res\\)\\s*<\\s*10:$",
+                    "hint": "Keep going until the heap is empty or we have the 10 most recent tweets.",
+                    "solutionCode": "        while minHeap and len(res) < 10:"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Pop the tweet with the smallest count (most recent).",
+                    "placeholderCode": "            count, tweetId, followeeId, index = heapq.heappop(minHeap)",
+                    "validationRegex": "^\\s+count,\\s*tweetId,\\s*followeeId,\\s*index\\s*=\\s*heapq\\.heappop\\(minHeap\\)$",
+                    "hint": "Since we use negative counts, heappop gives us the most recent tweet.",
+                    "solutionCode": "            count, tweetId, followeeId, index = heapq.heappop(minHeap)"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Add the tweet ID to the result list.",
+                    "placeholderCode": "            res.append(tweetId)",
+                    "validationRegex": "^\\s+res\\.append\\(tweetId\\)$",
+                    "hint": "We only need the ID for the final output.",
+                    "solutionCode": "            res.append(tweetId)"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Check if the same followee has more tweets.",
+                    "placeholderCode": "            if index >= 0:",
+                    "validationRegex": "^\\s+if\\s+index\\s*>=\\s*0:$",
+                    "hint": "We saved the 'index - 1' previously; if it's not negative, there are more.",
+                    "solutionCode": "            if index >= 0:"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Retrieve the next most recent tweet data.",
+                    "placeholderCode": "                count, tweetId = self.tweetMap[followeeId][index]",
+                    "validationRegex": "^\\s+count,\\s*tweetId\\s*=\\s*self\\.tweetMap\\[followeeId\\]\\[index\\]$",
+                    "hint": "Use the updated index to get the previous tweet.",
+                    "solutionCode": "                count, tweetId = self.tweetMap[followeeId][index]"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Push the next tweet onto the heap.",
+                    "placeholderCode": "                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])",
+                    "validationRegex": "^\\s+heapq\\.heappush\\(minHeap,\\s*\\[count,\\s*tweetId,\\s*followeeId,\\s*index\\s*-\\s*1\\]\\)$",
+                    "hint": "Again, decrement the index for the next potential push.",
+                    "solutionCode": "                heapq.heappush(minHeap, [count, tweetId, followeeId, index - 1])"
+                },
+                {
+                    "id": 24,
+                    "instruction": "Return the final result list.",
+                    "placeholderCode": "        return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Done! This list contains up to 10 most recent tweet IDs.",
+                    "solutionCode": "        return res"
+                },
+                {
+                    "id": 25,
                     "instruction": "Implement follow and unfollow methods.",
                     "placeholderCode": "    def follow(self, followerId, followeeId):\n        self.followMap[followerId].add(followeeId)\n    def unfollow(self, followerId, followeeId):\n        if followeeId in self.followMap[followerId]:\n            self.followMap[followerId].remove(followeeId)",
                     "validationRegex": "^\\s+def\\s+follow\\(self,\\s*followerId,\\s*followeeId\\):\\s*self\\.followMap\\[followerId\\]\\.add\\(followeeId\\)\\s*def\\s+unfollow\\(self,\\s*followerId,\\s*followeeId\\):\\s*if\\s+followeeId\\s+in\\s+self\\.followMap\\[followerId\\]:\\s*self\\.followMap\\[followerId\\]\\.remove\\(followeeId\\)$",
