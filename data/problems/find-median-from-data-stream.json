@@ -54,14 +54,38 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define MedianFinder class.",
-                    "placeholderCode": "class MedianFinder:\n    def __init__(self):\n        self.small = [] # max heap\n        self.large = [] # min heap",
-                    "validationRegex": "^class\\s+MedianFinder:\\s*def\\s+__init__\\(self\\):\\s*self\\.small\\s*=\\s*\\[\\]\\s*self\\.large\\s*=\\s*\\[\\]$",
-                    "hint": "Initialize two heaps: a max-heap for the smaller half and a min-heap for the larger half.",
-                    "solutionCode": "class MedianFinder:\n    def __init__(self):\n        self.small = [] # max heap\n        self.large = [] # min heap"
+                    "instruction": "Define the MedianFinder class.",
+                    "placeholderCode": "class MedianFinder:",
+                    "validationRegex": "^class\\s+MedianFinder:\\s*$",
+                    "hint": "Use the class keyword to start the definition.",
+                    "solutionCode": "class MedianFinder:"
                 },
                 {
                     "id": 2,
+                    "instruction": "Define the __init__ constructor method.",
+                    "placeholderCode": "    def __init__(self):",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):\\s*$",
+                    "hint": "Initialize the class instance and prepare the heaps.",
+                    "solutionCode": "    def __init__(self):"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize a list called 'small' for the max-heap (lower half).",
+                    "placeholderCode": "        self.small = []",
+                    "validationRegex": "^\\s+self\\.small\\s*=\\s*\\[\\]\\s*$",
+                    "hint": "This will store the smaller half of numbers; we'll push negative values to simulate a max-heap.",
+                    "solutionCode": "        self.small = []"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Initialize a list called 'large' for the min-heap (upper half).",
+                    "placeholderCode": "        self.large = []",
+                    "validationRegex": "^\\s+self\\.large\\s*=\\s*\\[\\]\\s*$",
+                    "hint": "This will store the larger half of numbers using a standard min-heap.",
+                    "solutionCode": "        self.large = []"
+                },
+                {
+                    "id": 5,
                     "instruction": "Implement addNum.",
                     "placeholderCode": "    def addNum(self, num):\n        heapq.heappush(self.small, -1 * num)\n        if self.small and self.large and (-1 * self.small[0]) > self.large[0]:\n            val = -1 * heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.small) > len(self.large) + 1:\n            val = -1 * heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.large) > len(self.small) + 1:\n            val = heapq.heappop(self.large)\n            heapq.heappush(self.small, -1 * val)",
                     "validationRegex": "^\\s+def\\s+addNum\\(self,\\s*num\\):\\s*heapq\\.heappush\\(self\\.small,\\s*-1\\s*\\*\\s*num\\)\\s*if\\s+self\\.small\\s+and\\s+self\\.large\\s+and\\s*\\(-1\\s*\\*\\s*self\\.small\\[0\\]\\)\\s*>\\s*self\\.large\\[0\\]:\\s*val\\s*=\\s*-1\\s*\\*\\s*heapq\\.heappop\\(self\\.small\\)\\s*heapq\\.heappush\\(self\\.large,\\s*val\\)\\s*if\\s+len\\(self\\.small\\)\\s*>\\s+len\\(self\\.large\\)\\s*\\+\\s*1:\\s*val\\s*=\\s*-1\\s*\\*\\s*heapq\\.heappop\\(self\\.small\\)\\s*heapq\\.heappush\\(self\\.large,\\s*val\\)\\s*if\\s+len\\(self\\.large\\)\\s*>\\s+len\\(self\\.small\\)\\s*\\+\\s*1:\\s*val\\s*=\\s*heapq\\.heappop\\(self\\.large\\)\\s*heapq\\.heappush\\(self\\.small,\\s*-1\\s*\\*\\s*val\\)$",
@@ -69,7 +93,7 @@
                     "solutionCode": "    def addNum(self, num):\n        heapq.heappush(self.small, -1 * num)\n        if self.small and self.large and (-1 * self.small[0]) > self.large[0]:\n            val = -1 * heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.small) > len(self.large) + 1:\n            val = -1 * heapq.heappop(self.small)\n            heapq.heappush(self.large, val)\n        if len(self.large) > len(self.small) + 1:\n            val = heapq.heappop(self.large)\n            heapq.heappush(self.small, -1 * val)"
                 },
                 {
-                    "id": 3,
+                    "id": 6,
                     "instruction": "Implement findMedian.",
                     "placeholderCode": "    def findMedian(self):\n        if len(self.small) > len(self.large):\n            return -1 * self.small[0]\n        if len(self.large) > len(self.small):\n            return self.large[0]\n        return (-1 * self.small[0] + self.large[0]) / 2.0",
                     "validationRegex": "^\\s+def\\s+findMedian\\(self\\):\\s*if\\s+len\\(self\\.small\\)\\s*>\\s+len\\(self\\.large\\):\\s*return\\s*-1\\s*\\*\\s*self\\.small\\[0\\]\\s*if\\s+len\\(self\\.large\\)\\s*>\\s+len\\(self\\.small\\):\\s*return\\s+self\\.large\\[0\\]\\s*return\\s*\\(-1\\s*\\*\\s*self\\.small\\[0\\]\\s*\\+\\s*self\\.large\\[0\\]\\)\\s*/\\s*2\\.0$",
