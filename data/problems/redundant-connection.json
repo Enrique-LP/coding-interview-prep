@@ -26,7 +26,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "DFS",
+            "name": "Brute Force",
             "description": "Check if adding an edge creates a cycle using DFS.",
             "steps": [
                 {
@@ -49,7 +49,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Union Find",
+            "name": "Optimal",
             "description": "Use Union Find to detect cycle.",
             "steps": [
                 {
@@ -62,19 +62,163 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize Union Find.",
-                    "placeholderCode": "    par = [i for i in range(len(edges) + 1)]\n    rank = [1] * (len(edges) + 1)\n    def find(n):\n        p = par[n]\n        while p != par[p]:\n            par[p] = par[par[p]]\n            p = par[p]\n        return p\n    def union(n1, n2):\n        p1, p2 = find(n1), find(n2)\n        if p1 == p2:\n            return False\n        if rank[p1] > rank[p2]:\n            par[p2] = p1\n            rank[p1] += rank[p2]\n        else:\n            par[p1] = p2\n            rank[p2] += rank[p1]\n        return True",
-                    "validationRegex": "^\\s+par\\s*=\\s*\\[i\\s+for\\s+i\\s+in\\s+range\\(len\\(edges\\)\\s*\\+\\s*1\\)\\]\\s*rank\\s*=\\s*\\[1\\]\\s*\\*\\s*\\(len\\(edges\\)\\s*\\+\\s*1\\)\\s*def\\s+find\\(n\\):\\s*p\\s*=\\s*par\\[n\\]\\s*while\\s+p\\s*!=\\s*par\\[p\\]:\\s*par\\[p\\]\\s*=\\s*par\\[par\\[p\\]\\]\\s*p\\s*=\\s*par\\[p\\]\\s*return\\s+p\\s*def\\s+union\\(n1,\\s*n2\\):\\s*p1,\\s*p2\\s*=\\s*find\\(n1\\),\\s*find\\(n2\\)\\s*if\\s+p1\\s*==\\s*p2:\\s*return\\s+False\\s*if\\s+rank\\[p1\\]\\s*>\\s+rank\\[p2\\]:\\s*par\\[p2\\]\\s*=\\s*p1\\s*rank\\[p1\\]\\s*\\+=\\s*rank\\[p2\\]\\s*else:\\s*par\\[p1\\]\\s*=\\s*p2\\s*rank\\[p2\\]\\s*\\+=\\s*rank\\[p1\\]\\s*return\\s+True$",
-                    "hint": "Implement Union-Find with path compression and union by rank. `find` returns the representative of a set. `union` merges two sets and returns False if they are already merged (cycle detected).\\n\\nExample:\\nEdges=[[1,2], [1,3], [2,3]].\\nUnion(1,2): OK. Par=[1,1,1].\\nUnion(1,3): OK. Par=[1,1,1]. (3 points to 1)\\nUnion(2,3): Find(2)->1. Find(3)->1. Same parent. Cycle! Return [2,3].",
-                    "solutionCode": "    par = [i for i in range(len(edges) + 1)]\n    rank = [1] * (len(edges) + 1)\n    def find(n):\n        p = par[n]\n        while p != par[p]:\n            par[p] = par[par[p]]\n            p = par[p]\n        return p\n    def union(n1, n2):\n        p1, p2 = find(n1), find(n2)\n        if p1 == p2:\n            return False\n        if rank[p1] > rank[p2]:\n            par[p2] = p1\n            rank[p1] += rank[p2]\n        else:\n            par[p1] = p2\n            rank[p2] += rank[p1]\n        return True"
+                    "instruction": "Initialize the parent array where each node is its own parent.",
+                    "placeholderCode": "    par = [i for i in range(len(edges) + 1)]",
+                    "validationRegex": "^\\s+par\\s*=\\s*\\[i\\s+for\\s+i\\s+in\\s+range\\(len\\(edges\\)\\s*\\+\\s*1\\)\\]$",
+                    "hint": "There are n nodes (1 to n), and n equals len(edges).",
+                    "solutionCode": "    par = [i for i in range(len(edges) + 1)]"
                 },
                 {
                     "id": 3,
-                    "instruction": "Process edges.",
-                    "placeholderCode": "    for n1, n2 in edges:\n        if not union(n1, n2):\n            return [n1, n2]",
-                    "validationRegex": "^\\s+for\\s+n1,\\s*n2\\s+in\\s+edges:\\s*if\\s+not\\s+union\\(n1,\\s*n2\\):\\s*return\\s*\\[n1,\\s*n2\\]$",
-                    "hint": "Iterate through edges. If `union` returns False, it means the edge creates a cycle, so return it.",
-                    "solutionCode": "    for n1, n2 in edges:\n        if not union(n1, n2):\n            return [n1, n2]"
+                    "instruction": "Initialize the rank array with ones.",
+                    "placeholderCode": "    rank = [1] * (len(edges) + 1)",
+                    "validationRegex": "^\\s+rank\\s*=\\s*\\[1\\]\\s*\\*\\s*\\(len\\(edges\\)\\s*\\+\\s*1\\)$",
+                    "hint": "The rank helps keep the tree balanced during Union.",
+                    "solutionCode": "    rank = [1] * (len(edges) + 1)"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define the helper function 'find(n)'.",
+                    "placeholderCode": "    def find(n):",
+                    "validationRegex": "^\\s+def\\s+find\\(n\\):$",
+                    "hint": "This function finds the representative/root of the set containing node 'n'.",
+                    "solutionCode": "    def find(n):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Get the parent of 'n'.",
+                    "placeholderCode": "        p = par[n]",
+                    "validationRegex": "^\\s+p\\s*=\\s*par\\[n\\]$",
+                    "hint": "Start traversing from the node's parent.",
+                    "solutionCode": "        p = par[n]"
+                },
+                {
+                    "id": 6,
+                    "instruction": "While the node is not its own parent, continue climbing.",
+                    "placeholderCode": "        while p != par[p]:",
+                    "validationRegex": "^\\s+while\\s+p\\s*!=\\s*par\\[p\\]:$",
+                    "hint": "A root node is its own parent.",
+                    "solutionCode": "        while p != par[p]:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Optional: Apply path compression by pointing current parent to its grandparent.",
+                    "placeholderCode": "            par[p] = par[par[p]]",
+                    "validationRegex": "^\\s+par\\[p\\]\\s*=\\s*par\\[par\\[p\\]\\]$",
+                    "hint": "This optimizes future finds by shortening the path to the root.",
+                    "solutionCode": "            par[p] = par[par[p]]"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Update the pointer 'p' to its parent.",
+                    "placeholderCode": "            p = par[p]",
+                    "validationRegex": "^\\s+p\\s*=\\s*par\\[p\\]$",
+                    "hint": "Move up the tree.",
+                    "solutionCode": "            p = par[p]"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return the root node 'p'.",
+                    "placeholderCode": "        return p",
+                    "validationRegex": "^\\s+return\\s+p$",
+                    "hint": "The loop ends when 'p' reaches the root.",
+                    "solutionCode": "        return p"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Define the function 'union(n1, n2)'.",
+                    "placeholderCode": "    def union(n1, n2):",
+                    "validationRegex": "^\\s+def\\s+union\\(n1,\\s*n2\\):$",
+                    "hint": "This function attempts to merge the sets containing n1 and n2.",
+                    "solutionCode": "    def union(n1, n2):"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Find the roots of both nodes.",
+                    "placeholderCode": "        p1, p2 = find(n1), find(n2)",
+                    "validationRegex": "^\\s+p1,\\s*p2\\s*=\\s*find\\(n1\\),\\s*find\\(n2\\)$",
+                    "hint": "Use our helper function to get the representatives.",
+                    "solutionCode": "        p1, p2 = find(n1), find(n2)"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Check if roots are identical.",
+                    "placeholderCode": "        if p1 == p2:",
+                    "validationRegex": "^\\s+if\\s+p1\\s*==\\s*p2:$",
+                    "hint": "If they have the same root, they are already in the same set.",
+                    "solutionCode": "        if p1 == p2:"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Return False if they are already connected.",
+                    "placeholderCode": "            return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "This indicates a cycle has been detected.",
+                    "solutionCode": "            return False"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Compare ranks to merge efficiently.",
+                    "placeholderCode": "        if rank[p1] > rank[p2]:",
+                    "validationRegex": "^\\s+if\\s+rank\\[p1\\]\\s*>\\s+rank\\[p2\\]:$",
+                    "hint": "We want to merge the smaller tree into the larger one.",
+                    "solutionCode": "        if rank[p1] > rank[p2]:"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Point p2's parent to p1.",
+                    "placeholderCode": "            par[p2] = p1",
+                    "validationRegex": "^\\s+par\\[p2\\]\\s*=\\s*p1$",
+                    "hint": "p2 becomes a child of p1.",
+                    "solutionCode": "            par[p2] = p1"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Increase p1's rank by p2's rank.",
+                    "placeholderCode": "            rank[p1] += rank[p2]",
+                    "validationRegex": "^\\s+rank\\[p1\\]\\s*\\+=\\s*rank\\[p2\\]$",
+                    "hint": "The new root's set size/rank increases.",
+                    "solutionCode": "            rank[p1] += rank[p2]"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Otherwise, merge p1 into p2.",
+                    "placeholderCode": "        else:\n            par[p1] = p2",
+                    "validationRegex": "^\\s+else:\\s*par\\[p1\\]\\s*=\\s*p2$",
+                    "hint": "This handles the case where rank[p1] <= rank[p2].",
+                    "solutionCode": "        else:\n            par[p1] = p2"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Increase p2's rank by p1's rank.",
+                    "placeholderCode": "            rank[p2] += rank[p1]",
+                    "validationRegex": "^\\s+rank\\[p2\\]\\s*\\+=\\s*rank\\[p1\\]$",
+                    "hint": "Update the parent's rank.",
+                    "solutionCode": "            rank[p2] += rank[p1]"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Return True to signal successful merger.",
+                    "placeholderCode": "        return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "No cycle was created by this edge.",
+                    "solutionCode": "        return True"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Loop through each edge [n1, n2] in edges.",
+                    "placeholderCode": "    for n1, n2 in edges:",
+                    "validationRegex": "^\\s+for\\s+n1,\\s*n2\\s+in\\s+edges:$",
+                    "hint": "Process each connection one by one.",
+                    "solutionCode": "    for n1, n2 in edges:"
+                },
+                {
+                    "id": 21,
+                    "instruction": "If 'union' returns False, the edge is redundant; return it.",
+                    "placeholderCode": "        if not union(n1, n2):\n            return [n1, n2]",
+                    "validationRegex": "^\\s+if\\s+not\\s+union\\(n1,\\s*n2\\):\\s*return\\s*\\[n1,\\s*n2\\]$",
+                    "hint": "This is the first edge that completes a cycle.",
+                    "solutionCode": "        if not union(n1, n2):\n            return [n1, n2]"
                 }
             ]
         }
