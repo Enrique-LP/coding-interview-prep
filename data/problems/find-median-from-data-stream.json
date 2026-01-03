@@ -18,7 +18,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Sorting",
+            "name": "Brute Force",
             "description": "Sort list on every findMedian call.",
             "steps": [
                 {
@@ -49,7 +49,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Two Heaps",
+            "name": "Optimal",
             "description": "Use max heap for lower half and min heap for upper half.",
             "steps": [
                 {

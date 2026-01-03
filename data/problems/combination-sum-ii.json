@@ -22,7 +22,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Backtracking",
+            "name": "Brute Force",
             "description": "Sort and backtrack, skipping duplicates.",
             "steps": [
                 {
@@ -61,7 +61,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Backtracking",
+            "name": "Optimal",
             "description": "Same as brute force.",
             "steps": [
                 {

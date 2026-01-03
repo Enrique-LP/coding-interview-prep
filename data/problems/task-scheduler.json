@@ -23,7 +23,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Simulation",
+            "name": "Brute Force",
             "description": "Simulate the process using a heap and queue.",
             "steps": [
                 {
@@ -62,7 +62,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Math",
+            "name": "Optimal",
             "description": "Calculate based on max frequency.",
             "steps": [
                 {
