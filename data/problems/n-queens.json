@@ -169,14 +169,38 @@
                 },
                 {
                     "id": 14,
-                    "instruction": "Place the queen and update occupied sets.",
-                    "placeholderCode": "            col.add(c)\n            posDiag.add(r + c)\n            negDiag.add(r - c)\n            board[r][c] = \"Q\"",
-                    "validationRegex": "^\\s+col\\.add\\(c\\)\\s*posDiag\\.add\\(r\\s*\\+\\s*c\\)\\s*negDiag\\.add\\(r\\s*-\\s*c\\)\\s*board\\[r\\]\\[c\\]\\s*=\\s*\"Q\"$",
-                    "hint": "Mark the position as occupied.",
-                    "solutionCode": "            col.add(c)\n            posDiag.add(r + c)\n            negDiag.add(r - c)\n            board[r][c] = \"Q\""
+                    "instruction": "Add the current column 'c' to the occupied columns set.",
+                    "placeholderCode": "            col.add(c)",
+                    "validationRegex": "^\\s+col\\.add\\(c\\)$",
+                    "hint": "Mark this column as attacked.",
+                    "solutionCode": "            col.add(c)"
                 },
                 {
                     "id": 15,
+                    "instruction": "Add the positive diagonal 'r + c' to the 'posDiag' set.",
+                    "placeholderCode": "            posDiag.add(r + c)",
+                    "validationRegex": "^\\s+posDiag\\.add\\(r\\s*\\+\\s*c\\)$",
+                    "hint": "Mark this positive diagonal as attacked.",
+                    "solutionCode": "            posDiag.add(r + c)"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Add the negative diagonal 'r - c' to the 'negDiag' set.",
+                    "placeholderCode": "            negDiag.add(r - c)",
+                    "validationRegex": "^\\s+negDiag\\.add\\(r\\s*-\\s*c\\)$",
+                    "hint": "Mark this negative diagonal as attacked.",
+                    "solutionCode": "            negDiag.add(r - c)"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Place a queen 'Q' at board[r][c].",
+                    "placeholderCode": "            board[r][c] = \"Q\"",
+                    "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*=\\s*\"Q\"$",
+                    "hint": "Officially place the queen on the chessboard.",
+                    "solutionCode": "            board[r][c] = \"Q\""
+                },
+                {
+                    "id": 18,
                     "instruction": "Recurse to the next row.",
                     "placeholderCode": "            backtrack(r + 1)",
                     "validationRegex": "^\\s+backtrack\\(r\\s*\\+\\s*1\\)$",
@@ -184,7 +208,7 @@
                     "solutionCode": "            backtrack(r + 1)"
                 },
                 {
-                    "id": 16,
+                    "id": 19,
                     "instruction": "Backtrack by removing the queen and updating sets.",
                     "placeholderCode": "            col.remove(c)\n            posDiag.remove(r + c)\n            negDiag.remove(r - c)\n            board[r][c] = \".\"",
                     "validationRegex": "^\\s+col\\.remove\\(c\\)\\s*posDiag\\.remove\\(r\\s*\\+\\s*c\\)\\s*negDiag\\.remove\\(r\\s*-\\s*c\\)\\s*board\\[r\\]\\[c\\]\\s*=\\s*\"\\.\"$",
@@ -192,7 +216,7 @@
                     "solutionCode": "            col.remove(c)\n            posDiag.remove(r + c)\n            negDiag.remove(r - c)\n            board[r][c] = \".\""
                 },
                 {
-                    "id": 17,
+                    "id": 20,
                     "instruction": "Call backtrack(0) and return results.",
                     "placeholderCode": "    backtrack(0)\n    return res",
                     "validationRegex": "^\\s+backtrack\\(0\\)\\s*return\\s+res$",
