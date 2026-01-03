@@ -133,11 +133,27 @@
                 },
                 {
                     "id": 9,
-                    "instruction": "Start backtracking if 'digits' is provided.",
-                    "placeholderCode": "    if digits:\n        backtrack(0, \"\")\n    return res",
-                    "validationRegex": "^\\s+if\\s+digits:\\s*backtrack\\(0,\\s*\"\"\\)\\s*return\\s+res$",
-                    "hint": "Trigger the recursion starting from index 0 with an empty string.",
-                    "solutionCode": "    if digits:\n        backtrack(0, \"\")\n    return res"
+                    "instruction": "Guard against empty digits input.",
+                    "placeholderCode": "    if digits:",
+                    "validationRegex": "^\\s+if\\s+digits:$",
+                    "hint": "Ensure there are digits to combine.",
+                    "solutionCode": "    if digits:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Initiate backtracking from the first digit.",
+                    "placeholderCode": "        backtrack(0, \"\")",
+                    "validationRegex": "^\\s+backtrack\\(0,\\s*\"\"\\)$",
+                    "hint": "Start at index 0 and an empty combination string.",
+                    "solutionCode": "        backtrack(0, \"\")"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Return the final list of combinations.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "This returns the completed results list.",
+                    "solutionCode": "    return res"
                 }
             ]
         }
