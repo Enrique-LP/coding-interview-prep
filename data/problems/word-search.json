@@ -138,7 +138,7 @@
                     "id": 10,
                     "instruction": "Add the current cell to the 'path' set.",
                     "placeholderCode": "        path.add((r, c))",
-                    "validationRegex": "^\\s+path\\.add\\(\\(\\(r,\\s*c\\)\\)\\)$",
+                    "validationRegex": "^\\s+path\\.add\\(\\((r,\\s*c)\\)\\)$",
                     "hint": "Mark the cell as visited for this branch.",
                     "solutionCode": "        path.add((r, c))"
                 },
@@ -154,7 +154,7 @@
                     "id": 12,
                     "instruction": "Backtrack by removing the current cell from 'path'.",
                     "placeholderCode": "        path.remove((r, c))",
-                    "validationRegex": "^\\s+path\\.remove\\(\\(\\(r,\\s*c\\)\\)\\)$",
+                    "validationRegex": "^\\s+path\\.remove\\(\\((r,\\s*c)\\)\\)$",
                     "hint": "Cleanup for the next possible starting point.",
                     "solutionCode": "        path.remove((r, c))"
                 },
