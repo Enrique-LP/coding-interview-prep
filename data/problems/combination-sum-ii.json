@@ -82,18 +82,130 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Define backtrack.",
-                    "placeholderCode": "    res = []\n    def backtrack(cur, pos, target):\n        if target == 0:\n            res.append(cur.copy())\n            return\n        if target <= 0:\n            return\n        prev = -1\n        for i in range(pos, len(candidates)):\n            if candidates[i] == prev:\n                continue\n            cur.append(candidates[i])\n            backtrack(cur, i + 1, target - candidates[i])\n            cur.pop()\n            prev = candidates[i]",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*def\\s+backtrack\\(cur,\\s*pos,\\s*target\\):\\s*if\\s+target\\s*==\\s*0:\\s*res\\.append\\(cur\\.copy\\(\\)\\)\\s*return\\s*if\\s+target\\s*<=\\s*0:\\s*return\\s*prev\\s*=\\s*-1\\s*for\\s+i\\s+in\\s+range\\(pos,\\s*len\\(candidates\\)\\):\\s*if\\s+candidates\\[i\\]\\s*==\\s*prev:\\s*continue\\s*cur\\.append\\(candidates\\[i\\]\\)\\s*backtrack\\(cur,\\s*i\\s*\\+\\s*1,\\s*target\\s*-\\s*candidates\\[i\\]\\)\\s*cur\\.pop\\(\\)\\s*prev\\s*=\\s*candidates\\[i\\]$",
-                    "hint": "Implement backtracking. Iterate through candidates, skip duplicates, and recurse with updated target.\\n\\nExample:\\nCands=[1, 1, 2], Target=3.\\nUse first 1. Rem=2. Recurse.\\nUse second 1. Rem=1. Recurse.\\nBacktrack. Skip second 1 (duplicate) in loop.",
-                    "solutionCode": "    res = []\n    def backtrack(cur, pos, target):\n        if target == 0:\n            res.append(cur.copy())\n            return\n        if target <= 0:\n            return\n        prev = -1\n        for i in range(pos, len(candidates)):\n            if candidates[i] == prev:\n                continue\n            cur.append(candidates[i])\n            backtrack(cur, i + 1, target - candidates[i])\n            cur.pop()\n            prev = candidates[i]"
+                    "instruction": "Initialize the list 'res' to store all unique combinations.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "This will hold our final answer.",
+                    "solutionCode": "    res = []"
                 },
                 {
                     "id": 4,
-                    "instruction": "Call backtrack.",
+                    "instruction": "Define the helper function 'backtrack'.",
+                    "placeholderCode": "    def backtrack(cur, pos, target):",
+                    "validationRegex": "^\\s+def\\s+backtrack\\(cur,\\s*pos,\\s*target\\):$",
+                    "hint": "The function uses current combination 'cur', start position 'pos', and remaining 'target'.",
+                    "solutionCode": "    def backtrack(cur, pos, target):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if target is met.",
+                    "placeholderCode": "        if target == 0:",
+                    "validationRegex": "^\\s+if\\s+target\\s*==\\s*0:$",
+                    "hint": "If target is 0, we found a valid combination.",
+                    "solutionCode": "        if target == 0:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Add a copy of 'cur' to 'res'.",
+                    "placeholderCode": "            res.append(cur.copy())",
+                    "validationRegex": "^\\s+res\\.append\\(cur\\.copy\\(\\)\\)$",
+                    "hint": "Make sure to append a copy, otherwise it will change when we backtrack.",
+                    "solutionCode": "            res.append(cur.copy())"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return from the successful branch.",
+                    "placeholderCode": "            return",
+                    "validationRegex": "^\\s+return$",
+                    "hint": "Stop searching this branch once target is reached.",
+                    "solutionCode": "            return"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Handle base case for exceeded target.",
+                    "placeholderCode": "        if target <= 0:",
+                    "validationRegex": "^\\s+if\\s+target\\s*<=\\s*0:$",
+                    "hint": "Stop if target is less than zero.",
+                    "solutionCode": "        if target <= 0:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return from the invalid branch.",
+                    "placeholderCode": "            return",
+                    "validationRegex": "^\\s+return$",
+                    "hint": "No need to look further if the sum is too large.",
+                    "solutionCode": "            return"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Initialize 'prev' to track the last used candidate at this level.",
+                    "placeholderCode": "        prev = -1",
+                    "validationRegex": "^\\s+prev\\s*=\\s*-1$",
+                    "hint": "This helps us avoid picking the same value multiple times at the same level.",
+                    "solutionCode": "        prev = -1"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Loop through candidates starting from 'pos'.",
+                    "placeholderCode": "        for i in range(pos, len(candidates)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(pos,\\s*len\\(candidates\\)\\):$",
+                    "hint": "Standard DFS loop for combinations.",
+                    "solutionCode": "        for i in range(pos, len(candidates)):"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Skip duplicates in the same level.",
+                    "placeholderCode": "            if candidates[i] == prev:",
+                    "validationRegex": "^\\s+if\\s+candidates\\[i\\]\\s*==\\s*prev:$",
+                    "hint": "If this candidate is the same as the previous one at this depth, skip it.",
+                    "solutionCode": "            if candidates[i] == prev:"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Continue to the next iteration if it's a duplicate.",
+                    "placeholderCode": "                continue",
+                    "validationRegex": "^\\s+continue$",
+                    "hint": "Use 'continue' to skip.",
+                    "solutionCode": "                continue"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Pre-decision: Add choice to 'cur'.",
+                    "placeholderCode": "            cur.append(candidates[i])",
+                    "validationRegex": "^\\s+cur\\.append\\(candidates\\[i\\]\\)$",
+                    "hint": "Include the candidate in the current potential combination.",
+                    "solutionCode": "            cur.append(candidates[i])"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Recurse: Call backtrack with next index and reduced target.",
+                    "placeholderCode": "            backtrack(cur, i + 1, target - candidates[i])",
+                    "validationRegex": "^\\s+backtrack\\(cur,\\s*i\\s*\\+\\s*1,\\s*target\\s*-\\s*candidates\\[i\\]\\)$",
+                    "hint": "Move to the next index because we can only use each item once.",
+                    "solutionCode": "            backtrack(cur, i + 1, target - candidates[i])"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Post-decision: Remove choice from 'cur' (backtrack).",
+                    "placeholderCode": "            cur.pop()",
+                    "validationRegex": "^\\s+cur\\.pop\\(\\)$",
+                    "hint": "Clean up 'cur' for the next branch.",
+                    "solutionCode": "            cur.pop()"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Update 'prev' with the current candidate.",
+                    "placeholderCode": "            prev = candidates[i]",
+                    "validationRegex": "^\\s+prev\\s*=\\s*candidates\\[i\\]$",
+                    "hint": "Mark this value as processed for this level.",
+                    "solutionCode": "            prev = candidates[i]"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Trigger the initial call and return results.",
                     "placeholderCode": "    backtrack([], 0, target)\n    return res",
                     "validationRegex": "^\\s+backtrack\\(\\[\\],\\s*0,\\s*target\\)\\s*return\\s+res$",
-                    "hint": "Start backtracking from the beginning.",
+                    "hint": "Start with an empty combination.",
                     "solutionCode": "    backtrack([], 0, target)\n    return res"
                 }
             ]
