@@ -161,14 +161,54 @@
                 },
                 {
                     "id": 13,
-                    "instruction": "Define isPali helper function.",
-                    "placeholderCode": "    def isPali(s, l, r):\n        while l < r:\n            if s[l] != s[r]:\n                return False\n            l, r = l + 1, r - 1\n        return True",
-                    "validationRegex": "^\\s+def\\s+isPali\\(s,\\s*l,\\s*r\\):\\s*while\\s+l\\s*<\\s+r:\\s*if\\s+s\\[l\\]\\s*!=\\s*s\\[r\\]:\\s*return\\s+False\\s*l,\\s*r\\s*=\\s*l\\s*\\+\\s*1,\\s*r\\s*-\\s*1\\s*return\\s+True$",
-                    "hint": "Helper function to check if a substring is a palindrome.",
-                    "solutionCode": "    def isPali(s, l, r):\n        while l < r:\n            if s[l] != s[r]:\n                return False\n            l, r = l + 1, r - 1\n        return True"
+                    "instruction": "Define the 'isPali' helper function signature.",
+                    "placeholderCode": "    def isPali(s, l, r):",
+                    "validationRegex": "^\\s+def\\s+isPali\\(s,\\s*l,\\s*r\\):$",
+                    "hint": "Takes string s and left/right boundaries l and r.",
+                    "solutionCode": "    def isPali(s, l, r):"
                 },
                 {
                     "id": 14,
+                    "instruction": "Continue while left pointer is less than right pointer.",
+                    "placeholderCode": "        while l < r:",
+                    "validationRegex": "^\\s+while\\s+l\\s*<\\s+r:$",
+                    "hint": "Check characters from both ends towards the middle.",
+                    "solutionCode": "        while l < r:"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Check if characters at left and right pointers mismatch.",
+                    "placeholderCode": "            if s[l] != s[r]:",
+                    "validationRegex": "^\\s+if\\s+s\\[l\\]\\s*!=\\s*s\\[r\\]:$",
+                    "hint": "If mismatch found, it's not a palindrome.",
+                    "solutionCode": "            if s[l] != s[r]:"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Return False if a mismatch is detected.",
+                    "placeholderCode": "                return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "Immediate exit from helper function.",
+                    "solutionCode": "                return False"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Move pointers towards the center.",
+                    "placeholderCode": "            l, r = l + 1, r - 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*l\\s*\\+\\s*1,\\s*r\\s*-\\s*1$",
+                    "hint": "Increment left and decrement right.",
+                    "solutionCode": "            l, r = l + 1, r - 1"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Return True if the loop completes without mismatches.",
+                    "placeholderCode": "        return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "Substring successfully verified as palindrome.",
+                    "solutionCode": "        return True"
+                },
+                {
+                    "id": 19,
                     "instruction": "Call dfs starting from index 0 and return res.",
                     "placeholderCode": "    dfs(0)\n    return res",
                     "validationRegex": "^\\s+dfs\\(0\\)\\s*return\\s+res$",
