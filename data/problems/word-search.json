@@ -168,14 +168,30 @@
                 },
                 {
                     "id": 14,
-                    "instruction": "Traverse the board with nested loops and start DFS from each cell.",
-                    "placeholderCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*if\\s+dfs\\(r,\\s*c,\\s*0\\):\\s*return\\s+True$",
-                    "hint": "Visit every (r, c) on the board.",
-                    "solutionCode": "    for r in range(ROWS):\n        for c in range(COLS):\n            if dfs(r, c, 0): return True"
+                    "instruction": "Begin traversing every row in the grid.",
+                    "placeholderCode": "    for r in range(ROWS):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):$",
+                    "hint": "Loop from 0 to ROWS-1.",
+                    "solutionCode": "    for r in range(ROWS):"
                 },
                 {
                     "id": 15,
+                    "instruction": "Traverse every column in the current row.",
+                    "placeholderCode": "        for c in range(COLS):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(COLS\\):$",
+                    "hint": "Loop from 0 to COLS-1.",
+                    "solutionCode": "        for c in range(COLS):"
+                },
+                {
+                    "id": 16,
+                    "instruction": "If DFS starting at (r, c) returns True, return True.",
+                    "placeholderCode": "            if dfs(r, c, 0): return True",
+                    "validationRegex": "^\\s+if\\s+dfs\\(r,\\s*c,\\s*0\\):\\s*return\\s+True$",
+                    "hint": "Trigger the search from each starting point.",
+                    "solutionCode": "            if dfs(r, c, 0): return True"
+                },
+                {
+                    "id": 17,
                     "instruction": "Return False if the word is not found in the entire board.",
                     "placeholderCode": "    return False",
                     "validationRegex": "^\\s+return\\s+False$",
