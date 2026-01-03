@@ -209,14 +209,38 @@
                 },
                 {
                     "id": 19,
-                    "instruction": "Backtrack by removing the queen and updating sets.",
-                    "placeholderCode": "            col.remove(c)\n            posDiag.remove(r + c)\n            negDiag.remove(r - c)\n            board[r][c] = \".\"",
-                    "validationRegex": "^\\s+col\\.remove\\(c\\)\\s*posDiag\\.remove\\(r\\s*\\+\\s*c\\)\\s*negDiag\\.remove\\(r\\s*-\\s*c\\)\\s*board\\[r\\]\\[c\\]\\s*=\\s*\"\\.\"$",
-                    "hint": "Undo the changes to explore other possibilities.",
-                    "solutionCode": "            col.remove(c)\n            posDiag.remove(r + c)\n            negDiag.remove(r - c)\n            board[r][c] = \".\""
+                    "instruction": "Backtrack: remove the column 'c' from the occupied set.",
+                    "placeholderCode": "            col.remove(c)",
+                    "validationRegex": "^\\s+col\\.remove\\(c\\)$",
+                    "hint": "Free up the column for other branches.",
+                    "solutionCode": "            col.remove(c)"
                 },
                 {
                     "id": 20,
+                    "instruction": "Backtrack: remove the positive diagonal 'r + c' from the set.",
+                    "placeholderCode": "            posDiag.remove(r + c)",
+                    "validationRegex": "^\\s+posDiag\\.remove\\(r\\s*\\+\\s*c\\)$",
+                    "hint": "Free up the positive diagonal.",
+                    "solutionCode": "            posDiag.remove(r + c)"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Backtrack: remove the negative diagonal 'r - c' from the set.",
+                    "placeholderCode": "            negDiag.remove(r - c)",
+                    "validationRegex": "^\\s+negDiag\\.remove\\(r\\s*-\\s*c\\)$",
+                    "hint": "Free up the negative diagonal.",
+                    "solutionCode": "            negDiag.remove(r - c)"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Reset board[r][c] back to a dot '.'.",
+                    "placeholderCode": "            board[r][c] = \".\"",
+                    "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*=\\s*\"\\.\"$",
+                    "hint": "Remove the queen from the board.",
+                    "solutionCode": "            board[r][c] = \".\""
+                },
+                {
+                    "id": 23,
                     "instruction": "Call backtrack(0) and return results.",
                     "placeholderCode": "    backtrack(0)\n    return res",
                     "validationRegex": "^\\s+backtrack\\(0\\)\\s*return\\s+res$",
