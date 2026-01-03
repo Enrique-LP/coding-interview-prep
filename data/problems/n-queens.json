@@ -161,10 +161,10 @@
                 },
                 {
                     "id": 13,
-                    "instruction": "Check if placement is valid using sets.",
+                    "instruction": "If the column 'c', positive diagonal 'r+c', or negative diagonal 'r-c' are already occupied, skip this position.",
                     "placeholderCode": "            if c in col or (r + c) in posDiag or (r - c) in negDiag:\n                continue",
                     "validationRegex": "^\\s+if\\s+c\\s+in\\s+col\\s+or\\s*\\(r\\s*\\+\\s*c\\)\\s+in\\s+posDiag\\s+or\\s*\\(r\\s*-\\s*c\\)\\s+in\\s+negDiag:\\s*continue$",
-                    "hint": "Prune the search if col, posDiag, or negDiag is attacked.",
+                    "hint": "Condition: `c in col or (r + c) in posDiag or (r - c) in negDiag`. If any are true, the queen is under attack.",
                     "solutionCode": "            if c in col or (r + c) in posDiag or (r - c) in negDiag:\n                continue"
                 },
                 {
