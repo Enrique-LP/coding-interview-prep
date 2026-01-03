@@ -25,7 +25,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Backtracking",
+            "name": "Brute Force",
             "description": "Generate all combinations.",
             "steps": [
                 {
@@ -39,17 +39,17 @@
                 {
                     "id": 2,
                     "instruction": "Define mapping.",
-                    "placeholderCode": "    res = []\n    digitToChar = {\n        \"2\": \"abc\",\n        \"3\": \"def\",\n        \"4\": \"ghi\",\n        \"5\": \"jkl\",\n        \"6\": \"mno\",\n        \"7\": \"qprs\",\n        \"8\": \"tuv\",\n        \"9\": \"wxyz\",\n    }",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*digitToChar\\s*=\\s*{\\s*\"2\":\\s*\"abc\",\\s*\"3\":\\s*\"def\",\\s*\"4\":\\s*\"ghi\",\\s*\"5\":\\s*\"jkl\",\\s*\"6\":\\s*\"mno\",\\s*\"7\":\\s*\"qprs\",\\s*\"8\":\\s*\"tuv\",\\s*\"9\":\\s*\"wxyz\",\\s*}$",
+                    "placeholderCode": "    res = []\n    digitToChar = {\n        \"2\": \"abc\",\n        \"3\": \"def\",\n        \"4\": \"ghi\",\n        \"5\": \"jkl\",\n        \"6\": \"mno\",\n        \"7\": \"pqrs\",\n        \"8\": \"tuv\",\n        \"9\": \"wxyz\",\n    }",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*digitToChar\\s*=\\s*{\\s*\"2\":\\s*\"abc\",\\s*\"3\":\\s*\"def\",\\s*\"4\":\\s*\"ghi\",\\s*\"5\":\\s*\"jkl\",\\s*\"6\":\\s*\"mno\",\\s*\"7\":\\s*\"pqrs\",\\s*\"8\":\\s*\"tuv\",\\s*\"9\":\\s*\"wxyz\",\\s*}$",
                     "hint": "Create a dictionary mapping digits to their corresponding letters.",
-                    "solutionCode": "    res = []\n    digitToChar = {\n        \"2\": \"abc\",\n        \"3\": \"def\",\n        \"4\": \"ghi\",\n        \"5\": \"jkl\",\n        \"6\": \"mno\",\n        \"7\": \"qprs\",\n        \"8\": \"tuv\",\n        \"9\": \"wxyz\",\n    }"
+                    "solutionCode": "    res = []\n    digitToChar = {\n        \"2\": \"abc\",\n        \"3\": \"def\",\n        \"4\": \"ghi\",\n        \"5\": \"jkl\",\n        \"6\": \"mno\",\n        \"7\": \"pqrs\",\n        \"8\": \"tuv\",\n        \"9\": \"wxyz\",\n    }"
                 },
                 {
                     "id": 3,
                     "instruction": "Define backtrack.",
                     "placeholderCode": "    def backtrack(i, curStr):\n        if len(curStr) == len(digits):\n            res.append(curStr)\n            return\n        for c in digitToChar[digits[i]]:\n            backtrack(i + 1, curStr + c)",
                     "validationRegex": "^\\s+def\\s+backtrack\\(i,\\s*curStr\\):\\s*if\\s+len\\(curStr\\)\\s*==\\s*len\\(digits\\):\\s*res\\.append\\(curStr\\)\\s*return\\s*for\\s+c\\s+in\\s+digitToChar\\[digits\\[i\\]\\]:\\s*backtrack\\(i\\s*\\+\\s*1,\\s*curStr\\s*\\+\\s*c\\)$",
-                    "hint": "Implement backtracking. If current string length equals digits length, add to results. Otherwise, iterate through letters for current digit and recurse.\\n\\nExample:\\nDigits=\"23\".\\ni=0 ('2'->\"abc\"). Pick 'a'. Recurse(1).\\ni=1 ('3'->\"def\"). Pick 'd'. \"ad\". Add.\\nBacktrack. Pick 'e'. \"ae\". Add.",
+                    "hint": "Implement backtracking. If current string length equals digits length, add to results. Otherwise, iterate through letters for current digit and recurse.",
                     "solutionCode": "    def backtrack(i, curStr):\n        if len(curStr) == len(digits):\n            res.append(curStr)\n            return\n        for c in digitToChar[digits[i]]:\n            backtrack(i + 1, curStr + c)"
                 },
                 {
@@ -64,8 +64,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Backtracking",
-            "description": "Same as brute force.",
+            "name": "Optimal",
+            "description": "Backtracking solution.",
             "steps": [
                 {
                     "id": 1,
@@ -77,26 +77,66 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Define mapping.",
-                    "placeholderCode": "    res = []\n    digitToChar = {\n        \"2\": \"abc\",\n        \"3\": \"def\",\n        \"4\": \"ghi\",\n        \"5\": \"jkl\",\n        \"6\": \"mno\",\n        \"7\": \"qprs\",\n        \"8\": \"tuv\",\n        \"9\": \"wxyz\",\n    }",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*digitToChar\\s*=\\s*{\\s*\"2\":\\s*\"abc\",\\s*\"3\":\\s*\"def\",\\s*\"4\":\\s*\"ghi\",\\s*\"5\":\\s*\"jkl\",\\s*\"6\":\\s*\"mno\",\\s*\"7\":\\s*\"qprs\",\\s*\"8\":\\s*\"tuv\",\\s*\"9\":\\s*\"wxyz\",\\s*}$",
-                    "hint": "Create a dictionary mapping digits to their corresponding letters.",
-                    "solutionCode": "    res = []\n    digitToChar = {\n        \"2\": \"abc\",\n        \"3\": \"def\",\n        \"4\": \"ghi\",\n        \"5\": \"jkl\",\n        \"6\": \"mno\",\n        \"7\": \"qprs\",\n        \"8\": \"tuv\",\n        \"9\": \"wxyz\",\n    }"
+                    "instruction": "Initialize the results list 'res'.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "This will store all valid letter combinations.",
+                    "solutionCode": "    res = []"
                 },
                 {
                     "id": 3,
-                    "instruction": "Define backtrack.",
-                    "placeholderCode": "    def backtrack(i, curStr):\n        if len(curStr) == len(digits):\n            res.append(curStr)\n            return\n        for c in digitToChar[digits[i]]:\n            backtrack(i + 1, curStr + c)",
-                    "validationRegex": "^\\s+def\\s+backtrack\\(i,\\s*curStr\\):\\s*if\\s+len\\(curStr\\)\\s*==\\s*len\\(digits\\):\\s*res\\.append\\(curStr\\)\\s*return\\s*for\\s+c\\s+in\\s+digitToChar\\[digits\\[i\\]\\]:\\s*backtrack\\(i\\s*\\+\\s*1,\\s*curStr\\s*\\+\\s*c\\)$",
-                    "hint": "Implement backtracking. If current string length equals digits length, add to results. Otherwise, iterate through letters for current digit and recurse.\\n\\nExample:\\nDigits=\"23\".\\ni=0 ('2'->\"abc\"). Pick 'a'. Recurse(1).\\ni=1 ('3'->\"def\"). Pick 'd'. \"ad\". Add.\\nBacktrack. Pick 'e'. \"ae\". Add.",
-                    "solutionCode": "    def backtrack(i, curStr):\n        if len(curStr) == len(digits):\n            res.append(curStr)\n            return\n        for c in digitToChar[digits[i]]:\n            backtrack(i + 1, curStr + c)"
+                    "instruction": "Define the digit-to-letter mapping dictionary.",
+                    "placeholderCode": "    digitToChar = {\n        \"2\": \"abc\",\n        \"3\": \"def\",\n        \"4\": \"ghi\",\n        \"5\": \"jkl\",\n        \"6\": \"mno\",\n        \"7\": \"pqrs\",\n        \"8\": \"tuv\",\n        \"9\": \"wxyz\",\n    }",
+                    "validationRegex": "^\\s+digitToChar\\s*=\\s*{\\s*\"2\":\\s*\"abc\",\\s*\"3\":\\s*\"def\",\\s*\"4\":\\s*\"ghi\",\\s*\"5\":\\s*\"jkl\",\\s*\"6\":\\s*\"mno\",\\s*\"7\":\\s*\"pqrs\",\\s*\"8\":\\s*\"tuv\",\\s*\"9\":\\s*\"wxyz\",\\s*}$",
+                    "hint": "Map each number to its corresponding characters on a phone keypad.",
+                    "solutionCode": "    digitToChar = {\n        \"2\": \"abc\",\n        \"3\": \"def\",\n        \"4\": \"ghi\",\n        \"5\": \"jkl\",\n        \"6\": \"mno\",\n        \"7\": \"pqrs\",\n        \"8\": \"tuv\",\n        \"9\": \"wxyz\",\n    }"
                 },
                 {
                     "id": 4,
-                    "instruction": "Call backtrack.",
+                    "instruction": "Define the recursive 'backtrack' function.",
+                    "placeholderCode": "    def backtrack(i, curStr):",
+                    "validationRegex": "^\\s+def\\s+backtrack\\(i,\\s*curStr\\):$",
+                    "hint": "i is the index of the digit we are processing, curStr is the current combination.",
+                    "solutionCode": "    def backtrack(i, curStr):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Base Case: Check if 'curStr' matches the length of 'digits'.",
+                    "placeholderCode": "        if len(curStr) == len(digits):",
+                    "validationRegex": "^\\s+if\\s+len\\(curStr\\)\\s*==\\s*len\\(digits\\):$",
+                    "hint": "If reached, we've found a valid combination.",
+                    "solutionCode": "        if len(curStr) == len(digits):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Append 'curStr' to 'res' and return.",
+                    "placeholderCode": "            res.append(curStr)\n            return",
+                    "validationRegex": "^\\s+res\\.append\\(curStr\\)\\s*return$",
+                    "hint": "Store the result and stop this branch.",
+                    "solutionCode": "            res.append(curStr)\n            return"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Iterate through characters mapping to the current digit.",
+                    "placeholderCode": "        for c in digitToChar[digits[i]]:",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+digitToChar\\[digits\\[i\\]\\]:$",
+                    "hint": "Loop through all possible letters for the current digit digits[i].",
+                    "solutionCode": "        for c in digitToChar[digits[i]]:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Recurse into the next digit index.",
+                    "placeholderCode": "            backtrack(i + 1, curStr + c)",
+                    "validationRegex": "^\\s+backtrack\\(i\\s*\\+\\s*1,\\s*curStr\\s*\\+\\s*c\\)$",
+                    "hint": "Move to the next digit and pass the updated combination string.",
+                    "solutionCode": "            backtrack(i + 1, curStr + c)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Start backtracking if 'digits' is provided.",
                     "placeholderCode": "    if digits:\n        backtrack(0, \"\")\n    return res",
                     "validationRegex": "^\\s+if\\s+digits:\\s*backtrack\\(0,\\s*\"\"\\)\\s*return\\s+res$",
-                    "hint": "Start backtracking if digits is not empty.",
+                    "hint": "Trigger the recursion starting from index 0 with an empty string.",
                     "solutionCode": "    if digits:\n        backtrack(0, \"\")\n    return res"
                 }
             ]
