@@ -27,7 +27,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "BFS",
+            "name": "Brute Force",
             "description": "BFS to find shortest path.",
             "steps": [
                 {
@@ -66,7 +66,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "BFS",
+            "name": "Optimal",
             "description": "Same as brute force.",
             "steps": [
                 {
@@ -79,14 +79,94 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize queue and set.",
-                    "placeholderCode": "    if endWord not in wordList:\n        return 0\n    nei = collections.defaultdict(list)\n    wordList.append(beginWord)\n    for word in wordList:\n        for j in range(len(word)):\n            pattern = word[:j] + \"*\" + word[j + 1 :]\n            nei[pattern].append(word)\n    visit = set([beginWord])\n    q = collections.deque([beginWord])\n    res = 1",
-                    "validationRegex": "^\\s+if\\s+endWord\\s+not\\s+in\\s+wordList:\\s*return\\s*0\\s*nei\\s*=\\s*collections\\.defaultdict\\(list\\)\\s*wordList\\.append\\(beginWord\\)\\s*for\\s+word\\s+in\\s+wordList:\\s*for\\s+j\\s+in\\s+range\\(len\\(word\\)\\):\\s*pattern\\s*=\\s*word\\[:j\\]\\s*\\+\\s*\"\\*\"\\s*\\+\\s*word\\[j\\s*\\+\\s*1\\s*:\\]\\s*nei\\[pattern\\]\\.append\\(word\\)\\s*visit\\s*=\\s*set\\(\\[beginWord\\]\\)\\s*q\\s*=\\s*collections\\.deque\\(\\[beginWord\\]\\)\\s*res\\s*=\\s*1$",
-                    "hint": "Preprocess words into patterns (e.g., 'hot' -> '*ot', 'h*t', 'ho*') to quickly find neighbors. Initialize BFS queue with beginWord.\\n\\nExample:\\nWord 'hot' generates patterns: '*ot', 'h*t', 'ho*'.\\nMap: {'*ot': ['hot', 'dot', 'lot'], ...}.\\nThis allows O(1) lookup of neighbors.",
-                    "solutionCode": "    if endWord not in wordList:\n        return 0\n    nei = collections.defaultdict(list)\n    wordList.append(beginWord)\n    for word in wordList:\n        for j in range(len(word)):\n            pattern = word[:j] + \"*\" + word[j + 1 :]\n            nei[pattern].append(word)\n    visit = set([beginWord])\n    q = collections.deque([beginWord])\n    res = 1"
+                    "instruction": "Check if endWord is even in the list.",
+                    "placeholderCode": "    if endWord not in wordList:",
+                    "validationRegex": "^\\s+if\\s+endWord\\s+not\\s+in\\s+wordList:$",
+                    "hint": "If the target word is missing, transformation is impossible.",
+                    "solutionCode": "    if endWord not in wordList:"
                 },
                 {
                     "id": 3,
+                    "instruction": "Return 0 if the word is not found.",
+                    "placeholderCode": "        return 0",
+                    "validationRegex": "^\\s+return\\s+0$",
+                    "hint": "No path exists.",
+                    "solutionCode": "        return 0"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Initialize neighbor dictionary.",
+                    "placeholderCode": "    nei = collections.defaultdict(list)",
+                    "validationRegex": "^\\s+nei\\s*=\\s*collections\\.defaultdict\\(list\\)$",
+                    "hint": "This will map word patterns (like 'h*t') to lists of matching words.",
+                    "solutionCode": "    nei = collections.defaultdict(list)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Ensure beginWord is included for pattern generation.",
+                    "placeholderCode": "    wordList.append(beginWord)",
+                    "validationRegex": "^\\s+wordList\\.append\\(beginWord\\)$",
+                    "hint": "We need to generate patterns for the starting word too.",
+                    "solutionCode": "    wordList.append(beginWord)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Iterate through every word in wordList.",
+                    "placeholderCode": "    for word in wordList:",
+                    "validationRegex": "^\\s+for\\s+word\\s+in\\s+wordList:$",
+                    "hint": "O(N) loop where N is the number of words.",
+                    "solutionCode": "    for word in wordList:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Iterate through each character position 'j' in the word.",
+                    "placeholderCode": "        for j in range(len(word)):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(len\\(word\\)\\):$",
+                    "hint": "Words are short (length L), so this loop is O(L).",
+                    "solutionCode": "        for j in range(len(word)):"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Generate a pattern by replacing the character at 'j' with '*'.",
+                    "placeholderCode": "            pattern = word[:j] + \"*\" + word[j + 1 :]",
+                    "validationRegex": "^\\s+pattern\\s*=\\s*word\\[:j\\]\\s*\\+\\s*\"\\*\"\\s*\\+\\s*word\\[j\\s*\\+\\s*1\\s*:\\]$",
+                    "hint": "Example: 'hot' position 0 becomes '*ot'.",
+                    "solutionCode": "            pattern = word[:j] + \"*\" + word[j + 1 :]"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Add the current word to the corresponding pattern in 'nei'.",
+                    "placeholderCode": "            nei[pattern].append(word)",
+                    "validationRegex": "^\\s+nei\\[pattern\\]\\.append\\(word\\)$",
+                    "hint": "Grouping words by shared patterns efficiently finds neighbors differing by one letter.",
+                    "solutionCode": "            nei[pattern].append(word)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Initialize visited set with beginWord.",
+                    "placeholderCode": "    visit = set([beginWord])",
+                    "validationRegex": "^\\s+visit\\s*=\\s*set\\(\\[beginWord\\]\\)$",
+                    "hint": "Track visited words to avoid infinite loops and cycles.",
+                    "solutionCode": "    visit = set([beginWord])"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Initialize BFS queue with beginWord.",
+                    "placeholderCode": "    q = collections.deque([beginWord])",
+                    "validationRegex": "^\\s+q\\s*=\\s*collections\\.deque\\(\\[beginWord\\]\\)$",
+                    "hint": "Queue is essential for Breadth-First Search.",
+                    "solutionCode": "    q = collections.deque([beginWord])"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Start transformation length at 1.",
+                    "placeholderCode": "    res = 1",
+                    "validationRegex": "^\\s+res\\s*=\\s*1$",
+                    "hint": "The sequence starts with beginWord itself.",
+                    "solutionCode": "    res = 1"
+                },
+                {
+                    "id": 13,
                     "instruction": "BFS loop.",
                     "placeholderCode": "    while q:\n        for i in range(len(q)):\n            word = q.popleft()\n            if word == endWord:\n                return res\n            for j in range(len(word)):\n                pattern = word[:j] + \"*\" + word[j + 1 :]\n                for neighbor in nei[pattern]:\n                    if neighbor not in visit:\n                        visit.add(neighbor)\n                        q.append(neighbor)\n        res += 1",
                     "validationRegex": "^\\s+while\\s+q:\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*word\\s*=\\s*q\\.popleft\\(\\)\\s*if\\s+word\\s*==\\s*endWord:\\s*return\\s+res\\s*for\\s+j\\s+in\\s+range\\(len\\(word\\)\\):\\s*pattern\\s*=\\s*word\\[:j\\]\\s*\\+\\s*\"\\*\"\\s*\\+\\s*word\\[j\\s*\\+\\s*1\\s*:\\]\\s*for\\s+neighbor\\s+in\\s+nei\\[pattern\\]:\\s*if\\s+neighbor\\s+not\\s+in\\s+visit:\\s*visit\\.add\\(neighbor\\)\\s*q\\.append\\(neighbor\\)\\s*res\\s*\\+=\\s*1$",
@@ -94,7 +174,7 @@
                     "solutionCode": "    while q:\n        for i in range(len(q)):\n            word = q.popleft()\n            if word == endWord:\n                return res\n            for j in range(len(word)):\n                pattern = word[:j] + \"*\" + word[j + 1 :]\n                for neighbor in nei[pattern]:\n                    if neighbor not in visit:\n                        visit.add(neighbor)\n                        q.append(neighbor)\n        res += 1"
                 },
                 {
-                    "id": 4,
+                    "id": 14,
                     "instruction": "Return 0.",
                     "placeholderCode": "    return 0",
                     "validationRegex": "^\\s+return\\s+0$",
