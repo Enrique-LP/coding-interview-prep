@@ -23,7 +23,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursion",
+            "name": "Brute Force",
             "description": "Try all subsets.",
             "steps": [
                 {
@@ -62,7 +62,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP using Set",
+            "name": "Optimal",
             "description": "Iteratively build reachable sums.",
             "steps": [
                 {
@@ -83,26 +83,42 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Initialize DP set.",
-                    "placeholderCode": "    dp = set()\n    dp.add(0)\n    target = sum(nums) // 2",
-                    "validationRegex": "^\\s+dp\\s*=\\s*set\\(\\)\\s*dp\\.add\\(0\\)\\s*target\\s*=\\s*sum\\(nums\\)\\s*//\\s*2$",
-                    "hint": "Use a set `dp` to store all possible subset sums. Initialize with 0.",
-                    "solutionCode": "    dp = set()\n    dp.add(0)\n    target = sum(nums) // 2"
+                    "instruction": "Initialize the DP set.",
+                    "placeholderCode": "    dp = set()",
+                    "validationRegex": "^\\s+dp\\s*=\\s*set\\(\\)$",
+                    "hint": "This set will hold all possible sums reachable by subsets.",
+                    "solutionCode": "    dp = set()"
                 },
                 {
                     "id": 4,
-                    "instruction": "Iterate nums.",
-                    "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):\n        nextDP = set()\n        for t in dp:\n            if (t + nums[i]) == target:\n                return True\n            nextDP.add(t + nums[i])\n            nextDP.add(t)\n        dp = nextDP",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*nextDP\\s*=\\s*set\\(\\)\\s*for\\s+t\\s+in\\s+dp:\\s*if\\s*\\(t\\s*\\+\\s*nums\\[i\\]\\)\\s*==\\s*target:\\s*return\\s+True\\s*nextDP\\.add\\(t\\s*\\+\\s*nums\\[i\\]\\)\\s*nextDP\\.add\\(t\\)\\s*dp\\s*=\\s*nextDP$",
-                    "hint": "For each number, create a new set of sums by adding the number to existing sums. If target is reached, return True.\\n\\nExample:\\nNums=[1, 5]. Target=3.\\nInit: DP={0}.\\nN=1: Next={0+1, 0} = {1, 0}.\\nN=5: Next={1+5, 0+5, 1, 0} = {6, 5, 1, 0}.\\nTarget 3 not in set.",
-                    "solutionCode": "    for i in range(len(nums) - 1, -1, -1):\n        nextDP = set()\n        for t in dp:\n            if (t + nums[i]) == target:\n                return True\n            nextDP.add(t + nums[i])\n            nextDP.add(t)\n        dp = nextDP"
+                    "instruction": "Add 0 to the DP set.",
+                    "placeholderCode": "    dp.add(0)",
+                    "validationRegex": "^\\s+dp\\.add\\(0\\)$",
+                    "hint": "A sum of 0 is always reachable with an empty subset.",
+                    "solutionCode": "    dp.add(0)"
                 },
                 {
                     "id": 5,
-                    "instruction": "Return result.",
+                    "instruction": "Calculate the target sum.",
+                    "placeholderCode": "    target = sum(nums) // 2",
+                    "validationRegex": "^\\s+target\\s*=\\s*sum\\(nums\\)\\s*//\\s*2$",
+                    "hint": "The target is half of the total sum.",
+                    "solutionCode": "    target = sum(nums) // 2"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Iterate through the numbers in reverse order.",
+                    "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):\n        nextDP = set()\n        for t in dp:\n            if (t + nums[i]) == target:\n                return True\n            nextDP.add(t + nums[i])\n            nextDP.add(t)\n        dp = nextDP",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*nextDP\\s*=\\s*set\\(\\)\\s*for\\s+t\\s+in\\s+dp:\\s*if\\s*\\(t\\s*\\+\\s*nums\\[i\\]\\)\\s*==\\s*target:\\s*return\\s+True\\s*nextDP\\.add\\(t\\s*\\+\\s*nums\\[i\\]\\)\\s*nextDP\\.add\\(t\\)\\s*dp\\s*=\\s*nextDP$",
+                    "hint": "For each number, iterate through the sums in 'dp' and create a new set 'nextDP' with updated sums. If target is reached, return True.",
+                    "solutionCode": "    for i in range(len(nums) - 1, -1, -1):\n        nextDP = set()\n        for t in dp:\n            if (t + nums[i]) == target:\n                return True\n            nextDP.add(t + nums[i])\n            nextDP.add(t)\n        dp = nextDP"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return whether the target sum was reached.",
                     "placeholderCode": "    return True if target in dp else False",
                     "validationRegex": "^\\s+return\\s+True\\s+if\\s+target\\s+in\\s+dp\\s+else\\s+False$",
-                    "hint": "Check if target sum is in the final set of possible sums.",
+                    "hint": "If target is in the set, a partition exists.",
                     "solutionCode": "    return True if target in dp else False"
                 }
             ]
