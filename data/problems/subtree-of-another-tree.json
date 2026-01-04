@@ -22,7 +22,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
+            "name": "Brute Force",
             "description": "Check if subRoot matches at any node of root.",
             "steps": [
                 {
@@ -69,8 +69,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Recursive",
-            "description": "Same as brute force, O(m*n).",
+            "name": "Optimal",
+            "description": "Same as brute force, O(m*n) is optimal.",
             "steps": [
                 {
                     "id": 1,
@@ -82,34 +82,58 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Define helper same_tree to check equality.",
-                    "placeholderCode": "    def same_tree(p, q):\n        if not p and not q: return True\n        if not p or not q or p.val != q.val: return False\n        return same_tree(p.left, q.left) and same_tree(p.right, q.right)",
-                    "validationRegex": "^\\s+def\\s+same_tree\\(p,\\s*q\\):\\s*if\\s+not\\s+p\\s+and\\s+not\\s+q:\\s*return\\s+True\\s*if\\s+not\\s+p\\s+or\\s+not\\s+q\\s+or\\s+p\\.val\\s*!=\\s*q\\.val:\\s*return\\s+False\\s*return\\s+same_tree\\(p\\.left,\\s*q\\.left\\)\\s+and\\s+same_tree\\(p\\.right,\\s*q\\.right\\)$",
-                    "hint": "Implement a helper to check if two trees are identical.",
-                    "solutionCode": "    def same_tree(p, q):\n        if not p and not q: return True\n        if not p or not q or p.val != q.val: return False\n        return same_tree(p.left, q.left) and same_tree(p.right, q.right)"
+                    "instruction": "Define a helper 'same_tree' function to check if two trees are identical.",
+                    "placeholderCode": "    def same_tree(p, q):",
+                    "validationRegex": "^\\s+def\\s+same_tree\\(p,\\s*q\\):$",
+                    "hint": "This helper will be used to compare subtrees of the main tree.",
+                    "solutionCode": "    def same_tree(p, q):"
                 },
                 {
                     "id": 3,
-                    "instruction": "If subRoot is None, it's a subtree.",
-                    "placeholderCode": "    if not subRoot: return True",
-                    "validationRegex": "^\\s+if\\s+not\\s+subRoot:\\s*return\\s+True$",
-                    "hint": "An empty tree is a subtree of any tree.",
-                    "solutionCode": "    if not subRoot: return True"
+                    "instruction": "Base case for 'same_tree': if both nodes are None, return True.",
+                    "placeholderCode": "        if not p and not q: return True",
+                    "validationRegex": "^\\s+if\\s+not\\s+p\\s+and\\s+not\\s+q:\\s*return\\s+True$",
+                    "hint": "Two empty subtrees are identical.",
+                    "solutionCode": "        if not p and not q: return True"
                 },
                 {
                     "id": 4,
-                    "instruction": "If root is None, it can't contain subRoot.",
-                    "placeholderCode": "    if not root: return False",
-                    "validationRegex": "^\\s+if\\s+not\\s+root:\\s*return\\s+False$",
-                    "hint": "If root is empty but subRoot isn't, return False.",
-                    "solutionCode": "    if not root: return False"
+                    "instruction": "Base case for 'same_tree': if structures differ or values mismatch, return False.",
+                    "placeholderCode": "        if not p or not q or p.val != q.val: return False",
+                    "validationRegex": "^\\s+if\\s+not\\s+p\\s+or\\s+not\\s+q\\s+or\\s+p\\.val\\s*!=\\s*q\\.val:\\s*return\\s+False$",
+                    "hint": "Mismatch occurs if only one node is None or their values are different.",
+                    "solutionCode": "        if not p or not q or p.val != q.val: return False"
                 },
                 {
                     "id": 5,
-                    "instruction": "Check if trees match or recurse.",
+                    "instruction": "Recursive case for 'same_tree': check if both children match.",
+                    "placeholderCode": "        return same_tree(p.left, q.left) and same_tree(p.right, q.right)",
+                    "validationRegex": "^\\s+return\\s+same_tree\\(p\\.left,\\s*q\\.left\\)\\s+and\\s+same_tree\\(p\\.right,\\s*q\\.right\\)$",
+                    "hint": "Both subtrees must be identical for the parent trees to match.",
+                    "solutionCode": "        return same_tree(p.left, q.left) and same_tree(p.right, q.right)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "If subRoot is None, it is technically a subtree (return True).",
+                    "placeholderCode": "    if not subRoot: return True",
+                    "validationRegex": "^\\s+if\\s+not\\s+subRoot:\\s*return\\s+True$",
+                    "hint": "An empty tree is a subtree of any binary tree.",
+                    "solutionCode": "    if not subRoot: return True"
+                },
+                {
+                    "id": 7,
+                    "instruction": "If root is None but subRoot is not, it cannot be a subtree (return False).",
+                    "placeholderCode": "    if not root: return False",
+                    "validationRegex": "^\\s+if\\s+not\\s+root:\\s*return\\s+False$",
+                    "hint": "A non-empty subRoot cannot be found in an empty root.",
+                    "solutionCode": "    if not root: return False"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Final check: compare current root with subRoot or recurse down.",
                     "placeholderCode": "    if same_tree(root, subRoot): return True\n    return is_subtree(root.left, subRoot) or is_subtree(root.right, subRoot)",
                     "validationRegex": "^\\s+if\\s+same_tree\\(root,\\s*subRoot\\):\\s*return\\s+True\\s*return\\s+is_subtree\\(root\\.left,\\s*subRoot\\)\\s+or\\s+is_subtree\\(root\\.right,\\s*subRoot\\)$",
-                    "hint": "Check if current trees match, or check left/right subtrees.",
+                    "hint": "Check if subRoot starts at the current node, or search left and right children recursively.",
                     "solutionCode": "    if same_tree(root, subRoot): return True\n    return is_subtree(root.left, subRoot) or is_subtree(root.right, subRoot)"
                 }
             ]
