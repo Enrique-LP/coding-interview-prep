@@ -100,14 +100,70 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Run Bellman-Ford algorithm to relax edges up to k+1 times.",
-                    "placeholderCode": "    for i in range(k + 1):\n        tmpPrices = prices.copy()\n        for s, d, p in flights:\n            if prices[s] == float(\"inf\"):\n                continue\n            if prices[s] + p < tmpPrices[d]:\n                tmpPrices[d] = prices[s] + p\n        prices = tmpPrices",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(k\\s*\\+\\s*1\\):\\s*tmpPrices\\s*=\\s*prices\\.copy\\(\\)\\s*for\\s+s,\\s*d,\\s*p\\s+in\\s+flights:\\s*if\\s+prices\\[s\\]\\s*==\\s*float\\(\"inf\"\\):\\s*continue\\s*if\\s+prices\\[s\\]\\s*\\+\\s*p\\s*<\\s*tmpPrices\\[d\\]:\\s*tmpPrices\\[d\\]\\s*\\s*=\\s*prices\\[s\\]\\s*\\+\\s*p\\s*prices\\s*=\\s*tmpPrices$",
-                    "hint": "For each stop allowed, update the minimum prices to all reachable neighbors.",
-                    "solutionCode": "    for i in range(k + 1):\n        tmpPrices = prices.copy()\n        for s, d, p in flights:\n            if prices[s] == float(\"inf\"):\n                continue\n            if prices[s] + p < tmpPrices[d]:\n                tmpPrices[d] = prices[s] + p\n        prices = tmpPrices"
+                    "instruction": "Initiate a loop to relax edges up to k+1 times.",
+                    "placeholderCode": "    for i in range(k + 1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(k\\s*\\+\\s*1\\):$",
+                    "hint": "We need k+1 iterations to allow for up to k stops.",
+                    "solutionCode": "    for i in range(k + 1):"
                 },
                 {
                     "id": 5,
+                    "instruction": "Create a temporary copy of the current prices.",
+                    "placeholderCode": "        tmpPrices = prices.copy()",
+                    "validationRegex": "^\\s+tmpPrices\\s*=\\s*prices\\.copy\\(\\)$",
+                    "hint": "This ensures we only use prices from the previous iteration, enforcing the 'at most k stops' constraint.",
+                    "solutionCode": "        tmpPrices = prices.copy()"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Iterate through each flight in the 'flights' array.",
+                    "placeholderCode": "        for s, d, p in flights:",
+                    "validationRegex": "^\\s+for\\s+s,\\s*d,\\s*p\\s+in\\s+flights:$",
+                    "hint": "Unpack source 's', destination 'd', and price 'p'.",
+                    "solutionCode": "        for s, d, p in flights:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check if the source city 's' has been reached yet.",
+                    "placeholderCode": "            if prices[s] == float(\"inf\"): ",
+                    "validationRegex": "^\\s+if\\s+prices\\[s\\]\\s*==\\s*float\\(\"inf\"\\):$",
+                    "hint": "If the price is infinity, we cannot use this flight yet.",
+                    "solutionCode": "            if prices[s] == float(\"inf\"): "
+                },
+                {
+                    "id": 8,
+                    "instruction": "Skip the current flight if the source is unreachable.",
+                    "placeholderCode": "                continue",
+                    "validationRegex": "^\\s+continue$",
+                    "hint": "Ignore flights starting from cities we haven't found a path to.",
+                    "solutionCode": "                continue"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if the new path to 'd' is cheaper than the known path.",
+                    "placeholderCode": "            if prices[s] + p < tmpPrices[d]:",
+                    "validationRegex": "^\\s+if\\s+prices\\[s\\]\\s*\\+\\s*p\\s*<\\s*tmpPrices\\[d\\]:$",
+                    "hint": "Compare the current total price through 's' with the minimum price stored in 'tmpPrices'.",
+                    "solutionCode": "            if prices[s] + p < tmpPrices[d]:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Update the temporary price for destination 'd'.",
+                    "placeholderCode": "                tmpPrices[d] = prices[s] + p",
+                    "validationRegex": "^\\s+tmpPrices\\[d\\]\\s*=\\s*prices\\[s\\]\\s*\\+\\s*p$",
+                    "hint": "Store the new found minimum price for this iteration.",
+                    "solutionCode": "                tmpPrices[d] = prices[s] + p"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Update the official 'prices' array with the temporary values.",
+                    "placeholderCode": "        prices = tmpPrices",
+                    "validationRegex": "^\\s+prices\\s*=\\s*tmpPrices$",
+                    "hint": "Assign the results of this iteration to the main array for the next stop calculation.",
+                    "solutionCode": "        prices = tmpPrices"
+                },
+                {
+                    "id": 12,
                     "instruction": "Return the final price to destination or -1 if unreachable.",
                     "placeholderCode": "    return -1 if prices[dst] == float(\"inf\") else prices[dst]",
                     "validationRegex": "^\\s+return\\s*-1\\s+if\\s+prices\\[dst\\]\\s*==\\s*float\\(\"inf\"\\)\\s+else\\s+prices\\[dst\\]$",
