@@ -106,14 +106,102 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Run Dijkstra's algorithm to find the minimum time to reach all nodes.",
-                    "placeholderCode": "    minHeap = [(0, k)]\n    visit = set()\n    t = 0\n    while minHeap:\n        w1, n1 = heapq.heappop(minHeap)\n        if n1 in visit:\n            continue\n        visit.add(n1)\n        t = max(t, w1)\n        for n2, w2 in edges[n1]:\n            if n2 not in visit:\n                heapq.heappush(minHeap, (w1 + w2, n2))",
-                    "validationRegex": "^\\s+minHeap\\s*=\\s*\\[\\(0,\\s*k\\)\\]\\s*visit\\s*=\\s*set\\(\\)\\s*t\\s*=\\s*0\\s*while\\s+minHeap:\\s*w1,\\s*n1\\s*=\\s*heapq\\.heappop\\(minHeap\\)\\s*if\\s+n1\\s+in\\s+visit:\\s*continue\\s*visit\\.add\\(n1\\)\\s*t\\s*=\\s*max\\(t,\\s*w1\\)\\s*for\\s+n2,\\s*w2\\s+in\\s+edges\\[n1\\]:\\s*if\\s+n2\\s+not\\s+in\\s+visit:\\s*heapq\\.heappush\\(minHeap,\\s*\\(w1\\s*\\+\\s*w2,\\s*n2\\)\\)$",
-                    "hint": "Use a min-heap to expanded the closest node first. Track visited and update the global max time 't'.",
-                    "solutionCode": "    minHeap = [(0, k)]\n    visit = set()\n    t = 0\n    while minHeap:\n        w1, n1 = heapq.heappop(minHeap)\n        if n1 in visit:\n            continue\n        visit.add(n1)\n        t = max(t, w1)\n        for n2, w2 in edges[n1]:\n            if n2 not in visit:\n                heapq.heappush(minHeap, (w1 + w2, n2))"
+                    "instruction": "Initialize the min-heap with the starting node 'k' and time 0.",
+                    "placeholderCode": "    minHeap = [(0, k)]",
+                    "validationRegex": "^\\s+minHeap\\s*=\\s*\\[\\(0,\\s*k\\)\\]$",
+                    "hint": "The heap stores tuples of (total_time, node_id).",
+                    "solutionCode": "    minHeap = [(0, k)]"
                 },
                 {
                     "id": 6,
+                    "instruction": "Initialize a set 'visit' to track nodes that have received the signal.",
+                    "placeholderCode": "    visit = set()",
+                    "validationRegex": "^\\s+visit\\s*=\\s*set\\(\\)$",
+                    "hint": "Tracking visited nodes prevents cycles and redundant processing.",
+                    "solutionCode": "    visit = set()"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Initialize the global time counter 't' to 0.",
+                    "placeholderCode": "    t = 0",
+                    "validationRegex": "^\\s+t\\s*=\\s*0$",
+                    "hint": "This will track the time when the last reachable node receives the signal.",
+                    "solutionCode": "    t = 0"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Start the BFS loop using the min-heap.",
+                    "placeholderCode": "    while minHeap:",
+                    "validationRegex": "^\\s+while\\s+minHeap:$",
+                    "hint": "Dijkstra's is essentially BFS with a priority queue.",
+                    "solutionCode": "    while minHeap:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Pop the node with the minimum recorded travel time from the heap.",
+                    "placeholderCode": "        w1, n1 = heapq.heappop(minHeap)",
+                    "validationRegex": "^\\s+w1,\\s*n1\\s*=\\s*heapq\\.heappop\\(minHeap\\)$",
+                    "hint": "w1 is the total time so far, n1 is the current node.",
+                    "solutionCode": "        w1, n1 = heapq.heappop(minHeap)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Check if node 'n1' has already been visited.",
+                    "placeholderCode": "        if n1 in visit:",
+                    "validationRegex": "^\\s+if\\s+n1\\s+in\\s+visit:$",
+                    "hint": "If it's already visited, we've already found a shorter or equal path to it.",
+                    "solutionCode": "        if n1 in visit:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Skip the current node if it was already visited.",
+                    "placeholderCode": "            continue",
+                    "validationRegex": "^\\s+continue$",
+                    "hint": "Move to the next element in the heap.",
+                    "solutionCode": "            continue"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Add node 'n1' to the visited set.",
+                    "placeholderCode": "        visit.add(n1)",
+                    "validationRegex": "^\\s+visit\\.add\\(n1\\)$",
+                    "hint": "Signify that the signal has successfully reached this node.",
+                    "solutionCode": "        visit.add(n1)"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Update the maximum time 't' with the current node's time.",
+                    "placeholderCode": "        t = max(t, w1)",
+                    "validationRegex": "^\\s+t\\s*=\\s*max\\(t,\\s*w1\\)$",
+                    "hint": "The signal reaches nodes at different times; we need the last one.",
+                    "solutionCode": "        t = max(t, w1)"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Iterate through each outgoing edge from 'n1'.",
+                    "placeholderCode": "        for n2, w2 in edges[n1]:",
+                    "validationRegex": "^\\s+for\\s+n2,\\s*w2\\s+in\\s+edges\\[n1\\]:$",
+                    "hint": "Explore all direct neighbors reachable from the current node.",
+                    "solutionCode": "        for n2, w2 in edges[n1]:"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Check if the neighbor 'n2' has not been visited yet.",
+                    "placeholderCode": "            if n2 not in visit:",
+                    "validationRegex": "^\\s+if\\s+n2\\s+not\\s+in\\s+visit:$",
+                    "hint": "We only send the signal to nodes that haven't received it yet.",
+                    "solutionCode": "            if n2 not in visit:"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Push the accumulated travel time and the neighbor into the heap.",
+                    "placeholderCode": "                heapq.heappush(minHeap, (w1 + w2, n2))",
+                    "validationRegex": "^\\s+heapq\\.heappush\\(minHeap,\\s*\\(w1\\s*\\+\\s*w2,\\s*n2\\)\\)$",
+                    "hint": "The new total time is the current time plus the weight of the new edge.",
+                    "solutionCode": "                heapq.heappush(minHeap, (w1 + w2, n2))"
+                },
+                {
+                    "id": 17,
                     "instruction": "Return the total time if all nodes were visited, otherwise return -1.",
                     "placeholderCode": "    return t if len(visit) == n else -1",
                     "validationRegex": "^\\s+return\\s+t\\s+if\\s+len\\(visit\\)\\s*==\\s*n\\s+else\\s*-1$",
