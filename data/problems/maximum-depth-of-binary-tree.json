@@ -21,7 +21,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive DFS",
+            "name": "Brute Force",
             "description": "Compute depth of left and right subtrees recursively.",
             "steps": [
                 {
@@ -52,7 +52,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Iterative BFS",
+            "name": "Optimal",
             "description": "Count levels using a queue.",
             "steps": [
                 {
@@ -89,26 +89,50 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Iterate through current level nodes.",
-                    "placeholderCode": "        for i in range(len(queue)):\n            node = queue.pop(0)\n            if node.left: queue.append(node.left)\n            if node.right: queue.append(node.right)",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(queue\\)\\):\\s*node\\s*=\\s*queue\\.pop\\(0\\)\\s*if\\s+node\\.left:\\s*queue\\.append\\(node\\.left\\)\\s*if\\s+node\\.right:\\s*queue\\.append\\(node\\.right\\)$",
-                    "hint": "Process all nodes at the current level and add their children.",
-                    "solutionCode": "        for i in range(len(queue)):\n            node = queue.pop(0)\n            if node.left: queue.append(node.left)\n            if node.right: queue.append(node.right)"
+                    "instruction": "Iterate through each node in the current level.",
+                    "placeholderCode": "        for i in range(len(queue)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(queue\\)\\):$",
+                    "hint": "Take a snapshot of the queue length to process only current level nodes.",
+                    "solutionCode": "        for i in range(len(queue)):"
                 },
                 {
                     "id": 6,
-                    "instruction": "Increment level.",
-                    "placeholderCode": "        level += 1",
-                    "validationRegex": "^\\s+level\\s*\\+=\\s*1$",
-                    "hint": "Increase level count after processing a full level.",
-                    "solutionCode": "        level += 1"
+                    "instruction": "Pop the current node from the front of the queue.",
+                    "placeholderCode": "            node = queue.pop(0)",
+                    "validationRegex": "^\\s+node\\s*=\\s*queue\\.pop\\(0\\)$",
+                    "hint": "Get the next node at this level.",
+                    "solutionCode": "            node = queue.pop(0)"
                 },
                 {
                     "id": 7,
-                    "instruction": "Return level.",
+                    "instruction": "Add the left child to the queue if it exists.",
+                    "placeholderCode": "            if node.left: queue.append(node.left)",
+                    "validationRegex": "^\\s+if\\s+node\\.left:\\s*queue\\.append\\(node\\.left\\)$",
+                    "hint": "Check the left child for the next level.",
+                    "solutionCode": "            if node.left: queue.append(node.left)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Add the right child to the queue if it exists.",
+                    "placeholderCode": "            if node.right: queue.append(node.right)",
+                    "validationRegex": "^\\s+if\\s+node\\.right:\\s*queue\\.append\\(node\\.right\\)$",
+                    "hint": "Check the right child for the next level.",
+                    "solutionCode": "            if node.right: queue.append(node.right)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Increment the level count after processing all nodes at the current level.",
+                    "placeholderCode": "        level += 1",
+                    "validationRegex": "^\\s+level\\s*\\+=\\s*1$",
+                    "hint": "Each BFS iteration processes one full depth level.",
+                    "solutionCode": "        level += 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Return the final level count.",
                     "placeholderCode": "    return level",
                     "validationRegex": "^\\s+return\\s+level$",
-                    "hint": "Return the total number of levels.",
+                    "hint": "This value represents the maximum depth of the tree.",
                     "solutionCode": "    return level"
                 }
             ]
