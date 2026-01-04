@@ -158,18 +158,106 @@
                 },
                 {
                     "id": 12,
-                    "instruction": "DFS for topological sort.",
-                    "placeholderCode": "    visit = {}\n    res = []\n    def dfs(c):\n        if c in visit:\n            return visit[c]\n        visit[c] = True\n        for nei in adj[c]:\n            if dfs(nei):\n                return True\n        visit[c] = False\n        res.append(c)\n        return False",
-                    "validationRegex": "^\\s+visit\\s*=\\s*{}\\s*res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(c\\):\\s*if\\s+c\\s+in\\s+visit:\\s*return\\s+visit\\[c\\]\\s*visit\\[c\\]\\s*=\\s*True\\s*for\\s+nei\\s+in\\s+adj\\[c\\]:\\s*if\\s+dfs\\(nei\\):\\s*return\\s+True\\s*visit\\[c\\]\\s*=\\s*False\\s*res\\.append\\(c\\)\\s*return\\s+False$",
-                    "hint": "Use DFS to detect cycles and build the topological sort. `visit` stores state: True (visiting/current path), False (visited/fully processed).",
-                    "solutionCode": "    visit = {}\n    res = []\n    def dfs(c):\n        if c in visit:\n            return visit[c]\n        visit[c] = True\n        for nei in adj[c]:\n            if dfs(nei):\n                return True\n        visit[c] = False\n        res.append(c)\n        return False"
+                    "instruction": "Initialize the 'visit' dictionary to track the state of each node.",
+                    "placeholderCode": "    visit = {}",
+                    "validationRegex": "^\\s+visit\\s*=\\s*{}$",
+                    "hint": "Nodes can be in three states: not visited (not in dict), visiting (True), or visited (False).",
+                    "solutionCode": "    visit = {}"
                 },
                 {
                     "id": 13,
-                    "instruction": "Call DFS.",
+                    "instruction": "Initialize an empty list 'res' to store the characters in reverse topological order.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "Characters are added to this list after all their neighbors have been processed.",
+                    "solutionCode": "    res = []"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Define the helper function 'dfs' to perform the topological search.",
+                    "placeholderCode": "    def dfs(c):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(c\\):$",
+                    "hint": "The function takes a character 'c' as input and returns True if a cycle is detected.",
+                    "solutionCode": "    def dfs(c):"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Check if the character 'c' has already been encountered in the current search or a previous one.",
+                    "placeholderCode": "        if c in visit:",
+                    "validationRegex": "^\\s+if\\s+c\\s+in\\s+visit:$",
+                    "hint": "This handles both detecting cycles and avoiding redundant work.",
+                    "solutionCode": "        if c in visit:"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Return the visit status of character 'c'.",
+                    "placeholderCode": "            return visit[c]",
+                    "validationRegex": "^\\s+return\\s+visit\\[c\\]$",
+                    "hint": "Returns True if we are already visiting this node (cycle), or False if it's already fully processed.",
+                    "solutionCode": "            return visit[c]"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Mark the character 'c' as currently being visited (entering the call stack).",
+                    "placeholderCode": "        visit[c] = True",
+                    "validationRegex": "^\\s+visit\\[c\\]\\s*=\\s*True$",
+                    "hint": "Setting it to True helps in detecting cycles in subsequent recursive calls.",
+                    "solutionCode": "        visit[c] = True"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Iterate through each neighbor 'nei' of character 'c' in the adjacency list.",
+                    "placeholderCode": "        for nei in adj[c]:",
+                    "validationRegex": "^\\s+for\\s+nei\\s+in\\s+adj\\[c\\]:$",
+                    "hint": "Explore all characters that are declared to come AFTER 'c'.",
+                    "solutionCode": "        for nei in adj[c]:"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Recursively call 'dfs' on the neighbor to continue the search.",
+                    "placeholderCode": "            if dfs(nei):",
+                    "validationRegex": "^\\s+if\\s+dfs\\(nei\\):$",
+                    "hint": "Check if a cycle exists in the path starting from 'nei'.",
+                    "solutionCode": "            if dfs(nei):"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Return True if the recursive call detects a cycle.",
+                    "placeholderCode": "                return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "Propagate the cycle detection back up the call stack.",
+                    "solutionCode": "                return True"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Mark the character 'c' as fully processed (exiting the call stack).",
+                    "placeholderCode": "        visit[c] = False",
+                    "validationRegex": "^\\s+visit\\[c\\]\\s*=\\s*False$",
+                    "hint": "Reset the status to False to signify this node and its dependencies are finished.",
+                    "solutionCode": "        visit[c] = False"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Append the character 'c' to the 'res' list.",
+                    "placeholderCode": "        res.append(c)",
+                    "validationRegex": "^\\s+res\\.append\\(c\\)$",
+                    "hint": "Since this is post-order traversal, the result list will be in reverse order.",
+                    "solutionCode": "        res.append(c)"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Return False to indicate that no cycle was detected from node 'c'.",
+                    "placeholderCode": "        return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "This signals to the caller that the search from this node was successful.",
+                    "solutionCode": "        return False"
+                },
+                {
+                    "id": 24,
+                    "instruction": "Apply DFS to every character node to build the complete topological order.",
                     "placeholderCode": "    for c in adj:\n        if dfs(c):\n            return \"\"\n    res.reverse()\n    return \"\".join(res)",
                     "validationRegex": "^\\s+for\\s+c\\s+in\\s+adj:\\s*if\\s+dfs\\(c\\):\\s*return\\s*\"\"\\s*res\\.reverse\\(\\)\\s*return\\s*\"\"\\.join\\(res\\)$",
-                    "hint": "Run DFS on all nodes. If a cycle is detected, return \"\". Otherwise, reverse the result list to get the correct order.",
+                    "hint": "Iterate over all keys in 'adj'. If any DFS returns True, there's a cycle; otherwise, reverse 'res' and join it into a string.",
                     "solutionCode": "    for c in adj:\n        if dfs(c):\n            return \"\"\n    res.reverse()\n    return \"\".join(res)"
                 }
             ]
