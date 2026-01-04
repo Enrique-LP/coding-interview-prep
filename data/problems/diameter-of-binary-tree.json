@@ -22,7 +22,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive DFS",
+            "name": "Brute Force",
             "description": "Calculate height and update diameter at each node.",
             "steps": [
                 {
@@ -85,7 +85,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Recursive DFS",
+            "name": "Optimal",
             "description": "Same as brute force, O(n) is optimal.",
             "steps": [
                 {
@@ -106,42 +106,50 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Define a helper dfs function to calculate height.",
-                    "placeholderCode": "    def dfs(root):\n        if not root: return -1",
-                    "validationRegex": "^\\s+def\\s+dfs\\(root\\):\\s*if\\s+not\\s+root:\\s*return\\s+-1$",
-                    "hint": "Return -1 for null nodes.",
-                    "solutionCode": "    def dfs(root):\n        if not root: return -1"
+                    "instruction": "Define a helper 'dfs' function to calculate node heights.",
+                    "placeholderCode": "    def dfs(root):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(root\\):$",
+                    "hint": "This inner function will update our globally reachable 'res' list.",
+                    "solutionCode": "    def dfs(root):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Recursively find height of left and right subtrees.",
+                    "instruction": "Return -1 as the base case if the current node is None.",
+                    "placeholderCode": "        if not root: return -1",
+                    "validationRegex": "^\\s+if\\s+not\\s+root:\\s*return\\s+-1$",
+                    "hint": "We use -1 so that a single leaf node has a height of 0.",
+                    "solutionCode": "        if not root: return -1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Recursively find the height of the left and right subtrees.",
                     "placeholderCode": "        left = dfs(root.left)\n        right = dfs(root.right)",
                     "validationRegex": "^\\s+left\\s*=\\s*dfs\\(root\\.left\\)\\s*right\\s*=\\s*dfs\\(root\\.right\\)$",
                     "hint": "Get heights of children.",
                     "solutionCode": "        left = dfs(root.left)\n        right = dfs(root.right)"
                 },
                 {
-                    "id": 5,
-                    "instruction": "Update the diameter (left height + right height + 2).",
+                    "id": 6,
+                    "instruction": "Update the maximum diameter found so far.",
                     "placeholderCode": "        res[0] = max(res[0], left + right + 2)",
                     "validationRegex": "^\\s+res\\[0\\]\\s*=\\s*max\\(res\\[0\\],\\s*left\\s*\\+\\s*right\\s*\\+\\s*2\\)$",
-                    "hint": "Diameter through this node is left + right + 2.",
+                    "hint": "The diameter through the current node is the sum of subtree heights plus 2 (edges to children).",
                     "solutionCode": "        res[0] = max(res[0], left + right + 2)"
                 },
                 {
-                    "id": 6,
-                    "instruction": "Return height of current node.",
+                    "id": 7,
+                    "instruction": "Return the height of the current node.",
                     "placeholderCode": "        return 1 + max(left, right)",
                     "validationRegex": "^\\s+return\\s+1\\s*\\+\\s*max\\(left,\\s*right\\)$",
-                    "hint": "Return 1 + max height of children.",
+                    "hint": "The height is 1 plus the maximum height of its subtrees.",
                     "solutionCode": "        return 1 + max(left, right)"
                 },
                 {
-                    "id": 7,
-                    "instruction": "Call dfs and return result.",
+                    "id": 8,
+                    "instruction": "Call the 'dfs' function and return the final maximum diameter.",
                     "placeholderCode": "    dfs(root)\n    return res[0]",
                     "validationRegex": "^\\s+dfs\\(root\\)\\s*return\\s+res\\[0\\]$",
-                    "hint": "Start DFS and return the max diameter found.",
+                    "hint": "Initiate the recursive search from the root.",
                     "solutionCode": "    dfs(root)\n    return res[0]"
                 }
             ]
