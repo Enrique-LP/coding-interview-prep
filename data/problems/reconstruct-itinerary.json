@@ -102,18 +102,58 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Define DFS.",
-                    "placeholderCode": "    res = []\n    def dfs(src):\n        while adj[src]:\n            dst = adj[src].pop()\n            dfs(dst)\n        res.append(src)",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(src\\):\\s*while\\s+adj\\[src\\]:\\s*dst\\s*=\\s*adj\\[src\\]\\.pop\\(\\)\\s*dfs\\(dst\\)\\s*res\\.append\\(src\\)$",
-                    "hint": "Hierholzer's algorithm. Visit edges until stuck, then add node to result. This builds the path in reverse.\\n\\nExample:\\nTickets=[[JFK, SFO], [JFK, ATL], [SFO, ATL], [ATL, JFK], [ATL, SFO]].\\nStart JFK. Path: JFK->ATL->JFK->SFO->ATL->SFO.\\nStuck at SFO. Add SFO to Res.\\nBacktrack to ATL. Stuck. Add ATL.\\n... Res=[SFO, ATL, SFO, JFK, ATL, JFK].",
-                    "solutionCode": "    res = []\n    def dfs(src):\n        while adj[src]:\n            dst = adj[src].pop()\n            dfs(dst)\n        res.append(src)"
+                    "instruction": "Initialize the result list to store the itinerary in reverse.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "We use a list that we will fill from end to start.",
+                    "solutionCode": "    res = []"
                 },
                 {
                     "id": 6,
-                    "instruction": "Call DFS and reverse.",
+                    "instruction": "Define the helper function 'dfs(src)'.",
+                    "placeholderCode": "    def dfs(src):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(src\\):$",
+                    "hint": "This function will visit all edges using Hierholzer's algorithm.",
+                    "solutionCode": "    def dfs(src):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "While there are outgoing flights from the current airport 'src'.",
+                    "placeholderCode": "        while adj[src]:",
+                    "validationRegex": "^\\s+while\\s+adj\\[src\\]:$",
+                    "hint": "This loop continues as long as the airport has unvisited tickets.",
+                    "solutionCode": "        while adj[src]:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Pop the next lexically smallest airport 'dst' from the adjacency list.",
+                    "placeholderCode": "            dst = adj[src].pop()",
+                    "validationRegex": "^\\s+dst\\s*=\\s*adj\\[src\\]\\.pop\\(\\)$",
+                    "hint": "Because we sorted in reverse, .pop() gives the smallest destination efficiently.",
+                    "solutionCode": "            dst = adj[src].pop()"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Recursively call 'dfs' with the destination airport 'dst'.",
+                    "placeholderCode": "            dfs(dst)",
+                    "validationRegex": "^\\s+dfs\\(dst\\)$",
+                    "hint": "Explore the path until we hit a dead end.",
+                    "solutionCode": "            dfs(dst)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Once stuck, append the current airport 'src' to the result 'res'.",
+                    "placeholderCode": "        res.append(src)",
+                    "validationRegex": "^\\s+res\\.append\\(src\\)$",
+                    "hint": "This is the 'post-order' step that builds the itinerary in reverse.",
+                    "solutionCode": "        res.append(src)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Call DFS starting from 'JFK' and return the reversed itinerary.",
                     "placeholderCode": "    dfs(\"JFK\")\n    return res[::-1]",
                     "validationRegex": "^\\s+dfs\\(\"JFK\"\\)\\s*return\\s+res\\[::-1\\]$",
-                    "hint": "Start from JFK. Reverse result to get correct order.",
+                    "hint": "All itineraries must start from JFK. We reverse 'res' because we built it backwards.",
                     "solutionCode": "    dfs(\"JFK\")\n    return res[::-1]"
                 }
             ]
