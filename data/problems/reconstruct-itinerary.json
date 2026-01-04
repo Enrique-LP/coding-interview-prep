@@ -26,7 +26,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "DFS",
+            "name": "Brute Force",
             "description": "DFS with backtracking.",
             "steps": [
                 {
@@ -65,7 +65,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Hierholzer's Algorithm",
+            "name": "Optimal",
             "description": "Find Eulerian path.",
             "steps": [
                 {
@@ -78,14 +78,30 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Build graph.",
-                    "placeholderCode": "    adj = collections.defaultdict(list)\n    for src, dst in sorted(tickets, reverse=True):\n        adj[src].append(dst)",
-                    "validationRegex": "^\\s+adj\\s*=\\s*collections\\.defaultdict\\(list\\)\\s*for\\s+src,\\s*dst\\s+in\\s+sorted\\(tickets,\\s*reverse=True\\):\\s*adj\\[src\\]\\.append\\(dst\\)$",
-                    "hint": "Sort tickets in reverse order so we can pop from end (O(1)) for lexical order.",
-                    "solutionCode": "    adj = collections.defaultdict(list)\n    for src, dst in sorted(tickets, reverse=True):\n        adj[src].append(dst)"
+                    "instruction": "Initialize the adjacency list as a defaultdict of lists.",
+                    "placeholderCode": "    adj = collections.defaultdict(list)",
+                    "validationRegex": "^\\s+adj\\s*=\\s*collections\\.defaultdict\\(list\\)$",
+                    "hint": "Using defaultdict prevents errors when accessing missing keys.",
+                    "solutionCode": "    adj = collections.defaultdict(list)"
                 },
                 {
                     "id": 3,
+                    "instruction": "Iterate through sorted tickets in reverse order.",
+                    "placeholderCode": "    for src, dst in sorted(tickets, reverse=True):",
+                    "validationRegex": "^\\s+for\\s+src,\\s*dst\\s+in\\s+sorted\\(tickets,\\s*reverse=True\\):$",
+                    "hint": "Reverse sorting allows O(1) popping from the end to get the smallest lexical destination first.",
+                    "solutionCode": "    for src, dst in sorted(tickets, reverse=True):"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Add each destination to the source's list in the adjacency map.",
+                    "placeholderCode": "        adj[src].append(dst)",
+                    "validationRegex": "^\\s+adj\\[src\\]\\.append\\(dst\\)$",
+                    "hint": "Build the graph connections.",
+                    "solutionCode": "        adj[src].append(dst)"
+                },
+                {
+                    "id": 5,
                     "instruction": "Define DFS.",
                     "placeholderCode": "    res = []\n    def dfs(src):\n        while adj[src]:\n            dst = adj[src].pop()\n            dfs(dst)\n        res.append(src)",
                     "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(src\\):\\s*while\\s+adj\\[src\\]:\\s*dst\\s*=\\s*adj\\[src\\]\\.pop\\(\\)\\s*dfs\\(dst\\)\\s*res\\.append\\(src\\)$",
@@ -93,7 +109,7 @@
                     "solutionCode": "    res = []\n    def dfs(src):\n        while adj[src]:\n            dst = adj[src].pop()\n            dfs(dst)\n        res.append(src)"
                 },
                 {
-                    "id": 4,
+                    "id": 6,
                     "instruction": "Call DFS and reverse.",
                     "placeholderCode": "    dfs(\"JFK\")\n    return res[::-1]",
                     "validationRegex": "^\\s+dfs\\(\"JFK\"\\)\\s*return\\s+res\\[::-1\\]$",
