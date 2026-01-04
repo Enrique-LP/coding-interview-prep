@@ -107,14 +107,70 @@
                 },
                 {
                     "id": 6,
-                    "instruction": "Iterate through the numbers in reverse order.",
-                    "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):\n        nextDP = set()\n        for t in dp:\n            if (t + nums[i]) == target:\n                return True\n            nextDP.add(t + nums[i])\n            nextDP.add(t)\n        dp = nextDP",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*nextDP\\s*=\\s*set\\(\\)\\s*for\\s+t\\s+in\\s+dp:\\s*if\\s*\\(t\\s*\\+\\s*nums\\[i\\]\\)\\s*==\\s*target:\\s*return\\s+True\\s*nextDP\\.add\\(t\\s*\\+\\s*nums\\[i\\]\\)\\s*nextDP\\.add\\(t\\)\\s*dp\\s*=\\s*nextDP$",
-                    "hint": "For each number, iterate through the sums in 'dp' and create a new set 'nextDP' with updated sums. If target is reached, return True.",
-                    "solutionCode": "    for i in range(len(nums) - 1, -1, -1):\n        nextDP = set()\n        for t in dp:\n            if (t + nums[i]) == target:\n                return True\n            nextDP.add(t + nums[i])\n            nextDP.add(t)\n        dp = nextDP"
+                    "instruction": "Start a loop to iterate through the numbers in 'nums' in reverse order.",
+                    "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "Iterating backwards is often a convention in DP to avoid using the same element multiple times if we used a 1D array, though here we use a set.",
+                    "solutionCode": "    for i in range(len(nums) - 1, -1, -1):"
                 },
                 {
                     "id": 7,
+                    "instruction": "Initialize a temporary set 'nextDP' for the next generation of sums.",
+                    "placeholderCode": "        nextDP = set()",
+                    "validationRegex": "^\\s+nextDP\\s*=\\s*set\\(\\)$",
+                    "hint": "This set will combine current sums with the new possibilities from the current number.",
+                    "solutionCode": "        nextDP = set()"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Iterate through each reachable sum already in the 'dp' set.",
+                    "placeholderCode": "        for t in dp:",
+                    "validationRegex": "^\\s+for\\s+t\\s+in\\s+dp:$",
+                    "hint": "Each 't' represents a sum we've successfully formed so far.",
+                    "solutionCode": "        for t in dp:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if adding the current number to sum 't' equals the target.",
+                    "placeholderCode": "            if (t + nums[i]) == target:",
+                    "validationRegex": "^\\s+if\\s*\\(t\\s*\\+\\s*nums\\[i\\]\\)\\s*==\\s*target:$",
+                    "hint": "If this matches, we've found a valid partition.",
+                    "solutionCode": "            if (t + nums[i]) == target:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Return True if the target sum is found.",
+                    "placeholderCode": "                return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "An early escape improves performance.",
+                    "solutionCode": "                return True"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Add the new sum (including current number) to 'nextDP'.",
+                    "placeholderCode": "            nextDP.add(t + nums[i])",
+                    "validationRegex": "^\\s+nextDP\\.add\\(t\\s*\\+\\s*nums\\[i\\]\\)$",
+                    "hint": "This represents choosing to include 'nums[i]' in the subset.",
+                    "solutionCode": "            nextDP.add(t + nums[i])"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Add the existing sum 't' (without current number) to 'nextDP'.",
+                    "placeholderCode": "            nextDP.add(t)",
+                    "validationRegex": "^\\s+nextDP\\.add\\(t\\)$",
+                    "hint": "This represents choosing to skip 'nums[i]' for this subset.",
+                    "solutionCode": "            nextDP.add(t)"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Update the main 'dp' set with the new collection of sums.",
+                    "placeholderCode": "        dp = nextDP",
+                    "validationRegex": "^\\s+dp\\s*=\\s*nextDP$",
+                    "hint": "The 'dp' set now contains all possible sums after processing this element.",
+                    "solutionCode": "        dp = nextDP"
+                },
+                {
+                    "id": 14,
                     "instruction": "Return whether the target sum was reached.",
                     "placeholderCode": "    return True if target in dp else False",
                     "validationRegex": "^\\s+return\\s+True\\s+if\\s+target\\s+in\\s+dp\\s+else\\s+False$",
