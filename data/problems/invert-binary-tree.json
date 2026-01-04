@@ -21,7 +21,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
+            "name": "Brute Force",
             "description": "Swap children recursively.",
             "steps": [
                 {
@@ -76,7 +76,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Iterative (BFS)",
+            "name": "Optimal",
             "description": "Use a queue to swap children level by level.",
             "steps": [
                 {
@@ -113,14 +113,22 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Pop the current node and swap its children.",
-                    "placeholderCode": "        node = queue.pop(0)\n        node.left, node.right = node.right, node.left",
-                    "validationRegex": "^\\s+node\\s*=\\s*queue\\.pop\\(0\\)\\s*node\\.left,\\s*node\\.right\\s*=\\s*node\\.right,\\s*node\\.left$",
-                    "hint": "Pop node and swap children.",
-                    "solutionCode": "        node = queue.pop(0)\n        node.left, node.right = node.right, node.left"
+                    "instruction": "Pop the current node from the front of the queue.",
+                    "placeholderCode": "        node = queue.pop(0)",
+                    "validationRegex": "^\\s+node\\s*=\\s*queue\\.pop\\(0\\)$",
+                    "hint": "Get the next node to process.",
+                    "solutionCode": "        node = queue.pop(0)"
                 },
                 {
                     "id": 6,
+                    "instruction": "Swap the left and right children of the current node.",
+                    "placeholderCode": "        node.left, node.right = node.right, node.left",
+                    "validationRegex": "^\\s+node\\.left,\\s*node\\.right\\s*=\\s*node\\.right,\\s*node\\.left$",
+                    "hint": "Interchange the pointers to invert this node.",
+                    "solutionCode": "        node.left, node.right = node.right, node.left"
+                },
+                {
+                    "id": 7,
                     "instruction": "Add children to the queue if they exist.",
                     "placeholderCode": "        if node.left: queue.append(node.left)\n        if node.right: queue.append(node.right)",
                     "validationRegex": "^\\s+if\\s+node\\.left:\\s*queue\\.append\\(node\\.left\\)\\s*if\\s+node\\.right:\\s*queue\\.append\\(node\\.right\\)$",
@@ -128,7 +136,7 @@
                     "solutionCode": "        if node.left: queue.append(node.left)\n        if node.right: queue.append(node.right)"
                 },
                 {
-                    "id": 7,
+                    "id": 8,
                     "instruction": "Return the root.",
                     "placeholderCode": "    return root",
                     "validationRegex": "^\\s+return\\s+root$",
