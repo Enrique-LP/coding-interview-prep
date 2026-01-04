@@ -21,7 +21,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
+            "name": "Brute Force",
             "description": "Check if current nodes match and recurse.",
             "steps": [
                 {
@@ -60,7 +60,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Recursive",
+            "name": "Optimal",
             "description": "Same as brute force, O(n) is optimal.",
             "steps": [
                 {
@@ -73,26 +73,42 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Base case: if both are None, they are same.",
+                    "instruction": "Handle the case where both nodes are None.",
                     "placeholderCode": "    if not p and not q:\n        return True",
                     "validationRegex": "^\\s+if\\s+not\\s+p\\s+and\\s+not\\s+q:\\s*return\\s+True$",
-                    "hint": "Return True if both trees are empty.",
+                    "hint": "If both reach None at the same time, this branch is identical.",
                     "solutionCode": "    if not p and not q:\n        return True"
                 },
                 {
                     "id": 3,
-                    "instruction": "Base case: if one is None or values differ, they are not same.",
-                    "placeholderCode": "    if not p or not q or p.val != q.val:\n        return False",
-                    "validationRegex": "^\\s+if\\s+not\\s+p\\s+or\\s+not\\s+q\\s+or\\s+p\\.val\\s*!=\\s*q\\.val:\\s*return\\s+False$",
-                    "hint": "Return False if one is empty or values don't match.",
-                    "solutionCode": "    if not p or not q or p.val != q.val:\n        return False"
+                    "instruction": "Check if one node exists and the other doesn't.",
+                    "placeholderCode": "    if not p or not q:",
+                    "validationRegex": "^\\s+if\\s+not\\s+p\\s+or\\s+not\\s+q:$",
+                    "hint": "Since we already checked if BOTH are None, if this condition is True, it means only ONE is None.",
+                    "solutionCode": "    if not p or not q:"
                 },
                 {
                     "id": 4,
-                    "instruction": "Recursively check left and right subtrees.",
+                    "instruction": "Return False if the structural comparison fails.",
+                    "placeholderCode": "        return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "Mismatching structures mean the trees are not the same.",
+                    "solutionCode": "        return False"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if the values of the current nodes are different.",
+                    "placeholderCode": "    if p.val != q.val:\n        return False",
+                    "validationRegex": "^\\s+if\\s+p\\.val\\s*!=\\s*q\\.val:\\s*return\\s+False$",
+                    "hint": "Even if structure matches, values must be equal for the trees to be the same.",
+                    "solutionCode": "    if p.val != q.val:\n        return False"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Recursively check if both the left and right subtrees are identical.",
                     "placeholderCode": "    return is_same_tree(p.left, q.left) and is_same_tree(p.right, q.right)",
                     "validationRegex": "^\\s+return\\s+is_same_tree\\(p\\.left,\\s*q\\.left\\)\\s+and\\s+is_same_tree\\(p\\.right,\\s*q\\.right\\)$",
-                    "hint": "Check if left subtrees and right subtrees are the same.",
+                    "hint": "The combined result must be True for all nodes in the tree.",
                     "solutionCode": "    return is_same_tree(p.left, q.left) and is_same_tree(p.right, q.right)"
                 }
             ]
