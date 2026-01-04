@@ -26,7 +26,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Topological Sort",
+            "name": "Brute Force",
             "description": "Build graph and topological sort.",
             "steps": [
                 {
@@ -65,7 +65,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Topological Sort",
+            "name": "Optimal",
             "description": "Same as brute force.",
             "steps": [
                 {
@@ -78,22 +78,94 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Build adjacency list.",
-                    "placeholderCode": "    adj = {c: set() for w in words for c in w}\n    for i in range(len(words) - 1):\n        w1, w2 = words[i], words[i + 1]\n        minLen = min(len(w1), len(w2))\n        if len(w1) > len(w2) and w1[:minLen] == w2[:minLen]:\n            return \"\"\n        for j in range(minLen):\n            if w1[j] != w2[j]:\n                adj[w1[j]].add(w2[j])\n                break",
-                    "validationRegex": "^\\s+adj\\s*=\\s*{c:\\s*set\\(\\)\\s+for\\s+w\\s+in\\s+words\\s+for\\s+c\\s+in\\s+w}\\s*for\\s+i\\s+in\\s+range\\(len\\(words\\)\\s*-\\s*1\\):\\s*w1,\\s*w2\\s*=\\s*words\\[i\\],\\s*words\\[i\\s*\\+\\s*1\\]\\s*minLen\\s*=\\s*min\\(len\\(w1\\),\\s*len\\(w2\\)\\)\\s*if\\s+len\\(w1\\)\\s*>\\s+len\\(w2\\)\\s+and\\s+w1\\[:minLen\\]\\s*==\\s*w2\\[:minLen\\]:\\s*return\\s*\"\"\\s*for\\s+j\\s+in\\s+range\\(minLen\\):\\s*if\\s+w1\\[j\\]\\s*!=\\s*w2\\[j\\]:\\s*adj\\[w1\\[j\\]\\]\\.add\\(w2\\[j\\]\\)\\s*break$",
-                    "hint": "Compare adjacent words. The first differing character determines the order. If a word is a prefix of the next word but longer, it's invalid.\\n\\nExample:\\nWords=[\"wrt\", \"wrf\", \"er\"].\\nCompare \"wrt\", \"wrf\": 't' != 'f'. Edge t->f.\\nCompare \"wrf\", \"er\": 'w' != 'e'. Edge w->e.",
-                    "solutionCode": "    adj = {c: set() for w in words for c in w}\n    for i in range(len(words) - 1):\n        w1, w2 = words[i], words[i + 1]\n        minLen = min(len(w1), len(w2))\n        if len(w1) > len(w2) and w1[:minLen] == w2[:minLen]:\n            return \"\"\n        for j in range(minLen):\n            if w1[j] != w2[j]:\n                adj[w1[j]].add(w2[j])\n                break"
+                    "instruction": "Initialize the adjacency list with an empty set for every unique character in all words.",
+                    "placeholderCode": "    adj = {c: set() for w in words for c in w}",
+                    "validationRegex": "^\\s+adj\\s*=\\s*{c:\\s*set\\(\\)\\s+for\\s+w\\s+in\\s+words\\s+for\\s+c\\s+in\\s+w}$",
+                    "hint": "This ensures every character mentioned in the input is a node in the graph.",
+                    "solutionCode": "    adj = {c: set() for w in words for c in w}"
                 },
                 {
                     "id": 3,
-                    "instruction": "DFS for topological sort.",
-                    "placeholderCode": "    visit = {}\n    res = []\n    def dfs(c):\n        if c in visit:\n            return visit[c]\n        visit[c] = True\n        for nei in adj[c]:\n            if dfs(nei):\n                return True\n        visit[c] = False\n        res.append(c)\n        return False",
-                    "validationRegex": "^\\s+visit\\s*=\\s*{}\\s*res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(c\\):\\s*if\\s+c\\s+in\\s+visit:\\s*return\\s+visit\\[c\\]\\s*visit\\[c\\]\\s*=\\s*True\\s*for\\s+nei\\s+in\\s+adj\\[c\\]:\\s*if\\s+dfs\\(nei\\):\\s*return\\s+True\\s*visit\\[c\\]\\s*=\\s*False\\s*res\\.append\\(c\\)\\s*return\\s+False$",
-                    "hint": "Use DFS to detect cycles and build the topological sort. `visit` stores state: True (visiting/current path), False (visited/fully processed).\\n\\nExample:\\nDFS('w'): Mark 'w' Visiting.\\nDFS('e'): Visiting... Visited. Add 'e' to Res.\\nBack to 'w': Mark 'w' Visited. Add 'w' to Res.\\nResult (reversed later): ['e', 'w'].",
-                    "solutionCode": "    visit = {}\n    res = []\n    def dfs(c):\n        if c in visit:\n            return visit[c]\n        visit[c] = True\n        for nei in adj[c]:\n            if dfs(nei):\n                return True\n        visit[c] = False\n        res.append(c)\n        return False"
+                    "instruction": "Start a loop to iterate through all adjacent pairs of words in the dictionary.",
+                    "placeholderCode": "    for i in range(len(words) - 1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(words\\)\\s*-\\s*1\\):$",
+                    "hint": "Comparing words[i] and words[i+1] reveals ordering rules.",
+                    "solutionCode": "    for i in range(len(words) - 1):"
                 },
                 {
                     "id": 4,
+                    "instruction": "Extract the current word 'w1' and the next word 'w2'.",
+                    "placeholderCode": "        w1, w2 = words[i], words[i + 1]",
+                    "validationRegex": "^\\s+w1,\\s*w2\\s*=\\s*words\\[i\\],\\s*words\\[i\\s*\\+\\s*1\\]$",
+                    "hint": "These are the two strings to compare character by character.",
+                    "solutionCode": "        w1, w2 = words[i], words[i + 1]"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Find the minimum length between 'w1' and 'w2' to avoid index out of bounds.",
+                    "placeholderCode": "        minLen = min(len(w1), len(w2))",
+                    "validationRegex": "^\\s+minLen\\s*=\\s*min\\(len\\(w1\\),\\s*len\\(w2\\)\\)$",
+                    "hint": "Comparison only happens over the shared prefix/length.",
+                    "solutionCode": "        minLen = min(len(w1), len(w2))"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check the prefix condition: if 'w1' is longer than 'w2' and they share the same prefix, the order is invalid.",
+                    "placeholderCode": "        if len(w1) > len(w2) and w1[:minLen] == w2[:minLen]:",
+                    "validationRegex": "^\\s+if\\s+len\\(w1\\)\\s*>\\s+len\\(w2\\)\\s+and\\s+w1\\[:minLen\\]\\s*==\\s*w2\\[:minLen\\]:$",
+                    "hint": "A sorted dictionary cannot have 'apple' before 'app'.",
+                    "solutionCode": "        if len(w1) > len(w2) and w1[:minLen] == w2[:minLen]:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return an empty string if the prefix condition fails.",
+                    "placeholderCode": "            return \"\"",
+                    "validationRegex": "^\\s+return\\s*\"\"$",
+                    "hint": "This signifies an inconsistent ordering in the input.",
+                    "solutionCode": "            return \"\""
+                },
+                {
+                    "id": 8,
+                    "instruction": "Start a loop to compare characters of 'w1' and 'w2' up to the minimum length.",
+                    "placeholderCode": "        for j in range(minLen):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(minLen\\):$",
+                    "hint": "Scan until a difference is found.",
+                    "solutionCode": "        for j in range(minLen):"
+                },
+                {
+                    "id": 9,
+                    "instruction": "If the characters at index 'j' are different, it defines an order.",
+                    "placeholderCode": "            if w1[j] != w2[j]:",
+                    "validationRegex": "^\\s+if\\s+w1\\[j\\]\\s*!=\\s*w2\\[j\\]:$",
+                    "hint": "The first differing character tells us that 'w1[j]' comes before 'w2[j]'.",
+                    "solutionCode": "            if w1[j] != w2[j]:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Add 'w2[j]' as a neighbor of 'w1[j]' in the adjacency list.",
+                    "placeholderCode": "                adj[w1[j]].add(w2[j])",
+                    "validationRegex": "^\\s+adj\\[w1\\[j\\]\\]\\.add\\(w2\\[j\\]\\)$",
+                    "hint": "Represent 'w1[j]' -> 'w2[j]' as a directed edge in the graph.",
+                    "solutionCode": "                adj[w1[j]].add(w2[j])"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Break the loop as only the first differing character matters for the ordering.",
+                    "placeholderCode": "                break",
+                    "validationRegex": "^\\s+break$",
+                    "hint": "Subsequent characters do not provide information about the relative order of these two words.",
+                    "solutionCode": "                break"
+                },
+                {
+                    "id": 12,
+                    "instruction": "DFS for topological sort.",
+                    "placeholderCode": "    visit = {}\n    res = []\n    def dfs(c):\n        if c in visit:\n            return visit[c]\n        visit[c] = True\n        for nei in adj[c]:\n            if dfs(nei):\n                return True\n        visit[c] = False\n        res.append(c)\n        return False",
+                    "validationRegex": "^\\s+visit\\s*=\\s*{}\\s*res\\s*=\\s*\\[\\]\\s*def\\s+dfs\\(c\\):\\s*if\\s+c\\s+in\\s+visit:\\s*return\\s+visit\\[c\\]\\s*visit\\[c\\]\\s*=\\s*True\\s*for\\s+nei\\s+in\\s+adj\\[c\\]:\\s*if\\s+dfs\\(nei\\):\\s*return\\s+True\\s*visit\\[c\\]\\s*=\\s*False\\s*res\\.append\\(c\\)\\s*return\\s+False$",
+                    "hint": "Use DFS to detect cycles and build the topological sort. `visit` stores state: True (visiting/current path), False (visited/fully processed).",
+                    "solutionCode": "    visit = {}\n    res = []\n    def dfs(c):\n        if c in visit:\n            return visit[c]\n        visit[c] = True\n        for nei in adj[c]:\n            if dfs(nei):\n                return True\n        visit[c] = False\n        res.append(c)\n        return False"
+                },
+                {
+                    "id": 13,
                     "instruction": "Call DFS.",
                     "placeholderCode": "    for c in adj:\n        if dfs(c):\n            return \"\"\n    res.reverse()\n    return \"\".join(res)",
                     "validationRegex": "^\\s+for\\s+c\\s+in\\s+adj:\\s*if\\s+dfs\\(c\\):\\s*return\\s*\"\"\\s*res\\.reverse\\(\\)\\s*return\\s*\"\"\\.join\\(res\\)$",
