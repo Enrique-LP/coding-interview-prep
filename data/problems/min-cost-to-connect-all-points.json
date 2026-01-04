@@ -138,11 +138,107 @@
                 },
                 {
                     "id": 11,
-                    "instruction": "Run Prim's algorithm to find the minimum cost.",
-                    "placeholderCode": "    res = 0\n    visit = set()\n    minH = [[0, 0]]\n    while len(visit) < N:\n        cost, i = heapq.heappop(minH)\n        if i in visit:\n            continue\n        res += cost\n        visit.add(i)\n        for neiCost, nei in adj[i]:\n            if nei not in visit:\n                heapq.heappush(minH, [neiCost, nei])\n    return res",
-                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*visit\\s*=\\s*set\\(\\)\\s*minH\\s*=\\s*\\[\\[0,\\s*0\\]\\]\\s*while\\s+len\\(visit\\)\\s*<\\s*N:\\s*cost,\\s*i\\s*=\\s*heapq\\.heappop\\(minH\\)\\s*if\\s+i\\s+in\\s+visit:\\s*continue\\s*res\\s*\\+=\\s*cost\\s*visit\\.add\\(i\\)\\s*for\\s+neiCost,\\s*nei\\s+in\\s+adj\\[i\\]:\\s*if\\s+nei\\s+not\\s+in\\s+visit:\\s*heapq\\.heappush\\(minH,\\s*\\[neiCost,\\s*nei\\]\\)\\s*return\\s+res$",
-                    "hint": "Prim's algorithm: Start with node 0 in min-heap. Pop min cost edge, add to MST if not visited. Add neighbors to heap.\\n\\nExample:\\nPoints=[(0,0), (2,2), (3,10)].\\nStart (0,0). MinH=[(0, 0)].\\nPop (0, 0). Visit {0}. Add edges: (0,1,cost 4), (0,2,cost 13).\\nPop (0,1). Visit {0,1}. Cost+=4. Add edges from 1: (1,2,cost 9).\\nPop (1,2). Visit {0,1,2}. Cost+=9. Total=13.",
-                    "solutionCode": "    res = 0\n    visit = set()\n    minH = [[0, 0]]\n    while len(visit) < N:\n        cost, i = heapq.heappop(minH)\n        if i in visit:\n            continue\n        res += cost\n        visit.add(i)\n        for neiCost, nei in adj[i]:\n            if nei not in visit:\n                heapq.heappush(minH, [neiCost, nei])\n    return res"
+                    "instruction": "Initialize the total cost 'res' to 0.",
+                    "placeholderCode": "    res = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*0$",
+                    "hint": "This will store the sum of all Manhattan distances in our MST.",
+                    "solutionCode": "    res = 0"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Initialize an empty set 'visit' to track connected points.",
+                    "placeholderCode": "    visit = set()",
+                    "validationRegex": "^\\s+visit\\s*=\\s*set\\(\\)$",
+                    "hint": "A set allows for O(1) average time complexity for lookups.",
+                    "solutionCode": "    visit = set()"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Initialize the min-heap with a starting edge: [cost 0, point index 0].",
+                    "placeholderCode": "    minH = [[0, 0]]",
+                    "validationRegex": "^\\s+minH\\s*=\\s*\\[\\[0,\\s*0\\]\\]$",
+                    "hint": "We start from the first point (index 0) with a cost of 0 to include it.",
+                    "solutionCode": "    minH = [[0, 0]]"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Start a loop that continues until all 'N' points are visited.",
+                    "placeholderCode": "    while len(visit) < N:",
+                    "validationRegex": "^\\s+while\\s+len\\(visit\\)\\s*<\\s*N:$",
+                    "hint": "The MST for N points will have exactly N nodes and N-1 edges.",
+                    "solutionCode": "    while len(visit) < N:"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Pop the edge with the minimum cost from the heap.",
+                    "placeholderCode": "        cost, i = heapq.heappop(minH)",
+                    "validationRegex": "^\\s+cost,\\s*i\\s*=\\s*heapq\\.heappop\\(minH\\)$",
+                    "hint": "The heap always gives us the shortest available edge connecting to our current MST.",
+                    "solutionCode": "        cost, i = heapq.heappop(minH)"
+                },
+                {
+                    "id": 16,
+                    "instruction": "If the point 'i' is already in 'visit', skip to the next iteration.",
+                    "placeholderCode": "        if i in visit:",
+                    "validationRegex": "^\\s+if\\s+i\\s+in\\s+visit:$",
+                    "hint": "This avoids forming cycles or re-visiting points.",
+                    "solutionCode": "        if i in visit:"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Continue the loop if the point was skipped.",
+                    "placeholderCode": "            continue",
+                    "validationRegex": "^\\s+continue$",
+                    "hint": "The 'continue' keyword skips the rest of the current loop iteration.",
+                    "solutionCode": "            continue"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Add the cost of the current edge to the total result.",
+                    "placeholderCode": "        res += cost",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*cost$",
+                    "hint": "The cost represents the Manhattan distance to this new point.",
+                    "solutionCode": "        res += cost"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Mark the point 'i' as visited.",
+                    "placeholderCode": "        visit.add(i)",
+                    "validationRegex": "^\\s+visit\\.add\\(i\\)$",
+                    "hint": "Adding it to the set prevents us from taking other (more expensive) edges to this same point.",
+                    "solutionCode": "        visit.add(i)"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Iterate through every neighbor 'nei' of the current point.",
+                    "placeholderCode": "        for neiCost, nei in adj[i]:",
+                    "validationRegex": "^\\s+for\\s+neiCost,\\s*nei\\s+in\\s+adj\\[i\\]:$",
+                    "hint": "We are looking for new potential edges to points not yet in our MST.",
+                    "solutionCode": "        for neiCost, nei in adj[i]:"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Check if the neighbor 'nei' has not been visited yet.",
+                    "placeholderCode": "            if nei not in visit:",
+                    "validationRegex": "^\\s+if\\s+nei\\s+not\\s+in\\s+visit:$",
+                    "hint": "We only care about neighbors that are still outside our connected component.",
+                    "solutionCode": "            if nei not in visit:"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Push the neighbor's cost and index into the min-heap.",
+                    "placeholderCode": "                heapq.heappush(minH, [neiCost, nei])",
+                    "validationRegex": "^\\s+heapq\\.heappush\\(minH,\\s*\\[neiCost,\\s*nei\\]\\)$",
+                    "hint": "This adds a new candidate edge to our heap.",
+                    "solutionCode": "                heapq.heappush(minH, [neiCost, nei])"
+                },
+                {
+                    "id": 23,
+                    "instruction": "Return the final total cost 'res'.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Once the loop finishes, we have connected all points with minimum total cost.",
+                    "solutionCode": "    return res"
                 }
             ]
         }
