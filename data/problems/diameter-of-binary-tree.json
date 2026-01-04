@@ -122,14 +122,22 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Recursively find the height of the left and right subtrees.",
-                    "placeholderCode": "        left = dfs(root.left)\n        right = dfs(root.right)",
-                    "validationRegex": "^\\s+left\\s*=\\s*dfs\\(root\\.left\\)\\s*right\\s*=\\s*dfs\\(root\\.right\\)$",
-                    "hint": "Get heights of children.",
-                    "solutionCode": "        left = dfs(root.left)\n        right = dfs(root.right)"
+                    "instruction": "Recursively call 'dfs' on the left child to find its height.",
+                    "placeholderCode": "        left = dfs(root.left)",
+                    "validationRegex": "^\\s+left\\s*=\\s*dfs\\(root\\.left\\)$",
+                    "hint": "Traverse down the left subtree.",
+                    "solutionCode": "        left = dfs(root.left)"
                 },
                 {
                     "id": 6,
+                    "instruction": "Recursively call 'dfs' on the right child to find its height.",
+                    "placeholderCode": "        right = dfs(root.right)",
+                    "validationRegex": "^\\s+right\\s*=\\s*dfs\\(root\\.right\\)$",
+                    "hint": "Traverse down the right subtree.",
+                    "solutionCode": "        right = dfs(root.right)"
+                },
+                {
+                    "id": 7,
                     "instruction": "Update the maximum diameter found so far.",
                     "placeholderCode": "        res[0] = max(res[0], left + right + 2)",
                     "validationRegex": "^\\s+res\\[0\\]\\s*=\\s*max\\(res\\[0\\],\\s*left\\s*\\+\\s*right\\s*\\+\\s*2\\)$",
@@ -137,7 +145,7 @@
                     "solutionCode": "        res[0] = max(res[0], left + right + 2)"
                 },
                 {
-                    "id": 7,
+                    "id": 8,
                     "instruction": "Return the height of the current node.",
                     "placeholderCode": "        return 1 + max(left, right)",
                     "validationRegex": "^\\s+return\\s+1\\s*\\+\\s*max\\(left,\\s*right\\)$",
@@ -145,7 +153,7 @@
                     "solutionCode": "        return 1 + max(left, right)"
                 },
                 {
-                    "id": 8,
+                    "id": 9,
                     "instruction": "Call the 'dfs' function and return the final maximum diameter.",
                     "placeholderCode": "    dfs(root)\n    return res[0]",
                     "validationRegex": "^\\s+dfs\\(root\\)\\s*return\\s+res\\[0\\]$",
