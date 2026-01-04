@@ -254,11 +254,43 @@
                 },
                 {
                     "id": 24,
-                    "instruction": "Apply DFS to every character node to build the complete topological order.",
-                    "placeholderCode": "    for c in adj:\n        if dfs(c):\n            return \"\"\n    res.reverse()\n    return \"\".join(res)",
-                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+adj:\\s*if\\s+dfs\\(c\\):\\s*return\\s*\"\"\\s*res\\.reverse\\(\\)\\s*return\\s*\"\"\\.join\\(res\\)$",
-                    "hint": "Iterate over all keys in 'adj'. If any DFS returns True, there's a cycle; otherwise, reverse 'res' and join it into a string.",
-                    "solutionCode": "    for c in adj:\n        if dfs(c):\n            return \"\"\n    res.reverse()\n    return \"\".join(res)"
+                    "instruction": "Initiate a loop to apply DFS to every character node in the dictionary.",
+                    "placeholderCode": "    for c in adj:",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+adj:$",
+                    "hint": "Ensure all components of the graph are covered, including disconnected ones.",
+                    "solutionCode": "    for c in adj:"
+                },
+                {
+                    "id": 25,
+                    "instruction": "Call the 'dfs' function for each character and check if a cycle is detected.",
+                    "placeholderCode": "        if dfs(c):",
+                    "validationRegex": "^\\s+if\\s+dfs\\(c\\):$",
+                    "hint": "The DFS returns True if there's a contradiction in the character order.",
+                    "solutionCode": "        if dfs(c):"
+                },
+                {
+                    "id": 26,
+                    "instruction": "Return an empty string if a cycle is detected.",
+                    "placeholderCode": "            return \"\"",
+                    "validationRegex": "^\\s+return\\s*\"\"$",
+                    "hint": "An empty string indicates that no valid ordering exists for the alien words.",
+                    "solutionCode": "            return \"\""
+                },
+                {
+                    "id": 27,
+                    "instruction": "Reverse the 'res' list to obtain the correct topological order.",
+                    "placeholderCode": "    res.reverse()",
+                    "validationRegex": "^\\s+res\\.reverse\\(\\)$",
+                    "hint": "The topological sort order is the reverse of the post-order sequence.",
+                    "solutionCode": "    res.reverse()"
+                },
+                {
+                    "id": 28,
+                    "instruction": "Join the characters in 'res' into a single string and return it.",
+                    "placeholderCode": "    return \"\".join(res)",
+                    "validationRegex": "^\\s+return\\s*\"\"\\.join\\(res\\)$",
+                    "hint": "The final string represents the lexicographical order of the new alien language.",
+                    "solutionCode": "    return \"\".join(res)"
                 }
             ]
         }
