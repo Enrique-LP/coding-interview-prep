@@ -109,11 +109,99 @@
                 },
                 {
                     "id": 7,
-                    "instruction": "Run Dijkstra's algorithm.",
-                    "placeholderCode": "    while minH:\n        t, r, c = heapq.heappop(minH)\n        if r == N - 1 and c == N - 1:\n            return t\n        for dr, dc in directions:\n            neiR, neiC = r + dr, c + dc\n            if (neiR < 0 or neiC < 0 or \n                neiR == N or neiC == N or\n                (neiR, neiC) in visit):\n                continue\n            visit.add((neiR, neiC))\n            heapq.heappush(minH, [max(t, grid[neiR][neiC]), neiR, neiC])",
-                    "validationRegex": "^\\s+while\\s+minH:\\s*t,\\s*r,\\s*c\\s*=\\s*heapq\\.heappop\\(minH\\)\\s*if\\s+r\\s*==\\s*N\\s*-\\s*1\\s+and\\s+c\\s*==\\s*N\\s*-\\s*1:\\s*return\\s+t\\s*for\\s+dr,\\s*dc\\s+in\\s+directions:\\s*neiR,\\s*neiC\\s*=\\s*r\\s*\\+\\s*dr,\\s*c\\s*\\+\\s*dc\\s*if\\s*\\(neiR\\s*<\\s*0\\s+or\\s+neiC\\s*<\\s*0\\s+or\\s+neiR\\s*==\\s*N\\s+or\\s+neiC\\s*==\\s*N\\s+or\\s*\\(neiR,\\s*neiC\\)\\s+in\\s+visit\\):\\s*continue\\s*visit\\.add\\(\\(\\(neiR,\\s*neiC\\)\\)\\)\\s*heapq\\.heappush\\(minH,\\s*\\[max\\(t,\\s*grid\\[neiR\\]\\[neiC\\]\\),\\s*neiR,\\s*neiC\\]\\)$",
-                    "hint": "Pop the lowest max-elevation path. Explore neighbours and push into heap with updated max elevation.",
-                    "solutionCode": "    while minH:\n        t, r, c = heapq.heappop(minH)\n        if r == N - 1 and c == N - 1:\n            return t\n        for dr, dc in directions:\n            neiR, neiC = r + dr, c + dc\n            if (neiR < 0 or neiC < 0 or \n                neiR == N or neiC == N or\n                (neiR, neiC) in visit):\n                continue\n            visit.add((neiR, neiC))\n            heapq.heappush(minH, [max(t, grid[neiR][neiC]), neiR, neiC])"
+                    "instruction": "Initiate the while loop that runs as long as the min-heap is not empty.",
+                    "placeholderCode": "    while minH:",
+                    "validationRegex": "^\\s+while\\s+minH:$",
+                    "hint": "The loop continues until we find the path to the target.",
+                    "solutionCode": "    while minH:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Pop the cell with the lowest maximum elevation encountered so far.",
+                    "placeholderCode": "        t, r, c = heapq.heappop(minH)",
+                    "validationRegex": "^\\s+t,\\s*r,\\s*c\\s*=\\s*heapq\\.heappop\\(minH\\)$",
+                    "hint": "'t' is the time (max elevation), 'r' and 'c' are row and column.",
+                    "solutionCode": "        t, r, c = heapq.heappop(minH)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if the current cell is the bottom-right corner (N-1, N-1).",
+                    "placeholderCode": "        if r == N - 1 and c == N - 1:",
+                    "validationRegex": "^\\s+if\\s+r\\s*==\\s*N\\s*-\\s*1\\s+and\\s+c\\s*==\\s*N\\s*-\\s*1:$",
+                    "hint": "This is our target destination.",
+                    "solutionCode": "        if r == N - 1 and c == N - 1:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "If the target is reached, return the recorded time 't'.",
+                    "placeholderCode": "            return t",
+                    "validationRegex": "^\\s+return\\s+t$",
+                    "hint": "Dijkstra's guarantees this is the minimum time required.",
+                    "solutionCode": "            return t"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Iterate through the four possible movement directions.",
+                    "placeholderCode": "        for dr, dc in directions:",
+                    "validationRegex": "^\\s+for\\s+dr,\\s*dc\\s+in\\s+directions:$",
+                    "hint": "We check neighbors in up, down, left, and right directions.",
+                    "solutionCode": "        for dr, dc in directions:"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Calculate the coordinates of the neighbor cell.",
+                    "placeholderCode": "            neiR, neiC = r + dr, c + dc",
+                    "validationRegex": "^\\s+neiR,\\s*neiC\\s*=\\s*r\\s*\\+\\s*dr,\\s*c\\s*\\+\\s*dc$",
+                    "hint": "Add the direction offset to the current row and column.",
+                    "solutionCode": "            neiR, neiC = r + dr, c + dc"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Check if the neighbor cell is outside the grid boundaries.",
+                    "placeholderCode": "            if (neiR < 0 or neiC < 0 or neiR == N or neiC == N):",
+                    "validationRegex": "^\\s+if\\s*\\(neiR\\s*<\\s*0\\s+or\\s+neiC\\s*<\\s*0\\s+or\\s+neiR\\s*==\\s*N\\s+or\\s+neiC\\s*==\\s*N\\):$",
+                    "hint": "Ensure the neighbor's coordinates are within [0, N-1].",
+                    "solutionCode": "            if (neiR < 0 or neiC < 0 or neiR == N or neiC == N):"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Skip the neighbor if it is out of bounds.",
+                    "placeholderCode": "                continue",
+                    "validationRegex": "^\\s+continue$",
+                    "hint": "The 'continue' keyword moves to the next direction.",
+                    "solutionCode": "                continue"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Check if the neighbor cell has already been visited.",
+                    "placeholderCode": "            if (neiR, neiC) in visit:",
+                    "validationRegex": "^\\s+if\\s*\\(neiR,\\s*neiC\\)\\s+in\\s+visit:$",
+                    "hint": "We don't need to re-process cells that have already been reached.",
+                    "solutionCode": "            if (neiR, neiC) in visit:"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Skip the neighbor if it was already visited.",
+                    "placeholderCode": "                continue",
+                    "validationRegex": "^\\s+continue$",
+                    "hint": "Avoid redundant calculations and potential cycles.",
+                    "solutionCode": "                continue"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Mark the neighbor cell as visited.",
+                    "placeholderCode": "            visit.add((neiR, neiC))",
+                    "validationRegex": "^\\s+visit\\.add\\(\\((neiR,\\s*neiC)\\)\\)$",
+                    "hint": "Ensures this cell won't be pushed to the heap again.",
+                    "solutionCode": "            visit.add((neiR, neiC))"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Push the updated max elevation and the neighbor coordinates into the min-heap.",
+                    "placeholderCode": "            heapq.heappush(minH, [max(t, grid[neiR][neiC]), neiR, neiC])",
+                    "validationRegex": "^\\s+heapq\\.heappush\\(minH,\\s*\\[max\\(t,\\s*grid\\[neiR\\]\\[neiC\\]\\),\\s*neiR,\\s*neiC\\]\\)$",
+                    "hint": "The new elevation is the maximum of the current 't' and the neighbor's elevation.",
+                    "solutionCode": "            heapq.heappush(minH, [max(t, grid[neiR][neiC]), neiR, neiC])"
                 }
             ]
         }
