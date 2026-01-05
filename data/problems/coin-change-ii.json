@@ -91,15 +91,31 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Iterate through each coin in the 'coins' list and update the DP table.",
-                    "placeholderCode": "    for c in coins:\n        for a in range(c, amount + 1):\n            dp[a] += dp[a - c]",
-                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+coins:\\s*for\\s+a\\s+in\\s+range\\(c,\\s*amount\\s*\\+\\s*1\\):\\s*dp\\[a\\]\\s*\\+=\\s*dp\\[a\\s*-\\s*c\\]$",
-                    "hint": "For each coin, we can update the total ways to reach an amount 'a' by adding the ways we already found to reach 'a - c'.",
-                    "solutionCode": "    for c in coins:\n        for a in range(c, amount + 1):\n            dp[a] += dp[a - c]"
+                    "instruction": "Initiate a loop to iterate through each coin denomination in 'coins'.",
+                    "placeholderCode": "    for c in coins:",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+coins:$",
+                    "hint": "Each coin will be used to update the number of combinations for all possible amounts.",
+                    "solutionCode": "    for c in coins:"
                 },
                 {
                     "id": 5,
-                    "instruction": "Return the total number of combinations for the target amount.",
+                    "instruction": "For the current coin, initiate another loop to iterate through all amounts from 'c' up to the target 'amount'.",
+                    "placeholderCode": "        for a in range(c, amount + 1):",
+                    "validationRegex": "^\\s+for\\s+a\\s+in\\s+range\\(c,\\s*amount\\s*\\+\\s*1\\):$",
+                    "hint": "We start from 'c' because we cannot make an amount smaller than the coin itself.",
+                    "solutionCode": "        for a in range(c, amount + 1):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update the 'dp' table for the current amount by adding the number of ways to make 'a - c'.",
+                    "placeholderCode": "            dp[a] += dp[a - c]",
+                    "validationRegex": "^\\s+dp\\[a\\]\\s*\\+=\\s*dp\\[a\\s*-\\s*c\\]$",
+                    "hint": "The new combinations are those that use the current coin 'c' at least once.",
+                    "solutionCode": "            dp[a] += dp[a - c]"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return the final number of combinations found in the last index of the 'dp' table.",
                     "placeholderCode": "    return dp[amount]",
                     "validationRegex": "^\\s+return\\s+dp\\[amount\\]$",
                     "hint": "Look at the last index of the DP table for the final answer.",
