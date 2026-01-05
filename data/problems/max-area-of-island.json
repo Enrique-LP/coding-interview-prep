@@ -131,14 +131,22 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "Iterate through every cell in the grid using nested loops.",
-                    "placeholderCode": "    for r in range(rows):\n        for c in range(cols):",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):$",
-                    "hint": "Use range(rows) and range(cols) to visit every cell.",
-                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):"
+                    "instruction": "Iterate through every row in the grid.",
+                    "placeholderCode": "    for r in range(rows):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):$",
+                    "hint": "Use range(rows) to visit every row.",
+                    "solutionCode": "    for r in range(rows):"
                 },
                 {
                     "id": 9,
+                    "instruction": "Iterate through every column in the current row.",
+                    "placeholderCode": "        for c in range(cols):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):$",
+                    "hint": "Use range(cols) to visit every column in the row.",
+                    "solutionCode": "        for c in range(cols):"
+                },
+                {
+                    "id": 10,
                     "instruction": "Update the max area by calling DFS on each cell.",
                     "placeholderCode": "            area = max(area, dfs(r, c))",
                     "validationRegex": "^\\s+area\\s*=\\s*max\\(area,\\s*dfs\\(r,\\s*c\\)\\)$",
@@ -146,7 +154,7 @@
                     "solutionCode": "            area = max(area, dfs(r, c))"
                 },
                 {
-                    "id": 10,
+                    "id": 11,
                     "instruction": "Return the maximum area found.",
                     "placeholderCode": "    return area",
                     "validationRegex": "^\\s+return\\s+area$",
