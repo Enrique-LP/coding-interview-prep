@@ -23,7 +23,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "DFS",
+            "name": "Brute Force",
             "description": "DFS to calculate area of each island.",
             "steps": [
                 {
@@ -70,8 +70,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DFS",
-            "description": "Same as brute force, O(m*n).",
+            "name": "Optimal",
+            "description": "DFS to calculate area of each island, O(m*n).",
             "steps": [
                 {
                     "id": 1,
@@ -83,14 +83,22 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize dimensions and visit set.",
-                    "placeholderCode": "    rows, cols = len(grid), len(grid[0])\n    visit = set()",
-                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)\\s*visit\\s*=\\s*set\\(\\)$",
-                    "hint": "Get grid dimensions and create a set to track visited cells.",
-                    "solutionCode": "    rows, cols = len(grid), len(grid[0])\n    visit = set()"
+                    "instruction": "Initialize dimensions (rows and cols).",
+                    "placeholderCode": "    rows, cols = len(grid), len(grid[0])",
+                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)$",
+                    "hint": "Get grid dimensions.",
+                    "solutionCode": "    rows, cols = len(grid), len(grid[0])"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize visit set.",
+                    "placeholderCode": "    visit = set()",
+                    "validationRegex": "^\\s+visit\\s*=\\s*set\\(\\)$",
+                    "hint": "Create a set to track visited cells.",
+                    "solutionCode": "    visit = set()"
+                },
+                {
+                    "id": 4,
                     "instruction": "Define DFS helper to return area.",
                     "placeholderCode": "    def dfs(r, c):\n        if (r < 0 or r == rows or c < 0 or c == cols or\n            grid[r][c] == 0 or (r, c) in visit):\n            return 0\n        visit.add((r, c))\n        return (1 + dfs(r + 1, c) + dfs(r - 1, c) +\n                dfs(r, c + 1) + dfs(r, c - 1))",
                     "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols\\s+or\\s+grid\\[r\\]\\[c\\]\\s*==\\s*0\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+visit\\):\\s*return\\s+0\\s*visit\\.add\\(\\(r,\\s*c\\)\\)\\s*return\\s*\\(1\\s*\\+\\s*dfs\\(r\\s*\\+\\s*1,\\s*c\\)\\s*\\+\\s*dfs\\(r\\s*-\\s*1,\\s*c\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*\\+\\s*1\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*-\\s*1\\)\\)$",
@@ -98,7 +106,7 @@
                     "solutionCode": "    def dfs(r, c):\n        if (r < 0 or r == rows or c < 0 or c == cols or\n            grid[r][c] == 0 or (r, c) in visit):\n            return 0\n        visit.add((r, c))\n        return (1 + dfs(r + 1, c) + dfs(r - 1, c) +\n                dfs(r, c + 1) + dfs(r, c - 1))"
                 },
                 {
-                    "id": 4,
+                    "id": 5,
                     "instruction": "Iterate through grid to find max area.",
                     "placeholderCode": "    area = 0\n    for r in range(rows):\n        for c in range(cols):\n            area = max(area, dfs(r, c))",
                     "validationRegex": "^\\s+area\\s*=\\s*0\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*area\\s*=\\s*max\\(area,\\s*dfs\\(r,\\s*c\\)\\)$",
@@ -106,7 +114,7 @@
                     "solutionCode": "    area = 0\n    for r in range(rows):\n        for c in range(cols):\n            area = max(area, dfs(r, c))"
                 },
                 {
-                    "id": 5,
+                    "id": 6,
                     "instruction": "Return max area.",
                     "placeholderCode": "    return area",
                     "validationRegex": "^\\s+return\\s+area$",
