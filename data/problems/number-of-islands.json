@@ -83,11 +83,11 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function num_islands that takes grid.",
-                    "placeholderCode": "def num_islands(grid):",
-                    "validationRegex": "^def\\s+num_islands\\(grid\\):$",
-                    "hint": "Use `def` to define the function.",
-                    "solutionCode": "def num_islands(grid):"
+                    "instruction": "Import collections and define the function num_islands.",
+                    "placeholderCode": "import collections\ndef num_islands(grid):",
+                    "validationRegex": "^import\\s+collections\\s+def\\s+num_islands\\(grid\\):$",
+                    "hint": "Import the collections module and define the main function.",
+                    "solutionCode": "import collections\ndef num_islands(grid):"
                 },
                 {
                     "id": 2,
@@ -123,14 +123,134 @@
                 },
                 {
                     "id": 6,
-                    "instruction": "Define BFS helper to mark connected land.",
-                    "placeholderCode": "    import collections\n    def bfs(r, c):\n        q = collections.deque()\n        visit.add((r, c))\n        q.append((r, c))\n        while q:\n            row, col = q.popleft()\n            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]\n            for dr, dc in directions:\n                r_new, c_new = row + dr, col + dc\n                if (r_new in range(rows) and\n                    c_new in range(cols) and\n                    grid[r_new][c_new] == '1' and\n                    (r_new, c_new) not in visit):\n                    q.append((r_new, c_new))\n                    visit.add((r_new, c_new))",
-                    "validationRegex": "^\\s+import\\s+collections\\s+def\\s+bfs\\(r,\\s*c\\):\\s*q\\s*=\\s*collections\\.deque\\(\\)\\s*visit\\.add\\(\\(r,\\s*c\\)\\)\\s*q\\.append\\(\\(r,\\s*c\\)\\)\\s*while\\s+q:\\s*row,\\s*col\\s*=\\s*q\\.popleft\\(\\)\\s*directions\\s*=\\s*\\[\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\],\\s*\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\]\\]\\s*for\\s+dr,\\s*dc\\s+in\\s+directions:\\s*r_new,\\s*c_new\\s*=\\s*row\\s*\\+\\s*dr,\\s*col\\s*\\+\\s*dc\\s*if\\s*\\(r_new\\s+in\\s+range\\(rows\\)\\s+and\\s+c_new\\s+in\\s+range\\(cols\\)\\s+and\\s+grid\\[r_new\\]\\[c_new\\]\\s*==\\s*'1'\\s+and\\s*\\(r_new,\\s*c_new\\)\\s+not\\s+in\\s+visit\\):\\s*q\\.append\\(\\(r_new,\\s*c_new\\)\\)\\s*visit\\.add\\(\\(r_new,\\s*c_new\\)\\)$",
-                    "hint": "Generic BFS algorithm. Use a queue. Pop, check neighbors, add valid unvisited land neighbors to queue and visit set.",
-                    "solutionCode": "    import collections\n    def bfs(r, c):\n        q = collections.deque()\n        visit.add((r, c))\n        q.append((r, c))\n        while q:\n            row, col = q.popleft()\n            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]\n            for dr, dc in directions:\n                r_new, c_new = row + dr, col + dc\n                if (r_new in range(rows) and\n                    c_new in range(cols) and\n                    grid[r_new][c_new] == '1' and\n                    (r_new, c_new) not in visit):\n                    q.append((r_new, c_new))\n                    visit.add((r_new, c_new))"
+                    "instruction": "Define the BFS helper function signature.",
+                    "placeholderCode": "    def bfs(r, c):",
+                    "validationRegex": "^\\s+def\\s+bfs\\(r,\\s*c\\):$",
+                    "hint": "Define a helper function to perform BFS starting from cell (r, c).",
+                    "solutionCode": "    def bfs(r, c):"
                 },
                 {
                     "id": 7,
+                    "instruction": "Initialize the BFS queue.",
+                    "placeholderCode": "        q = collections.deque()",
+                    "validationRegex": "^\\s+q\\s*=\\s*collections\\.deque\\(\\)$",
+                    "hint": "Create a double-ended queue for BFS.",
+                    "solutionCode": "        q = collections.deque()"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Mark the starting cell as visited.",
+                    "placeholderCode": "        visit.add((r, c))",
+                    "validationRegex": "^\\s+visit\\.add\\(\\(r,\\s*c\\)\\)$",
+                    "hint": "Add the current row and column as a tuple to the visit set.",
+                    "solutionCode": "        visit.add((r, c))"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Append the starting cell to the queue.",
+                    "placeholderCode": "        q.append((r, c))",
+                    "validationRegex": "^\\s+q\\.append\\(\\(r,\\s*c\\)\\)$",
+                    "hint": "Add the starting coordinates to the queue to begin the search.",
+                    "solutionCode": "        q.append((r, c))"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Start the while loop to process the queue.",
+                    "placeholderCode": "        while q:",
+                    "validationRegex": "^\\s+while\\s+q:$",
+                    "hint": "Continue the process as long as there are cells in the queue.",
+                    "solutionCode": "        while q:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Pop the next cell from the queue.",
+                    "placeholderCode": "            row, col = q.popleft()",
+                    "validationRegex": "^\\s+row,\\s*col\\s*=\\s*q\\.popleft\\(\\)$",
+                    "hint": "Retrieve the coordinates of the cell to expand.",
+                    "solutionCode": "            row, col = q.popleft()"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Define the possible movement directions.",
+                    "placeholderCode": "            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]",
+                    "validationRegex": "^\\s+directions\\s*=\\s*\\[\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\],\\s*\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\]\\]$",
+                    "hint": "Define up, down, left, and right moves.",
+                    "solutionCode": "            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Iterate through each direction.",
+                    "placeholderCode": "            for dr, dc in directions:",
+                    "validationRegex": "^\\s+for\\s+dr,\\s*dc\\s+in\\s+directions:$",
+                    "hint": "Loop through each of the 4 defined directions.",
+                    "solutionCode": "            for dr, dc in directions:"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Calculate the new row index.",
+                    "placeholderCode": "                r_new = row + dr",
+                    "validationRegex": "^\\s+r_new\\s*=\\s*row\\s*\\+\\s*dr$",
+                    "hint": "Compute the next row index by adding the direction delta.",
+                    "solutionCode": "                r_new = row + dr"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Calculate the new column index.",
+                    "placeholderCode": "                c_new = col + dc",
+                    "validationRegex": "^\\s+c_new\\s*=\\s*col\\s*\\+\\s*dc$",
+                    "hint": "Compute the next column index by adding the direction delta.",
+                    "solutionCode": "                c_new = col + dc"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Check if r_new is within grid rows.",
+                    "placeholderCode": "                if (r_new in range(rows) and",
+                    "validationRegex": "^\\s+if\\s*\\(r_new\\s+in\\s+range\\(rows\\)\\s+and$",
+                    "hint": "Verify that the new row is between 0 and total rows.",
+                    "solutionCode": "                if (r_new in range(rows) and"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Check if c_new is within grid columns.",
+                    "placeholderCode": "                    c_new in range(cols) and",
+                    "validationRegex": "^\\s+c_new\\s+in\\s+range\\(cols\\)\\s+and$",
+                    "hint": "Verify that the new column is between 0 and total columns.",
+                    "solutionCode": "                    c_new in range(cols) and"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Check if the new cell is land.",
+                    "placeholderCode": "                    grid[r_new][c_new] == '1' and",
+                    "validationRegex": "^\\s+grid\\[r_new\\]\\[c_new\\]\\s*==\\s*'1'\\s+and$",
+                    "hint": "Verify if the cell at new coordinates contains '1'.",
+                    "solutionCode": "                    grid[r_new][c_new] == '1' and"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Check if the cell hasn't been visited.",
+                    "placeholderCode": "                    (r_new, c_new) not in visit):",
+                    "validationRegex": "^\\s*\\(r_new,\\s*c_new\\)\\s+not\\s+in\\s+visit\\):$",
+                    "hint": "Ensure the new coordinate is not already in the visit set.",
+                    "solutionCode": "                    (r_new, c_new) not in visit):"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Add the new valid cell to the queue.",
+                    "placeholderCode": "                    q.append((r_new, c_new))",
+                    "validationRegex": "^\\s+q\\.append\\(\\(r_new,\\s*c_new\\)\\)$",
+                    "hint": "Expand the island by adding the neighbor to the queue.",
+                    "solutionCode": "                    q.append((r_new, c_new))"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Mark the new cell as visited.",
+                    "placeholderCode": "                    visit.add((r_new, c_new))",
+                    "validationRegex": "^\\s+visit\\.add\\(\\(r_new,\\s*c_new\\)\\)$",
+                    "hint": "Ensure the neighbor is marked so it isn't processed again.",
+                    "solutionCode": "                    visit.add((r_new, c_new))"
+                },
+                {
+                    "id": 22,
                     "instruction": "Iterate through the grid using nested loops.",
                     "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1' and (r, c) not in visit:\n                bfs(r, c)\n                islands += 1",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+grid\\[r\\]\\[c\\]\\s*==\\s*'1'\\s+and\\s*\\(r,\\s*c\\)\\s+not\\s+in\\s+visit:\\s*bfs\\(r,\\s*c\\)\\s*islands\\s*\\+=\\s*1$",
@@ -138,7 +258,7 @@
                     "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1' and (r, c) not in visit:\n                bfs(r, c)\n                islands += 1"
                 },
                 {
-                    "id": 8,
+                    "id": 23,
                     "instruction": "Return the total island count.",
                     "placeholderCode": "    return islands",
                     "validationRegex": "^\\s+return\\s+islands$",
