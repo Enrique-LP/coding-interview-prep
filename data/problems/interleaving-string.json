@@ -22,8 +22,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
-            "description": "Recursively check if characters match s3.",
+            "name": "Brute Force",
+            "description": "Recursively check if characters from s1 and s2 can match s3 characters at each position using memoization.",
             "steps": [
                 {
                     "id": 1,
@@ -46,7 +46,7 @@
                     "instruction": "Define recursive helper with memoization.",
                     "placeholderCode": "    memo = {}\n    def dfs(i, j):\n        if i == len(s1) and j == len(s2): return True\n        if (i, j) in memo: return memo[(i, j)]",
                     "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*j\\):\\s*if\\s+i\\s*==\\s*len\\(s1\\)\\s+and\\s+j\\s*==\\s*len\\(s2\\):\\s*return\\s+True\\s*if\\s*\\(i,\\s*j\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*j\\)\\]$",
-                    "hint": "Recursive function `dfs(i, j)` checks if s1[i:] and s2[j:] can form s3[i+j:]. Base case: both strings consumed -> True. Check memo.\\n\\nExample:\\nS1=\"a\", S2=\"b\", S3=\"ab\".\\nDFS(0,0): S1[0]='a'==S3[0]. Recurse DFS(1,0).\\n  DFS(1,0): S2[0]='b'==S3[1]. Recurse DFS(1,1).\\n    DFS(1,1): Both consumed. Return True.",
+                    "hint": "Recursive function `dfs(i, j)` checks if s1[i:] and s2[j:] can form s3[i+j:]. Base case: both strings consumed -> True. Check memo.",
                     "solutionCode": "    memo = {}\n    def dfs(i, j):\n        if i == len(s1) and j == len(s2): return True\n        if (i, j) in memo: return memo[(i, j)]"
                 },
                 {
@@ -55,7 +55,7 @@
                     "placeholderCode": "        if i < len(s1) and s1[i] == s3[i + j] and dfs(i + 1, j):\n            return True",
                     "validationRegex": "^\\s+if\\s+i\\s*<\\s+len\\(s1\\)\\s+and\\s+s1\\[i\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dfs\\(i\\s*\\+\\s*1,\\s*j\\):\\s*return\\s+True$",
                     "hint": "If s1[i] matches s3[i+j], recurse incrementing i.",
-                    "solutionCode": "        if i < len(s1) and s1[i] == s3[i + j] and dfs(i + 1, j):\n            return True"
+                    "solutionCode": "        if i < len(s1) and s1[i] == s3[i + j] and dfs(i + 1, j):"
                 },
                 {
                     "id": 5,
@@ -63,7 +63,7 @@
                     "placeholderCode": "        if j < len(s2) and s2[j] == s3[i + j] and dfs(i, j + 1):\n            return True",
                     "validationRegex": "^\\s+if\\s+j\\s*<\\s+len\\(s2\\)\\s+and\\s+s2\\[j\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dfs\\(i,\\s*j\\s*\\+\\s*1\\):\\s*return\\s+True$",
                     "hint": "If s2[j] matches s3[i+j], recurse incrementing j.",
-                    "solutionCode": "        if j < len(s2) and s2[j] == s3[i + j] and dfs(i, j + 1):\n            return True"
+                    "solutionCode": "        if j < len(s2) and s2[j] == s3[i + j] and dfs(i, j + 1):"
                 },
                 {
                     "id": 6,
@@ -85,8 +85,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "2D grid to track reachable states.",
+            "name": "Optimal",
+            "description": "Iterative dynamic programming approach using a 2D table to build reachable states bottom-up O(n*m).",
             "steps": [
                 {
                     "id": 1,
@@ -106,26 +106,34 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Initialize DP grid.",
-                    "placeholderCode": "    dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]\n    dp[len(s1)][len(s2)] = True",
-                    "validationRegex": "^\\s+dp\\s*=\\s*\\[\\[False\\]\\s*\\*\\s*\\(len\\(s2\\)\\s*\\+\\s*1\\)\\s+for\\s+_\\s+in\\s+range\\(len\\(s1\\)\\s*\\+\\s*1\\)\\]\\s*dp\\[len\\(s1\\)\\]\\[len\\(s2\\)\\]\\s*=\\s*True$",
-                    "hint": "Initialize DP grid. dp[i][j] means s1[i:] and s2[j:] can interleave to form s3[i+j:]. Base case: end of both strings is True.",
-                    "solutionCode": "    dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]\n    dp[len(s1)][len(s2)] = True"
+                    "instruction": "Initialize the DP grid with False, with dimensions (len(s1) + 1) by (len(s2) + 1).",
+                    "placeholderCode": "    dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\[\\[False\\]\\s*\\*\\s*\\(len\\(s2\\)\\s*\\+\\s*1\\)\\s+for\\s+_\\s+in\\s+range\\(len\\(s1\\)\\s*\\+\\s*1\\)\\]$",
+                    "hint": "dp[i][j] will represent if s1[i:] and s2[j:] can form s3[i+j:].",
+                    "solutionCode": "    dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]"
                 },
                 {
                     "id": 4,
-                    "instruction": "Iterate backwards.",
-                    "placeholderCode": "    for i in range(len(s1), -1, -1):\n        for j in range(len(s2), -1, -1):\n            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:\n                dp[i][j] = True\n            if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:\n                dp[i][j] = True",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s1\\),\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(s2\\),\\s*-1,\\s*-1\\):\\s*if\\s+i\\s*<\\s+len\\(s1\\)\\s+and\\s+s1\\[i\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*True\\s*if\\s+j\\s*<\\s+len\\(s2\\)\\s+and\\s+s2\\[j\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dp\\[i\\]\\[j\\s*\\+\\s*1\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*True$",
-                    "hint": "Iterate backwards. Check if current char of s1 or s2 matches s3 and if the subsequent state is valid.\\n\\nExample:\\nS1=\"a\", S2=\"b\", S3=\"ab\".\\nDP[1][1]=True (Base).\\ni=1, j=0 ('b' matches 'b'): DP[1][0] = DP[1][1] = True.\\ni=0, j=1 ('a' matches 'a'): DP[0][1] = DP[1][1] = True.\\ni=0, j=0 ('a' matches 'a'): DP[0][0] = DP[1][0] = True.",
-                    "solutionCode": "    for i in range(len(s1), -1, -1):\n        for j in range(len(s2), -1, -1):\n            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:\n                dp[i][j] = True\n            if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:\n                dp[i][j] = True"
+                    "instruction": "Set the base case at the bottom-right corner of the grid to True.",
+                    "placeholderCode": "    dp[len(s1)][len(s2)] = True",
+                    "validationRegex": "^\\s+dp\\[len\\(s1\\)\\]\\[len\\(s2\\)\\]\\s*=\\s*True$",
+                    "hint": "When both s1 and s2 are fully consumed, we have successfully interleaved s3.",
+                    "solutionCode": "    dp[len(s1)][len(s2)] = True"
                 },
                 {
                     "id": 5,
-                    "instruction": "Return result.",
+                    "instruction": "Iterate backwards through both s1 and s2 indices.",
+                    "placeholderCode": "    for i in range(len(s1), -1, -1):\n        for j in range(len(s2), -1, -1):\n            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:\n                dp[i][j] = True\n            if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:\n                dp[i][j] = True",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s1\\),\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(s2\\),\\s*-1,\\s*-1\\):\\s*if\\s+i\\s*<\\s+len\\(s1\\)\\s+and\\s+s1\\[i\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*True\\s*if\\s+j\\s*<\\s+len\\(s2\\)\\s+and\\s+s2\\[j\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dp\\[i\\]\\[j\\s*\\+\\s*1\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*True$",
+                    "hint": "Check if current char of s1 or s2 matches s3 and if the subsequent state is valid.",
+                    "solutionCode": "    for i in range(len(s1), -1, -1):\n        for j in range(len(s2), -1, -1):\n            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:\n                dp[i][j] = True\n            if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:\n                dp[i][j] = True"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return the final result from the top-left corner of the DP table.",
                     "placeholderCode": "    return dp[0][0]",
                     "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
-                    "hint": "Return result for start of strings.",
+                    "hint": "dp[0][0] indicates if the entirety of s1 and s2 can interleave to form s3.",
                     "solutionCode": "    return dp[0][0]"
                 }
             ]
