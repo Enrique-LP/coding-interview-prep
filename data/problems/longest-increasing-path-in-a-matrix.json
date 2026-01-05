@@ -109,34 +109,58 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Define the recursive DFS helper function that checks bounds, increasing path condition, and utilizes memoization.",
-                    "placeholderCode": "    def dfs(r, c, prevVal):\n        if r < 0 or r == rows or c < 0 or c == cols or matrix[r][c] <= prevVal:\n            return 0\n        if (r, c) in dp: return dp[(r, c)]",
-                    "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c,\\s*prevVal\\):\\s*if\\s+r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols\\s+or\\s+matrix\\[r\\]\\[c\\]\\s*<=\\s*prevVal:\\s*return\\s+0\\s*if\\s*\\(r,\\s*c\\)\\s+in\\s+dp:\\s*return\\s+dp\\[\\(r,\\s*c\\)\\]$",
-                    "hint": "Base cases: out of bounds or current cell is not greater than the previous cell. Return the cached result if available.",
-                    "solutionCode": "    def dfs(r, c, prevVal):\n        if r < 0 or r == rows or c < 0 or c == cols or matrix[r][c] <= prevVal:\n            return 0\n        if (r, c) in dp: return dp[(r, c)]"
+                    "instruction": "Define a the recursive DFS helper function 'dfs' that takes current coordinates and the previous cell value.",
+                    "placeholderCode": "    def dfs(r, c, prevVal):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c,\\s*prevVal\\):$",
+                    "hint": "This function will explore paths starting from (r, c) only if the value is greater than 'prevVal'.",
+                    "solutionCode": "    def dfs(r, c, prevVal):"
                 },
                 {
                     "id": 5,
-                    "instruction": "Within the DFS helper, calculate the maximum path length from the current cell by checking all four directions.",
-                    "placeholderCode": "        res = 1\n        res = max(res, 1 + dfs(r + 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r - 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c + 1, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c - 1, matrix[r][c]))",
-                    "validationRegex": "^\\s+res\\s*=\\s*1\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*matrix\\[r\\]\\[c\\]\\)\\)\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*matrix\\[r\\]\\[c\\]\\)\\)\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*matrix\\[r\\]\\[c\\]\\)\\)\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*matrix\\[r\\]\\[c\\]\\)\\)$",
-                    "hint": "For each of the 4 neighbors, call DFS if it's part of an increasing sequence.",
-                    "solutionCode": "        res = 1\n        res = max(res, 1 + dfs(r + 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r - 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c + 1, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c - 1, matrix[r][c]))"
+                    "instruction": "Add a base case to check for out-of-bounds coordinates or if the current cell value is not greater than the previous cell value.",
+                    "placeholderCode": "        if r < 0 or r == rows or c < 0 or c == cols or matrix[r][c] <= prevVal:",
+                    "validationRegex": "^\\s+if\\s+r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols\\s+or\\s+matrix\\[r\\]\\[c\\]\\s*<=\\s*prevVal:$",
+                    "hint": "The path must be strictly increasing and stay within the matrix boundaries.",
+                    "solutionCode": "        if r < 0 or r == rows or c < 0 or c == cols or matrix[r][c] <= prevVal:"
                 },
                 {
                     "id": 6,
-                    "instruction": "Cache the calculated maximum path length in the 'dp' dictionary and return it.",
-                    "placeholderCode": "        dp[(r, c)] = res\n        return res",
-                    "validationRegex": "^\\s+dp\\[\\(r,\\s*c\\)\\]\\s*=\\s*res\\s*return\\s+res$",
-                    "hint": "Storing the result ensures we don't recompute the same cell twice.",
-                    "solutionCode": "        dp[(r, c)] = res\n        return res"
+                    "instruction": "If any of the base case conditions are met, return a path length of 0.",
+                    "placeholderCode": "            return 0",
+                    "validationRegex": "^\\s+return\\s+0$",
+                    "hint": "A length of 0 indicates that no valid increasing path continues from this direction.",
+                    "solutionCode": "            return 0"
                 },
                 {
                     "id": 7,
-                    "instruction": "Iterate through every cell in the matrix to trigger the DFS and find the global longest increasing path.",
+                    "instruction": "Check if the result for the current cell (r, c) has already been computed and stored in the DP table.",
+                    "placeholderCode": "        if (r, c) in dp: return dp[(r, c)]",
+                    "validationRegex": "^\\s+if\\s*\\(r,\\s*c\\)\\s+in\\s+dp:\\s*return\\s+dp\\[\\(r,\\s*c\\)\\]$",
+                    "hint": "If the state is already in 'dp', returning it immediately avoids redundant recursive calls.",
+                    "solutionCode": "        if (r, c) in dp: return dp[(r, c)]"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Initialize 'res' to 1 and update it with the maximum path length found by recursively calling DFS in all four directions.",
+                    "placeholderCode": "        res = 1\n        res = max(res, 1 + dfs(r + 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r - 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c + 1, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c - 1, matrix[r][c]))",
+                    "validationRegex": "^\\s+res\\s*=\\s*1\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*matrix\\[r\\]\\[c\\]\\)\\)\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*matrix\\[r\\]\\[c\\]\\)\\)\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*matrix\\[r\\]\\[c\\]\\)\\)\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*matrix\\[r\\]\\[c\\]\\)\\)$",
+                    "hint": "We check all possible moves: down, up, right, and left.",
+                    "solutionCode": "        res = 1\n        res = max(res, 1 + dfs(r + 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r - 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c + 1, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c - 1, matrix[r][c]))"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Store the computed maximum path length for the current cell in the DP table and return it.",
+                    "placeholderCode": "        dp[(r, c)] = res\n        return res",
+                    "validationRegex": "^\\s+dp\\[\\(r,\\s*c\\)\\]\\s*=\\s*res\\s*return\\s+res$",
+                    "hint": "Caching the result is essential for the DFS with memoization strategy.",
+                    "solutionCode": "        dp[(r, c)] = res\n        return res"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Trigger the DFS for every single cell in the matrix and return the maximum value found in the DP table.",
                     "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            dfs(r, c, -1)\n    return max(dp.values())",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*dfs\\(r,\\s*c,\\s*-1\\)\\s*return\\s+max\\(dp\\.values\\(\\)\\)$",
-                    "hint": "We start DFS for all cells because any cell could be the start of the overall longest path.",
+                    "hint": "Since the path could start anywhere, we must ensure every cell is considered as a potential starting point.",
                     "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            dfs(r, c, -1)\n    return max(dp.values())"
                 }
             ]
