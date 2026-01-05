@@ -21,54 +21,62 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Backtracking with Set",
+            "name": "Brute Force",
             "description": "Generate all subsets and use a set to filter duplicates.",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function subsets_with_dup that takes nums.",
                     "placeholderCode": "def subsets_with_dup(nums):",
-                    "validationRegex": "^def\\s+subsets_with_dup\\(nums\\):$",
+                    "validationRegex": "^def\\\\s+subsets_with_dup\\\\(nums\\\\):$",
                     "hint": "Use `def` to define the function.",
                     "solutionCode": "def subsets_with_dup(nums):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Sort nums to handle duplicates easier.",
-                    "placeholderCode": "    nums.sort()\n    res = set()",
-                    "validationRegex": "^\\s+nums\\.sort\\(\\)\\s*res\\s*=\\s*set\\(\\)$",
-                    "hint": "Sort the array to group duplicates, and use a set for results to ensure uniqueness.\\n\\nExample:\\nNums=[1, 2, 2].\\nGenerate all subsets (including duplicates): [], [1], [2], [1, 2], [2], [1, 2], [2, 2], [1, 2, 2].\\nStore in Set: {(), (1), (2), (1, 2), (2, 2), (1, 2, 2)}.",
-                    "solutionCode": "    nums.sort()\n    res = set()"
+                    "instruction": "Sort the input array to group duplicate elements.",
+                    "placeholderCode": "    nums.sort()",
+                    "validationRegex": "^\\\\s+nums\\\\.sort\\\\(\\\\)$",
+                    "hint": "Sorting ensures that duplicates are adjacent, making them easier to handle.",
+                    "solutionCode": "    nums.sort()"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize a set to store unique subsets as tuples.",
+                    "placeholderCode": "    res = set()",
+                    "validationRegex": "^\\\\s+res\\\\s*=\\\\s*set\\\\(\\\\)$",
+                    "hint": "We use a set because it automatically handles duplicate entries.",
+                    "solutionCode": "    res = set()"
+                },
+                {
+                    "id": 4,
                     "instruction": "Define dfs function.",
                     "placeholderCode": "    def dfs(i, subset):\n        if i == len(nums):\n            res.add(tuple(subset))\n            return",
-                    "validationRegex": "^\\s+def\\s+dfs\\(i,\\s*subset\\):\\s*if\\s+i\\s*==\\s*len\\(nums\\):\\s*res\\.add\\(tuple\\(subset\\)\\)\\s*return$",
+                    "validationRegex": "^\\\\s+def\\\\s+dfs\\\\(i,\\\\s*subset\\\\):\\\\s*if\\\\s+i\\\\s*==\\\\s*len\\\\(nums\\\\):\\\\s*res\\\\.add\\\\(tuple\\\\(subset\\\\)\\\\)\\\\s*return$",
                     "hint": "Define DFS. Base case: if index reaches end, add tuple of subset to result set.",
                     "solutionCode": "    def dfs(i, subset):\n        if i == len(nums):\n            res.add(tuple(subset))\n            return"
                 },
                 {
-                    "id": 4,
+                    "id": 5,
                     "instruction": "Include nums[i].",
                     "placeholderCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)",
-                    "validationRegex": "^\\s+subset\\.append\\(nums\\[i\\]\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
+                    "validationRegex": "^\\\\s+subset\\\\.append\\\\(nums\\\\[i\\\\]\\\\)\\\\s*dfs\\\\(i\\\\s*\\\\+\\\\s*1,\\\\s*subset\\\\)$",
                     "hint": "Include current number and recurse.",
                     "solutionCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)"
                 },
                 {
-                    "id": 5,
+                    "id": 6,
                     "instruction": "Exclude nums[i].",
                     "placeholderCode": "        subset.pop()\n        dfs(i + 1, subset)",
-                    "validationRegex": "^\\s+subset\\.pop\\(\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
+                    "validationRegex": "^\\\\s+subset\\\\.pop\\\\(\\\\)\\\\s*dfs\\\\(i\\\\s*\\\\+\\\\s*1,\\\\s*subset\\\\)$",
                     "hint": "Backtrack (remove current number) and recurse.",
                     "solutionCode": "        subset.pop()\n        dfs(i + 1, subset)"
                 },
                 {
-                    "id": 6,
+                    "id": 7,
                     "instruction": "Call dfs and return list of lists.",
                     "placeholderCode": "    dfs(0, [])\n    return [list(s) for s in res]",
-                    "validationRegex": "^\\s+dfs\\(0,\\s*\\[\\],\\s*0\\)\\s*return\\s+\\[list\\(s\\)\\s+for\\s+s\\s+in\\s+res\\]$",
+                    "validationRegex": "^\\\\s+dfs\\\\(0,\\\\s*\\\\[\\\\]\\\\)\\\\s*return\\\\s+\\\\[list\\\\(s\\\\)\\\\s+for\\\\s+s\\\\s+in\\\\s+res\\\\]$",
                     "hint": "Start DFS and convert set of tuples back to list of lists.",
                     "solutionCode": "    dfs(0, [])\n    return [list(s) for s in res]"
                 }
@@ -76,54 +84,62 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Backtracking Optimized",
+            "name": "Optimal",
             "description": "Skip duplicates during recursion.",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function subsets_with_dup that takes nums.",
                     "placeholderCode": "def subsets_with_dup(nums):",
-                    "validationRegex": "^def\\s+subsets_with_dup\\(nums\\):$",
+                    "validationRegex": "^def\\\\s+subsets_with_dup\\\\(nums\\\\):$",
                     "hint": "Use `def` to define the function.",
                     "solutionCode": "def subsets_with_dup(nums):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Sort nums and initialize result.",
-                    "placeholderCode": "    res = []\n    nums.sort()",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*nums\\.sort\\(\\)$",
-                    "hint": "Sort the array to handle duplicates efficiently.",
-                    "solutionCode": "    res = []\n    nums.sort()"
+                    "instruction": "Initialize result list for storing subsets.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\\\s+res\\\\s*=\\\\s*\\\\[\\\\]$",
+                    "hint": "This list will store all unique subsets found.",
+                    "solutionCode": "    res = []"
                 },
                 {
                     "id": 3,
+                    "instruction": "Sort the input array to handle duplicate numbers.",
+                    "placeholderCode": "    nums.sort()",
+                    "validationRegex": "^\\\\s+nums\\\\.sort\\\\(\\\\)$",
+                    "hint": "Sorting makes duplicates appear next to each other, allowing us to skip them.",
+                    "solutionCode": "    nums.sort()"
+                },
+                {
+                    "id": 4,
                     "instruction": "Define dfs function.",
                     "placeholderCode": "    def dfs(i, subset):\n        if i == len(nums):\n            res.append(subset.copy())\n            return",
-                    "validationRegex": "^\\s+def\\s+dfs\\(i,\\s*subset\\):\\s*if\\s+i\\s*==\\s*len\\(nums\\):\\s*res\\.append\\(subset\\.copy\\(\\)\\)\\s*return$",
+                    "validationRegex": "^\\\\s+def\\\\s+dfs\\\\(i,\\\\s*subset\\\\):\\\\s*if\\\\s+i\\\\s*==\\\\s*len\\\\(nums\\\\):\\\\s*res\\\\.append\\\\(subset\\\\.copy\\\\(\\\\)\\\\)\\\\s*return$",
                     "hint": "Define DFS. Base case: if index reaches end, add copy of subset to result.",
                     "solutionCode": "    def dfs(i, subset):\n        if i == len(nums):\n            res.append(subset.copy())\n            return"
                 },
                 {
-                    "id": 4,
+                    "id": 5,
                     "instruction": "Include nums[i].",
                     "placeholderCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)\n        subset.pop()",
-                    "validationRegex": "^\\s+subset\\.append\\(nums\\[i\\]\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*subset\\)\\s*subset\\.pop\\(\\)$",
+                    "validationRegex": "^\\\\s+subset\\\\.append\\\\(nums\\\\[i\\\\]\\\\)\\\\s*dfs\\\\(i\\\\s*\\\\+\\\\s*1,\\\\s*subset\\\\)\\\\s*subset\\\\.pop\\\\(\\\\)$",
                     "hint": "Include current number, recurse, then backtrack.",
                     "solutionCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)\n        subset.pop()"
                 },
                 {
-                    "id": 5,
+                    "id": 6,
                     "instruction": "Skip duplicates and exclude nums[i].",
                     "placeholderCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            i += 1\n        dfs(i + 1, subset)",
-                    "validationRegex": "^\\s+while\\s+i\\s*\\+\\s*1\\s*<\\s+len\\(nums\\)\\s+and\\s+nums\\[i\\]\\s*==\\s+nums\\[i\\s*\\+\\s*1\\]:\\s*i\\s*\\+=\\s*1\\s*dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
-                    "hint": "Skip adjacent duplicates to avoid duplicate subsets, then recurse.\\n\\nExample:\\nNums=[1, 2, 2]. Sorted.\\nInclude first 2 -> [1, 2]. Recurse.\\nBacktrack. Next is 2 (duplicate). Skip.\\nEnsures we don't generate [1, 2] again from the second 2.",
+                    "validationRegex": "^\\\\s+while\\\\s+i\\\\s*\\\\+\\\\s*1\\\\s*<\\\\s+len\\\\(nums\\\\)\\\\s+and\\\\s+nums\\\\[i\\\\]\\\\s*==\\\\s+nums\\\\[i\\\\s*\\\\+\\\\s*1\\\\]:\\\\s*i\\\\s*\\\\+=\\\\s*1\\\\s*dfs\\\\(i\\\\s*\\\\+\\\\s*1,\\\\s*subset\\\\)$",
+                    "hint": "Skip adjacent duplicates to avoid duplicate subsets, then recurse.\\\\n\\\\nExample:\\\\nNums=[1, 2, 2]. Sorted.\\\\nInclude first 2 -> [1, 2]. Recurse.\\\\nBacktrack. Next is 2 (duplicate). Skip.\\\\nEnsures we don't generate [1, 2] again from the second 2.",
                     "solutionCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            i += 1\n        dfs(i + 1, subset)"
                 },
                 {
-                    "id": 6,
+                    "id": 7,
                     "instruction": "Call dfs and return result.",
                     "placeholderCode": "    dfs(0, [])\n    return res",
-                    "validationRegex": "^\\s+dfs\\(0,\\s*\\[\\],\\s*0\\)\\s*return\\s+res$",
+                    "validationRegex": "^\\\\s+dfs\\\\(0,\\\\s*\\\\[\\\\]\\\\)\\\\s*return\\\\s+res$",
                     "hint": "Start DFS from index 0.",
                     "solutionCode": "    dfs(0, [])\n    return res"
                 }
