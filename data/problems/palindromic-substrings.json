@@ -147,14 +147,46 @@
                 },
                 {
                     "id": 9,
-                    "instruction": "Count even length palindromes centered between 'i' and 'i+1'.",
-                    "placeholderCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1",
-                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*\\+\\s*1\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*res\\s*\\+=\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
-                    "hint": "Follow a similar expansion logic for even cases like 'aa' or 'abba'.",
-                    "solutionCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1"
+                    "instruction": "Initialize pointers 'l' and 'r' for even-length palindromes (centered between 'i' and 'i+1').",
+                    "placeholderCode": "        l, r = i, i + 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*\\+\\s*1$",
+                    "hint": "For even palindromes, the center is the gap between index i and i+1.",
+                    "solutionCode": "        l, r = i, i + 1"
                 },
                 {
                     "id": 10,
+                    "instruction": "Expand as long as pointers are in bounds and the characters match for the even center.",
+                    "placeholderCode": "        while l >= 0 and r < len(s) and s[l] == s[r]:",
+                    "validationRegex": "^\\s+while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:$",
+                    "hint": "Check characters symmetrically around the gap.",
+                    "solutionCode": "        while l >= 0 and r < len(s) and s[l] == s[r]:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Increment the result counter for each valid even palindrome detected.",
+                    "placeholderCode": "            res += 1",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*1$",
+                    "hint": "Each match corresponds to a valid even-length palindromic substring.",
+                    "solutionCode": "            res += 1"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Decrement the left pointer 'l' to expand the even-centered window leftwards.",
+                    "placeholderCode": "            l -= 1",
+                    "validationRegex": "^\\s+l\\s*-=\\s*1$",
+                    "hint": "Move the left boundary towards the beginning of the string.",
+                    "solutionCode": "            l -= 1"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Increment the right pointer 'r' to expand the even-centered window rightwards.",
+                    "placeholderCode": "            r += 1",
+                    "validationRegex": "^\\s+r\\s*\\+=\\s*1$",
+                    "hint": "Move the right boundary towards the end of the string.",
+                    "solutionCode": "            r += 1"
+                },
+                {
+                    "id": 14,
                     "instruction": "Return the final total count of palindromic substrings found.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
