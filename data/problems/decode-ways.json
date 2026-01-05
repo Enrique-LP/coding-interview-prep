@@ -143,14 +143,22 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "If the next two digits form a valid number (10-26), add those possibilities to the current state.",
-                    "placeholderCode": "        if (i + 1 < len(s) and (s[i] == \"1\" or\n            (s[i] == \"2\" and s[i + 1] in \"0123456\"))):\n            dp[i] += dp[i + 2]",
-                    "validationRegex": "^\\s+if\\s*\\(i\\s*\\+\\s*1\\s*<\\s+len\\(s\\)\\s+and\\s*\\(s\\[i\\]\\s*==\\s*\"1\"\\s+or\\s*\\(s\\[i\\]\\s*==\\s*\"2\"\\s+and\\s+s\\[i\\s*\\+\\s*1\\]\\s+in\\s*\"0123456\"\\)\\)\\):\\s*dp\\[i\\]\\s*\\+=\\s*dp\\[i\\s*\\+\\s*2\\]$",
-                    "hint": "Check if s[i]s[i+1] is between 10 and 26.",
-                    "solutionCode": "        if (i + 1 < len(s) and (s[i] == \"1\" or\n            (s[i] == \"2\" and s[i + 1] in \"0123456\"))):\n            dp[i] += dp[i + 2]"
+                    "instruction": "Check if the next two digits form a valid number between 10 and 26.",
+                    "placeholderCode": "        if (i + 1 < len(s) and (s[i] == \"1\" or\n            (s[i] == \"2\" and s[i + 1] in \"0123456\"))):",
+                    "validationRegex": "^\\s+if\\s*\\(i\\s*\\+\\s*1\\s*<\\s+len\\(s\\)\\s+and\\s*\\(s\\[i\\]\\s*==\\s*\"1\"\\s+or\\s*\\(s\\[i\\]\\s*==\\s*\"2\"\\s+and\\s+s\\[i\\s*\\+\\s*1\\]\\s+in\\s*\"0123456\"\\)\\)\\):$",
+                    "hint": "Two-digit decodings are valid if the value is between 10 and 26.",
+                    "solutionCode": "        if (i + 1 < len(s) and (s[i] == \"1\" or\n            (s[i] == \"2\" and s[i + 1] in \"0123456\"))):"
                 },
                 {
                     "id": 9,
+                    "instruction": "Add the number of decodings from two positions ahead to the current state.",
+                    "placeholderCode": "            dp[i] += dp[i + 2]",
+                    "validationRegex": "^\\s+dp\\[i\\]\\s*\\+=\\s*dp\\[i\\s*\\+\\s*2\\]$",
+                    "hint": "This step accounts for the multiple ways to decode by including the results of the two-digit path.",
+                    "solutionCode": "            dp[i] += dp[i + 2]"
+                },
+                {
+                    "id": 10,
                     "instruction": "Return the total number of ways to decode the message starting from index 0.",
                     "placeholderCode": "    return dp[0]",
                     "validationRegex": "^\\s+return\\s+dp\\[0\\]$",
