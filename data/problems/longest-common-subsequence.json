@@ -22,8 +22,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
-            "description": "Recursively check matching characters.",
+            "name": "Brute Force",
+            "description": "Recursively check matching characters using memoization to find the longest common subsequence.",
             "steps": [
                 {
                     "id": 1,
@@ -38,7 +38,7 @@
                     "instruction": "Define recursive helper with memoization.",
                     "placeholderCode": "    memo = {}\n    def dfs(i, j):\n        if i == len(text1) or j == len(text2): return 0\n        if (i, j) in memo: return memo[(i, j)]",
                     "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*j\\):\\s*if\\s+i\\s*==\\s*len\\(text1\\)\\s+or\\s+j\\s*==\\s*len\\(text2\\):\\s*return\\s+0\\s*if\\s*\\(i,\\s*j\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*j\\)\\]$",
-                    "hint": "Recursive function `dfs(i, j)` returns LCS of text1[i:] and text2[j:]. Base case: end of either string -> 0. Check memo.\\n\\nExample:\\nT1=\"abc\", T2=\"ac\".\\nDFS(0,0): 'a'=='a'. 1 + DFS(1,1).\\n  DFS(1,1): 'b'!='c'. Max(DFS(2,1), DFS(1,2)).\\n    DFS(2,1): 'c'=='c'. 1 + DFS(3,2) -> 1 + 0 = 1.\\n    DFS(1,2): 'b'!=''. 0.",
+                    "hint": "Recursive function `dfs(i, j)` returns LCS of text1[i:] and text2[j:]. Base case: end of either string -> 0. Check memo.",
                     "solutionCode": "    memo = {}\n    def dfs(i, j):\n        if i == len(text1) or j == len(text2): return 0\n        if (i, j) in memo: return memo[(i, j)]"
                 },
                 {
@@ -77,8 +77,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "Use 2D grid to build solution bottom-up.",
+            "name": "Optimal",
+            "description": "Iterative dynamic programming approach using a 2D table to build the solution bottom-up O(n*m).",
             "steps": [
                 {
                     "id": 1,
@@ -90,26 +90,66 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize DP grid.",
+                    "instruction": "Initialize the DP grid with zeros, having dimensions (len(text1) + 1) by (len(text2) + 1).",
                     "placeholderCode": "    dp = [[0 for j in range(len(text2) + 1)] for i in range(len(text1) + 1)]",
                     "validationRegex": "^\\s+dp\\s*=\\s*\\[\\[0\\s+for\\s+j\\s+in\\s+range\\(len\\(text2\\)\\s*\\+\\s*1\\)\\]\\s+for\\s+i\\s+in\\s+range\\(len\\(text1\\)\\s*\\+\\s*1\\)\\]$",
-                    "hint": "Create a 2D grid of size (len(text1)+1) x (len(text2)+1) initialized with 0s.",
+                    "hint": "The grid will store the LCS lengths for all possible suffixes.",
                     "solutionCode": "    dp = [[0 for j in range(len(text2) + 1)] for i in range(len(text1) + 1)]"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate backwards through strings.",
-                    "placeholderCode": "    for i in range(len(text1) - 1, -1, -1):\n        for j in range(len(text2) - 1, -1, -1):\n            if text1[i] == text2[j]:\n                dp[i][j] = 1 + dp[i + 1][j + 1]\n            else:\n                dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(text1\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(text2\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+text1\\[i\\]\\s*==\\s+text2\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*1\\s*\\+\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\s*else:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*max\\(dp\\[i\\]\\[j\\s*\\+\\s*1\\],\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\]\\)$",
-                    "hint": "Iterate backwards. If chars match, dp[i][j] = 1 + diagonal. Else, max of right or down.\\n\\nExample:\\nT1=\"abc\", T2=\"ac\". DP 4x3 grid.\\ni=2 ('c'), j=1 ('c'): Match. DP[2][1] = 1 + DP[3][2] = 1.\\ni=1 ('b'), j=1 ('c'): No match. Max(DP[1][2], DP[2][1]) = 1.\\ni=0 ('a'), j=0 ('a'): Match. DP[0][0] = 1 + DP[1][1] = 2.",
-                    "solutionCode": "    for i in range(len(text1) - 1, -1, -1):\n        for j in range(len(text2) - 1, -1, -1):\n            if text1[i] == text2[j]:\n                dp[i][j] = 1 + dp[i + 1][j + 1]\n            else:\n                dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])"
+                    "instruction": "Initiate a loop to iterate backwards through the indices of the first string.",
+                    "placeholderCode": "    for i in range(len(text1) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(text1\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "Starting from the end allows us to build the solution bottom-up.",
+                    "solutionCode": "    for i in range(len(text1) - 1, -1, -1):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Inside the first loop, initiate a second loop to iterate backwards through the indices of the second string.",
+                    "placeholderCode": "        for j in range(len(text2) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(len\\(text2\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "We compare every character of the first string against every character of the second string.",
+                    "solutionCode": "        for j in range(len(text2) - 1, -1, -1):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if the characters at current indices 'i' and 'j' match.",
+                    "placeholderCode": "            if text1[i] == text2[j]:",
+                    "validationRegex": "^\\s+if\\s+text1\\[i\\]\\s*==\\s+text2\\[j\\]:$",
+                    "hint": "A match means this character contributes to the length of the subsequence.",
+                    "solutionCode": "            if text1[i] == text2[j]:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "If the characters match, update the DP table by adding 1 to the result of skipping both characters.",
+                    "placeholderCode": "                dp[i][j] = 1 + dp[i + 1][j + 1]",
+                    "validationRegex": "^\\s+dp\\[i\\]\\[j\\]\\s*=\\s*1\\s*\\+\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]$",
+                    "hint": "The value at dp[i+1][j+1] represents the LCS length from the remaining suffixes.",
+                    "solutionCode": "                dp[i][j] = 1 + dp[i + 1][j + 1]"
+                },
+                {
+                    "id": 7,
+                    "instruction": "If the characters do not match, begin the alternative logic.",
+                    "placeholderCode": "            else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "We must choose the path that yields the longer subsequence.",
+                    "solutionCode": "            else:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Update the DP table by taking the maximum result of skipping one character from either string.",
+                    "placeholderCode": "                dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])",
+                    "validationRegex": "^\\s+dp\\[i\\]\\[j\\]\\s*=\\s*max\\(dp\\[i\\]\\[j\\s*\\+\\s*1\\],\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\]\\)$",
+                    "hint": "We look at the previously computed results to find the maximum possible LCS length.",
+                    "solutionCode": "                dp[i][j] = max(dp[i][j + 1], dp[i + 1][j])"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return the final LCS length stored at the beginning of the grid.",
                     "placeholderCode": "    return dp[0][0]",
                     "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
-                    "hint": "The result is at dp[0][0].",
+                    "hint": "The answer is now stored in the first cell of the DP table.",
                     "solutionCode": "    return dp[0][0]"
                 }
             ]
