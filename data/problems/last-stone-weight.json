@@ -122,14 +122,22 @@
                 },
                 {
                     "id": 7,
-                    "instruction": "If the stones have different weights, push the difference back into the heap.",
-                    "placeholderCode": "        if second > first:\n            heapq.heappush(stones, first - second)",
-                    "validationRegex": "^\\s+if\\s+second\\s*>\\s+first:\\s*heapq\\.heappush\\(stones,\\s*first\\s*-\\s*second\\)$",
-                    "hint": "Since values are negative, 'second > first' means the first stone was heavier.",
-                    "solutionCode": "        if second > first:\n            heapq.heappush(stones, first - second)"
+                    "instruction": "Check if the two stones have different weights.",
+                    "placeholderCode": "        if second > first:",
+                    "validationRegex": "^\\s+if\\s+second\\s*>\\s+first:$",
+                    "hint": "Since we use negative values, 'second > first' means the original weight of 'first' was greater.",
+                    "solutionCode": "        if second > first:"
                 },
                 {
                     "id": 8,
+                    "instruction": "Push the difference of the two stones back into the heap.",
+                    "placeholderCode": "            heapq.heappush(stones, first - second)",
+                    "validationRegex": "^\\s+heapq\\.heappush\\(stones,\\s*first\\s*-\\s*second\\)$",
+                    "hint": "The remaining weight is the difference between the heavier and the lighter stone.",
+                    "solutionCode": "            heapq.heappush(stones, first - second)"
+                },
+                {
+                    "id": 9,
                     "instruction": "Ensure the heap is not empty by adding a zero if necessary.",
                     "placeholderCode": "    stones.append(0)",
                     "validationRegex": "^\\s+stones\\.append\\(0\\)$",
@@ -137,7 +145,7 @@
                     "solutionCode": "    stones.append(0)"
                 },
                 {
-                    "id": 9,
+                    "id": 10,
                     "instruction": "Return the absolute value of the remaining stone.",
                     "placeholderCode": "    return abs(stones[0])",
                     "validationRegex": "^\\s+return\\s+abs\\(stones\\[0\\]\\)$",
