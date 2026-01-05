@@ -163,14 +163,22 @@
                 },
                 {
                     "id": 10,
-                    "instruction": "Exclude candidates[i] (backtrack) and move to the next candidate.",
-                    "placeholderCode": "        cur.pop()\n        dfs(i + 1, cur, total)",
-                    "validationRegex": "^\\s+cur\\.pop\\(\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*cur,\\s*total\\)$",
-                    "hint": "Remove the last added candidate and explore branches starting from the next index.",
-                    "solutionCode": "        cur.pop()\n        dfs(i + 1, cur, total)"
+                    "instruction": "Remove the last added candidate from the current combination (backtrack).",
+                    "placeholderCode": "        cur.pop()",
+                    "validationRegex": "^\\s+cur\\.pop\\(\\)$",
+                    "hint": "This reverts the changes made to 'cur' before exploring the next decision branch.",
+                    "solutionCode": "        cur.pop()"
                 },
                 {
                     "id": 11,
+                    "instruction": "Recurse with the next index to explore choices that exclude candidates[i].",
+                    "placeholderCode": "        dfs(i + 1, cur, total)",
+                    "validationRegex": "^\\s+dfs\\(i\\s*\\+\\s*1,\\s*cur,\\s*total\\)$",
+                    "hint": "This branch represents the decision to no longer use the current candidate.",
+                    "solutionCode": "        dfs(i + 1, cur, total)"
+                },
+                {
+                    "id": 12,
                     "instruction": "Initiate the DFS and return the final results.",
                     "placeholderCode": "    dfs(0, [], 0)\n    return res",
                     "validationRegex": "^\\s+dfs\\(0,\\s*\\[\\],\\s*0\\)\\s*return\\s+res$",
