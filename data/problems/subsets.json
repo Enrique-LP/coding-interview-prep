@@ -22,7 +22,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Cascading",
+            "name": "Brute Force",
             "description": "Iteratively add new element to existing subsets.",
             "steps": [
                 {
@@ -69,7 +69,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Backtracking",
+            "name": "Optimal",
             "description": "DFS to explore include/exclude decisions.",
             "steps": [
                 {
@@ -82,14 +82,22 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize result and subset list.",
-                    "placeholderCode": "    res = []\n    subset = []",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*subset\\s*=\\s*\\[\\]$",
-                    "hint": "Initialize a list for results and a temporary list for the current subset.",
-                    "solutionCode": "    res = []\n    subset = []"
+                    "instruction": "Initialize the list for storing all subsets.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "Initialize an empty list to store the final result.",
+                    "solutionCode": "    res = []"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize a temporary list for the current subset.",
+                    "placeholderCode": "    subset = []",
+                    "validationRegex": "^\\s+subset\\s*=\\s*\\[\\]$",
+                    "hint": "This list will be modified as we explore different branches of the DFS.",
+                    "solutionCode": "    subset = []"
+                },
+                {
+                    "id": 4,
                     "instruction": "Define dfs function taking index i.",
                     "placeholderCode": "    def dfs(i):\n        if i >= len(nums):\n            res.append(subset.copy())\n            return",
                     "validationRegex": "^\\s+def\\s+dfs\\(i\\):\\s*if\\s+i\\s*>=\\s+len\\(nums\\):\\s*res\\.append\\(subset\\.copy\\(\\)\\)\\s*return$",
@@ -97,7 +105,7 @@
                     "solutionCode": "    def dfs(i):\n        if i >= len(nums):\n            res.append(subset.copy())\n            return"
                 },
                 {
-                    "id": 4,
+                    "id": 5,
                     "instruction": "Decision to include nums[i].",
                     "placeholderCode": "        subset.append(nums[i])\n        dfs(i + 1)",
                     "validationRegex": "^\\s+subset\\.append\\(nums\\[i\\]\\)\\s*dfs\\(i\\s*\\+\\s*1\\)$",
@@ -105,7 +113,7 @@
                     "solutionCode": "        subset.append(nums[i])\n        dfs(i + 1)"
                 },
                 {
-                    "id": 5,
+                    "id": 6,
                     "instruction": "Decision to exclude nums[i].",
                     "placeholderCode": "        subset.pop()\n        dfs(i + 1)",
                     "validationRegex": "^\\s+subset\\.pop\\(\\)\\s*dfs\\(i\\s*\\+\\s*1\\)$",
@@ -113,7 +121,7 @@
                     "solutionCode": "        subset.pop()\n        dfs(i + 1)"
                 },
                 {
-                    "id": 6,
+                    "id": 7,
                     "instruction": "Call dfs starting at 0 and return result.",
                     "placeholderCode": "    dfs(0)\n    return res",
                     "validationRegex": "^\\s+dfs\\(0\\)\\s*return\\s+res$",
