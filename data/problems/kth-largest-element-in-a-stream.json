@@ -122,14 +122,22 @@
                 },
                 {
                     "id": 10,
-                    "instruction": "Remove the smallest element if the heap size exceeds k.",
-                    "placeholderCode": "        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)",
-                    "validationRegex": "^\\s+if\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:\\s*heapq\\.heappop\\(self\\.minHeap\\)$",
-                    "hint": "Keep only the k largest elements in the heap.",
-                    "solutionCode": "        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)"
+                    "instruction": "Check if the heap size exceeds k after the insertion.",
+                    "placeholderCode": "        if len(self.minHeap) > self.k:",
+                    "validationRegex": "^\\s+if\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:$",
+                    "hint": "Since we only need the k largest elements, any extra elements must be removed.",
+                    "solutionCode": "        if len(self.minHeap) > self.k:"
                 },
                 {
                     "id": 11,
+                    "instruction": "Pop the smallest element to maintain the heap size at k.",
+                    "placeholderCode": "            heapq.heappop(self.minHeap)",
+                    "validationRegex": "^\\s+heapq\\.heappop\\(self\\.minHeap\\)$",
+                    "hint": "The min-heap property ensures the smallest of the top k elements is at the root.",
+                    "solutionCode": "            heapq.heappop(self.minHeap)"
+                },
+                {
+                    "id": 12,
                     "instruction": "Return the current kth largest element (the root of the min-heap).",
                     "placeholderCode": "        return self.minHeap[0]",
                     "validationRegex": "^\\s+return\\s+self\\.minHeap\\[0\\]$",
