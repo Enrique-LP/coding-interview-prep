@@ -66,14 +66,22 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Store the value of k and initialize the min-heap.",
-                    "placeholderCode": "        self.k = k\n        self.minHeap = nums",
-                    "validationRegex": "^\\s+self\\.k\\s*=\\s*k\\s*self\\.minHeap\\s*=\\s*nums$",
-                    "hint": "Save the state in instance variables.",
-                    "solutionCode": "        self.k = k\n        self.minHeap = nums"
+                    "instruction": "Store the value of k in the instance attribute.",
+                    "placeholderCode": "        self.k = k",
+                    "validationRegex": "^\\s+self\\.k\\s*=\\s*k$",
+                    "hint": "We need to keep k to ensure the heap never exceeds this size.",
+                    "solutionCode": "        self.k = k"
                 },
                 {
                     "id": 4,
+                    "instruction": "Initialize the min-heap with the provided nums list.",
+                    "placeholderCode": "        self.minHeap = nums",
+                    "validationRegex": "^\\s+self\\.minHeap\\s*=\\s*nums$",
+                    "hint": "Assign the input list to our internal heap state.",
+                    "solutionCode": "        self.minHeap = nums"
+                },
+                {
+                    "id": 5,
                     "instruction": "Transform the list into a valid min-heap in-place.",
                     "placeholderCode": "        heapq.heapify(self.minHeap)",
                     "validationRegex": "^\\s+heapq\\.heapify\\(self\\.minHeap\\)$",
@@ -81,7 +89,7 @@
                     "solutionCode": "        heapq.heapify(self.minHeap)"
                 },
                 {
-                    "id": 5,
+                    "id": 6,
                     "instruction": "Remove the smallest elements from the heap until k elements remain.",
                     "placeholderCode": "        while len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)",
                     "validationRegex": "^\\s+while\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:\\s*heapq\\.heappop\\(self\\.minHeap\\)$",
@@ -89,7 +97,7 @@
                     "solutionCode": "        while len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)"
                 },
                 {
-                    "id": 6,
+                    "id": 7,
                     "instruction": "Define the add method to insert new values into the stream.",
                     "placeholderCode": "    def add(self, val):",
                     "validationRegex": "^\\s+def\\s+add\\(self,\\s*val\\):$",
@@ -97,7 +105,7 @@
                     "solutionCode": "    def add(self, val):"
                 },
                 {
-                    "id": 7,
+                    "id": 8,
                     "instruction": "Push the new value to the heap.",
                     "placeholderCode": "        heapq.heappush(self.minHeap, val)",
                     "validationRegex": "^\\s+heapq\\.heappush\\(self\\.minHeap,\\s*val\\)$",
@@ -105,7 +113,7 @@
                     "solutionCode": "        heapq.heappush(self.minHeap, val)"
                 },
                 {
-                    "id": 8,
+                    "id": 9,
                     "instruction": "Remove the smallest element if the heap size exceeds k.",
                     "placeholderCode": "        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)",
                     "validationRegex": "^\\s+if\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:\\s*heapq\\.heappop\\(self\\.minHeap\\)$",
@@ -113,7 +121,7 @@
                     "solutionCode": "        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)"
                 },
                 {
-                    "id": 9,
+                    "id": 10,
                     "instruction": "Return the current kth largest element (the root of the min-heap).",
                     "placeholderCode": "        return self.minHeap[0]",
                     "validationRegex": "^\\s+return\\s+self\\.minHeap\\[0\\]$",
