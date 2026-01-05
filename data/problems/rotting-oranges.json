@@ -131,14 +131,110 @@
                 },
                 {
                     "id": 9,
-                    "instruction": "Run BFS while queue and fresh oranges exist.",
-                    "placeholderCode": "    directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]\n    while q and fresh > 0:\n        for i in range(len(q)):\n            r, c = q.pop(0)\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or row == rows or col < 0 or\n                    col == cols or grid[row][col] != 1):\n                    continue\n                grid[row][col] = 2\n                q.append((row, col))\n                fresh -= 1\n        time += 1",
-                    "validationRegex": "^\\s+directions\\s*=\\s*\\[\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\],\\s*\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\]\\]\\s*while\\s+q\\s+and\\s+fresh\\s*>\\s*0:\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*r,\\s*c\\s*=\\s*q\\.pop\\(0\\)\\s*for\\s+dr,\\s*dc\\s+in\\s+directions:\\s*row,\\s*col\\s*=\\s*r\\s*\\+\\s*dr,\\s*c\\s*\\+\\s*dc\\s*if\\s*\\(row\\s*<\\s*0\\s+or\\s+row\\s*==\\s*rows\\s+or\\s+col\\s*<\\s*0\\s+or\\s+col\\s*==\\s*cols\\s+or\\s+grid\\[row\\]\\[col\\]\\s*!=\\s*1\\):\\s*continue\\s*grid\\[row\\]\\[col\\]\\s*=\\s*2\\s*q\\.append\\(\\(row,\\s*col\\)\\)\\s*fresh\\s*-=\\s*1\\s*time\\s*\\+=\\s*1$",
-                    "hint": "BFS level by level. For each rotten orange, infect adjacent fresh oranges.",
-                    "solutionCode": "    directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]\n    while q and fresh > 0:\n        for i in range(len(q)):\n            r, c = q.pop(0)\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or row == rows or col < 0 or\n                    col == cols or grid[row][col] != 1):\n                    continue\n                grid[row][col] = 2\n                q.append((row, col))\n                fresh -= 1\n        time += 1"
+                    "instruction": "Initialize the list of four directions for neighbors.",
+                    "placeholderCode": "    directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]",
+                    "validationRegex": "^\\s+directions\\s*=\\s*\\[\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\],\\s*\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\]\\]$",
+                    "hint": "Define North, South, East, and West movement offsets.",
+                    "solutionCode": "    directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]"
                 },
                 {
                     "id": 10,
+                    "instruction": "Execute while the queue is not empty and fresh oranges remain.",
+                    "placeholderCode": "    while q and fresh > 0:",
+                    "validationRegex": "^\\s+while\\s+q\\s+and\\s+fresh\\s*>\\s*0:$",
+                    "hint": "The BFS continues as long as there's something to rot and someone to infect.",
+                    "solutionCode": "    while q and fresh > 0:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Iterate through the oranges currently in the queue for the current level.",
+                    "placeholderCode": "        for i in range(len(q)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):$",
+                    "hint": "This ensures we process the BFS level by level (minute by minute).",
+                    "solutionCode": "        for i in range(len(q)):"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Pop the coordinates of a rotten orange from the queue.",
+                    "placeholderCode": "            r, c = q.pop(0)",
+                    "validationRegex": "^\\s+r,\\s*c\\s*=\\s*q\\.pop\\(0\\)$",
+                    "hint": "Retrieve the row and column of the next orange to process.",
+                    "solutionCode": "            r, c = q.pop(0)"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Check all four neighbor directions.",
+                    "placeholderCode": "            for dr, dc in directions:",
+                    "validationRegex": "^\\s+for\\s+dr,\\s*dc\\s+in\\s+directions:$",
+                    "hint": "Iterate through the directions list defined earlier.",
+                    "solutionCode": "            for dr, dc in directions:"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Calculate the coordinates of the neighbor cell.",
+                    "placeholderCode": "                row, col = r + dr, c + dc",
+                    "validationRegex": "^\\s+row,\\s*col\\s*=\\s*r\\s*\\+\\s*dr,\\s*c\\s*\\+\\s*dc$",
+                    "hint": "Add the direction offset to the current row and column.",
+                    "solutionCode": "                row, col = r + dr, c + dc"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Check if the neighbor row is out of bounds.",
+                    "placeholderCode": "                if row < 0 or row == rows: continue",
+                    "validationRegex": "^\\s+if\\s+row\\s*<\\s*0\\s+or\\s+row\\s*==\\s*rows:\\s*continue$",
+                    "hint": "Skip the neighbor if the row index is invalid.",
+                    "solutionCode": "                if row < 0 or row == rows: continue"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Check if the neighbor column is out of bounds.",
+                    "placeholderCode": "                if col < 0 or col == cols: continue",
+                    "validationRegex": "^\\s+if\\s+col\\s*<\\s*0\\s+or\\s+col\\s*==\\s*cols:\\s*continue$",
+                    "hint": "Skip the neighbor if the column index is invalid.",
+                    "solutionCode": "                if col < 0 or col == cols: continue"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Skip the neighbor if it is not a fresh orange.",
+                    "placeholderCode": "                if grid[row][col] != 1: continue",
+                    "validationRegex": "^\\s+if\\s+grid\\[row\\]\\[col\\]\\s*!=\\s*1:\\s*continue$",
+                    "hint": "A rotten orange only infects fresh ones (value 1).",
+                    "solutionCode": "                if grid[row][col] != 1: continue"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Mark the fresh orange as rotten.",
+                    "placeholderCode": "                grid[row][col] = 2",
+                    "validationRegex": "^\\s+grid\\[row\\]\\[col\\]\\s*=\\s*2$",
+                    "hint": "Change the grid value from 1 to 2.",
+                    "solutionCode": "                grid[row][col] = 2"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Add the newly rotten orange to the queue.",
+                    "placeholderCode": "                q.append((row, col))",
+                    "validationRegex": "^\\s+q\\.append\\(\\(row,\\s*col\\)\\)$",
+                    "hint": "Push the new coordinates into our BFS queue.",
+                    "solutionCode": "                q.append((row, col))"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Decrement the count of fresh oranges remaining.",
+                    "placeholderCode": "                fresh -= 1",
+                    "validationRegex": "^\\s+fresh\\s*-=\\s*1$",
+                    "hint": "One fresh orange has just turned rotten.",
+                    "solutionCode": "                fresh -= 1"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Increment the time counter after processing one full level.",
+                    "placeholderCode": "        time += 1",
+                    "validationRegex": "^\\s+time\\s*\\+=\\s*1$",
+                    "hint": "Each level in the BFS represents one minute of time passing.",
+                    "solutionCode": "        time += 1"
+                },
+                {
+                    "id": 22,
                     "instruction": "Return time if no fresh oranges left, else -1.",
                     "placeholderCode": "    return time if fresh == 0 else -1",
                     "validationRegex": "^\\s+return\\s+time\\s+if\\s+fresh\\s*==\\s*0\\s+else\\s+-1$",
