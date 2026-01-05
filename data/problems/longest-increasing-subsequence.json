@@ -22,8 +22,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
-            "description": "Recursively check include/exclude.",
+            "name": "Brute Force",
+            "description": "Recursively check every possible subsequence by either including or excluding each element.",
             "steps": [
                 {
                     "id": 1,
@@ -54,7 +54,7 @@
                     "instruction": "Include current element if valid.",
                     "placeholderCode": "        if nums[i] > prev_val:\n            res = max(res, 1 + dfs(i + 1, nums[i]))",
                     "validationRegex": "^\\s+if\\s+nums\\[i\\]\\s*>\\s+prev_val:\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(i\\s*\\+\\s*1,\\s*nums\\[i\\]\\)\\)$",
-                    "hint": "Option 2: Include current element if it's greater than `prev_val`. Take max of both options.\\n\\nExample:\\nNums=[1, 2].\\nDFS(0, -inf):\\n  Skip 1 -> DFS(1, -inf) -> Skip 2 -> 0. Include 2 -> 1.\\n  Include 1 -> 1 + DFS(1, 1) -> Include 2 -> 1+1=2.\\nMax is 2.",
+                    "hint": "Option 2: Include current element if it's greater than `prev_val`. Take max of both options.",
                     "solutionCode": "        if nums[i] > prev_val:\n            res = max(res, 1 + dfs(i + 1, nums[i]))"
                 },
                 {
@@ -77,8 +77,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "O(n^2) DP solution.",
+            "name": "Optimal",
+            "description": "Iterative O(n^2) dynamic programming solution that builds the solution for each index based on subsequent elements.",
             "steps": [
                 {
                     "id": 1,
@@ -90,26 +90,50 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize DP array with 1s.",
+                    "instruction": "Initialize the DP table 'dp' with 1s, as each element is a subsequence of length 1.",
                     "placeholderCode": "    dp = [1] * len(nums)",
                     "validationRegex": "^\\s+dp\\s*=\\s*\\[1\\]\\s*\\*\\s*len\\(nums\\)$",
-                    "hint": "Initialize DP array of size n with 1s (each element is an increasing subsequence of length 1).",
+                    "hint": "Initialize DP array of size n with 1s.",
                     "solutionCode": "    dp = [1] * len(nums)"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate backwards.",
-                    "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):\n        for j in range(i + 1, len(nums)):\n            if nums[i] < nums[j]:\n                dp[i] = max(dp[i], 1 + dp[j])",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(i\\s*\\+\\s*1,\\s*len\\(nums\\)\\):\\s*if\\s+nums\\[i\\]\\s*<\\s+nums\\[j\\]:\\s*dp\\[i\\]\\s*=\\s*max\\(dp\\[i\\],\\s*1\\s*\\+\\s*dp\\[j\\]\\)$",
-                    "hint": "Iterate backwards. For each element `i`, check all subsequent elements `j`. If `nums[i] < nums[j]`, we can extend the subsequence ending at `j`.\\n\\nExample:\\nNums=[1, 2, 4, 3]. DP=[1, 1, 1, 1].\\ni=2 (4): No j > 2 with val > 4.\\ni=1 (2): j=2 (4>2) -> DP[1]=max(1, 1+1)=2. j=3 (3>2) -> DP[1]=max(2, 1+1)=2.\\ni=0 (1): j=1 (2>1) -> DP[0]=max(1, 1+2)=3.",
-                    "solutionCode": "    for i in range(len(nums) - 1, -1, -1):\n        for j in range(i + 1, len(nums)):\n            if nums[i] < nums[j]:\n                dp[i] = max(dp[i], 1 + dp[j])"
+                    "instruction": "Iterate backwards through the array 'nums'.",
+                    "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "Building the solution from right to left.",
+                    "solutionCode": "    for i in range(len(nums) - 1, -1, -1):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return max of DP array.",
+                    "instruction": "For each element 'i', iterate through all following elements 'j'.",
+                    "placeholderCode": "        for j in range(i + 1, len(nums)):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(i\\s*\\+\\s*1,\\s*len\\(nums\\)\\):$",
+                    "hint": "We check if the element at 'i' can precede the longest increasing subsequence starting at 'j'.",
+                    "solutionCode": "        for j in range(i + 1, len(nums)):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Check if the current element at index 'i' is less than the element at index 'j'.",
+                    "placeholderCode": "            if nums[i] < nums[j]:",
+                    "validationRegex": "^\\s+if\\s+nums\\[i\\]\\s*<\\s+nums\\[j\\]:$",
+                    "hint": "A smaller element can be added to the front of an increasing subsequence.",
+                    "solutionCode": "            if nums[i] < nums[j]:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update 'dp[i]' to be the maximum of its current value and 1 plus 'dp[j]'.",
+                    "placeholderCode": "                dp[i] = max(dp[i], 1 + dp[j])",
+                    "validationRegex": "^\\s+dp\\[i\\]\\s*=\\s*max\\(dp\\[i\\],\\s*1\\s*\\+\\s*dp\\[j\\]\\)$",
+                    "hint": "Take the longest subsequence found so far starting from index 'j' and add the current element.",
+                    "solutionCode": "                dp[i] = max(dp[i], 1 + dp[j])"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return the maximum value in the 'dp' array.",
                     "placeholderCode": "    return max(dp)",
                     "validationRegex": "^\\s+return\\s+max\\(dp\\)$",
-                    "hint": "The answer is the maximum value in the DP array.",
+                    "hint": "The longest overall subsequence could start at any index.",
                     "solutionCode": "    return max(dp)"
                 }
             ]
