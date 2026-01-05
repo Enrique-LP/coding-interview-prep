@@ -99,70 +99,54 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Check base case: row indices out of bounds.",
-                    "placeholderCode": "        if (r < 0 or r == rows or",
-                    "validationRegex": "^\\s+if\\s*\\(r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or$",
-                    "hint": "Check if the current row index is negative or equal to the total rows.",
-                    "solutionCode": "        if (r < 0 or r == rows or"
+                    "instruction": "Base case: return if row or column is out of bounds.",
+                    "placeholderCode": "        if r < 0 or r == rows or c < 0 or c == cols:",
+                    "validationRegex": "^\\s+if\\s+r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols:$",
+                    "hint": "Check if the current coordinates are outside the board.",
+                    "solutionCode": "        if r < 0 or r == rows or c < 0 or c == cols:"
                 },
                 {
                     "id": 5,
-                    "instruction": "Check base case: column indices out of bounds.",
-                    "placeholderCode": "            c < 0 or c == cols or",
-                    "validationRegex": "^\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols\\s+or$",
-                    "hint": "Check if the current column index is negative or equal to the total columns.",
-                    "solutionCode": "            c < 0 or c == cols or"
+                    "instruction": "Base case: return if cell is not an 'O'.",
+                    "placeholderCode": "        if board[r][c] != 'O':",
+                    "validationRegex": "^\\s+if\\s+board\\[r\\]\\[c\\]\\s*!=\\s*'O':$",
+                    "hint": "We only continue if the cell is an 'O'.",
+                    "solutionCode": "        if board[r][c] != 'O':"
                 },
                 {
                     "id": 6,
-                    "instruction": "Check base case: cell is not an 'O'.",
-                    "placeholderCode": "            board[r][c] != 'O'):",
-                    "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*!=\\s*'O'\\):$",
-                    "hint": "We only care about capturing 'O' cells.",
-                    "solutionCode": "            board[r][c] != 'O'):"
-                },
-                {
-                    "id": 7,
-                    "instruction": "Return if any base case is met.",
+                    "instruction": "Return if base cases are met.",
                     "placeholderCode": "            return",
                     "validationRegex": "^\\s+return$",
-                    "hint": "Exit the current recursive call.",
+                    "hint": "Exit the recursion if any of the above conditions apply.",
                     "solutionCode": "            return"
                 },
                 {
-                    "id": 8,
+                    "id": 7,
                     "instruction": "Mark the cell as temporarily safe ('T').",
                     "placeholderCode": "        board[r][c] = 'T'",
                     "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*=\\s*'T'$",
-                    "hint": "Assign 'T' to the current board position.",
+                    "hint": "Set the current board cell to 'T'.",
                     "solutionCode": "        board[r][c] = 'T'"
                 },
                 {
+                    "id": 8,
+                    "instruction": "Recursively call capture for the neighbors (South and North).",
+                    "placeholderCode": "        capture(r + 1, c)\n        capture(r - 1, c)",
+                    "validationRegex": "^\\s+capture\\(r\\s*\\+\\s*1,\\s*c\\)\\s*capture\\(r\\s*-\\s*1,\\s*c\\)$",
+                    "hint": "Check cells below and above.",
+                    "solutionCode": "        capture(r + 1, c)\n        capture(r - 1, c)"
+                },
+                {
                     "id": 9,
-                    "instruction": "Recursively call capture for South neighbor.",
-                    "placeholderCode": "        capture(r + 1, c)",
-                    "validationRegex": "^\\s+capture\\(r\\s*\\+\\s*1,\\s*c\\)$",
-                    "hint": "Move to the cell below.",
-                    "solutionCode": "        capture(r + 1, c)"
-                },
-                {
-                    "id": 10,
-                    "instruction": "Recursively call capture for North neighbor.",
-                    "placeholderCode": "        capture(r - 1, c)",
-                    "validationRegex": "^\\s+capture\\(r\\s*-\\s*1,\\s*c\\)$",
-                    "hint": "Move to the cell above.",
-                    "solutionCode": "        capture(r - 1, c)"
-                },
-                {
-                    "id": 11,
-                    "instruction": "Recursively call capture for East and West neighbors.",
+                    "instruction": "Recursively call capture for the neighbors (East and West).",
                     "placeholderCode": "        capture(r, c + 1)\n        capture(r, c - 1)",
                     "validationRegex": "^\\s+capture\\(r,\\s*c\\s*\\+\\s*1\\)\\s*capture\\(r,\\s*c\\s*-\\s*1\\)$",
-                    "hint": "Move to the cells to the right and left.",
+                    "hint": "Check cells to the right and left.",
                     "solutionCode": "        capture(r, c + 1)\n        capture(r, c - 1)"
                 },
                 {
-                    "id": 12,
+                    "id": 10,
                     "instruction": "Run DFS on border 'O's.",
                     "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if (board[r][c] == 'O' and\n                (r in [0, rows - 1] or c in [0, cols - 1])):\n                capture(r, c)",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s*\\(board\\[r\\]\\[c\\]\\s*==\\s*'O'\\s+and\\s*\\(r\\s+in\\s+\\[0,\\s*rows\\s*-\\s*1\\]\\s+or\\s+c\\s+in\\s+\\[0,\\s*cols\\s*-\\s*1\\]\\)\\):\\s*capture\\(r,\\s*c\\)$",
@@ -170,7 +154,7 @@
                     "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if (board[r][c] == 'O' and\n                (r in [0, rows - 1] or c in [0, cols - 1])):\n                capture(r, c)"
                 },
                 {
-                    "id": 13,
+                    "id": 11,
                     "instruction": "Flip 'O' to 'X' and 'T' back to 'O'.",
                     "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if board[r][c] == 'O':\n                board[r][c] = 'X'\n            elif board[r][c] == 'T':\n                board[r][c] = 'O'",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+board\\[r\\]\\[c\\]\\s*==\\s*'O':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'X'\\s*elif\\s+board\\[r\\]\\[c\\]\\s*==\\s*'T':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'O'$",
