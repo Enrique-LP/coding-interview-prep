@@ -212,14 +212,22 @@
                 },
                 {
                     "id": 17,
-                    "instruction": "Run DFS on all courses.",
-                    "placeholderCode": "    for crs in range(numCourses):\n        if not dfs(crs): return False",
-                    "validationRegex": "^\\s+for\\s+crs\\s+in\\s+range\\(numCourses\\):\\s*if\\s+not\\s+dfs\\(crs\\):\\s*return\\s+False$",
-                    "hint": "Iterate through all courses and run DFS. If any returns False, return False.",
-                    "solutionCode": "    for crs in range(numCourses):\n        if not dfs(crs): return False"
+                    "instruction": "Iterate through every course index from 0 to numCourses - 1.",
+                    "placeholderCode": "    for crs in range(numCourses):",
+                    "validationRegex": "^\\s+for\\s+crs\\s+in\\s+range\\(numCourses\\):$",
+                    "hint": "Use a for loop to ensure even disconnected components are checked.",
+                    "solutionCode": "    for crs in range(numCourses):"
                 },
                 {
                     "id": 18,
+                    "instruction": "Run DFS on the current course and return False if a cycle exists.",
+                    "placeholderCode": "        if not dfs(crs): return False",
+                    "validationRegex": "^\\s+if\\s+not\\s+dfs\\(crs\\):\\s*return\\s+False$",
+                    "hint": "If any course leads to a cycle, it's impossible to finish all courses.",
+                    "solutionCode": "        if not dfs(crs): return False"
+                },
+                {
+                    "id": 19,
                     "instruction": "Return True if no cycle detected.",
                     "placeholderCode": "    return True",
                     "validationRegex": "^\\s+return\\s+True$",
