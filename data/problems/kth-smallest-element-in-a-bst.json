@@ -146,18 +146,26 @@
                 },
                 {
                     "id": 10,
-                    "instruction": "If k is 0, return current value.",
-                    "placeholderCode": "        if k == 0:\n            return curr.val",
-                    "validationRegex": "^\\s+if\\s+k\\s*==\\s*0:\\s*return\\s+curr\\.val$",
-                    "hint": "If k reaches 0, we found the kth smallest element.",
-                    "solutionCode": "        if k == 0:\n            return curr.val"
+                    "instruction": "Check if k has reached zero, indicating we found the kth smallest element.",
+                    "placeholderCode": "        if k == 0:",
+                    "validationRegex": "^\\s+if\\s+k\\s*==\\s*0:$",
+                    "hint": "Since we started with k and decremented it for each node, reaching zero means success.",
+                    "solutionCode": "        if k == 0:"
                 },
                 {
                     "id": 11,
-                    "instruction": "Move right.",
+                    "instruction": "Return the value of the current node.",
+                    "placeholderCode": "            return curr.val",
+                    "validationRegex": "^\\s+return\\s+curr\\.val$",
+                    "hint": "This is the kth element encountered in our sorted in-order traversal.",
+                    "solutionCode": "            return curr.val"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Move to the right child of the current node.",
                     "placeholderCode": "        curr = curr.right",
                     "validationRegex": "^\\s+curr\\s*=\\s*curr\\.right$",
-                    "hint": "Move to the right child.",
+                    "hint": "After processing a node, we explore its right subtree.",
                     "solutionCode": "        curr = curr.right"
                 }
             ]
