@@ -24,7 +24,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "DFS",
+            "name": "Brute Force",
             "description": "Detect cycle in directed graph using DFS.",
             "steps": [
                 {
@@ -56,7 +56,7 @@
                     "instruction": "Define DFS helper.",
                     "placeholderCode": "    def dfs(crs):\n        if crs in visitSet:\n            return False\n        if preMap[crs] == []:\n            return True\n        visitSet.add(crs)\n        for pre in preMap[crs]:\n            if not dfs(pre): return False\n        visitSet.remove(crs)\n        preMap[crs] = []\n        return True",
                     "validationRegex": "^\\s+def\\s+dfs\\(crs\\):\\s*if\\s+crs\\s+in\\s+visitSet:\\s*return\\s+False\\s*if\\s+preMap\\[crs\\]\\s*==\\s*\\[\\]:\\s*return\\s+True\\s*visitSet\\.add\\(crs\\)\\s*for\\s+pre\\s+in\\s+preMap\\[crs\\]:\\s*if\\s+not\\s+dfs\\(pre\\):\\s*return\\s+False\\s*visitSet\\.remove\\(crs\\)\\s*preMap\\[crs\\]\\s*=\\s*\\[\\]\\s*return\\s+True$",
-                    "hint": "Recursive DFS. If node in current path, cycle detected (return False). If no prereqs, return True. Add to path, recurse, remove from path. Memoize by clearing prereqs.\\n\\nExample:\\n0->1, 1->0.\\nDFS(0): Path={0}. Recurse(1).\\n  DFS(1): Path={0, 1}. Recurse(0).\\n    DFS(0): 0 in Path. Cycle! Return False.",
+                    "hint": "Recursive DFS. If node in current path, cycle detected (return False). If no prereqs, return True. Add to path, recurse, remove from path.",
                     "solutionCode": "    def dfs(crs):\n        if crs in visitSet:\n            return False\n        if preMap[crs] == []:\n            return True\n        visitSet.add(crs)\n        for pre in preMap[crs]:\n            if not dfs(pre): return False\n        visitSet.remove(crs)\n        preMap[crs] = []\n        return True"
                 },
                 {
@@ -79,7 +79,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DFS",
+            "name": "Optimal",
             "description": "Same as brute force, O(V+E).",
             "steps": [
                 {
@@ -92,14 +92,30 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Build adjacency list.",
-                    "placeholderCode": "    preMap = {i: [] for i in range(numCourses)}\n    for crs, pre in prerequisites:\n        preMap[crs].append(pre)",
-                    "validationRegex": "^\\s+preMap\\s*=\\s*\\{i:\\s*\\[\\]\\s+for\\s+i\\s+in\\s+range\\(numCourses\\)\\}\\s*for\\s+crs,\\s*pre\\s+in\\s+prerequisites:\\s*preMap\\[crs\\]\\.append\\(pre\\)$",
+                    "instruction": "Initialize the adjacency list with an empty list for each course.",
+                    "placeholderCode": "    preMap = {i: [] for i in range(numCourses)}",
+                    "validationRegex": "^\\s+preMap\\s*=\\s*\\{i:\\s*\\[\\]\\s+for\\s+i\\s+in\\s+range\\(numCourses\\)\\}$",
                     "hint": "Create a dictionary mapping each course to its prerequisites.",
-                    "solutionCode": "    preMap = {i: [] for i in range(numCourses)}\n    for crs, pre in prerequisites:\n        preMap[crs].append(pre)"
+                    "solutionCode": "    preMap = {i: [] for i in range(numCourses)}"
                 },
                 {
                     "id": 3,
+                    "instruction": "Iterate through each pair of (course, prerequisite) in the input list.",
+                    "placeholderCode": "    for crs, pre in prerequisites:",
+                    "validationRegex": "^\\s+for\\s+crs,\\s*pre\\s+in\\s+prerequisites:$",
+                    "hint": "Use a for loop to process each requirement.",
+                    "solutionCode": "    for crs, pre in prerequisites:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Add the prerequisite to the corresponding course's list in the map.",
+                    "placeholderCode": "        preMap[crs].append(pre)",
+                    "validationRegex": "^\\s+preMap\\[crs\\]\\.append\\(pre\\)$",
+                    "hint": "Build the neighbor relationship in the graph.",
+                    "solutionCode": "        preMap[crs].append(pre)"
+                },
+                {
+                    "id": 5,
                     "instruction": "Initialize visit set for current path.",
                     "placeholderCode": "    visitSet = set()",
                     "validationRegex": "^\\s+visitSet\\s*=\\s*set\\(\\)$",
@@ -107,15 +123,15 @@
                     "solutionCode": "    visitSet = set()"
                 },
                 {
-                    "id": 4,
+                    "id": 6,
                     "instruction": "Define DFS helper.",
                     "placeholderCode": "    def dfs(crs):\n        if crs in visitSet:\n            return False\n        if preMap[crs] == []:\n            return True\n        visitSet.add(crs)\n        for pre in preMap[crs]:\n            if not dfs(pre): return False\n        visitSet.remove(crs)\n        preMap[crs] = []\n        return True",
                     "validationRegex": "^\\s+def\\s+dfs\\(crs\\):\\s*if\\s+crs\\s+in\\s+visitSet:\\s*return\\s+False\\s*if\\s+preMap\\[crs\\]\\s*==\\s*\\[\\]:\\s*return\\s+True\\s*visitSet\\.add\\(crs\\)\\s*for\\s+pre\\s+in\\s+preMap\\[crs\\]:\\s*if\\s+not\\s+dfs\\(pre\\):\\s*return\\s+False\\s*visitSet\\.remove\\(crs\\)\\s*preMap\\[crs\\]\\s*=\\s*\\[\\]\\s*return\\s+True$",
-                    "hint": "Recursive DFS. If node in current path, cycle detected (return False). If no prereqs, return True. Add to path, recurse, remove from path. Memoize by clearing prereqs.\\n\\nExample:\\n0->1, 1->0.\\nDFS(0): Path={0}. Recurse(1).\\n  DFS(1): Path={0, 1}. Recurse(0).\\n    DFS(0): 0 in Path. Cycle! Return False.",
+                    "hint": "Recursive DFS. If node in current path, cycle detected (return False). If no prereqs, return True. Add to path, recurse, remove from path. Memoize by clearing prereqs.",
                     "solutionCode": "    def dfs(crs):\n        if crs in visitSet:\n            return False\n        if preMap[crs] == []:\n            return True\n        visitSet.add(crs)\n        for pre in preMap[crs]:\n            if not dfs(pre): return False\n        visitSet.remove(crs)\n        preMap[crs] = []\n        return True"
                 },
                 {
-                    "id": 5,
+                    "id": 7,
                     "instruction": "Run DFS on all courses.",
                     "placeholderCode": "    for crs in range(numCourses):\n        if not dfs(crs): return False",
                     "validationRegex": "^\\s+for\\s+crs\\s+in\\s+range\\(numCourses\\):\\s*if\\s+not\\s+dfs\\(crs\\):\\s*return\\s+False$",
@@ -123,7 +139,7 @@
                     "solutionCode": "    for crs in range(numCourses):\n        if not dfs(crs): return False"
                 },
                 {
-                    "id": 6,
+                    "id": 8,
                     "instruction": "Return True if no cycle detected.",
                     "placeholderCode": "    return True",
                     "validationRegex": "^\\s+return\\s+True$",
