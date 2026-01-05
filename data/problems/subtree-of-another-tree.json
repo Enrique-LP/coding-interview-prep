@@ -82,38 +82,6 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Define a helper 'same_tree' function to check if two trees are identical.",
-                    "placeholderCode": "    def same_tree(p, q):",
-                    "validationRegex": "^\\s+def\\s+same_tree\\(p,\\s*q\\):$",
-                    "hint": "This helper will be used to compare subtrees of the main tree.",
-                    "solutionCode": "    def same_tree(p, q):"
-                },
-                {
-                    "id": 3,
-                    "instruction": "Base case for 'same_tree': if both nodes are None, return True.",
-                    "placeholderCode": "        if not p and not q: return True",
-                    "validationRegex": "^\\s+if\\s+not\\s+p\\s+and\\s+not\\s+q:\\s*return\\s+True$",
-                    "hint": "Two empty subtrees are identical.",
-                    "solutionCode": "        if not p and not q: return True"
-                },
-                {
-                    "id": 4,
-                    "instruction": "Base case for 'same_tree': if structures differ or values mismatch, return False.",
-                    "placeholderCode": "        if not p or not q or p.val != q.val: return False",
-                    "validationRegex": "^\\s+if\\s+not\\s+p\\s+or\\s+not\\s+q\\s+or\\s+p\\.val\\s*!=\\s*q\\.val:\\s*return\\s+False$",
-                    "hint": "Mismatch occurs if only one node is None or their values are different.",
-                    "solutionCode": "        if not p or not q or p.val != q.val: return False"
-                },
-                {
-                    "id": 5,
-                    "instruction": "Recursive case for 'same_tree': check if both children match.",
-                    "placeholderCode": "        return same_tree(p.left, q.left) and same_tree(p.right, q.right)",
-                    "validationRegex": "^\\s+return\\s+same_tree\\(p\\.left,\\s*q\\.left\\)\\s+and\\s+same_tree\\(p\\.right,\\s*q\\.right\\)$",
-                    "hint": "Both subtrees must be identical for the parent trees to match.",
-                    "solutionCode": "        return same_tree(p.left, q.left) and same_tree(p.right, q.right)"
-                },
-                {
-                    "id": 6,
                     "instruction": "If subRoot is None, it is technically a subtree (return True).",
                     "placeholderCode": "    if not subRoot: return True",
                     "validationRegex": "^\\s+if\\s+not\\s+subRoot:\\s*return\\s+True$",
@@ -121,12 +89,44 @@
                     "solutionCode": "    if not subRoot: return True"
                 },
                 {
-                    "id": 7,
+                    "id": 3,
                     "instruction": "If root is None but subRoot is not, it cannot be a subtree (return False).",
                     "placeholderCode": "    if not root: return False",
                     "validationRegex": "^\\s+if\\s+not\\s+root:\\s*return\\s+False$",
                     "hint": "A non-empty subRoot cannot be found in an empty root.",
                     "solutionCode": "    if not root: return False"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Define a helper 'same_tree' function to check if two trees are identical.",
+                    "placeholderCode": "    def same_tree(p, q):",
+                    "validationRegex": "^\\s+def\\s+same_tree\\(p,\\s*q\\):$",
+                    "hint": "This helper will be used to compare subtrees of the main tree.",
+                    "solutionCode": "    def same_tree(p, q):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Base case for 'same_tree': if both nodes are None, return True.",
+                    "placeholderCode": "        if not p and not q: return True",
+                    "validationRegex": "^\\s+if\\s+not\\s+p\\s+and\\s+not\\s+q:\\s*return\\s+True$",
+                    "hint": "Two empty subtrees are identical.",
+                    "solutionCode": "        if not p and not q: return True"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Base case for 'same_tree': if structures differ or values mismatch, return False.",
+                    "placeholderCode": "        if not p or not q or p.val != q.val: return False",
+                    "validationRegex": "^\\s+if\\s+not\\s+p\\s+or\\s+not\\s+q\\s+or\\s+p\\.val\\s*!=\\s*q\\.val:\\s*return\\s+False$",
+                    "hint": "Mismatch occurs if only one node is None or their values are different.",
+                    "solutionCode": "        if not p or not q or p.val != q.val: return False"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Recursive case for 'same_tree': check if both children match.",
+                    "placeholderCode": "        return same_tree(p.left, q.left) and same_tree(p.right, q.right)",
+                    "validationRegex": "^\\s+return\\s+same_tree\\(p\\.left,\\s*q\\.left\\)\\s+and\\s+same_tree\\(p\\.right,\\s*q\\.right\\)$",
+                    "hint": "Both subtrees must be identical for the parent trees to match.",
+                    "solutionCode": "        return same_tree(p.left, q.left) and same_tree(p.right, q.right)"
                 },
                 {
                     "id": 8,
