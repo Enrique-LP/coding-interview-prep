@@ -22,7 +22,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive Backtracking",
+            "name": "Brute Force",
             "description": "Remove element, permute rest, add back.",
             "steps": [
                 {
@@ -85,7 +85,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Iterative",
+            "name": "Optimal",
             "description": "Insert each number into all positions of existing permutations.",
             "steps": [
                 {
@@ -114,22 +114,62 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Create new permutations by inserting n.",
-                    "placeholderCode": "        new_perms = []\n        for p in perms:\n            for i in range(len(p) + 1):\n                p_copy = p.copy()\n                p_copy.insert(i, n)\n                new_perms.append(p_copy)",
-                    "validationRegex": "^\\s+new_perms\\s*=\\s*\\[\\]\\s*for\\s+p\\s+in\\s+perms:\\s*for\\s+i\\s+in\\s+range\\(len\\(p\\)\\s*\\+\\s*1\\):\\s*p_copy\\s*=\\s*p\\.copy\\(\\)\\s*p_copy\\.insert\\(i,\\s*n\\)\\s*new_perms\\.append\\(p_copy\\)$",
-                    "hint": "For each existing permutation, insert the current number at every possible position.\\n\\nExample:\\nExisting: [[1]]. Insert 2.\\nPos 0: [2, 1].\\nPos 1: [1, 2].\\nNew: [[2, 1], [1, 2]].",
-                    "solutionCode": "        new_perms = []\n        for p in perms:\n            for i in range(len(p) + 1):\n                p_copy = p.copy()\n                p_copy.insert(i, n)\n                new_perms.append(p_copy)"
+                    "instruction": "Initialize a list for the permutations of the current subset.",
+                    "placeholderCode": "        new_perms = []",
+                    "validationRegex": "^\\s+new_perms\\s*=\\s*\\[\\]$",
+                    "hint": "This will temporarily hold permutations including the current number.",
+                    "solutionCode": "        new_perms = []"
                 },
                 {
                     "id": 5,
-                    "instruction": "Update perms.",
+                    "instruction": "Iterate through all currently existing permutations.",
+                    "placeholderCode": "        for p in perms:",
+                    "validationRegex": "^\\s+for\\s+p\\s+in\\s+perms:$",
+                    "hint": "We are adding the current number to each one of the permutations we have built so far.",
+                    "solutionCode": "        for p in perms:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Iterate through all possible positions to insert the current number.",
+                    "placeholderCode": "            for i in range(len(p) + 1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(p\\)\\s*\\+\\s*1\\):$",
+                    "hint": "A list of length p has len(p) + 1 potential insertion spots.",
+                    "solutionCode": "            for i in range(len(p) + 1):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Create a copy of the current permutation.",
+                    "placeholderCode": "                p_copy = p.copy()",
+                    "validationRegex": "^\\s+p_copy\\s*=\\s*p\\.copy\\(\\)$",
+                    "hint": "We must Copy the list to avoid modifying the original permutation in the results.",
+                    "solutionCode": "                p_copy = p.copy()"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Insert the number into the copied permutation at the current position.",
+                    "placeholderCode": "                p_copy.insert(i, n)",
+                    "validationRegex": "^\\s+p_copy\\.insert\\(i,\\s*n\\)$",
+                    "hint": "Use the insert method to place the element.",
+                    "solutionCode": "                p_copy.insert(i, n)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Add the newly created permutation to the list of new permutations.",
+                    "placeholderCode": "                new_perms.append(p_copy)",
+                    "validationRegex": "^\\s+new_perms\\.append\\(p_copy\\)$",
+                    "hint": "Store each variation in the temporary list.",
+                    "solutionCode": "                new_perms.append(p_copy)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Update perms with the new permutations.",
                     "placeholderCode": "        perms = new_perms",
                     "validationRegex": "^\\s+perms\\s*=\\s*new_perms$",
                     "hint": "Update the list of permutations with the newly generated ones.",
                     "solutionCode": "        perms = new_perms"
                 },
                 {
-                    "id": 6,
+                    "id": 11,
                     "instruction": "Return permutations.",
                     "placeholderCode": "    return perms",
                     "validationRegex": "^\\s+return\\s+perms$",
