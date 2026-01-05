@@ -23,7 +23,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Backtracking",
+            "name": "Brute Force",
             "description": "DFS with decision to include same number again or move next.",
             "steps": [
                 {
@@ -70,7 +70,7 @@
                     "id": 6,
                     "instruction": "Exclude candidates[i] and recurse (move to i + 1).",
                     "placeholderCode": "        cur.pop()\n        dfs(i + 1, cur, total)",
-                    "validationRegex": "^\\s+cur\\.pop\\(\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*cur,\\s*total\\)$",
+                    "validationRegex": "^\\s+cur\\.pop\\(\\)\\s*dfs\\(i\\s*\\+\\s*1\\s*,\\s*cur,\\s*total\\)$",
                     "hint": "Backtrack (remove last element) and recurse with next index.",
                     "solutionCode": "        cur.pop()\n        dfs(i + 1, cur, total)"
                 },
@@ -86,8 +86,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Backtracking",
-            "description": "Same as brute force, optimized by sorting.",
+            "name": "Optimal",
+            "description": "DFS with backtracking exploring each candidate.",
             "steps": [
                 {
                     "id": 1,
@@ -107,45 +107,71 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Define dfs function taking index i, current combination cur, and current total.",
-                    "placeholderCode": "    def dfs(i, cur, total):\n        if total == target:\n            res.append(cur.copy())\n            return",
-                    "validationRegex": "^\\s+def\\s+dfs\\(i,\\s*cur,\\s*total\\):\\s*if\\s+total\\s*==\\s*target:\\s*res\\.append\\(cur\\.copy\\(\\)\\)\\s*return$",
-                    "hint": "Define DFS. If total equals target, add copy of current combination to results.",
-                    "solutionCode": "    def dfs(i, cur, total):\n        if total == target:\n            res.append(cur.copy())\n            return"
+                    "instruction": "Define the inner dfs function taking current index, combination, and total.",
+                    "placeholderCode": "    def dfs(i, cur, total):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(i,\\s*cur,\\s*total\\):$",
+                    "hint": "The function explores branches of the decision tree.",
+                    "solutionCode": "    def dfs(i, cur, total):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Base cases for stopping recursion.",
-                    "placeholderCode": "        if i >= len(candidates) or total > target:\n            return",
-                    "validationRegex": "^\\s+if\\s+i\\s*>=\\s+len\\(candidates\\)\\s+or\\s+total\\s*>\\s+target:\\s*return$",
-                    "hint": "Stop if index out of bounds or total exceeds target.",
-                    "solutionCode": "        if i >= len(candidates) or total > target:\n            return"
+                    "instruction": "Add a base case to check if the current total matches the target.",
+                    "placeholderCode": "        if total == target:",
+                    "validationRegex": "^\\s+if\\s+total\\s*==\\s*target:$",
+                    "hint": "When this condition is true, we have found a valid combination.",
+                    "solutionCode": "        if total == target:"
                 },
                 {
                     "id": 5,
-                    "instruction": "Include candidates[i] and recurse (stay at i).",
-                    "placeholderCode": "        cur.append(candidates[i])\n        dfs(i, cur, total + candidates[i])",
-                    "validationRegex": "^\\s+cur\\.append\\(candidates\\[i\\]\\)\\s*dfs\\(i,\\s*cur,\\s*total\\s*\\+\\s*candidates\\[i\\]\\)$",
-                    "hint": "Add current candidate and recurse with same index (allowing reuse).\\n\\nExample:\\nTarget=7, Candidates=[2, 3].\\nStart: 0. Add 2 -> Total=2. Recurse (index 0).\\nAdd 2 -> Total=4. Recurse (index 0).\\nAdd 2 -> Total=6. Recurse (index 0).\\nAdd 2 -> Total=8 (>7). Backtrack.",
-                    "solutionCode": "        cur.append(candidates[i])\n        dfs(i, cur, total + candidates[i])"
+                    "instruction": "Append a copy of the current combination to the result list.",
+                    "placeholderCode": "            res.append(cur.copy())",
+                    "validationRegex": "^\\s+res\\.append\\(cur\\.copy\\(\\)\\)$",
+                    "hint": "Use .copy() to save the current state of the combination list.",
+                    "solutionCode": "            res.append(cur.copy())"
                 },
                 {
                     "id": 6,
-                    "instruction": "Exclude candidates[i] and recurse (move to i + 1).",
-                    "placeholderCode": "        cur.pop()\n        dfs(i + 1, cur, total)",
-                    "validationRegex": "^\\s+cur\\.pop\\(\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*cur,\\s*total\\)$",
-                    "hint": "Backtrack (remove last element) and recurse with next index.",
-                    "solutionCode": "        cur.pop()\n        dfs(i + 1, cur, total)"
+                    "instruction": "Return from the function after adding the combination to results.",
+                    "placeholderCode": "            return",
+                    "validationRegex": "^\\s*return$",
+                    "hint": "Stop searching this branch as we already reached the target.",
+                    "solutionCode": "            return"
                 },
                 {
                     "id": 7,
-                    "instruction": "Call dfs and return result.",
+                    "instruction": "Base cases for stopping recursion if index or total out of bounds.",
+                    "placeholderCode": "        if i >= len(candidates) or total > target:\n            return",
+                    "validationRegex": "^\\s+if\\s+i\\s*>=\\s+len\\(candidates\\)\\s+or\\s+total\\s*>\\s+target:\\s*return$",
+                    "hint": "Return if we run out of candidates or exceed the target sum.",
+                    "solutionCode": "        if i >= len(candidates) or total > target:\n            return"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Include candidates[i] and recurse allowing the same index for reuse.",
+                    "placeholderCode": "        cur.append(candidates[i])\n        dfs(i, cur, total + candidates[i])",
+                    "validationRegex": "^\\s+cur\\.append\\(candidates\\[i\\]\\)\\s*dfs\\(i,\\s*cur,\\s*total\\s*\\+\\s*candidates\\[i\\]\\)$",
+                    "hint": "Include the current candidate and continue searching from the same index.",
+                    "solutionCode": "        cur.append(candidates[i])\n        dfs(i, cur, total + candidates[i])"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Exclude candidates[i] (backtrack) and move to the next candidate.",
+                    "placeholderCode": "        cur.pop()\n        dfs(i + 1, cur, total)",
+                    "validationRegex": "^\\s+cur\\.pop\\(\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*cur,\\s*total\\)$",
+                    "hint": "Remove the last added candidate and explore branches starting from the next index.",
+                    "solutionCode": "        cur.pop()\n        dfs(i + 1, cur, total)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Initiate the DFS and return the final results.",
                     "placeholderCode": "    dfs(0, [], 0)\n    return res",
                     "validationRegex": "^\\s+dfs\\(0,\\s*\\[\\],\\s*0\\)\\s*return\\s+res$",
-                    "hint": "Start DFS from index 0 with empty list and 0 total.",
+                    "hint": "Start the recursion from index 0 with an empty combination and zero sum.",
                     "solutionCode": "    dfs(0, [], 0)\n    return res"
                 }
             ]
         }
-    }
+    ]
+}
+}
 }
