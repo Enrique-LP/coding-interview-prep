@@ -97,14 +97,22 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Check if node value is within boundaries.",
-                    "placeholderCode": "        if not (left < node.val < right):\n            return False",
-                    "validationRegex": "^\\s+if\\s+not\\s*\\(left\\s*<\\s+node\\.val\\s*<\\s+right\\):\\s*return\\s+False$",
-                    "hint": "Return False if value is not strictly between left and right.\\n\\nExample:\\nNode=5. Range (3, 7). 3 < 5 < 7. Valid.\\nNode=2. Range (3, 7). 2 < 3? False. Invalid BST.",
-                    "solutionCode": "        if not (left < node.val < right):\n            return False"
+                    "instruction": "Check if the current node's value violates the binary search tree boundaries.",
+                    "placeholderCode": "        if not (left < node.val < right):",
+                    "validationRegex": "^\\s+if\\s+not\\s*\\(left\\s*<\\s+node\\.val\\s*<\\s+right\\):$",
+                    "hint": "The value must be strictly greater than 'left' and strictly less than 'right'.",
+                    "solutionCode": "        if not (left < node.val < right):"
                 },
                 {
                     "id": 5,
+                    "instruction": "Return False if the node value is outside the allowed range.",
+                    "placeholderCode": "            return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "Violation of boundaries means the tree is not a valid BST.",
+                    "solutionCode": "            return False"
+                },
+                {
+                    "id": 6,
                     "instruction": "Recursively check left and right subtrees with updated boundaries.",
                     "placeholderCode": "        return valid(node.left, left, node.val) and valid(node.right, node.val, right)",
                     "validationRegex": "^\\s+return\\s+valid\\(node\\.left,\\s*left,\\s*node\\.val\\)\\s+and\\s+valid\\(node\\.right,\\s*node\\.val,\\s*right\\)$",
@@ -112,7 +120,7 @@
                     "solutionCode": "        return valid(node.left, left, node.val) and valid(node.right, node.val, right)"
                 },
                 {
-                    "id": 6,
+                    "id": 7,
                     "instruction": "Call helper with initial infinite boundaries.",
                     "placeholderCode": "    return valid(root, float(\"-inf\"), float(\"inf\"))",
                     "validationRegex": "^\\s+return\\s+valid\\(root,\\s*float\\(\"-inf\"\\),\\s*float\\(\"inf\"\\)\\)$",
