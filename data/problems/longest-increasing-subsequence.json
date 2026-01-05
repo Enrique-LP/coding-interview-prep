@@ -98,42 +98,50 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate backwards through the array 'nums'.",
+                    "instruction": "Initiate a loop to iterate backwards through the array 'nums'.",
                     "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):",
                     "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
-                    "hint": "Building the solution from right to left.",
+                    "hint": "Starting from the end allows us to build the LIS solution bottom-up.",
                     "solutionCode": "    for i in range(len(nums) - 1, -1, -1):"
                 },
                 {
                     "id": 4,
-                    "instruction": "For each element 'i', iterate through all following elements 'j'.",
+                    "instruction": "For the current element at index 'i', initiate another loop to check all subsequent elements 'j'.",
                     "placeholderCode": "        for j in range(i + 1, len(nums)):",
                     "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(i\\s*\\+\\s*1,\\s*len\\(nums\\)\\):$",
-                    "hint": "We check if the element at 'i' can precede the longest increasing subsequence starting at 'j'.",
+                    "hint": "We are looking for any element 'j' that can follow 'i' in an increasing subsequence.",
                     "solutionCode": "        for j in range(i + 1, len(nums)):"
                 },
                 {
                     "id": 5,
-                    "instruction": "Check if the current element at index 'i' is less than the element at index 'j'.",
+                    "instruction": "Check if the element at index 'i' is smaller than the element at index 'j'.",
                     "placeholderCode": "            if nums[i] < nums[j]:",
                     "validationRegex": "^\\s+if\\s+nums\\[i\\]\\s*<\\s+nums\\[j\\]:$",
-                    "hint": "A smaller element can be added to the front of an increasing subsequence.",
+                    "hint": "Only if nums[i] < nums[j] can we extend the increasing subsequence.",
                     "solutionCode": "            if nums[i] < nums[j]:"
                 },
                 {
                     "id": 6,
-                    "instruction": "Update 'dp[i]' to be the maximum of its current value and 1 plus 'dp[j]'.",
-                    "placeholderCode": "                dp[i] = max(dp[i], 1 + dp[j])",
-                    "validationRegex": "^\\s+dp\\[i\\]\\s*=\\s*max\\(dp\\[i\\],\\s*1\\s*\\+\\s*dp\\[j\\]\\)$",
-                    "hint": "Take the longest subsequence found so far starting from index 'j' and add the current element.",
-                    "solutionCode": "                dp[i] = max(dp[i], 1 + dp[j])"
+                    "instruction": "Calculate the potential new LIS length starting at index 'i' using the result from index 'j'.",
+                    "placeholderCode": "                potential_len = 1 + dp[j]",
+                    "validationRegex": "^\\s+potential_len\\s*=\\s*1\\s*\\+\\s*dp\\[j\\]$",
+                    "hint": "Add 1 (for the current element) to the LIS length found starting at 'j'.",
+                    "solutionCode": "                potential_len = 1 + dp[j]"
                 },
                 {
                     "id": 7,
-                    "instruction": "Return the maximum value in the 'dp' array.",
+                    "instruction": "Update 'dp[i]' to the maximum value between its current value and the new potential length.",
+                    "placeholderCode": "                dp[i] = max(dp[i], potential_len)",
+                    "validationRegex": "^\\s+dp\\[i\\]\\s*=\\s*max\\(dp\\[i\\],\\s*potential_len\\)$",
+                    "hint": "We want to store the longest increasing subsequence found so far for index 'i'.",
+                    "solutionCode": "                dp[i] = max(dp[i], potential_len)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return the maximum value in the 'dp' array, which represents the longest increasing subsequence overall.",
                     "placeholderCode": "    return max(dp)",
                     "validationRegex": "^\\s+return\\s+max\\(dp\\)$",
-                    "hint": "The longest overall subsequence could start at any index.",
+                    "hint": "The overall LIS can start at any position in the array.",
                     "solutionCode": "    return max(dp)"
                 }
             ]
