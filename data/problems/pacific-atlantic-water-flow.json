@@ -83,22 +83,30 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize dimensions and reachable sets.",
-                    "placeholderCode": "    rows, cols = len(heights), len(heights[0])\n    pac, atl = set(), set()",
-                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(heights\\),\\s*len\\(heights\\[0\\]\\)\\s*pac,\\s*atl\\s*=\\s*set\\(\\),\\s*set\\(\\)$",
-                    "hint": "Get dimensions and initialize two sets for Pacific and Atlantic reachable cells.",
-                    "solutionCode": "    rows, cols = len(heights), len(heights[0])\n    pac, atl = set(), set()"
+                    "instruction": "Initialize dimensions (rows and cols).",
+                    "placeholderCode": "    rows, cols = len(heights), len(heights[0])",
+                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(heights\\),\\s*len\\(heights\\[0\\]\\)$",
+                    "hint": "Get the number of rows and columns from the heights grid.",
+                    "solutionCode": "    rows, cols = len(heights), len(heights[0])"
                 },
                 {
                     "id": 3,
-                    "instruction": "Define DFS helper.",
-                    "placeholderCode": "    def dfs(r, c, visit, prevHeight):\n        if (r < 0 or c < 0 or r == rows or c == cols or\n            (r, c) in visit or heights[r][c] < prevHeight):\n            return\n        visit.add((r, c))\n        dfs(r + 1, c, visit, heights[r][c])\n        dfs(r - 1, c, visit, heights[r][c])\n        dfs(r, c + 1, visit, heights[r][c])\n        dfs(r, c - 1, visit, heights[r][c])",
-                    "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c,\\s*visit,\\s*prevHeight\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*==\\s*cols\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+heights\\[r\\]\\[c\\]\\s*<\\s+prevHeight\\):\\s*return\\s*visit\\.add\\(\\(r,\\s*c\\)\\)\\s*dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)$",
-                    "hint": "Recursive DFS. Check bounds, visited status, and height condition (must be >= prevHeight to flow FROM ocean).\\n\\nExample:\\nHeights=[[1, 2], [2, 3]]. Pacific touches top/left.\\nDFS from (0,0) [Height 1]: Reachable.\\nCheck (0,1) [Height 2]: 2 >= 1. Reachable.\\nCheck (1,0) [Height 2]: 2 >= 1. Reachable.\\nCheck (1,1) [Height 3]: 3 >= 2. Reachable.",
-                    "solutionCode": "    def dfs(r, c, visit, prevHeight):\n        if (r < 0 or c < 0 or r == rows or c == cols or\n            (r, c) in visit or heights[r][c] < prevHeight):\n            return\n        visit.add((r, c))\n        dfs(r + 1, c, visit, heights[r][c])\n        dfs(r - 1, c, visit, heights[r][c])\n        dfs(r, c + 1, visit, heights[r][c])\n        dfs(r, c - 1, visit, heights[r][c])"
+                    "instruction": "Initialize sets to track reachable cells for Pacific and Atlantic oceans.",
+                    "placeholderCode": "    pac, atl = set(), set()",
+                    "validationRegex": "^\\s+pac,\\s*atl\\s*=\\s*set\\(\\),\\s*set\\(\\)$",
+                    "hint": "Create two empty sets: one for Pacific and one for Atlantic reachable coordinates.",
+                    "solutionCode": "    pac, atl = set(), set()"
                 },
                 {
                     "id": 4,
+                    "instruction": "Define DFS helper.",
+                    "placeholderCode": "    def dfs(r, c, visit, prevHeight):\n        if (r < 0 or c < 0 or r == rows or c == cols or\n            (r, c) in visit or heights[r][c] < prevHeight):\n            return\n        visit.add((r, c))\n        dfs(r + 1, c, visit, heights[r][c])\n        dfs(r - 1, c, visit, heights[r][c])\n        dfs(r, c + 1, visit, heights[r][c])\n        dfs(r, c - 1, visit, heights[r][c])",
+                    "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c,\\s*visit,\\s*prevHeight\\):\\s*if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*==\\s*cols\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+heights\\[r\\]\\[c\\]\\s*<\\s+prevHeight\\):\\s*return\\s*visit\\.add\\(\\(r,\\s*c\\)\\)\\s*dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)$",
+                    "hint": "Recursive DFS. Check bounds, visited status, and height condition (must be >= prevHeight to flow FROM ocean).",
+                    "solutionCode": "    def dfs(r, c, visit, prevHeight):\n        if (r < 0 or c < 0 or r == rows or c == cols or\n            (r, c) in visit or heights[r][c] < prevHeight):\n            return\n        visit.add((r, c))\n        dfs(r + 1, c, visit, heights[r][c])\n        dfs(r - 1, c, visit, heights[r][c])\n        dfs(r, c + 1, visit, heights[r][c])\n        dfs(r, c - 1, visit, heights[r][c])"
+                },
+                {
+                    "id": 5,
                     "instruction": "Run DFS from all borders.",
                     "placeholderCode": "    for c in range(cols):\n        dfs(0, c, pac, heights[0][c])\n        dfs(rows - 1, c, atl, heights[rows - 1][c])\n    for r in range(rows):\n        dfs(r, 0, pac, heights[r][0])\n        dfs(r, cols - 1, atl, heights[r][cols - 1])",
                     "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):\\s*dfs\\(0,\\s*c,\\s*pac,\\s*heights\\[0\\]\\[c\\]\\)\\s*dfs\\(rows\\s*-\\s*1,\\s*c,\\s*atl,\\s*heights\\[rows\\s*-\\s*1\\]\\[c\\]\\)\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*dfs\\(r,\\s*0,\\s*pac,\\s*heights\\[r\\]\\[0\\]\\)\\s*dfs\\(r,\\s*cols\\s*-\\s*1,\\s*atl,\\s*heights\\[r\\]\\[cols\\s*-\\s*1\\]\\)$",
@@ -106,7 +114,7 @@
                     "solutionCode": "    for c in range(cols):\n        dfs(0, c, pac, heights[0][c])\n        dfs(rows - 1, c, atl, heights[rows - 1][c])\n    for r in range(rows):\n        dfs(r, 0, pac, heights[r][0])\n        dfs(r, cols - 1, atl, heights[r][cols - 1])"
                 },
                 {
-                    "id": 5,
+                    "id": 6,
                     "instruction": "Return intersection of reachable sets.",
                     "placeholderCode": "    return list(pac.intersection(atl))",
                     "validationRegex": "^\\s+return\\s+list\\(pac\\.intersection\\(atl\\)\\)$",
