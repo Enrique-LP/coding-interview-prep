@@ -21,7 +21,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "BFS",
+            "name": "Brute Force",
             "description": "Use a queue to traverse level by level.",
             "steps": [
                 {
@@ -76,7 +76,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "BFS",
+            "name": "Optimal",
             "description": "Same as brute force, O(n) is optimal.",
             "steps": [
                 {
@@ -89,42 +89,50 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize result list and queue.",
-                    "placeholderCode": "    res = []\n    q = [root] if root else []",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*q\\s*=\\s*\\[root\\]\\s*if\\s+root\\s+else\\s*\\[\\]$",
-                    "hint": "Start with root in queue if it exists.",
-                    "solutionCode": "    res = []\n    q = [root] if root else []"
+                    "instruction": "Initialize an empty list 'res' to store the level order traversal.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "This list will contain sub-lists for each level of the tree.",
+                    "solutionCode": "    res = []"
                 },
                 {
                     "id": 3,
-                    "instruction": "Loop while queue is not empty.",
-                    "placeholderCode": "    while q:",
-                    "validationRegex": "^\\s+while\\s+q:$",
-                    "hint": "Continue while there are nodes to process.",
-                    "solutionCode": "    while q:"
+                    "instruction": "Initialize a queue 'q' with the root node if it exists.",
+                    "placeholderCode": "    q = [root] if root else []",
+                    "validationRegex": "^\\s+q\\s*=\\s*\\[root\\]\\s+if\\s+root\\s+else\\s*\\[\\]$",
+                    "hint": "BFS uses a queue to process nodes level by level.",
+                    "solutionCode": "    q = [root] if root else []"
                 },
                 {
                     "id": 4,
-                    "instruction": "Process current level.",
-                    "placeholderCode": "        val = []\n        for i in range(len(q)):\n            node = q.pop(0)\n            val.append(node.val)\n            if node.left: q.append(node.left)\n            if node.right: q.append(node.right)",
-                    "validationRegex": "^\\s+val\\s*=\\s*\\[\\]\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*node\\s*=\\s*q\\.pop\\(0\\)\\s*val\\.append\\(node\\.val\\)\\s*if\\s+node\\.left:\\s*q\\.append\\(node\\.left\\)\\s*if\\s+node\\.right:\\s*q\\.append\\(node\\.right\\)$",
-                    "hint": "Collect values of current level and add children to queue.",
-                    "solutionCode": "        val = []\n        for i in range(len(q)):\n            node = q.pop(0)\n            val.append(node.val)\n            if node.left: q.append(node.left)\n            if node.right: q.append(node.right)"
+                    "instruction": "Loop while the queue is not empty.",
+                    "placeholderCode": "    while q:",
+                    "validationRegex": "^\\s+while\\s+q:$",
+                    "hint": "Continue the process until all reachable nodes have been visited.",
+                    "solutionCode": "    while q:"
                 },
                 {
                     "id": 5,
-                    "instruction": "Append level values to result.",
-                    "placeholderCode": "        res.append(val)",
-                    "validationRegex": "^\\s+res\\.append\\(val\\)$",
-                    "hint": "Add the list of values for this level to the result.",
-                    "solutionCode": "        res.append(val)"
+                    "instruction": "Process current level nodes and track their values.",
+                    "placeholderCode": "        val = []\n        for i in range(len(q)):\n            node = q.pop(0)\n            val.append(node.val)\n            if node.left: q.append(node.left)\n            if node.right: q.append(node.right)",
+                    "validationRegex": "^\\s+val\\s*=\\s*\\[\\]\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*node\\s*=\\s*q\\.pop\\(0\\)\\s*val\\.append\\(node\\.val\\)\\s*if\\s+node\\.left:\\s*q\\.append\\(node\\.left\\)\\s*if\\s+node\\.right:\\s*q\\.append\\(node\\.right\\)$",
+                    "hint": "Collect values of current level nodes and add their children to the queue for the next level.",
+                    "solutionCode": "        val = []\n        for i in range(len(q)):\n            node = q.pop(0)\n            val.append(node.val)\n            if node.left: q.append(node.left)\n            if node.right: q.append(node.right)"
                 },
                 {
                     "id": 6,
-                    "instruction": "Return result.",
+                    "instruction": "Append the list of current level values to the result.",
+                    "placeholderCode": "        res.append(val)",
+                    "validationRegex": "^\\s+res\\.append\\(val\\)$",
+                    "hint": "Each entry in 'res' represents one level of the binary tree.",
+                    "solutionCode": "        res.append(val)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return the final result after traversing all levels.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "Return the list of levels.",
+                    "hint": "The result is a list of lists containing values level by level.",
                     "solutionCode": "    return res"
                 }
             ]
