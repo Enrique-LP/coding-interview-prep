@@ -21,7 +21,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
+            "name": "Brute Force",
             "description": "Calculate min cost recursively.",
             "steps": [
                 {
@@ -37,7 +37,7 @@
                     "instruction": "Define recursive helper.",
                     "placeholderCode": "    def dfs(i):\n        if i >= len(cost): return 0\n        return cost[i] + min(dfs(i + 1), dfs(i + 2))",
                     "validationRegex": "^\\s+def\\s+dfs\\(i\\):\\s*if\\s+i\\s*>=\\s+len\\(cost\\):\\s*return\\s+0\\s*return\\s+cost\\[i\\]\\s*\\+\\s*min\\(dfs\\(i\\s*\\+\\s*1\\),\\s*dfs\\(i\\s*\\+\\s*2\\)\\)$",
-                    "hint": "Recursive function. If index out of bounds, return 0. Else return cost[i] + min(dfs(i+1), dfs(i+2)).\\n\\nExample:\\nCost=[10, 15].\\nDFS(0): 10 + Min(DFS(1), DFS(2))\\n  DFS(1): 15 + Min(DFS(2), DFS(3)) -> 15 + 0 = 15.\\n  DFS(2): 0.\\n  Min(15, 0) = 0. -> 10 + 0 = 10.",
+                    "hint": "Recursive function. If index out of bounds, return 0. Else return cost[i] + min(dfs(i+1), dfs(i+2)).",
                     "solutionCode": "    def dfs(i):\n        if i >= len(cost): return 0\n        return cost[i] + min(dfs(i + 1), dfs(i + 2))"
                 },
                 {
@@ -52,8 +52,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "Iterate backwards to find min cost.",
+            "name": "Optimal",
+            "description": "Iterate backwards to find min cost in-place, O(n) time and O(1) space.",
             "steps": [
                 {
                     "id": 1,
@@ -73,14 +73,22 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate backwards from third to last element.",
-                    "placeholderCode": "    for i in range(len(cost) - 3, -1, -1):\n        cost[i] += min(cost[i + 1], cost[i + 2])",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(cost\\)\\s*-\\s*3,\\s*-1,\\s*-1\\):\\s*cost\\[i\\]\\s*\\+=\\s*min\\(cost\\[i\\s*\\+\\s*1\\],\\s*cost\\[i\\s*\\+\\s*2\\]\\)$",
-                    "hint": "Iterate backwards. Update cost[i] to be cost[i] + min(cost[i+1], cost[i+2]). This builds the solution from the top down.\\n\\nExample:\\nCost=[10, 15, 20]. Append 0 -> [10, 15, 20, 0].\\ni=1 (Val 15): 15 + min(20, 0) = 15.\\ni=0 (Val 10): 10 + min(15, 15) = 25.\\nResult: min(25, 15) = 15.",
-                    "solutionCode": "    for i in range(len(cost) - 3, -1, -1):\n        cost[i] += min(cost[i + 1], cost[i + 2])"
+                    "instruction": "Iterate backwards from the third-to-last element down to index 0.",
+                    "placeholderCode": "    for i in range(len(cost) - 3, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(cost\\)\\s*-\\s*3,\\s*-1,\\s*-1\\):$",
+                    "hint": "Start from index len(cost)-3 because len(cost)-1 is the top floor and len(cost)-2 has no choice but to go to the top.",
+                    "solutionCode": "    for i in range(len(cost) - 3, -1, -1):"
                 },
                 {
                     "id": 4,
+                    "instruction": "Update the current cost with the minimum of the next two possible steps.",
+                    "placeholderCode": "        cost[i] += min(cost[i + 1], cost[i + 2])",
+                    "validationRegex": "^\\s+cost\\[i\\]\\s*\\+=\\s*min\\(cost\\[i\\s*\\+\\s*1\\],\\s*cost\\[i\\s*\\+\\s*2\\]\\)$",
+                    "hint": "At each step, we choose the cheapest way to continue climbing.",
+                    "solutionCode": "        cost[i] += min(cost[i + 1], cost[i + 2])"
+                },
+                {
+                    "id": 5,
                     "instruction": "Return min of first two costs.",
                     "placeholderCode": "    return min(cost[0], cost[1])",
                     "validationRegex": "^\\s+return\\s+min\\(cost\\[0\\],\\s*cost\\[1\\]\\)$",
