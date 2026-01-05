@@ -114,14 +114,62 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Expand outwards for odd-length palindromes centered at index 'i'.",
-                    "placeholderCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1",
-                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*if\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*>\\s*resLen:\\s*res\\s*=\\s*s\\[l:r\\+1\\]\\s*resLen\\s*=\\s*r\\s*-\\s*l\\s*\\+\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
-                    "hint": "Check palindromes like 'aba' where 'b' is the center.",
-                    "solutionCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1"
+                    "instruction": "Initialize the left and right pointers at the current index 'i' (odd length center).",
+                    "placeholderCode": "        l, r = i, i",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i$",
+                    "hint": "For odd-length palindromes, the center is a single character.",
+                    "solutionCode": "        l, r = i, i"
                 },
                 {
                     "id": 6,
+                    "instruction": "Expand outwards as long as the characters at pointers 'l' and 'r' match.",
+                    "placeholderCode": "        while l >= 0 and r < len(s) and s[l] == s[r]:",
+                    "validationRegex": "^\\s+while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:$",
+                    "hint": "Ensure the pointers are within bounds and the symmetry is maintained.",
+                    "solutionCode": "        while l >= 0 and r < len(s) and s[l] == s[r]:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check if the current palindrome is longer than the previous maximum.",
+                    "placeholderCode": "            if (r - l + 1) > resLen:",
+                    "validationRegex": "^\\s+if\\s+\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*>\\s*resLen:$",
+                    "hint": "Compare the current window width (r - l + 1) with our record.",
+                    "solutionCode": "            if (r - l + 1) > resLen:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Update the result string with the new longest palindrome.",
+                    "placeholderCode": "                res = s[l:r+1]",
+                    "validationRegex": "^\\s+res\\s*=\\s*s\\[l:r\\+1\\]$",
+                    "hint": "Slice the string to capture the symmetric part.",
+                    "solutionCode": "                res = s[l:r+1]"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Update the maximum length record.",
+                    "placeholderCode": "                resLen = r - l + 1",
+                    "validationRegex": "^\\s+resLen\\s*=\\s*r\\s*-\\s*l\\s*\\+\\s*1$",
+                    "hint": "Record the new length to compare in future iterations.",
+                    "solutionCode": "                resLen = r - l + 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Move the left pointer one step to the left.",
+                    "placeholderCode": "            l -= 1",
+                    "validationRegex": "^\\s+l\\s*-=\\s*1$",
+                    "hint": "Expand the window outwards.",
+                    "solutionCode": "            l -= 1"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Move the right pointer one step to the right.",
+                    "placeholderCode": "            r += 1",
+                    "validationRegex": "^\\s+r\\s*\\+=\\s*1$",
+                    "hint": "Continue the expansion in the next while loop iteration.",
+                    "solutionCode": "            r += 1"
+                },
+                {
+                    "id": 12,
                     "instruction": "Expand outwards for even-length palindromes centered between index 'i' and 'i+1'.",
                     "placeholderCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1",
                     "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*\\+\\s*1\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*if\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*>\\s*resLen:\\s*res\\s*=\\s*s\\[l:r\\+1\\]\\s*resLen\\s*=\\s*r\\s*-\\s*l\\s*\\+\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
@@ -129,7 +177,7 @@
                     "solutionCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1"
                 },
                 {
-                    "id": 7,
+                    "id": 13,
                     "instruction": "Return the final result string representing the longest palindrome found.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
