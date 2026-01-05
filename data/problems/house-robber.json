@@ -21,7 +21,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
+            "name": "Brute Force",
             "description": "Recursively choose to rob or skip.",
             "steps": [
                 {
@@ -37,7 +37,7 @@
                     "instruction": "Define recursive helper.",
                     "placeholderCode": "    def dfs(i):\n        if i >= len(nums): return 0\n        return max(nums[i] + dfs(i + 2), dfs(i + 1))",
                     "validationRegex": "^\\s+def\\s+dfs\\(i\\):\\s*if\\s+i\\s*>=\\s+len\\(nums\\):\\s*return\\s+0\\s*return\\s+max\\(nums\\[i\\]\\s*\\+\\s*dfs\\(i\\s*\\+\\s*2\\),\\s*dfs\\(i\\s*\\+\\s*1\\)\\)$",
-                    "hint": "Recursive function. At each house, either rob it (and skip next) or skip it. Return max.\\n\\nExample:\\nNums=[1, 2].\\ni=0: Max(1 + DFS(2), DFS(1))\\n  DFS(2): 0.\\n  DFS(1): Max(2 + DFS(3), DFS(2)) = 2.\\nMax(1, 2) = 2.",
+                    "hint": "Recursive function. At each house, either rob it (and skip next) or skip it. Return max.",
                     "solutionCode": "    def dfs(i):\n        if i >= len(nums): return 0\n        return max(nums[i] + dfs(i + 2), dfs(i + 1))"
                 },
                 {
@@ -52,8 +52,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "Maintain max loot for previous two houses.",
+            "name": "Optimal",
+            "description": "Maintain max loot for previous two houses using iterative DP, O(n) time and O(1) space.",
             "steps": [
                 {
                     "id": 1,
@@ -65,26 +65,50 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize rob1 and rob2.",
+                    "instruction": "Initialize rob1 and rob2 to zero.",
                     "placeholderCode": "    rob1, rob2 = 0, 0",
                     "validationRegex": "^\\s+rob1,\\s*rob2\\s*=\\s*0,\\s*0$",
-                    "hint": "Initialize two variables to keep track of the max loot ending at the previous two houses.",
+                    "hint": "rob1 represents the max loot ending at house [i-2], and rob2 represents house [i-1].",
                     "solutionCode": "    rob1, rob2 = 0, 0"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate through nums.",
-                    "placeholderCode": "    for n in nums:\n        temp = max(n + rob1, rob2)\n        rob1 = rob2\n        rob2 = temp",
-                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:\\s*temp\\s*=\\s*max\\(n\\s*\\+\\s*rob1,\\s*rob2\\)\\s*rob1\\s*=\\s*rob2\\s*rob2\\s*=\\s*temp$",
-                    "hint": "Iterate. `temp` is max of robbing current house + loot from 2 houses ago (`rob1`) OR skipping current house (`rob2`). Update `rob1` and `rob2`.\\n\\nExample:\\nNums=[1, 2, 3, 1]. Init: Rob1=0, Rob2=0.\\nHouse 1: Max(1+0, 0) = 1. Rob1=0, Rob2=1.\\nHouse 2: Max(2+0, 1) = 2. Rob1=1, Rob2=2.\\nHouse 3: Max(3+1, 2) = 4. Rob1=2, Rob2=4.\\nHouse 1: Max(1+2, 4) = 4. Rob1=4, Rob2=4.",
-                    "solutionCode": "    for n in nums:\n        temp = max(n + rob1, rob2)\n        rob1 = rob2\n        rob2 = temp"
+                    "instruction": "Start a loop to iterate through each house amount in nums.",
+                    "placeholderCode": "    for n in nums:",
+                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:$",
+                    "hint": "We process each house one by one to find the maximum loot.",
+                    "solutionCode": "    for n in nums:"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return rob2.",
+                    "instruction": "Calculate the max loot including the current house or skipping it.",
+                    "placeholderCode": "        temp = max(n + rob1, rob2)",
+                    "validationRegex": "^\\s+temp\\s*=\\s*max\\(n\\s*\\+\\s*rob1,\\s*rob2\\)$",
+                    "hint": "We either rob the current house + whatever we had before the previous one, OR we skip current and take the loot from the previous house.",
+                    "solutionCode": "        temp = max(n + rob1, rob2)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Update rob1 to the value of rob2.",
+                    "placeholderCode": "        rob1 = rob2",
+                    "validationRegex": "^\\s+rob1\\s*=\\s*rob2$",
+                    "hint": "The current 'previous' house becomes the 'two houses ago' house for the next iteration.",
+                    "solutionCode": "        rob1 = rob2"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update rob2 to the value stored in temp.",
+                    "placeholderCode": "        rob2 = temp",
+                    "validationRegex": "^\\s+rob2\\s*=\\s*temp$",
+                    "hint": "The new max loot becomes the 'previous' house for the next iteration.",
+                    "solutionCode": "        rob2 = temp"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return the final accumulated max loot stored in rob2.",
                     "placeholderCode": "    return rob2",
                     "validationRegex": "^\\s+return\\s+rob2$",
-                    "hint": "Return the final accumulated max loot.",
+                    "hint": "After the loop, rob2 contains the maximum amount of money that can be robbed.",
                     "solutionCode": "    return rob2"
                 }
             ]
