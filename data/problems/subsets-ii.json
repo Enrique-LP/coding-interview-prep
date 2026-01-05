@@ -28,7 +28,7 @@
                     "id": 1,
                     "instruction": "Define the function subsets_with_dup that takes nums.",
                     "placeholderCode": "def subsets_with_dup(nums):",
-                    "validationRegex": "^def\\\\s+subsets_with_dup\\\\(nums\\\\):$",
+                    "validationRegex": "^def\\s+subsets_with_dup\\(nums\\):$",
                     "hint": "Use `def` to define the function.",
                     "solutionCode": "def subsets_with_dup(nums):"
                 },
@@ -36,7 +36,7 @@
                     "id": 2,
                     "instruction": "Sort the input array to group duplicate elements.",
                     "placeholderCode": "    nums.sort()",
-                    "validationRegex": "^\\\\s+nums\\\\.sort\\\\(\\\\)$",
+                    "validationRegex": "^\\s+nums\\.sort\\(\\)$",
                     "hint": "Sorting ensures that duplicates are adjacent, making them easier to handle.",
                     "solutionCode": "    nums.sort()"
                 },
@@ -44,7 +44,7 @@
                     "id": 3,
                     "instruction": "Initialize a set to store unique subsets as tuples.",
                     "placeholderCode": "    res = set()",
-                    "validationRegex": "^\\\\s+res\\\\s*=\\\\s*set\\\\(\\\\)$",
+                    "validationRegex": "^\\s+res\\s*=\\s*set\\(\\)$",
                     "hint": "We use a set because it automatically handles duplicate entries.",
                     "solutionCode": "    res = set()"
                 },
@@ -52,7 +52,7 @@
                     "id": 4,
                     "instruction": "Define the recursive dfs function signature.",
                     "placeholderCode": "    def dfs(i, subset):",
-                    "validationRegex": "^\\\\s+def\\\\s+dfs\\\\(i,\\\\s*subset\\\\):$",
+                    "validationRegex": "^\\s+def\\s+dfs\\(i,\\s*subset\\):$",
                     "hint": "The function explores each branch of the decision tree.",
                     "solutionCode": "    def dfs(i, subset):"
                 },
@@ -60,7 +60,7 @@
                     "id": 5,
                     "instruction": "Add a base case to check if all elements have been processed.",
                     "placeholderCode": "        if i == len(nums):",
-                    "validationRegex": "^\\\\s+if\\\\s+i\\\\s*==\\\\s+len\\\\(nums\\\\):$",
+                    "validationRegex": "^\\s+if\\s+i\\s*==\\s+len\\(nums\\):$",
                     "hint": "Check if index i has reached the length of the input list.",
                     "solutionCode": "        if i == len(nums):"
                 },
@@ -68,15 +68,15 @@
                     "id": 6,
                     "instruction": "Add a tuple version of the current subset to the result set.",
                     "placeholderCode": "            res.add(tuple(subset))",
-                    "validationRegex": "^\\\\s+res\\\\.add\\\\(tuple\\\\(subset\\\\)\\\\)$",
+                    "validationRegex": "^\\s+res\\.add\\(tuple\\(subset\\)\\)$",
                     "hint": "Tuples are hashable and can be stored in a set to identify duplicates.",
                     "solutionCode": "            res.add(tuple(subset))"
                 },
                 {
                     "id": 7,
-                    "instruction": "Return from the function after adding the subset.",
+                    "instruction": "Return from the function.",
                     "placeholderCode": "            return",
-                    "validationRegex": "^\\\\s+return$",
+                    "validationRegex": "^\\s+return$",
                     "hint": "Exit the current recursive call.",
                     "solutionCode": "            return"
                 },
@@ -84,7 +84,7 @@
                     "id": 8,
                     "instruction": "Include nums[i], recurse, then backtrack.",
                     "placeholderCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)\n        subset.pop()",
-                    "validationRegex": "^\\\\s+subset\\\\.append\\\\(nums\\\\[i\\\\]\\\\)\\\\s+dfs\\\\(i\\\\s*\\\\+\\\\s*1,\\\\s*subset\\\\)\\\\s+subset\\\\.pop\\\\(\\\\)$",
+                    "validationRegex": "^\\s+subset\\.append\\(nums\\[i\\]\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*subset\\)\\s*subset\\.pop\\(\\)$",
                     "hint": "Include current number, recurse, then backtrack.",
                     "solutionCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)\n        subset.pop()"
                 },
@@ -92,7 +92,7 @@
                     "id": 9,
                     "instruction": "Recurse for the exclusion case.",
                     "placeholderCode": "        dfs(i + 1, subset)",
-                    "validationRegex": "^\\\\s+dfs\\\\(i\\\\s*\\\\+\\\\s*1,\\\\s*subset\\\\)$",
+                    "validationRegex": "^\\s+dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
                     "hint": "Move to the next element without including the current one.",
                     "solutionCode": "        dfs(i + 1, subset)"
                 },
@@ -100,7 +100,7 @@
                     "id": 10,
                     "instruction": "Call dfs and return list of lists.",
                     "placeholderCode": "    dfs(0, [])\n    return [list(s) for s in res]",
-                    "validationRegex": "^\\\\s+dfs\\\\(0,\\\\s*\\\\[\\\\]\\\\)\\\\s*return\\\\s+\\\\[list\\\\(s\\\\)\\\\s+for\\\\s+s\\\\s+in\\\\s+res\\\\]$",
+                    "validationRegex": "^\\s+dfs\\(0,\\s*\\[\\]\\)\\s*return\\s+\\[list\\(s\\)\\s+for\\s+s\\s+in\\s+res\\]$",
                     "hint": "Start DFS and convert set of tuples back to list of lists.",
                     "solutionCode": "    dfs(0, [])\n    return [list(s) for s in res]"
                 }
@@ -115,7 +115,7 @@
                     "id": 1,
                     "instruction": "Define the function subsets_with_dup that takes nums.",
                     "placeholderCode": "def subsets_with_dup(nums):",
-                    "validationRegex": "^def\\\\s+subsets_with_dup\\\\(nums\\\\):$",
+                    "validationRegex": "^def\\s+subsets_with_dup\\(nums\\):$",
                     "hint": "Use `def` to define the function.",
                     "solutionCode": "def subsets_with_dup(nums):"
                 },
@@ -123,7 +123,7 @@
                     "id": 2,
                     "instruction": "Initialize result list for storing subsets.",
                     "placeholderCode": "    res = []",
-                    "validationRegex": "^\\\\s+res\\\\s*=\\s*\\\\[\\\\]$",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
                     "hint": "This list will store all unique subsets found.",
                     "solutionCode": "    res = []"
                 },
@@ -131,7 +131,7 @@
                     "id": 3,
                     "instruction": "Sort the input array to handle duplicate numbers.",
                     "placeholderCode": "    nums.sort()",
-                    "validationRegex": "^\\\\s+nums\\\\.sort\\\\(\\\\)$",
+                    "validationRegex": "^\\s+nums\\.sort\\(\\)$",
                     "hint": "Sorting makes duplicates appear next to each other, allowing us to skip them.",
                     "solutionCode": "    nums.sort()"
                 },
@@ -139,7 +139,7 @@
                     "id": 4,
                     "instruction": "Define the recursive dfs function signature.",
                     "placeholderCode": "    def dfs(i, subset):",
-                    "validationRegex": "^\\\\s+def\\\\s+dfs\\\\(i,\\\\s*subset\\\\):$",
+                    "validationRegex": "^\\s+def\\s+dfs\\(i,\\s*subset\\):$",
                     "hint": "This function takes the current index and the building subset.",
                     "solutionCode": "    def dfs(i, subset):"
                 },
@@ -147,7 +147,7 @@
                     "id": 5,
                     "instruction": "Add a base case to check if all elements have been processed.",
                     "placeholderCode": "        if i == len(nums):",
-                    "validationRegex": "^\\\\s+if\\\\s+i\\\\s*==\\\\s+len\\\\(nums\\\\):$",
+                    "validationRegex": "^\\s+if\\s+i\\s*==\\s+len\\(nums\\):$",
                     "hint": "When the index reaches the length of nums, a complete subset is formed.",
                     "solutionCode": "        if i == len(nums):"
                 },
@@ -155,7 +155,7 @@
                     "id": 6,
                     "instruction": "Inside the base case, append a copy of the current subset to the result list.",
                     "placeholderCode": "            res.append(subset.copy())",
-                    "validationRegex": "^\\\\s+res\\\\.append\\\\(subset\\\\.copy\\\\(\\\\)\\\\)$",
+                    "validationRegex": "^\\s+res\\.append\\(subset\\.copy\\(\\)\\)$",
                     "hint": "Copying is necessary because the subset is mutated later.",
                     "solutionCode": "            res.append(subset.copy())"
                 },
@@ -163,7 +163,7 @@
                     "id": 7,
                     "instruction": "Return from the function.",
                     "placeholderCode": "            return",
-                    "validationRegex": "^\\\\s+return$",
+                    "validationRegex": "^\\s+return$",
                     "hint": "Stop the recursion for this branch.",
                     "solutionCode": "            return"
                 },
@@ -171,7 +171,7 @@
                     "id": 8,
                     "instruction": "Include nums[i], recurse, then backtrack.",
                     "placeholderCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)\n        subset.pop()",
-                    "validationRegex": "^\\\\s+subset\\\\.append\\\\(nums\\\\[i\\\\]\\\\)\\\\s+dfs\\\\(i\\\\s*\\\\+\\\\s*1,\\\\s*subset\\\\)\\\\s*subset\\\\.pop\\\\(\\\\)$",
+                    "validationRegex": "^\\s+subset\\.append\\(nums\\[i\\]\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*subset\\)\\s*subset\\.pop\\(\\)$",
                     "hint": "Include current number, recurse, then backtrack.",
                     "solutionCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)\n        subset.pop()"
                 },
@@ -179,7 +179,7 @@
                     "id": 9,
                     "instruction": "Skip duplicates and exclude nums[i].",
                     "placeholderCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            i += 1\n        dfs(i + 1, subset)",
-                    "validationRegex": "^\\\\s+while\\\\s+i\\\\s*\\\\+\\\\s*1\\\\s*<\\\\s+len\\\\(nums\\\\)\\\\s+and\\\\s+nums\\\\[i\\\\]\\\\s*==\\\\s+nums\\\\[i\\\\s*\\\\+\\\\s*1\\\\]:\\\\s*i\\\\s*\\\\+=\\\\s*1\\\\s+dfs\\\\(i\\\\s*\\\\+\\\\s*1,\\\\s*subset\\\\)$",
+                    "validationRegex": "^\\s+while\\s+i\\s*\\+\\s*1\\s*<\\s+len\\(nums\\)\\s+and\\s+nums\\[i\\]\\s*==\\s+nums\\[i\\s*\\+\\s*1\\]:\\s*i\\s*\\+=\\s*1\\s+dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
                     "hint": "Skip adjacent duplicates to avoid duplicate subsets, then recurse.",
                     "solutionCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            i += 1\n        dfs(i + 1, subset)"
                 },
@@ -187,7 +187,7 @@
                     "id": 10,
                     "instruction": "Call dfs and return result.",
                     "placeholderCode": "    dfs(0, [])\n    return res",
-                    "validationRegex": "^\\\\s+dfs\\\\(0,\\\\s*\\\\[\\\\]\\\\)\\\\s*return\\\\s+res$",
+                    "validationRegex": "^\\s+dfs\\(0,\\s*\\[\\]\\)\\s*return\\s+res$",
                     "hint": "Start DFS from index 0.",
                     "solutionCode": "    dfs(0, [])\n    return res"
                 }
