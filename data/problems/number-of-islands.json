@@ -55,7 +55,7 @@
                     "instruction": "Define DFS helper to mark visited land.",
                     "placeholderCode": "    def dfs(r, c):\n        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] == '0':\n            return\n        grid[r][c] = '0'\n        dfs(r + 1, c)\n        dfs(r - 1, c)\n        dfs(r, c + 1)\n        dfs(r, c - 1)",
                     "validationRegex": "^\\s+def\\s+dfs\\(r,\\s*c\\):\\s*if\\s+r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*>=\\s+rows\\s+or\\s+c\\s*>=\\s+cols\\s+or\\s+grid\\[r\\]\\[c\\]\\s*==\\s*'0':\\s*return\\s*grid\\[r\\]\\[c\\]\\s*=\\s*'0'\\s*dfs\\(r\\s*\\+\\s*1,\\s*c\\)\\s*dfs\\(r\\s*-\\s*1,\\s*c\\)\\s*dfs\\(r,\\s*c\\s*\\+\\s*1\\)\\s*dfs\\(r,\\s*c\\s*-\\s*1\\)$",
-                    "hint": "Recursive DFS. If out of bounds or water, return. Mark current cell as visited (e.g., change '1' to '0') and recurse in 4 directions.\\n\\nExample:\\nGrid=[[1, 1], [0, 0]].\\nStart at (0,0). Mark '0'. Recurse (0,1).\\n  (0,1) is '1'. Mark '0'. Recurse neighbors (all '0' or bounds).\\nIsland count = 1.",
+                    "hint": "Recursive DFS. If out of bounds or water, return. Mark current cell as visited (e.g., change '1' to '0') and recurse in 4 directions.",
                     "solutionCode": "    def dfs(r, c):\n        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] == '0':\n            return\n        grid[r][c] = '0'\n        dfs(r + 1, c)\n        dfs(r - 1, c)\n        dfs(r, c + 1)\n        dfs(r, c - 1)"
                 },
                 {
@@ -91,31 +91,55 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize count, dimensions, and visited set.",
-                    "placeholderCode": "    if not grid: return 0\n    rows, cols = len(grid), len(grid[0])\n    visit = set()\n    islands = 0",
-                    "validationRegex": "^\\s+if\\s+not\\s+grid:\\s*return\\s+0\\s*rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)\\s*visit\\s*=\\s*set\\(\\)\\s*islands\\s*=\\s*0$",
-                    "hint": "Initialize variables. Use a set to keep track of visited cells without modifying the grid.",
-                    "solutionCode": "    if not grid: return 0\n    rows, cols = len(grid), len(grid[0])\n    visit = set()\n    islands = 0"
+                    "instruction": "Check for empty grid.",
+                    "placeholderCode": "    if not grid:\n        return 0",
+                    "validationRegex": "^\\s+if\\s+not\\s+grid:\\s*return\\s+0$",
+                    "hint": "If the input grid is empty, return 0.",
+                    "solutionCode": "    if not grid: return 0"
                 },
                 {
                     "id": 3,
-                    "instruction": "Define BFS helper.",
+                    "instruction": "Store the number of rows and columns.",
+                    "placeholderCode": "    rows, cols = len(grid), len(grid[0])",
+                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)$",
+                    "hint": "Get the grid's vertical and horizontal dimensions.",
+                    "solutionCode": "    rows, cols = len(grid), len(grid[0])"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Initialize a set to track visited cells.",
+                    "placeholderCode": "    visit = set()",
+                    "validationRegex": "^\\s+visit\\s*=\\s*set\\(\\)$",
+                    "hint": "Using a set prevents revisiting the same cell and avoids modifying the input grid.",
+                    "solutionCode": "    visit = set()"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Initialize the island counter.",
+                    "placeholderCode": "    islands = 0",
+                    "validationRegex": "^\\s+islands\\s*=\\s*0$",
+                    "hint": "This variable will store the total number of islands found.",
+                    "solutionCode": "    islands = 0"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Define BFS helper to mark connected land.",
                     "placeholderCode": "    import collections\n    def bfs(r, c):\n        q = collections.deque()\n        visit.add((r, c))\n        q.append((r, c))\n        while q:\n            row, col = q.popleft()\n            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]\n            for dr, dc in directions:\n                r_new, c_new = row + dr, col + dc\n                if (r_new in range(rows) and\n                    c_new in range(cols) and\n                    grid[r_new][c_new] == '1' and\n                    (r_new, c_new) not in visit):\n                    q.append((r_new, c_new))\n                    visit.add((r_new, c_new))",
                     "validationRegex": "^\\s+import\\s+collections\\s+def\\s+bfs\\(r,\\s*c\\):\\s*q\\s*=\\s*collections\\.deque\\(\\)\\s*visit\\.add\\(\\(r,\\s*c\\)\\)\\s*q\\.append\\(\\(r,\\s*c\\)\\)\\s*while\\s+q:\\s*row,\\s*col\\s*=\\s*q\\.popleft\\(\\)\\s*directions\\s*=\\s*\\[\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\],\\s*\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\]\\]\\s*for\\s+dr,\\s*dc\\s+in\\s+directions:\\s*r_new,\\s*c_new\\s*=\\s*row\\s*\\+\\s*dr,\\s*col\\s*\\+\\s*dc\\s*if\\s*\\(r_new\\s+in\\s+range\\(rows\\)\\s+and\\s+c_new\\s+in\\s+range\\(cols\\)\\s+and\\s+grid\\[r_new\\]\\[c_new\\]\\s*==\\s*'1'\\s+and\\s*\\(r_new,\\s*c_new\\)\\s+not\\s+in\\s+visit\\):\\s*q\\.append\\(\\(r_new,\\s*c_new\\)\\)\\s*visit\\.add\\(\\(r_new,\\s*c_new\\)\\)$",
                     "hint": "Generic BFS algorithm. Use a queue. Pop, check neighbors, add valid unvisited land neighbors to queue and visit set.",
                     "solutionCode": "    import collections\n    def bfs(r, c):\n        q = collections.deque()\n        visit.add((r, c))\n        q.append((r, c))\n        while q:\n            row, col = q.popleft()\n            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]\n            for dr, dc in directions:\n                r_new, c_new = row + dr, col + dc\n                if (r_new in range(rows) and\n                    c_new in range(cols) and\n                    grid[r_new][c_new] == '1' and\n                    (r_new, c_new) not in visit):\n                    q.append((r_new, c_new))\n                    visit.add((r_new, c_new))"
                 },
                 {
-                    "id": 4,
-                    "instruction": "Iterate through grid.",
+                    "id": 7,
+                    "instruction": "Iterate through the grid using nested loops.",
                     "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1' and (r, c) not in visit:\n                bfs(r, c)\n                islands += 1",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+grid\\[r\\]\\[c\\]\\s*==\\s*'1'\\s+and\\s*\\(r,\\s*c\\)\\s+not\\s+in\\s+visit:\\s*bfs\\(r,\\s*c\\)\\s*islands\\s*\\+=\\s*1$",
-                    "hint": "Loop through the grid. If a cell is land and not visited, start BFS and increment island count.\\n\\nExample:\\nGrid=[[1, 0], [0, 1]].\\n(0,0) is '1'. BFS covers (0,0). Count=1.\\n(0,1) is '0'. Skip.\\n(1,0) is '0'. Skip.\\n(1,1) is '1'. BFS covers (1,1). Count=2.",
+                    "hint": "Loop through the grid. If a cell is land and not visited, start BFS and increment island count.",
                     "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1' and (r, c) not in visit:\n                bfs(r, c)\n                islands += 1"
                 },
                 {
-                    "id": 5,
-                    "instruction": "Return islands count.",
+                    "id": 8,
+                    "instruction": "Return the total island count.",
                     "placeholderCode": "    return islands",
                     "validationRegex": "^\\s+return\\s+islands$",
                     "hint": "Return the total number of islands.",
