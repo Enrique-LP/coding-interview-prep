@@ -82,51 +82,59 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Start negating the weights to use them in a min-heap as a max-heap.",
-                    "placeholderCode": "    stones = [-s ",
-                    "validationRegex": "^\\s+stones\\s*=\\s*\\[-s\\s*$",
-                    "hint": "Use a list comprehension to negate all elements.",
-                    "solutionCode": "    stones = [-s "
+                    "instruction": "Negate all stone weights to use them in a min-heap as a max-heap.",
+                    "placeholderCode": "    stones = [-s for s in stones]",
+                    "validationRegex": "^\\s+stones\\s*=\\s*\\[-s\\s+for\\s+s\\s+in\\s+stones\\]$",
+                    "hint": "Python's heapq only supports min-heaps, so we negate values to simulate a max-heap.",
+                    "solutionCode": "    stones = [-s for s in stones]"
                 },
                 {
                     "id": 3,
-                    "instruction": "Complete the list comprehension to negate each stone in the list.",
-                    "placeholderCode": "for s in stones]",
-                    "validationRegex": "^\\s*for\\s+s\\s+in\\s+stones\\]$",
-                    "hint": "Loop through the stones and close the list comprehension.",
-                    "solutionCode": "for s in stones]"
-                },
-                {
-                    "id": 4,
-                    "instruction": "Transform the list into a valid min-heap in-place.",
+                    "instruction": "Transform the list into a valid heap in-place.",
                     "placeholderCode": "    heapq.heapify(stones)",
                     "validationRegex": "^\\s+heapq\\.heapify\\(stones\\)$",
-                    "hint": "The heapify function reorders the list to satisfy the heap property.",
+                    "hint": "The heapify function reorders the list to satisfy the heap property in O(n) time.",
                     "solutionCode": "    heapq.heapify(stones)"
                 },
                 {
+                    "id": 4,
+                    "instruction": "Initialize a loop that runs as long as there is more than one stone left.",
+                    "placeholderCode": "    while len(stones) > 1:",
+                    "validationRegex": "^\\s+while\\s+len\\(stones\\)\\s*>\\s*1:$",
+                    "hint": "The game continues until 0 or 1 stone remains.",
+                    "solutionCode": "    while len(stones) > 1:"
+                },
+                {
                     "id": 5,
-                    "instruction": "Loop while more than 1 stone exists.",
-                    "placeholderCode": "    while len(stones) > 1:\n        first = heapq.heappop(stones)\n        second = heapq.heappop(stones)",
-                    "validationRegex": "^\\s+while\\s+len\\(stones\\)\\s*>\\s*1:\\s*first\\s*=\\s*heapq\\.heappop\\(stones\\)\\s*second\\s*=\\s*heapq\\.heappop\\(stones\\)$",
-                    "hint": "Pop the two largest (most negative) stones.",
-                    "solutionCode": "    while len(stones) > 1:\n        first = heapq.heappop(stones)\n        second = heapq.heappop(stones)"
+                    "instruction": "Pop the two heaviest stones (the smallest negative values).",
+                    "placeholderCode": "        first = heapq.heappop(stones)\n        second = heapq.heappop(stones)",
+                    "validationRegex": "^\\s+first\\s*=\\s*heapq\\.heappop\\(stones\\)\\s*second\\s*=\\s*heapq\\.heappop\\(stones\\)$",
+                    "hint": "Use heappop twice to get the stones with the largest original weights.",
+                    "solutionCode": "        first = heapq.heappop(stones)\n        second = heapq.heappop(stones)"
                 },
                 {
                     "id": 6,
-                    "instruction": "If second > first (since negative), push difference.",
+                    "instruction": "If the stones have different weights, push the difference back into the heap.",
                     "placeholderCode": "        if second > first:\n            heapq.heappush(stones, first - second)",
                     "validationRegex": "^\\s+if\\s+second\\s*>\\s+first:\\s*heapq\\.heappush\\(stones,\\s*first\\s*-\\s*second\\)$",
-                    "hint": "Calculate the difference and push it back if non-zero.",
+                    "hint": "Since values are negative, 'second > first' means the first stone was heavier.",
                     "solutionCode": "        if second > first:\n            heapq.heappush(stones, first - second)"
                 },
                 {
                     "id": 7,
-                    "instruction": "Return the absolute value of the last stone or 0.",
-                    "placeholderCode": "    stones.append(0)\n    return abs(stones[0])",
-                    "validationRegex": "^\\s+stones\\.append\\(0\\)\\s*return\\s+abs\\(stones\\[0\\]\\)$",
-                    "hint": "Return the absolute value of the remaining stone.",
-                    "solutionCode": "    stones.append(0)\n    return abs(stones[0])"
+                    "instruction": "Ensure the heap is not empty by adding a zero if necessary.",
+                    "placeholderCode": "    stones.append(0)",
+                    "validationRegex": "^\\s+stones\\.append\\(0\\)$",
+                    "hint": "This handles the case where all stones are destroyed.",
+                    "solutionCode": "    stones.append(0)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return the absolute value of the remaining stone.",
+                    "placeholderCode": "    return abs(stones[0])",
+                    "validationRegex": "^\\s+return\\s+abs\\(stones\\[0\\]\\)$",
+                    "hint": "Negate the result back to its original weight using abs().",
+                    "solutionCode": "    return abs(stones[0])"
                 }
             ]
         }
