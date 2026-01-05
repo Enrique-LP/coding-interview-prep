@@ -22,7 +22,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive In-order",
+            "name": "Brute Force",
             "description": "Traverse in-order to get sorted elements.",
             "steps": [
                 {
@@ -69,7 +69,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Iterative In-order",
+            "name": "Optimal",
             "description": "Use a stack to stop early once kth element is found.",
             "steps": [
                 {
@@ -82,14 +82,22 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize stack and current node.",
-                    "placeholderCode": "    stack = []\n    curr = root",
-                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]\\s*curr\\s*=\\s*root$",
-                    "hint": "Use a stack for iterative traversal.",
-                    "solutionCode": "    stack = []\n    curr = root"
+                    "instruction": "Initialize an empty stack to help with iterative in-order traversal.",
+                    "placeholderCode": "    stack = []",
+                    "validationRegex": "^\\s+stack\\s*=\\s*\\[\\]$",
+                    "hint": "Iterative in-order uses a stack to simulate recursion.",
+                    "solutionCode": "    stack = []"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize 'curr' as the current node, starting from the root.",
+                    "placeholderCode": "    curr = root",
+                    "validationRegex": "^\\s+curr\\s*=\\s*root$",
+                    "hint": "This pointer will traverse through the nodes of the tree.",
+                    "solutionCode": "    curr = root"
+                },
+                {
+                    "id": 4,
                     "instruction": "Loop while stack or curr is not None.",
                     "placeholderCode": "    while stack or curr:",
                     "validationRegex": "^\\s+while\\s+stack\\s+or\\s+curr:$",
@@ -97,7 +105,7 @@
                     "solutionCode": "    while stack or curr:"
                 },
                 {
-                    "id": 4,
+                    "id": 5,
                     "instruction": "Go as left as possible.",
                     "placeholderCode": "        while curr:\n            stack.append(curr)\n            curr = curr.left",
                     "validationRegex": "^\\s+while\\s+curr:\\s*stack\\.append\\(curr\\)\\s*curr\\s*=\\s*curr\\.left$",
@@ -105,7 +113,7 @@
                     "solutionCode": "        while curr:\n            stack.append(curr)\n            curr = curr.left"
                 },
                 {
-                    "id": 5,
+                    "id": 6,
                     "instruction": "Pop node, decrement k.",
                     "placeholderCode": "        curr = stack.pop()\n        k -= 1",
                     "validationRegex": "^\\s+curr\\s*=\\s*stack\\.pop\\(\\)\\s*k\\s*-=\\s*1$",
@@ -113,7 +121,7 @@
                     "solutionCode": "        curr = stack.pop()\n        k -= 1"
                 },
                 {
-                    "id": 6,
+                    "id": 7,
                     "instruction": "If k is 0, return current value.",
                     "placeholderCode": "        if k == 0:\n            return curr.val",
                     "validationRegex": "^\\s+if\\s+k\\s*==\\s*0:\\s*return\\s+curr\\.val$",
@@ -121,7 +129,7 @@
                     "solutionCode": "        if k == 0:\n            return curr.val"
                 },
                 {
-                    "id": 7,
+                    "id": 8,
                     "instruction": "Move right.",
                     "placeholderCode": "        curr = curr.right",
                     "validationRegex": "^\\s+curr\\s*=\\s*curr\\.right$",
