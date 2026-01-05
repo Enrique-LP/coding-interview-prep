@@ -129,14 +129,22 @@
                 },
                 {
                     "id": 6,
-                    "instruction": "Create copy of node and add to map.",
-                    "placeholderCode": "        copy = Node(node.val)\n        oldToNew[node] = copy",
-                    "validationRegex": "^\\s+copy\\s*=\\s*Node\\(node\\.val\\)\\s*oldToNew\\[node\\]\\s*=\\s*copy$",
-                    "hint": "Create a new node with the same value and store it in the map.\\n\\nExample:\\nOriginal Node 1. Neighbors: [2, 4].\\nCreate Copy 1. Map: {Node1: Copy1}.\\nRecurse on 2. Create Copy 2. Map: {Node1: Copy1, Node2: Copy2}.\\nLink Copy1.neighbors.append(Copy2).",
-                    "solutionCode": "        copy = Node(node.val)\n        oldToNew[node] = copy"
+                    "instruction": "Create a copy of the current node.",
+                    "placeholderCode": "        copy = Node(node.val)",
+                    "validationRegex": "^\\s+copy\\s*=\\s*Node\\(node\\.val\\)$",
+                    "hint": "Create a new Node instance using the value of the original node.",
+                    "solutionCode": "        copy = Node(node.val)"
                 },
                 {
                     "id": 7,
+                    "instruction": "Store the cloned node in the hash map.",
+                    "placeholderCode": "        oldToNew[node] = copy",
+                    "validationRegex": "^\\s+oldToNew\\[node\\]\\s*=\\s*copy$",
+                    "hint": "Map the original node to its new copy to avoid redundant cloning.",
+                    "solutionCode": "        oldToNew[node] = copy"
+                },
+                {
+                    "id": 8,
                     "instruction": "Recursively clone neighbors.",
                     "placeholderCode": "        for nei in node.neighbors:\n            copy.neighbors.append(dfs(nei))",
                     "validationRegex": "^\\s+for\\s+nei\\s+in\\s+node\\.neighbors:\\s*copy\\.neighbors\\.append\\(dfs\\(nei\\)\\)$",
@@ -144,7 +152,7 @@
                     "solutionCode": "        for nei in node.neighbors:\n            copy.neighbors.append(dfs(nei))"
                 },
                 {
-                    "id": 8,
+                    "id": 9,
                     "instruction": "Return copy.",
                     "placeholderCode": "        return copy",
                     "validationRegex": "^\\s+return\\s+copy$",
@@ -152,7 +160,7 @@
                     "solutionCode": "        return copy"
                 },
                 {
-                    "id": 9,
+                    "id": 10,
                     "instruction": "Call DFS if node exists.",
                     "placeholderCode": "    return dfs(node) if node else None",
                     "validationRegex": "^\\s+return\\s+dfs\\(node\\)\\s+if\\s+node\\s+else\\s+None$",
