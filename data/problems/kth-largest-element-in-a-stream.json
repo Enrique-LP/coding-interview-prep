@@ -90,14 +90,22 @@
                 },
                 {
                     "id": 6,
-                    "instruction": "Remove the smallest elements from the heap until k elements remain.",
-                    "placeholderCode": "        while len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)",
-                    "validationRegex": "^\\s+while\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:\\s*heapq\\.heappop\\(self\\.minHeap\\)$",
-                    "hint": "A min-heap's root is the smallest value; popping it leaves larger values behind.",
-                    "solutionCode": "        while len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)"
+                    "instruction": "Initialize a loop that runs as long as the heap size is greater than k.",
+                    "placeholderCode": "        while len(self.minHeap) > self.k:",
+                    "validationRegex": "^\\s+while\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:$",
+                    "hint": "We only want to keep the k largest elements in our min-heap.",
+                    "solutionCode": "        while len(self.minHeap) > self.k:"
                 },
                 {
                     "id": 7,
+                    "instruction": "Pop the smallest element from the heap during each iteration.",
+                    "placeholderCode": "            heapq.heappop(self.minHeap)",
+                    "validationRegex": "^\\s+heapq\\.heappop\\(self\\.minHeap\\)$",
+                    "hint": "This removes the smallest values, ensuring only the k largest remain.",
+                    "solutionCode": "            heapq.heappop(self.minHeap)"
+                },
+                {
+                    "id": 8,
                     "instruction": "Define the add method to insert new values into the stream.",
                     "placeholderCode": "    def add(self, val):",
                     "validationRegex": "^\\s+def\\s+add\\(self,\\s*val\\):$",
@@ -105,7 +113,7 @@
                     "solutionCode": "    def add(self, val):"
                 },
                 {
-                    "id": 8,
+                    "id": 9,
                     "instruction": "Push the new value to the heap.",
                     "placeholderCode": "        heapq.heappush(self.minHeap, val)",
                     "validationRegex": "^\\s+heapq\\.heappush\\(self\\.minHeap,\\s*val\\)$",
@@ -113,7 +121,7 @@
                     "solutionCode": "        heapq.heappush(self.minHeap, val)"
                 },
                 {
-                    "id": 9,
+                    "id": 10,
                     "instruction": "Remove the smallest element if the heap size exceeds k.",
                     "placeholderCode": "        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)",
                     "validationRegex": "^\\s+if\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:\\s*heapq\\.heappop\\(self\\.minHeap\\)$",
@@ -121,7 +129,7 @@
                     "solutionCode": "        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)"
                 },
                 {
-                    "id": 10,
+                    "id": 11,
                     "instruction": "Return the current kth largest element (the root of the min-heap).",
                     "placeholderCode": "        return self.minHeap[0]",
                     "validationRegex": "^\\s+return\\s+self\\.minHeap\\[0\\]$",
