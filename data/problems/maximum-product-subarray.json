@@ -93,13 +93,37 @@
                 {
                     "id": 4,
                     "instruction": "Iterate through each number 'n' in the input array.",
-                    "placeholderCode": "    for n in nums:\n        if n == 0:\n            curMin, curMax = 1, 1\n            continue",
-                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:\\s*if\\s+n\\s*==\\s*0:\\s*curMin,\\s*curMax\\s*=\\s*1,\\s*1\\s*continue$",
-                    "hint": "If we hit a zero, we reset our current window of products.",
-                    "solutionCode": "    for n in nums:\n        if n == 0:\n            curMin, curMax = 1, 1\n            continue"
+                    "placeholderCode": "    for n in nums:",
+                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:$",
+                    "hint": "Process each element of the array one by one.",
+                    "solutionCode": "    for n in nums:"
                 },
                 {
                     "id": 5,
+                    "instruction": "Check if the current number 'n' is zero.",
+                    "placeholderCode": "        if n == 0:",
+                    "validationRegex": "^\\s+if\\s+n\\s*==\\s*0:$",
+                    "hint": "Zero acts as a boundary that resets our product calculation.",
+                    "solutionCode": "        if n == 0:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Reset the current minimum and maximum products to 1 if a zero is encountered.",
+                    "placeholderCode": "            curMin, curMax = 1, 1",
+                    "validationRegex": "^\\s+curMin,\\s*curMax\\s*=\\s*1,\\s*1$",
+                    "hint": "After a zero, we start fresh with the next subarray.",
+                    "solutionCode": "            curMin, curMax = 1, 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Skip to the next iteration of the loop.",
+                    "placeholderCode": "            continue",
+                    "validationRegex": "^\\s+continue$",
+                    "hint": "Move to the next element since zero has been handled.",
+                    "solutionCode": "            continue"
+                },
+                {
+                    "id": 8,
                     "instruction": "Update current min and max products by considering the element 'n' itself and the previous products.",
                     "placeholderCode": "        tmp = curMax * n\n        curMax = max(n * curMax, n * curMin, n)\n        curMin = min(tmp, n * curMin, n)",
                     "validationRegex": "^\\s+tmp\\s*=\\s*curMax\\s*\\*\\s*n\\s*curMax\\s*=\\s*max\\(n\\s*\\*\\s*curMax,\\s*n\\s*\\*\\s*curMin,\\s*n\\)\\s*curMin\\s*=\\s*min\\(tmp,\\s*n\\s*\\*\\s*curMin,\\s*n\\)$",
@@ -107,7 +131,7 @@
                     "solutionCode": "        tmp = curMax * n\n        curMax = max(n * curMax, n * curMin, n)\n        curMin = min(tmp, n * curMin, n)"
                 },
                 {
-                    "id": 6,
+                    "id": 9,
                     "instruction": "Update the global maximum product with the newly calculated current maximum.",
                     "placeholderCode": "        res = max(res, curMax)",
                     "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*curMax\\)$",
@@ -115,7 +139,7 @@
                     "solutionCode": "        res = max(res, curMax)"
                 },
                 {
-                    "id": 7,
+                    "id": 10,
                     "instruction": "Return the global maximum product found.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
