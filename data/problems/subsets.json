@@ -146,14 +146,22 @@
                 },
                 {
                     "id": 10,
-                    "instruction": "Decision to exclude nums[i].",
-                    "placeholderCode": "        subset.pop()\n        dfs(i + 1)",
-                    "validationRegex": "^\\s+subset\\.pop\\(\\)\\s*dfs\\(i\\s*\\+\\s*1\\)$",
-                    "hint": "Backtrack: remove the current number and recurse (exclude decision).\\n\\nExample:\\nNums=[1, 2].\\nStart: [].\\nInclude 1 -> [1]. Recurse -> Include 2 -> [1, 2].\\nBacktrack 2 -> [1]. Exclude 2 -> [1].\\nBacktrack 1 -> []. Exclude 1 -> [].",
-                    "solutionCode": "        subset.pop()\n        dfs(i + 1)"
+                    "instruction": "Remove the current element from the subset (backtrack).",
+                    "placeholderCode": "        subset.pop()",
+                    "validationRegex": "^\\s+subset\\.pop\\(\\)$",
+                    "hint": "By removing the element, we return the subset to its state before the include decision.",
+                    "solutionCode": "        subset.pop()"
                 },
                 {
                     "id": 11,
+                    "instruction": "Recursive call to dfs for the next index after excluding the element.",
+                    "placeholderCode": "        dfs(i + 1)",
+                    "validationRegex": "^\\s+dfs\\(i\\s*\\+\\s*1\\)$",
+                    "hint": "Explore all subproblems that do not include nums[i].",
+                    "solutionCode": "        dfs(i + 1)"
+                },
+                {
+                    "id": 12,
                     "instruction": "Call dfs starting at 0 and return result.",
                     "placeholderCode": "    dfs(0)\n    return res",
                     "validationRegex": "^\\s+dfs\\(0\\)\\s*return\\s+res$",
