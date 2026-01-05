@@ -209,14 +209,30 @@
                 },
                 {
                     "id": 11,
-                    "instruction": "Skip duplicates and exclude nums[i].",
-                    "placeholderCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            i += 1\n        dfs(i + 1, subset)",
-                    "validationRegex": "^\\s+while\\s+i\\s*\\+\\s*1\\s*<\\s+len\\(nums\\)\\s+and\\s+nums\\[i\\]\\s*==\\s+nums\\[i\\s*\\+\\s*1\\]:\\s*i\\s*\\+=\\s*1\\s+dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
-                    "hint": "Skip adjacent duplicates to avoid duplicate subsets, then recurse.",
-                    "solutionCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            i += 1\n        dfs(i + 1, subset)"
+                    "instruction": "Start a while loop to skip duplicate elements.",
+                    "placeholderCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:",
+                    "validationRegex": "^\\s+while\\s+i\\s*\\+\\s*1\\s*<\\s+len\\(nums\\)\\s+and\\s+nums\\[i\\]\\s*==\\s+nums\\[i\\s*\\+\\s*1\\]:$",
+                    "hint": "Check if the next element is the same as the current one.",
+                    "solutionCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:"
                 },
                 {
                     "id": 12,
+                    "instruction": "Increment the index inside the loop.",
+                    "placeholderCode": "            i += 1",
+                    "validationRegex": "^\\s+i\\s*\\+=\\s*1$",
+                    "hint": "Advance the index to skip the duplicate.",
+                    "solutionCode": "            i += 1"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Recurse with the next index to explore the exclusion case.",
+                    "placeholderCode": "        dfs(i + 1, subset)",
+                    "validationRegex": "^\\s+dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
+                    "hint": "Recursively call DFS after skipping all duplicates.",
+                    "solutionCode": "        dfs(i + 1, subset)"
+                },
+                {
+                    "id": 14,
                     "instruction": "Call dfs and return result.",
                     "placeholderCode": "    dfs(0, [])\n    return res",
                     "validationRegex": "^\\s+dfs\\(0,\\s*\\[\\]\\)\\s*return\\s+res$",
