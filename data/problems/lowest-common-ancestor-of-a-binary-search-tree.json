@@ -100,14 +100,22 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "If both p and q are larger than root, move right.",
-                    "placeholderCode": "        elif p.val > root.val and q.val > root.val:\n            root = root.right",
-                    "validationRegex": "^\\s+elif\\s+p\\.val\\s*>\\s+root\\.val\\s+and\\s+q\\.val\\s*>\\s+root\\.val:\\s*root\\s*=\\s*root\\.right$",
-                    "hint": "Move to right child if both values are larger.",
-                    "solutionCode": "        elif p.val > root.val and q.val > root.val:\n            root = root.right"
+                    "instruction": "Check if both p and q are larger than the current root value.",
+                    "placeholderCode": "        elif p.val > root.val and q.val > root.val:",
+                    "validationRegex": "^\\s+elif\\s+p\\.val\\s*>\\s+root\\.val\\s+and\\s+q\\.val\\s*>\\s+root\\.val:$",
+                    "hint": "In a BST, if both values are larger, they must be in the right subtree.",
+                    "solutionCode": "        elif p.val > root.val and q.val > root.val:"
                 },
                 {
                     "id": 6,
+                    "instruction": "Move to the right child of the current root.",
+                    "placeholderCode": "            root = root.right",
+                    "validationRegex": "^\\s+root\\s*=\\s*root\\.right$",
+                    "hint": "Continue the search in the right subtree.",
+                    "solutionCode": "            root = root.right"
+                },
+                {
+                    "id": 7,
                     "instruction": "Otherwise, a split or match has been found.",
                     "placeholderCode": "        else:",
                     "validationRegex": "^\\s+else:$",
@@ -115,7 +123,7 @@
                     "solutionCode": "        else:"
                 },
                 {
-                    "id": 7,
+                    "id": 8,
                     "instruction": "Return the current root as the lowest common ancestor.",
                     "placeholderCode": "            return root",
                     "validationRegex": "^\\s+return\\s+root$",
