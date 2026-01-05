@@ -22,8 +22,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
-            "description": "Recursively check buy/sell decisions.",
+            "name": "Brute Force",
+            "description": "Recursively check buy, sell, and cooldown decisions using memoization to find the maximum profit.",
             "steps": [
                 {
                     "id": 1,
@@ -38,7 +38,7 @@
                     "instruction": "Define recursive helper with memoization.",
                     "placeholderCode": "    memo = {}\n    def dfs(i, buying):\n        if i >= len(prices): return 0\n        if (i, buying) in memo: return memo[(i, buying)]",
                     "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*buying\\):\\s*if\\s+i\\s*>=\\s+len\\(prices\\):\\s*return\\s+0\\s*if\\s*\\(i,\\s*buying\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*buying\\)\\]$",
-                    "hint": "Recursive function `dfs(i, buying)` returns max profit from day `i`. `buying` is boolean indicating if we can buy. Base case: i out of bounds -> 0. Check memo.\\n\\nExample:\\nPrices=[1, 2].\\nDFS(0, Buy): Max(Buy->DFS(1, Sell)-1, Cooldown->DFS(1, Buy)).\\n  DFS(1, Sell): Max(Sell->DFS(3, Buy)+2, Cooldown->DFS(2, Sell)).",
+                    "hint": "Recursive function `dfs(i, buying)` returns max profit from day `i`. `buying` is boolean indicating if we can buy. Base case: i out of bounds -> 0. Check memo.",
                     "solutionCode": "    memo = {}\n    def dfs(i, buying):\n        if i >= len(prices): return 0\n        if (i, buying) in memo: return memo[(i, buying)]"
                 },
                 {
@@ -77,8 +77,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "Use state variables to track profit.",
+            "name": "Optimal",
+            "description": "Iterative state machine approach to track maximum profit through sold, held, and reset states.",
             "steps": [
                 {
                     "id": 1,
@@ -90,7 +90,7 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize states.",
+                    "instruction": "Initialize the states 'sold', 'held', and 'reset' to represent different phases of the strategy.",
                     "placeholderCode": "    sold, held, reset = float('-inf'), float('-inf'), 0",
                     "validationRegex": "^\\s+sold,\\s*held,\\s*reset\\s*=\\s*float\\('-inf'\\),\\s*float\\('-inf'\\),\\s*0$",
                     "hint": "Initialize states: `sold` (just sold), `held` (holding stock), `reset` (cooldown/ready to buy). `sold` and `held` start at -inf.",
@@ -98,15 +98,47 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate through prices.",
-                    "placeholderCode": "    for price in prices:\n        pre_sold = sold\n        sold = held + price\n        held = max(held, reset - price)\n        reset = max(reset, pre_sold)",
-                    "validationRegex": "^\\s+for\\s+price\\s+in\\s+prices:\\s*pre_sold\\s*=\\s*sold\\s*sold\\s*=\\s*held\\s*\\+\\s*price\\s*held\\s*=\\s*max\\(held,\\s*reset\\s*-\\s*price\\)\\s*reset\\s*=\\s*max\\(reset,\\s*pre_sold\\)$",
-                    "hint": "Update states. `sold` comes from `held`. `held` comes from `reset` (buying) or keeping `held`. `reset` comes from `sold` (cooldown) or keeping `reset`.\\n\\nExample:\\nPrices=[1, 2].\\nInit: Sold=-inf, Held=-inf, Reset=0.\\nDay 1 (P=1):\\n  Sold = -inf + 1 (impossible).\\n  Held = max(-inf, 0 - 1) = -1.\\n  Reset = max(0, -inf) = 0.\\nDay 2 (P=2):\\n  Sold = -1 + 2 = 1.\\n  Held = max(-1, 0 - 2) = -1.\\n  Reset = max(0, -inf) = 0.\\nResult: Max(1, 0) = 1.",
-                    "solutionCode": "    for price in prices:\n        pre_sold = sold\n        sold = held + price\n        held = max(held, reset - price)\n        reset = max(reset, pre_sold)"
+                    "instruction": "Initiate a loop to iterate through each price in the 'prices' array.",
+                    "placeholderCode": "    for price in prices:",
+                    "validationRegex": "^\\s+for\\s+price\\s+in\\s+prices:$",
+                    "hint": "We process the prices day by day to transition between states.",
+                    "solutionCode": "    for price in prices:"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return max of sold and reset.",
+                    "instruction": "Store the current value of 'sold' in a temporary variable 'pre_sold'.",
+                    "placeholderCode": "        pre_sold = sold",
+                    "validationRegex": "^\\s+pre_sold\\s*=\\s*sold$",
+                    "hint": "We need the old 'sold' value to update the 'reset' state properly later.",
+                    "solutionCode": "        pre_sold = sold"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Update 'sold' by calculating the profit from selling the stock held until today.",
+                    "placeholderCode": "        sold = held + price",
+                    "validationRegex": "^\\s+sold\\s*=\\s*held\\s*\\+\\s*price$",
+                    "hint": "The 'sold' state represents having just sold the stock today.",
+                    "solutionCode": "        sold = held + price"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update 'held' by taking the maximum between keeping current stock or buying new stock from the 'reset' state.",
+                    "placeholderCode": "        held = max(held, reset - price)",
+                    "validationRegex": "^\\s+held\\s*=\\s*max\\(held,\\s*reset\\s*-\\s*price\\)$",
+                    "hint": "The 'held' state means we are currently in possession of a stock.",
+                    "solutionCode": "        held = max(held, reset - price)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Update 'reset' by taking the maximum between staying in cooldown or transitioning from the 'sold' state.",
+                    "placeholderCode": "        reset = max(reset, pre_sold)",
+                    "validationRegex": "^\\s+reset\\s*=\\s*max\\(reset,\\s*pre_sold\\)$",
+                    "hint": "The 'reset' state represents being ready to buy stock (cooldown finished).",
+                    "solutionCode": "        reset = max(reset, pre_sold)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return the maximum profit found in either the 'sold' or 'reset' states.",
                     "placeholderCode": "    return max(sold, reset)",
                     "validationRegex": "^\\s+return\\s+max\\(sold,\\s*reset\\)$",
                     "hint": "Max profit is either from having just sold or being in reset state.",
