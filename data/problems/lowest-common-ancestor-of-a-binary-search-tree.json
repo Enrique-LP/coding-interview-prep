@@ -24,7 +24,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
+            "name": "Brute Force",
             "description": "Use BST property to guide search.",
             "steps": [
                 {
@@ -63,7 +63,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Iterative",
+            "name": "Optimal",
             "description": "Iteratively traverse down the tree.",
             "steps": [
                 {
@@ -84,14 +84,22 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "If both p and q are smaller than root, move left.",
-                    "placeholderCode": "        if p.val < root.val and q.val < root.val:\n            root = root.left",
-                    "validationRegex": "^\\s+if\\s+p\\.val\\s*<\\s+root\\.val\\s+and\\s+q\\.val\\s*<\\s+root\\.val:\\s*root\\s*=\\s*root\\.left$",
-                    "hint": "Move to left child if both values are smaller.",
-                    "solutionCode": "        if p.val < root.val and q.val < root.val:\n            root = root.left"
+                    "instruction": "Check if both p and q are smaller than the current root value.",
+                    "placeholderCode": "        if p.val < root.val and q.val < root.val:",
+                    "validationRegex": "^\\s+if\\s+p\\.val\\s*<\\s+root\\.val\\s+and\\s+q\\.val\\s*<\\s+root\\.val:$",
+                    "hint": "In a BST, if both values are smaller, they must be in the left subtree.",
+                    "solutionCode": "        if p.val < root.val and q.val < root.val:"
                 },
                 {
                     "id": 4,
+                    "instruction": "Move to the left child of the current root.",
+                    "placeholderCode": "            root = root.left",
+                    "validationRegex": "^\\s+root\\s*=\\s*root\\.left$",
+                    "hint": "Continue the search in the left subtree.",
+                    "solutionCode": "            root = root.left"
+                },
+                {
+                    "id": 5,
                     "instruction": "If both p and q are larger than root, move right.",
                     "placeholderCode": "        elif p.val > root.val and q.val > root.val:\n            root = root.right",
                     "validationRegex": "^\\s+elif\\s+p\\.val\\s*>\\s+root\\.val\\s+and\\s+q\\.val\\s*>\\s+root\\.val:\\s*root\\s*=\\s*root\\.right$",
@@ -99,12 +107,20 @@
                     "solutionCode": "        elif p.val > root.val and q.val > root.val:\n            root = root.right"
                 },
                 {
-                    "id": 5,
-                    "instruction": "Otherwise, return root.",
-                    "placeholderCode": "        else:\n            return root",
-                    "validationRegex": "^\\s+else:\\s*return\\s+root$",
+                    "id": 6,
+                    "instruction": "Otherwise, a split or match has been found.",
+                    "placeholderCode": "        else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "This means p and q are on different sides of root, or one is the root itself.",
+                    "solutionCode": "        else:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return the current root as the lowest common ancestor.",
+                    "placeholderCode": "            return root",
+                    "validationRegex": "^\\s+return\\s+root$",
                     "hint": "Found the split point, return current node.",
-                    "solutionCode": "        else:\n            return root"
+                    "solutionCode": "            return root"
                 }
             ]
         }
