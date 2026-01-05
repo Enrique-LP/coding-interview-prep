@@ -82,14 +82,30 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "Include nums[i], recurse, then backtrack.",
-                    "placeholderCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)\n        subset.pop()",
-                    "validationRegex": "^\\s+subset\\.append\\(nums\\[i\\]\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*subset\\)\\s*subset\\.pop\\(\\)$",
-                    "hint": "Include current number, recurse, then backtrack.",
-                    "solutionCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)\n        subset.pop()"
+                    "instruction": "Include the current number in the subset.",
+                    "placeholderCode": "        subset.append(nums[i])",
+                    "validationRegex": "^\\s+subset\\.append\\(nums\\[i\\]\\)$",
+                    "hint": "Add nums[i] to the subset list.",
+                    "solutionCode": "        subset.append(nums[i])"
                 },
                 {
                     "id": 9,
+                    "instruction": "Recurse with the next index including the current number.",
+                    "placeholderCode": "        dfs(i + 1, subset)",
+                    "validationRegex": "^\\s+dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
+                    "hint": "Explore the branch where the current element is included.",
+                    "solutionCode": "        dfs(i + 1, subset)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Backtrack by removing the last element.",
+                    "placeholderCode": "        subset.pop()",
+                    "validationRegex": "^\\s+subset\\.pop\\(\\)$",
+                    "hint": "Remove the element we just added to explore other paths.",
+                    "solutionCode": "        subset.pop()"
+                },
+                {
+                    "id": 11,
                     "instruction": "Recurse for the exclusion case.",
                     "placeholderCode": "        dfs(i + 1, subset)",
                     "validationRegex": "^\\s+dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
@@ -97,7 +113,7 @@
                     "solutionCode": "        dfs(i + 1, subset)"
                 },
                 {
-                    "id": 10,
+                    "id": 12,
                     "instruction": "Call dfs and return list of lists.",
                     "placeholderCode": "    dfs(0, [])\n    return [list(s) for s in res]",
                     "validationRegex": "^\\s+dfs\\(0,\\s*\\[\\]\\)\\s*return\\s+\\[list\\(s\\)\\s+for\\s+s\\s+in\\s+res\\]$",
@@ -169,14 +185,30 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "Include nums[i], recurse, then backtrack.",
-                    "placeholderCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)\n        subset.pop()",
-                    "validationRegex": "^\\s+subset\\.append\\(nums\\[i\\]\\)\\s*dfs\\(i\\s*\\+\\s*1,\\s*subset\\)\\s*subset\\.pop\\(\\)$",
-                    "hint": "Include current number, recurse, then backtrack.",
-                    "solutionCode": "        subset.append(nums[i])\n        dfs(i + 1, subset)\n        subset.pop()"
+                    "instruction": "Include the current number in the subset.",
+                    "placeholderCode": "        subset.append(nums[i])",
+                    "validationRegex": "^\\s+subset\\.append\\(nums\\[i\\]\\)$",
+                    "hint": "Add the element at index i to our building subset.",
+                    "solutionCode": "        subset.append(nums[i])"
                 },
                 {
                     "id": 9,
+                    "instruction": "Recurse with the next index including the current number.",
+                    "placeholderCode": "        dfs(i + 1, subset)",
+                    "validationRegex": "^\\s+dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
+                    "hint": "Recurse to the next element.",
+                    "solutionCode": "        dfs(i + 1, subset)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Backtrack by removing the last element.",
+                    "placeholderCode": "        subset.pop()",
+                    "validationRegex": "^\\s+subset\\.pop\\(\\)$",
+                    "hint": "Remove the element to try other combinations.",
+                    "solutionCode": "        subset.pop()"
+                },
+                {
+                    "id": 11,
                     "instruction": "Skip duplicates and exclude nums[i].",
                     "placeholderCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            i += 1\n        dfs(i + 1, subset)",
                     "validationRegex": "^\\s+while\\s+i\\s*\\+\\s*1\\s*<\\s+len\\(nums\\)\\s+and\\s+nums\\[i\\]\\s*==\\s+nums\\[i\\s*\\+\\s*1\\]:\\s*i\\s*\\+=\\s*1\\s+dfs\\(i\\s*\\+\\s*1,\\s*subset\\)$",
@@ -184,7 +216,7 @@
                     "solutionCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            i += 1\n        dfs(i + 1, subset)"
                 },
                 {
-                    "id": 10,
+                    "id": 12,
                     "instruction": "Call dfs and return result.",
                     "placeholderCode": "    dfs(0, [])\n    return res",
                     "validationRegex": "^\\s+dfs\\(0,\\s*\\[\\]\\)\\s*return\\s+res$",
