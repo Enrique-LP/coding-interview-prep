@@ -132,7 +132,7 @@
                     "instruction": "Skip duplicates and exclude nums[i].",
                     "placeholderCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            i += 1\n        dfs(i + 1, subset)",
                     "validationRegex": "^\\\\s+while\\\\s+i\\\\s*\\\\+\\\\s*1\\\\s*<\\\\s+len\\\\(nums\\\\)\\\\s+and\\\\s+nums\\\\[i\\\\]\\\\s*==\\\\s+nums\\\\[i\\\\s*\\\\+\\\\s*1\\\\]:\\\\s*i\\\\s*\\\\+=\\\\s*1\\\\s*dfs\\\\(i\\\\s*\\\\+\\\\s*1,\\\\s*subset\\\\)$",
-                    "hint": "Skip adjacent duplicates to avoid duplicate subsets, then recurse.\\\\n\\\\nExample:\\\\nNums=[1, 2, 2]. Sorted.\\\\nInclude first 2 -> [1, 2]. Recurse.\\\\nBacktrack. Next is 2 (duplicate). Skip.\\\\nEnsures we don't generate [1, 2] again from the second 2.",
+                    "hint": "Skip adjacent duplicates to avoid duplicate subsets, then recurse.\\n\\nExample:\\nNums=[1, 2, 2]. Sorted.\\nInclude first 2 -> [1, 2]. Recurse.\\nBacktrack. Next is 2 (duplicate). Skip.\\nEnsures we don't generate [1, 2] again from the second 2.",
                     "solutionCode": "        while i + 1 < len(nums) and nums[i] == nums[i + 1]:\n            i += 1\n        dfs(i + 1, subset)"
                 },
                 {
