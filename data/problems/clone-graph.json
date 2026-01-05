@@ -105,14 +105,30 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Define DFS helper.",
-                    "placeholderCode": "    def dfs(node):\n        if node in oldToNew:\n            return oldToNew[node]",
-                    "validationRegex": "^\\s+def\\s+dfs\\(node\\):\\s*if\\s+node\\s+in\\s+oldToNew:\\s*return\\s+oldToNew\\[node\\]$",
-                    "hint": "If the node has already been cloned, return the clone from the map.",
-                    "solutionCode": "    def dfs(node):\n        if node in oldToNew:\n            return oldToNew[node]"
+                    "instruction": "Define DFS helper function header.",
+                    "placeholderCode": "    def dfs(node):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(node\\):$",
+                    "hint": "Start the DFS helper function.",
+                    "solutionCode": "    def dfs(node):"
                 },
                 {
                     "id": 4,
+                    "instruction": "Check if the node has already been cloned.",
+                    "placeholderCode": "        if node in oldToNew:",
+                    "validationRegex": "^\\s+if\\s+node\\s+in\\s+oldToNew:$",
+                    "hint": "Look up the node in the hash map.",
+                    "solutionCode": "        if node in oldToNew:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return the already cloned node if it exists.",
+                    "placeholderCode": "            return oldToNew[node]",
+                    "validationRegex": "^\\s+return\\s+oldToNew\\[node\\]$",
+                    "hint": "Return the value from the map.",
+                    "solutionCode": "            return oldToNew[node]"
+                },
+                {
+                    "id": 6,
                     "instruction": "Create copy of node and add to map.",
                     "placeholderCode": "        copy = Node(node.val)\n        oldToNew[node] = copy",
                     "validationRegex": "^\\s+copy\\s*=\\s*Node\\(node\\.val\\)\\s*oldToNew\\[node\\]\\s*=\\s*copy$",
@@ -120,7 +136,7 @@
                     "solutionCode": "        copy = Node(node.val)\n        oldToNew[node] = copy"
                 },
                 {
-                    "id": 5,
+                    "id": 7,
                     "instruction": "Recursively clone neighbors.",
                     "placeholderCode": "        for nei in node.neighbors:\n            copy.neighbors.append(dfs(nei))",
                     "validationRegex": "^\\s+for\\s+nei\\s+in\\s+node\\.neighbors:\\s*copy\\.neighbors\\.append\\(dfs\\(nei\\)\\)$",
@@ -128,7 +144,7 @@
                     "solutionCode": "        for nei in node.neighbors:\n            copy.neighbors.append(dfs(nei))"
                 },
                 {
-                    "id": 6,
+                    "id": 8,
                     "instruction": "Return copy.",
                     "placeholderCode": "        return copy",
                     "validationRegex": "^\\s+return\\s+copy$",
@@ -136,7 +152,7 @@
                     "solutionCode": "        return copy"
                 },
                 {
-                    "id": 7,
+                    "id": 9,
                     "instruction": "Call DFS if node exists.",
                     "placeholderCode": "    return dfs(node) if node else None",
                     "validationRegex": "^\\s+return\\s+dfs\\(node\\)\\s+if\\s+node\\s+else\\s+None$",
