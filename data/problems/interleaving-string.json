@@ -122,14 +122,54 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Iterate backwards through both s1 and s2 indices.",
-                    "placeholderCode": "    for i in range(len(s1), -1, -1):\n        for j in range(len(s2), -1, -1):\n            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:\n                dp[i][j] = True\n            if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:\n                dp[i][j] = True",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s1\\),\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(s2\\),\\s*-1,\\s*-1\\):\\s*if\\s+i\\s*<\\s+len\\(s1\\)\\s+and\\s+s1\\[i\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*True\\s*if\\s+j\\s*<\\s+len\\(s2\\)\\s+and\\s+s2\\[j\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dp\\[i\\]\\[j\\s*\\+\\s*1\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*True$",
-                    "hint": "Check if current char of s1 or s2 matches s3 and if the subsequent state is valid.",
-                    "solutionCode": "    for i in range(len(s1), -1, -1):\n        for j in range(len(s2), -1, -1):\n            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:\n                dp[i][j] = True\n            if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:\n                dp[i][j] = True"
+                    "instruction": "Initiate a loop to iterate backwards through the indices of the first string 's1'.",
+                    "placeholderCode": "    for i in range(len(s1), -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s1\\),\\s*-1,\\s*-1\\):$",
+                    "hint": "We include len(s1) to handle the base cases for empty suffixes.",
+                    "solutionCode": "    for i in range(len(s1), -1, -1):"
                 },
                 {
                     "id": 6,
+                    "instruction": "Initiate a nested loop to iterate backwards through the indices of the second string 's2'.",
+                    "placeholderCode": "        for j in range(len(s2), -1, -1):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(len\\(s2\\),\\s*-1,\\s*-1\\):$",
+                    "hint": "Each pair (i, j) represents checking suffixes s1[i:] and s2[j:] against s3[i+j:].",
+                    "solutionCode": "        for j in range(len(s2), -1, -1):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check if the current character of 's1' matches the current character of 's3' and if the state after consuming it is valid.",
+                    "placeholderCode": "            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:",
+                    "validationRegex": "^\\s+if\\s+i\\s*<\\s+len\\(s1\\)\\s+and\\s+s1\\[i\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\]:$",
+                    "hint": "If s1[i] matches the required character, we see if the rest of s1 starting from i+1 can work.",
+                    "solutionCode": "            if i < len(s1) and s1[i] == s3[i + j] and dp[i + 1][j]:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Update the DP table to True if the 's1' match condition is met.",
+                    "placeholderCode": "                dp[i][j] = True",
+                    "validationRegex": "^\\s+dp\\[i\\]\\[j\\]\\s*=\\s*True$",
+                    "hint": "This means reaching (i, j) is possible by taking a character from s1.",
+                    "solutionCode": "                dp[i][j] = True"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if the current character of 's2' matches the current character of 's3' and if the state after consuming it is valid.",
+                    "placeholderCode": "            if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:",
+                    "validationRegex": "^\\s+if\\s+j\\s*<\\s+len\\(s2\\)\\s+and\\s+s2\\[j\\]\\s*==\\s+s3\\[i\\s*\\+\\s*j\\]\\s+and\\s+dp\\[i\\]\\[j\\s*\\+\\s*1\\]:$",
+                    "hint": "If s2[j] matches the required character, we see if the rest of s2 starting from j+1 can work.",
+                    "solutionCode": "            if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Update the DP table to True if the 's2' match condition is met.",
+                    "placeholderCode": "                dp[i][j] = True",
+                    "validationRegex": "^\\s+dp\\[i\\]\\[j\\]\\s*=\\s*True$",
+                    "hint": "This means reaching (i, j) is possible by taking a character from s2.",
+                    "solutionCode": "                dp[i][j] = True"
+                },
+                {
+                    "id": 11,
                     "instruction": "Return the final result from the top-left corner of the DP table.",
                     "placeholderCode": "    return dp[0][0]",
                     "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
