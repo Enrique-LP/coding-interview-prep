@@ -203,11 +203,51 @@
                 },
                 {
                     "id": 17,
-                    "instruction": "Flip 'O' to 'X' and 'T' back to 'O'.",
-                    "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if board[r][c] == 'O':\n                board[r][c] = 'X'\n            elif board[r][c] == 'T':\n                board[r][c] = 'O'",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+board\\[r\\]\\[c\\]\\s*==\\s*'O':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'X'\\s*elif\\s+board\\[r\\]\\[c\\]\\s*==\\s*'T':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'O'$",
-                    "hint": "Final pass to flip nodes.",
-                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if board[r][c] == 'O':\n                board[r][c] = 'X'\n            elif board[r][c] == 'T':\n                board[r][c] = 'O'"
+                    "instruction": "Iterate through every row once more.",
+                    "placeholderCode": "    for r in range(rows):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):$",
+                    "hint": "Start a final pass through the grid rows.",
+                    "solutionCode": "    for r in range(rows):"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Iterate through every column index.",
+                    "placeholderCode": "        for c in range(cols):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):$",
+                    "hint": "Use a nested loop to access each cell index.",
+                    "solutionCode": "        for c in range(cols):"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Check if the current cell is still an 'O'.",
+                    "placeholderCode": "            if board[r][c] == 'O':",
+                    "validationRegex": "^\\s+if\\s+board\\[r\\]\\[c\\]\\s*==\\s*'O':$",
+                    "hint": "Any 'O' remaining at this stage is surrounded by 'X's.",
+                    "solutionCode": "            if board[r][c] == 'O':"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Capture the surrounded region by flipping 'O' to 'X'.",
+                    "placeholderCode": "                board[r][c] = 'X'",
+                    "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*=\\s*'X'$",
+                    "hint": "Assign the character 'X' to the current board position.",
+                    "solutionCode": "                board[r][c] = 'X'"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Check if the current cell is marked as temporarily safe ('T').",
+                    "placeholderCode": "            elif board[r][c] == 'T':",
+                    "validationRegex": "^\\s+elif\\s+board\\[r\\]\\[c\\]\\s*==\\s*'T':$",
+                    "hint": "These were the cells connected to the border.",
+                    "solutionCode": "            elif board[r][c] == 'T':"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Revert the safe cell back from 'T' to 'O'.",
+                    "placeholderCode": "                board[r][c] = 'O'",
+                    "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*=\\s*'O'$",
+                    "hint": "Restore the original 'O' value for safe regions.",
+                    "solutionCode": "                board[r][c] = 'O'"
                 }
             ]
         }
