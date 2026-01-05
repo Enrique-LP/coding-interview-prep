@@ -23,8 +23,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
-            "description": "Recursively check combinations.",
+            "name": "Brute Force",
+            "description": "Recursively check all possible combinations of coins to make the given amount using memoization.",
             "steps": [
                 {
                     "id": 1,
@@ -39,14 +39,14 @@
                     "instruction": "Define recursive helper with memoization.",
                     "placeholderCode": "    memo = {}\n    def dfs(i, a):\n        if a == amount: return 1\n        if a > amount or i == len(coins): return 0\n        if (i, a) in memo: return memo[(i, a)]",
                     "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*a\\):\\s*if\\s+a\\s*==\\s*amount:\\s*return\\s+1\\s*if\\s+a\\s*>\\s+amount\\s+or\\s+i\\s*==\\s*len\\(coins\\):\\s*return\\s+0\\s*if\\s*\\(i,\\s*a\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*a\\)\\]$",
-                    "hint": "Recursive function `dfs(i, a)` returns ways to make amount `a` using coins starting from index `i`. Base cases: a == amount -> 1, a > amount or no coins left -> 0. Check memo.\\n\\nExample:\\nAmount=3, Coins=[2].\\nDFS(0, 0): Use 2 -> DFS(0, 2) + Skip -> DFS(1, 0).\\n  DFS(0, 2): Use 2 -> DFS(0, 4) (0) + Skip -> DFS(1, 2) (0).",
+                    "hint": "Recursive function `dfs(i, a)` returns ways to make amount `a` using coins starting from index `i`. Base cases: a == amount -> 1, a > amount or no coins left -> 0. Check memo.",
                     "solutionCode": "    memo = {}\n    def dfs(i, a):\n        if a == amount: return 1\n        if a > amount or i == len(coins): return 0\n        if (i, a) in memo: return memo[(i, a)]"
                 },
                 {
                     "id": 3,
                     "instruction": "Sum results of including or excluding coin.",
                     "placeholderCode": "        res = dfs(i, a + coins[i]) + dfs(i + 1, a)\n        memo[(i, a)] = res\n        return res",
-                    "validationRegex": "^\\s+res\\s*=\\s*dfs\\(i,\\s*a\\s*\\+\\s*coins\\[i\\]\\)\\s*\\+\\s*dfs\\(i\\s*\\+\\s*1,\\s*a\\)\\s*memo\\[\\(i,\\s*a\\)\\]\\s*=\\s*res\\s*return\\s+res$",
+                    "validationRegex": "^\\s+res\\s*=\\s*dfs\\(i\\s*,\\s*a\\s*\\+\\s*coins\\[i\\]\\)\\s*\\+\\s*dfs\\(i\\s*\\+\\s*1,\\s*a\\)\\s*memo\\[\\(i,\\s*a\\)\\]\\s*=\\s*res\\s*return\\s+res$",
                     "hint": "Either use current coin (stay at index `i`, increase amount) or skip current coin (move to `i+1`, amount stays same). Sum both possibilities.",
                     "solutionCode": "        res = dfs(i, a + coins[i]) + dfs(i + 1, a)\n        memo[(i, a)] = res\n        return res"
                 },
@@ -62,8 +62,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "Unbounded knapsack approach.",
+            "name": "Optimal",
+            "description": "Iterative approach using a 1D DP table to store the number of ways to reach each amount O(n * amount).",
             "steps": [
                 {
                     "id": 1,
@@ -75,26 +75,34 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize DP array.",
-                    "placeholderCode": "    dp = [0] * (amount + 1)\n    dp[0] = 1",
-                    "validationRegex": "^\\s+dp\\s*=\\s*\\[0\\]\\s*\\*\\s*\\(amount\\s*\\+\\s*1\\)\\s*dp\\[0\\]\\s*=\\s*1$",
-                    "hint": "Initialize DP array of size amount+1 with 0s. dp[0] = 1 (one way to make 0 amount).",
-                    "solutionCode": "    dp = [0] * (amount + 1)\n    dp[0] = 1"
+                    "instruction": "Initialize the DP table 'dp' with zeros for all amounts up to 'amount'.",
+                    "placeholderCode": "    dp = [0] * (amount + 1)",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\[0\\]\\s*\\*\\s*\\(amount\\s*\\+\\s*1\\)$",
+                    "hint": "Each index 'a' in 'dp' will store the number of ways to make the amount 'a'.",
+                    "solutionCode": "    dp = [0] * (amount + 1)"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate through coins and amounts.",
-                    "placeholderCode": "    for c in coins:\n        for a in range(c, amount + 1):\n            dp[a] += dp[a - c]",
-                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+coins:\\s*for\\s+a\\s+in\\s+range\\(c,\\s*amount\\s*\\+\\s*1\\):\\s*dp\\[a\\]\\s*\\+=\\s*dp\\[a\\s*-\\s*c\\]$",
-                    "hint": "For each coin, update dp array. For each amount `a` from `c` to `amount`, add `dp[a-c]` to `dp[a]`.\\n\\nExample:\\nAmount=3, Coins=[2]. DP=[1, 0, 0, 0].\\nCoin 2:\\n  a=2: DP[2] += DP[0] (1) -> 1.\\n  a=3: DP[3] += DP[1] (0) -> 0.\\nResult: DP[3] = 0.",
-                    "solutionCode": "    for c in coins:\n        for a in range(c, amount + 1):\n            dp[a] += dp[a - c]"
+                    "instruction": "Set the base case: there is exactly one way to make an amount of 0 (by using no coins).",
+                    "placeholderCode": "    dp[0] = 1",
+                    "validationRegex": "^\\s+dp\\[0\\]\\s*=\\s*1$",
+                    "hint": "Having zero ways to make zero would prevent any combinations from being found.",
+                    "solutionCode": "    dp[0] = 1"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Iterate through each coin in the 'coins' list and update the DP table.",
+                    "placeholderCode": "    for c in coins:\n        for a in range(c, amount + 1):\n            dp[a] += dp[a - c]",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+coins:\\s*for\\s+a\\s+in\\s+range\\(c,\\s*amount\\s*\\+\\s*1\\):\\s*dp\\[a\\]\\s*\\+=\\s*dp\\[a\\s*-\\s*c\\]$",
+                    "hint": "For each coin, we can update the total ways to reach an amount 'a' by adding the ways we already found to reach 'a - c'.",
+                    "solutionCode": "    for c in coins:\n        for a in range(c, amount + 1):\n            dp[a] += dp[a - c]"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return the total number of combinations for the target amount.",
                     "placeholderCode": "    return dp[amount]",
                     "validationRegex": "^\\s+return\\s+dp\\[amount\\]$",
-                    "hint": "Return the total combinations for the target amount.",
+                    "hint": "Look at the last index of the DP table for the final answer.",
                     "solutionCode": "    return dp[amount]"
                 }
             ]
