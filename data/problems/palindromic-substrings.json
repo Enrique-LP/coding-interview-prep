@@ -23,7 +23,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Expand Around Center",
+            "name": "Brute Force",
             "description": "Count palindromes expanding from each center.",
             "steps": [
                 {
@@ -55,7 +55,7 @@
                     "instruction": "Count odd length palindromes.",
                     "placeholderCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1",
                     "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*res\\s*\\+=\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
-                    "hint": "Expand outwards from single character center (odd length). Increment count for each valid palindrome found.\\n\\nExample:\\nS=\"aaa\". i=1 ('a').\\nL=1, R=1. \"a\". Count++.\\nL=0, R=2. \"aaa\". Count++.\\nL=-1. Stop.",
+                    "hint": "Expand outwards from single character center (odd length). Increment count for each valid palindrome found.",
                     "solutionCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1"
                 },
                 {
@@ -78,8 +78,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Expand Around Center",
-            "description": "Same as brute force, O(n^2).",
+            "name": "Optimal",
+            "description": "Same as brute force, O(n^2) time and O(1) space.",
             "steps": [
                 {
                     "id": 1,
@@ -91,42 +91,74 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize result count.",
+                    "instruction": "Initialize the result counter 'res' to 0.",
                     "placeholderCode": "    res = 0",
                     "validationRegex": "^\\s+res\\s*=\\s*0$",
-                    "hint": "Initialize a counter for the number of palindromes found.",
+                    "hint": "This variable will keep track of the total number of palindromic substrings.",
                     "solutionCode": "    res = 0"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate through string.",
+                    "instruction": "Iterate through each character in the string 's' using index 'i'.",
                     "placeholderCode": "    for i in range(len(s)):",
                     "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\):$",
-                    "hint": "Iterate through each character in the string, treating it as the center of a potential palindrome.",
+                    "hint": "Each character can be the center of a potential palindrome.",
                     "solutionCode": "    for i in range(len(s)):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Count odd length palindromes.",
-                    "placeholderCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1",
-                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*res\\s*\\+=\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
-                    "hint": "Expand outwards from single character center (odd length). Increment count for each valid palindrome found.\\n\\nExample:\\nS=\"aaa\". i=1 ('a').\\nL=1, R=1. \"a\". Count++.\\nL=0, R=2. \"aaa\". Count++.\\nL=-1. Stop.",
-                    "solutionCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1"
+                    "instruction": "Initialize pointers 'l' and 'r' to the current index 'i' for odd-length expansion.",
+                    "placeholderCode": "        l, r = i, i",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i$",
+                    "hint": "For odd palindromes, expansion starts from a single character center.",
+                    "solutionCode": "        l, r = i, i"
                 },
                 {
                     "id": 5,
-                    "instruction": "Count even length palindromes.",
-                    "placeholderCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1",
-                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*\\+\\s*1\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*res\\s*\\+=\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
-                    "hint": "Expand outwards from between characters (even length). Increment count for each valid palindrome found.",
-                    "solutionCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1"
+                    "instruction": "Expand as long as pointers are in bounds and the characters match.",
+                    "placeholderCode": "        while l >= 0 and r < len(s) and s[l] == s[r]:",
+                    "validationRegex": "^\\s+while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:$",
+                    "hint": "This loop checks the symmetry around the center.",
+                    "solutionCode": "        while l >= 0 and r < len(s) and s[l] == s[r]:"
                 },
                 {
                     "id": 6,
-                    "instruction": "Return result.",
+                    "instruction": "Increment the result counter for each valid palindrome found.",
+                    "placeholderCode": "            res += 1",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*1$",
+                    "hint": "Each time the characters match, we've found a new palindromic substring.",
+                    "solutionCode": "            res += 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Decrement the left pointer 'l' to expand further outwards.",
+                    "placeholderCode": "            l -= 1",
+                    "validationRegex": "^\\s+l\\s*-=\\s*1$",
+                    "hint": "Move towards the start of the string.",
+                    "solutionCode": "            l -= 1"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Increment the right pointer 'r' to expand further outwards.",
+                    "placeholderCode": "            r += 1",
+                    "validationRegex": "^\\s+r\\s*\\+=\\s*1$",
+                    "hint": "Move towards the end of the string.",
+                    "solutionCode": "            r += 1"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Count even length palindromes centered between 'i' and 'i+1'.",
+                    "placeholderCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*\\+\\s*1\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*res\\s*\\+=\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
+                    "hint": "Follow a similar expansion logic for even cases like 'aa' or 'abba'.",
+                    "solutionCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            res += 1\n            l -= 1\n            r += 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Return the final total count of palindromic substrings found.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "Return the total count of palindromic substrings.",
+                    "hint": "All valid substrings have been counted after the loops finish.",
                     "solutionCode": "    return res"
                 }
             ]
