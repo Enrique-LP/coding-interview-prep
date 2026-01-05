@@ -107,62 +107,70 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Add base cases for out-of-bounds cells.",
-                    "placeholderCode": "        if (r < 0 or c < 0 or r == rows or c == cols or",
-                    "validationRegex": "^\\s+if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*==\\s*cols\\s+or$",
-                    "hint": "Check if the current row or column is outside the grid dimensions.",
-                    "solutionCode": "        if (r < 0 or c < 0 or r == rows or c == cols or"
+                    "instruction": "Check base cases: out-of-bounds, already visited, or height condition.",
+                    "placeholderCode": "        if (r < 0 or c < 0 or r == rows or c == cols or\n            (r, c) in visit or heights[r][c] < prevHeight):",
+                    "validationRegex": "^\\s+if\\s*\\(r\\s*<\\s*0\\s+or\\s+c\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*==\\s*cols\\s+or\\s*\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+heights\\[r\\]\\[c\\]\\s*<\\s+prevHeight\\):$",
+                    "hint": "Return if the cell is invalid, already visited, or its height is lower than the previous cell's height.",
+                    "solutionCode": "        if (r < 0 or c < 0 or r == rows or c == cols or\n            (r, c) in visit or heights[r][c] < prevHeight):"
                 },
                 {
                     "id": 6,
-                    "instruction": "Add base cases for visited cells or height condition.",
-                    "placeholderCode": "            (r, c) in visit or heights[r][c] < prevHeight):",
-                    "validationRegex": "^\\s+\\(r,\\s*c\\)\\s+in\\s+visit\\s+or\\s+heights\\[r\\]\\[c\\]\\s*<\\s+prevHeight\\):$",
-                    "hint": "The water can only flow to a cell if its height is greater than or equal to the previous cell's height (since we are moving from ocean to land).",
-                    "solutionCode": "            (r, c) in visit or heights[r][c] < prevHeight):"
-                },
-                {
-                    "id": 7,
                     "instruction": "Return if base cases are met.",
                     "placeholderCode": "            return",
                     "validationRegex": "^\\s+return$",
-                    "hint": "If any base case is true, we stop the current DFS path.",
+                    "hint": "Stop the current DFS recursion if the conditions are true.",
                     "solutionCode": "            return"
                 },
                 {
-                    "id": 8,
+                    "id": 7,
                     "instruction": "Mark the current cell as visited in the appropriate ocean set.",
                     "placeholderCode": "        visit.add((r, c))",
                     "validationRegex": "^\\s+visit\\.add\\(\\(r,\\s*c\\)\\)$",
-                    "hint": "Add the row and column tuple to the set passed as an argument.",
+                    "hint": "Add the row and column tuple to the current visit set.",
                     "solutionCode": "        visit.add((r, c))"
                 },
                 {
+                    "id": 8,
+                    "instruction": "Recursively call DFS for the cell to the South.",
+                    "placeholderCode": "        dfs(r + 1, c, visit, heights[r][c])",
+                    "validationRegex": "^\\s+dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)$",
+                    "hint": "Move down in the grid.",
+                    "solutionCode": "        dfs(r + 1, c, visit, heights[r][c])"
+                },
+                {
                     "id": 9,
-                    "instruction": "Recursively call DFS for South and North neighbors.",
-                    "placeholderCode": "        dfs(r + 1, c, visit, heights[r][c])\n        dfs(r - 1, c, visit, heights[r][c])",
-                    "validationRegex": "^\\s+dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)$",
-                    "hint": "Check the cells below and above the current one.",
-                    "solutionCode": "        dfs(r + 1, c, visit, heights[r][c])\n        dfs(r - 1, c, visit, heights[r][c])"
+                    "instruction": "Recursively call DFS for the cell to the North.",
+                    "placeholderCode": "        dfs(r - 1, c, visit, heights[r][c])",
+                    "validationRegex": "^\\s+dfs\\(r\\s*-\\s*1,\\s*c,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)$",
+                    "hint": "Move up in the grid.",
+                    "solutionCode": "        dfs(r - 1, c, visit, heights[r][c])"
                 },
                 {
                     "id": 10,
-                    "instruction": "Recursively call DFS for East and West neighbors.",
-                    "placeholderCode": "        dfs(r, c + 1, visit, heights[r][c])\n        dfs(r, c - 1, visit, heights[r][c])",
-                    "validationRegex": "^\\s+dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)$",
-                    "hint": "Check the cells to the right and left of the current one.",
-                    "solutionCode": "        dfs(r, c + 1, visit, heights[r][c])\n        dfs(r, c - 1, visit, heights[r][c])"
+                    "instruction": "Recursively call DFS for the cell to the East.",
+                    "placeholderCode": "        dfs(r, c + 1, visit, heights[r][c])",
+                    "validationRegex": "^\\s+dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)$",
+                    "hint": "Move right in the grid.",
+                    "solutionCode": "        dfs(r, c + 1, visit, heights[r][c])"
                 },
                 {
                     "id": 11,
+                    "instruction": "Recursively call DFS for the cell to the West.",
+                    "placeholderCode": "        dfs(r, c - 1, visit, heights[r][c])",
+                    "validationRegex": "^\\s+dfs\\(r,\\s*c\\s*-\\s*1,\\s*visit,\\s*heights\\[r\\]\\[c\\]\\)$",
+                    "hint": "Move left in the grid.",
+                    "solutionCode": "        dfs(r, c - 1, visit, heights[r][c])"
+                },
+                {
+                    "id": 12,
                     "instruction": "Run DFS from all borders.",
                     "placeholderCode": "    for c in range(cols):\n        dfs(0, c, pac, heights[0][c])\n        dfs(rows - 1, c, atl, heights[rows - 1][c])\n    for r in range(rows):\n        dfs(r, 0, pac, heights[r][0])\n        dfs(r, cols - 1, atl, heights[r][cols - 1])",
-                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):\\s*dfs\\(0,\\s*c,\\s*pac,\\s*heights\\[0\\]\\[c\\]\\)\\s*dfs\\(rows\\s*-\\s*1,\\s*c,\\s*atl,\\s*heights\\[rows\\s*-\\s*1\\]\\[c\\]\\)\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*dfs\\(r,\\s*0,\\s*pac,\\s*heights\\[r\\]\\[0\\]\\)\\s*dfs\\(r,\\s*cols\\s*-\\s*1,\\s*atl,\\s*heights\\[r\\]\\[cols\\s*-\\s*1\\]\\)$",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):\\s*dfs\\(0,\\s*c,\\s*pac,\\s*heights\\[0\\]\\[c\\]\\)\\s*dfs\\(rows\\s*-\\s*1,\\s*c,\\s*atl,\\s*heights\\[rows\\s*-\\s*1\\]\\s*\\[c\\]\\)\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*dfs\\(r,\\s*0,\\s*pac,\\s*heights\\[r\\]\\[0\\]\\)\\s*dfs\\(r,\\s*cols\\s*-\\s*1,\\s*atl,\\s*heights\\[r\\]\\[cols\\s*-\\s*1\\]\\)$",
                     "hint": "Start DFS from top/left (Pacific) and bottom/right (Atlantic) borders.",
                     "solutionCode": "    for c in range(cols):\n        dfs(0, c, pac, heights[0][c])\n        dfs(rows - 1, c, atl, heights[rows - 1][c])\n    for r in range(rows):\n        dfs(r, 0, pac, heights[r][0])\n        dfs(r, cols - 1, atl, heights[r][cols - 1])"
                 },
                 {
-                    "id": 12,
+                    "id": 13,
                     "instruction": "Return intersection of reachable sets.",
                     "placeholderCode": "    return list(pac.intersection(atl))",
                     "validationRegex": "^\\s+return\\s+list\\(pac\\.intersection\\(atl\\)\\)$",
