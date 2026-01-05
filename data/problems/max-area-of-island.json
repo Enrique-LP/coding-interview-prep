@@ -117,7 +117,7 @@
                     "id": 6,
                     "instruction": "Recursively call DFS for the four adjacent cells and sum the areas.",
                     "placeholderCode": "        return (1 + dfs(r + 1, c) + dfs(r - 1, c) +\n                dfs(r, c + 1) + dfs(r, c - 1))",
-                    "validationRegex": "^\\s+return\\s*\\(1\\s*\\+\\s*dfs\\(r\\s*\\+\\s*1,\\s*c\\)\\s*\\+\\s*dfs\\(r\\s*-1,\\s*c\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*\\+\\s*1\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*-\\s*1\\)\\)$",
+                    "validationRegex": "^\\s+return\\s*\\(1\\s*\\+\\s*dfs\\(r\\s*\\+\\s*1,\\s*c\\)\\s*\\+\\s*dfs\\(r\\s*-\\s*1,\\s*c\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*\\+\\s*1\\)\\s*\\+\\s*dfs\\(r,\\s*c\\s*-\\s*1\\)\\)$",
                     "hint": "The current cell has area 1. Add this to the result of DFS in all four directions.",
                     "solutionCode": "        return (1 + dfs(r + 1, c) + dfs(r - 1, c) +\n                dfs(r, c + 1) + dfs(r, c - 1))"
                 },
