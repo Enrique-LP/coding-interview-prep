@@ -99,67 +99,67 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Check base cases: out of bounds or cell is not an 'O' (using or).",
-                    "placeholderCode": "        if (r < 0 or r == rows or c < 0 or c == cols or",
-                    "validationRegex": "^\\s+if\\s*\\(r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols\\s+or$",
-                    "hint": "Start the if statement to check grid boundaries first.",
-                    "solutionCode": "        if (r < 0 or r == rows or c < 0 or c == cols or"
+                    "instruction": "Base case: check if the row or column index is out of bounds.",
+                    "placeholderCode": "        if r < 0 or r == rows or c < 0 or c == cols:",
+                    "validationRegex": "^\\s+if\\s+r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols:$",
+                    "hint": "Verify if the current position is outside the matrix grid.",
+                    "solutionCode": "        if r < 0 or r == rows or c < 0 or c == cols:"
                 },
                 {
                     "id": 5,
-                    "instruction": "Complete the condition: check if cell content is not an 'O'.",
-                    "placeholderCode": "            board[r][c] != 'O'):",
-                    "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*!=\\s*'O'\\):$",
-                    "hint": "The 'or' operator will prevent this check from running if coordinates are invalid.",
-                    "solutionCode": "            board[r][c] != 'O'):"
-                },
-                {
-                    "id": 6,
-                    "instruction": "Return if any of the above conditions are true.",
+                    "instruction": "Return to stop the recursion if out of bounds.",
                     "placeholderCode": "            return",
                     "validationRegex": "^\\s+return$",
-                    "hint": "Exit the recursion to stop searching this path.",
+                    "hint": "Use return to exit the function for invalid coordinates.",
                     "solutionCode": "            return"
                 },
                 {
+                    "id": 6,
+                    "instruction": "Base case: check if the current cell is not an 'O'.",
+                    "placeholderCode": "        if board[r][c] != 'O':",
+                    "validationRegex": "^\\s+if\\s+board\\[r\\]\\[c\\]\\s*!=\\s*'O':$",
+                    "hint": "We only continue the search if the cell is an 'O'.",
+                    "solutionCode": "        if board[r][c] != 'O':"
+                },
+                {
                     "id": 7,
-                    "instruction": "Mark the cell as temporarily safe ('T').",
-                    "placeholderCode": "        board[r][c] = 'T'",
-                    "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*=\\s*'T'$",
-                    "hint": "Set the current board cell to 'T'.",
-                    "solutionCode": "        board[r][c] = 'T'"
+                    "instruction": "Return to stop the recursion if the cell should not be captured.",
+                    "placeholderCode": "            return",
+                    "validationRegex": "^\\s+return$",
+                    "hint": "Exit if the cell is already 'X' or marked as 'T'.",
+                    "solutionCode": "            return"
                 },
                 {
                     "id": 8,
-                    "instruction": "Recursively call capture for the South neighbor.",
-                    "placeholderCode": "        capture(r + 1, c)",
-                    "validationRegex": "^\\s+capture\\(r\\s*\\+\\s*1,\\s*c\\)$",
-                    "hint": "Check the cell below.",
-                    "solutionCode": "        capture(r + 1, c)"
+                    "instruction": "Mark the current 'O' cell as temporarily safe ('T').",
+                    "placeholderCode": "        board[r][c] = 'T'",
+                    "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*=\\s*'T'$",
+                    "hint": "Change the cell value to indicate it's connected to a border.",
+                    "solutionCode": "        board[r][c] = 'T'"
                 },
                 {
                     "id": 9,
-                    "instruction": "Recursively call capture for the North neighbor.",
-                    "placeholderCode": "        capture(r - 1, c)",
-                    "validationRegex": "^\\s+capture\\(r\\s*-\\s*1,\\s*c\\)$",
-                    "hint": "Check the cell above.",
-                    "solutionCode": "        capture(r - 1, c)"
+                    "instruction": "Recursively call capture for the South neighbor.",
+                    "placeholderCode": "        capture(r + 1, c)",
+                    "validationRegex": "^\\s+capture\\(r\\s*\\+\\s*1,\\s*c\\)$",
+                    "hint": "Move down in the board.",
+                    "solutionCode": "        capture(r + 1, c)"
                 },
                 {
                     "id": 10,
-                    "instruction": "Recursively call capture for the East neighbor.",
-                    "placeholderCode": "        capture(r, c + 1)",
-                    "validationRegex": "^\\s+capture\\(r,\\s*c\\s*\\+\\s*1\\)$",
-                    "hint": "Check the cell to the right.",
-                    "solutionCode": "        capture(r, c + 1)"
+                    "instruction": "Recursively call capture for the North neighbor.",
+                    "placeholderCode": "        capture(r - 1, c)",
+                    "validationRegex": "^\\s+capture\\(r\\s*-\\s*1,\\s*c\\)$",
+                    "hint": "Move up in the board.",
+                    "solutionCode": "        capture(r - 1, c)"
                 },
                 {
                     "id": 11,
-                    "instruction": "Recursively call capture for the West neighbor.",
-                    "placeholderCode": "        capture(r, c - 1)",
-                    "validationRegex": "^\\s+capture\\(r,\\s*c\\s*-\\s*1\\)$",
-                    "hint": "Check the cell to the left.",
-                    "solutionCode": "        capture(r, c - 1)"
+                    "instruction": "Recursively call capture for the East and West neighbors.",
+                    "placeholderCode": "        capture(r, c + 1)\n        capture(r, c - 1)",
+                    "validationRegex": "^\\s+capture\\(r,\\s*c\\s*\\+\\s*1\\)\\s*capture\\(r,\\s*c\\s*-\\s*1\\)$",
+                    "hint": "Call capture for the cells to the right and left.",
+                    "solutionCode": "        capture(r, c + 1)\n        capture(r, c - 1)"
                 },
                 {
                     "id": 12,
