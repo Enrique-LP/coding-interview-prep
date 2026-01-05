@@ -106,14 +106,30 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Go as left as possible.",
-                    "placeholderCode": "        while curr:\n            stack.append(curr)\n            curr = curr.left",
-                    "validationRegex": "^\\s+while\\s+curr:\\s*stack\\.append\\(curr\\)\\s*curr\\s*=\\s*curr\\.left$",
-                    "hint": "Push nodes to stack while moving left.",
-                    "solutionCode": "        while curr:\n            stack.append(curr)\n            curr = curr.left"
+                    "instruction": "Inner loop: Continue while 'curr' is not None to reach the leftmost ancestor.",
+                    "placeholderCode": "        while curr:",
+                    "validationRegex": "^\\s+while\\s+curr:$",
+                    "hint": "In-order traversal starts by exploring the leftmost subtree as deep as possible.",
+                    "solutionCode": "        while curr:"
                 },
                 {
                     "id": 6,
+                    "instruction": "Push the current node onto the stack.",
+                    "placeholderCode": "            stack.append(curr)",
+                    "validationRegex": "^\\s+stack\\.append\\(curr\\)$",
+                    "hint": "We store nodes on the stack to process them later in sorted order.",
+                    "solutionCode": "            stack.append(curr)"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Move to the left child of the current node.",
+                    "placeholderCode": "            curr = curr.left",
+                    "validationRegex": "^\\s+curr\\s*=\\s*curr\\.left$",
+                    "hint": "Continue going down the left side until you reach a leaf.",
+                    "solutionCode": "            curr = curr.left"
+                },
+                {
+                    "id": 8,
                     "instruction": "Pop node, decrement k.",
                     "placeholderCode": "        curr = stack.pop()\n        k -= 1",
                     "validationRegex": "^\\s+curr\\s*=\\s*stack\\.pop\\(\\)\\s*k\\s*-=\\s*1$",
@@ -121,7 +137,7 @@
                     "solutionCode": "        curr = stack.pop()\n        k -= 1"
                 },
                 {
-                    "id": 7,
+                    "id": 9,
                     "instruction": "If k is 0, return current value.",
                     "placeholderCode": "        if k == 0:\n            return curr.val",
                     "validationRegex": "^\\s+if\\s+k\\s*==\\s*0:\\s*return\\s+curr\\.val$",
@@ -129,7 +145,7 @@
                     "solutionCode": "        if k == 0:\n            return curr.val"
                 },
                 {
-                    "id": 8,
+                    "id": 10,
                     "instruction": "Move right.",
                     "placeholderCode": "        curr = curr.right",
                     "validationRegex": "^\\s+curr\\s*=\\s*curr\\.right$",
