@@ -102,14 +102,62 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Iterate backwards through the string starting from the last index.",
-                    "placeholderCode": "    for i in range(len(s) - 1, -1, -1):\n        for w in wordDict:\n            if (i + len(w) <= len(s) and\n                s[i : i + len(w)] == w):\n                dp[i] = dp[i + len(w)]\n                if dp[i]:\n                    break",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*for\\s+w\\s+in\\s+wordDict:\\s*if\\s*\\(i\\s*\\+\\s*len\\(w\\)\\s*<=\\s*len\\(s\\)\\s+and\\s+s\\[i\\s*:\\s*i\\s*\\+\\s*len\\(w\\)\\]\\s*==\\s*w\\):\\s*dp\\[i\\]\\s*=\\s*dp\\[i\\s*\\+\\s*len\\(w\\)\\]\\s*if\\s+dp\\[i\\]:\\s*break$",
-                    "hint": "For each index, try matching every word from wordDict. If a match is found and the remaining string is valid, then dp[i] is True.",
-                    "solutionCode": "    for i in range(len(s) - 1, -1, -1):\n        for w in wordDict:\n            if (i + len(w) <= len(s) and\n                s[i : i + len(w)] == w):\n                dp[i] = dp[i + len(w)]\n                if dp[i]:\n                    break"
+                    "instruction": "Initiate a loop to iterate through the string 's' backwards.",
+                    "placeholderCode": "    for i in range(len(s) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "Starting from the end helps build solutions for the suffixes.",
+                    "solutionCode": "    for i in range(len(s) - 1, -1, -1):"
                 },
                 {
                     "id": 5,
+                    "instruction": "For each position 'i', iterate through every word in the dictionary.",
+                    "placeholderCode": "        for w in wordDict:",
+                    "validationRegex": "^\\s+for\\s+w\\s+in\\s+wordDict:$",
+                    "hint": "We check if any word from the dictionary can start at the current index.",
+                    "solutionCode": "        for w in wordDict:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check if the current word 'w' fits within the boundaries of the remaining string.",
+                    "placeholderCode": "            if (i + len(w) <= len(s)):",
+                    "validationRegex": "^\\s+if\\s*\\(i\\s*\\+\\s*len\\(w\\)\\s*<=\\s*len\\(s\\)\\):$",
+                    "hint": "We can only check for a match if the word is not longer than the available suffix.",
+                    "solutionCode": "            if (i + len(w) <= len(s)):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Verify if the substring starting at index 'i' with the same length as 'w' matches 'w'.",
+                    "placeholderCode": "                if s[i : i + len(w)] == w:",
+                    "validationRegex": "^\\s+if\\s+s\\[i\\s*:\\s*i\\s*\\+\\s*len\\(w\\)\\]\\s*==\\s*w:$",
+                    "hint": "Perform a string slice comparison to find a match.",
+                    "solutionCode": "                if s[i : i + len(w)] == w:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Assign the segmentation status of the remaining suffix to the current index 'dp[i]'.",
+                    "placeholderCode": "                    dp[i] = dp[i + len(w)]",
+                    "validationRegex": "^\\s+dp\\[i\\]\\s*=\\s*dp\\[i\\s*\\+\\s*len\\(w\\)\\]$",
+                    "hint": "If the string after word 'w' can be segmented (which we already calculated), then the string from 'i' can also be segmented.",
+                    "solutionCode": "                    dp[i] = dp[i + len(w)]"
+                },
+                {
+                    "id": 9,
+                    "instruction": "If a valid segmentation is found for the current index, check the condition to stop further word checks.",
+                    "placeholderCode": "                    if dp[i]:",
+                    "validationRegex": "^\\s+if\\s+dp\\[i\\]:$",
+                    "hint": "Only one valid decomposition starting at 'i' is needed.",
+                    "solutionCode": "                    if dp[i]:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Break the inner loop since a valid segmentation for 'dp[i]' has been confirmed.",
+                    "placeholderCode": "                        break",
+                    "validationRegex": "^\\s+break$",
+                    "hint": "Terminate the dictionary search for this index to save time.",
+                    "solutionCode": "                        break"
+                },
+                {
+                    "id": 11,
                     "instruction": "Return whether the entire string 's' can be segmented into words from the dictionary.",
                     "placeholderCode": "    return dp[0]",
                     "validationRegex": "^\\s+return\\s+dp\\[0\\]$",
