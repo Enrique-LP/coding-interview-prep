@@ -131,14 +131,22 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "Recursively call capture for the neighbors (South and North).",
-                    "placeholderCode": "        capture(r + 1, c)\n        capture(r - 1, c)",
-                    "validationRegex": "^\\s+capture\\(r\\s*\\+\\s*1,\\s*c\\)\\s*capture\\(r\\s*-\\s*1,\\s*c\\)$",
-                    "hint": "Check cells below and above.",
-                    "solutionCode": "        capture(r + 1, c)\n        capture(r - 1, c)"
+                    "instruction": "Recursively call capture for the South neighbor.",
+                    "placeholderCode": "        capture(r + 1, c)",
+                    "validationRegex": "^\\s+capture\\(r\\s*\\+\\s*1,\\s*c\\)$",
+                    "hint": "Check the cell below.",
+                    "solutionCode": "        capture(r + 1, c)"
                 },
                 {
                     "id": 9,
+                    "instruction": "Recursively call capture for the North neighbor.",
+                    "placeholderCode": "        capture(r - 1, c)",
+                    "validationRegex": "^\\s+capture\\(r\\s*-\\s*1,\\s*c\\)$",
+                    "hint": "Check the cell above.",
+                    "solutionCode": "        capture(r - 1, c)"
+                },
+                {
+                    "id": 10,
                     "instruction": "Recursively call capture for the neighbors (East and West).",
                     "placeholderCode": "        capture(r, c + 1)\n        capture(r, c - 1)",
                     "validationRegex": "^\\s+capture\\(r,\\s*c\\s*\\+\\s*1\\)\\s*capture\\(r,\\s*c\\s*-\\s*1\\)$",
@@ -146,7 +154,7 @@
                     "solutionCode": "        capture(r, c + 1)\n        capture(r, c - 1)"
                 },
                 {
-                    "id": 10,
+                    "id": 11,
                     "instruction": "Run DFS on border 'O's.",
                     "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if (board[r][c] == 'O' and\n                (r in [0, rows - 1] or c in [0, cols - 1])):\n                capture(r, c)",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s*\\(board\\[r\\]\\[c\\]\\s*==\\s*'O'\\s+and\\s*\\(r\\s+in\\s+\\[0,\\s*rows\\s*-\\s*1\\]\\s+or\\s+c\\s+in\\s+\\[0,\\s*cols\\s*-\\s*1\\]\\)\\):\\s*capture\\(r,\\s*c\\)$",
@@ -154,7 +162,7 @@
                     "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if (board[r][c] == 'O' and\n                (r in [0, rows - 1] or c in [0, cols - 1])):\n                capture(r, c)"
                 },
                 {
-                    "id": 11,
+                    "id": 12,
                     "instruction": "Flip 'O' to 'X' and 'T' back to 'O'.",
                     "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if board[r][c] == 'O':\n                board[r][c] = 'X'\n            elif board[r][c] == 'T':\n                board[r][c] = 'O'",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+board\\[r\\]\\[c\\]\\s*==\\s*'O':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'X'\\s*elif\\s+board\\[r\\]\\[c\\]\\s*==\\s*'T':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'O'$",
