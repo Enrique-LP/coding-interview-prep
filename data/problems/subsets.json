@@ -98,14 +98,38 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Define dfs function taking index i.",
-                    "placeholderCode": "    def dfs(i):\n        if i >= len(nums):\n            res.append(subset.copy())\n            return",
-                    "validationRegex": "^\\s+def\\s+dfs\\(i\\):\\s*if\\s+i\\s*>=\\s+len\\(nums\\):\\s*res\\.append\\(subset\\.copy\\(\\)\\)\\s*return$",
-                    "hint": "Define a recursive function. Base case: if index reaches end, add copy of subset to result.",
-                    "solutionCode": "    def dfs(i):\n        if i >= len(nums):\n            res.append(subset.copy())\n            return"
+                    "instruction": "Define the recursive dfs function that takes the current index i.",
+                    "placeholderCode": "    def dfs(i):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(i\\):$",
+                    "hint": "This function will explore the decision tree for each element.",
+                    "solutionCode": "    def dfs(i):"
                 },
                 {
                     "id": 5,
+                    "instruction": "Add a base case to check if the current index has reached the end of the array.",
+                    "placeholderCode": "        if i >= len(nums):",
+                    "validationRegex": "^\\s+if\\s+i\\s*>=\\s+len\\(nums\\):$",
+                    "hint": "When i equals the length of nums, we have made a decision for every element.",
+                    "solutionCode": "        if i >= len(nums):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Inside the base case, append a copy of the current subset to the result list.",
+                    "placeholderCode": "            res.append(subset.copy())",
+                    "validationRegex": "^\\s+res\\.append\\(subset\\.copy\\(\\)\\)$",
+                    "hint": "We must use .copy() because the subset list is modified in other parts of the code.",
+                    "solutionCode": "            res.append(subset.copy())"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return from the function after adding the subset to the results.",
+                    "placeholderCode": "            return",
+                    "validationRegex": "^\\s+return$",
+                    "hint": "Stop the recursion for this branch.",
+                    "solutionCode": "            return"
+                },
+                {
+                    "id": 8,
                     "instruction": "Decision to include nums[i].",
                     "placeholderCode": "        subset.append(nums[i])\n        dfs(i + 1)",
                     "validationRegex": "^\\s+subset\\.append\\(nums\\[i\\]\\)\\s*dfs\\(i\\s*\\+\\s*1\\)$",
@@ -113,7 +137,7 @@
                     "solutionCode": "        subset.append(nums[i])\n        dfs(i + 1)"
                 },
                 {
-                    "id": 6,
+                    "id": 9,
                     "instruction": "Decision to exclude nums[i].",
                     "placeholderCode": "        subset.pop()\n        dfs(i + 1)",
                     "validationRegex": "^\\s+subset\\.pop\\(\\)\\s*dfs\\(i\\s*\\+\\s*1\\)$",
@@ -121,7 +145,7 @@
                     "solutionCode": "        subset.pop()\n        dfs(i + 1)"
                 },
                 {
-                    "id": 7,
+                    "id": 10,
                     "instruction": "Call dfs starting at 0 and return result.",
                     "placeholderCode": "    dfs(0)\n    return res",
                     "validationRegex": "^\\s+dfs\\(0\\)\\s*return\\s+res$",
