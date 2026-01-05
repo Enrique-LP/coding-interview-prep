@@ -23,7 +23,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "DFS from Oceans",
+            "name": "Brute Force",
             "description": "Start DFS from ocean borders and find reachable cells.",
             "steps": [
                 {
@@ -70,7 +70,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DFS from Oceans",
+            "name": "Optimal",
             "description": "Same as brute force, O(m*n).",
             "steps": [
                 {
