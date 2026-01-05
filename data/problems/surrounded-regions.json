@@ -99,26 +99,26 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Base case: return if row or column is out of bounds.",
-                    "placeholderCode": "        if r < 0 or r == rows or c < 0 or c == cols:",
-                    "validationRegex": "^\\s+if\\s+r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols:$",
-                    "hint": "Check if the current coordinates are outside the board.",
-                    "solutionCode": "        if r < 0 or r == rows or c < 0 or c == cols:"
+                    "instruction": "Check base cases: out of bounds or cell is not an 'O' (using or).",
+                    "placeholderCode": "        if (r < 0 or r == rows or c < 0 or c == cols or",
+                    "validationRegex": "^\\s+if\\s*\\(r\\s*<\\s*0\\s+or\\s+r\\s*==\\s*rows\\s+or\\s+c\\s*<\\s*0\\s+or\\s+c\\s*==\\s*cols\\s+or$",
+                    "hint": "Start the if statement to check grid boundaries first.",
+                    "solutionCode": "        if (r < 0 or r == rows or c < 0 or c == cols or"
                 },
                 {
                     "id": 5,
-                    "instruction": "Base case: return if cell is not an 'O'.",
-                    "placeholderCode": "        if board[r][c] != 'O':",
-                    "validationRegex": "^\\s+if\\s+board\\[r\\]\\[c\\]\\s*!=\\s*'O':$",
-                    "hint": "We only continue if the cell is an 'O'.",
-                    "solutionCode": "        if board[r][c] != 'O':"
+                    "instruction": "Complete the condition: check if cell content is not an 'O'.",
+                    "placeholderCode": "            board[r][c] != 'O'):",
+                    "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*!=\\s*'O'\\):$",
+                    "hint": "The 'or' operator will prevent this check from running if coordinates are invalid.",
+                    "solutionCode": "            board[r][c] != 'O'):"
                 },
                 {
                     "id": 6,
-                    "instruction": "Return if base cases are met.",
+                    "instruction": "Return if any of the above conditions are true.",
                     "placeholderCode": "            return",
                     "validationRegex": "^\\s+return$",
-                    "hint": "Exit the recursion if any of the above conditions apply.",
+                    "hint": "Exit the recursion to stop searching this path.",
                     "solutionCode": "            return"
                 },
                 {
