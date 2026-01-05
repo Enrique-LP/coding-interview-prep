@@ -50,75 +50,75 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Import the 'heapq' library to use heap operations.",
-                    "placeholderCode": "import heapq",
-                    "validationRegex": "^import\\s+heapq$",
-                    "hint": "The 'heapq' module provides functions for implementing min-heaps.",
-                    "solutionCode": "import heapq"
+                    "instruction": "Import the heapq module and define the KthLargest class.",
+                    "placeholderCode": "import heapq\n\nclass KthLargest:",
+                    "validationRegex": "^import\\s+heapq\\s*class\\s+KthLargest:$",
+                    "hint": "Start with the import outside the class definition.",
+                    "solutionCode": "import heapq\n\nclass KthLargest:"
                 },
                 {
                     "id": 2,
-                    "instruction": "Define the KthLargest class.",
-                    "placeholderCode": "class KthLargest:",
-                    "validationRegex": "^class\\s+KthLargest:$",
-                    "hint": "Use the 'class' keyword followed by the name.",
-                    "solutionCode": "class KthLargest:"
-                },
-                {
-                    "id": 3,
-                    "instruction": "Define the constructor method __init__ with k and nums as arguments.",
+                    "instruction": "Define the constructor method __init__ with k and nums.",
                     "placeholderCode": "    def __init__(self, k, nums):",
                     "validationRegex": "^\\s+def\\s+__init__\\(self,\\s*k,\\s*nums\\):$",
-                    "hint": "The constructor is used to initialize the object's attributes.",
+                    "hint": "Initialize the object with its parameters.",
                     "solutionCode": "    def __init__(self, k, nums):"
                 },
                 {
+                    "id": 3,
+                    "instruction": "Store the value of k and initialize the min-heap.",
+                    "placeholderCode": "        self.k = k\n        self.minHeap = nums",
+                    "validationRegex": "^\\s+self\\.k\\s*=\\s*k\\s*self\\.minHeap\\s*=\\s*nums$",
+                    "hint": "Save the state in instance variables.",
+                    "solutionCode": "        self.k = k\n        self.minHeap = nums"
+                },
+                {
                     "id": 4,
-                    "instruction": "Store the value of k as an attribute of the instance.",
-                    "placeholderCode": "        self.k = k",
-                    "validationRegex": "^\\s+self\\.k\\s*=\\s*k$",
-                    "hint": "Use 'self' to store attributes that will be accessible in other methods.",
-                    "solutionCode": "        self.k = k"
-                },
-                {
-                    "id": 5,
-                    "instruction": "Store the provided nums list as the initial min-heap.",
-                    "placeholderCode": "        self.minHeap = nums",
-                    "validationRegex": "^\\s+self\\.minHeap\\s*=\\s*nums$",
-                    "hint": "Assign the input list to internal state.",
-                    "solutionCode": "        self.minHeap = nums"
-                },
-                {
-                    "id": 6,
-                    "instruction": "Convert the minHeap list into a valid heap in-place.",
+                    "instruction": "Transform the list into a valid min-heap in-place.",
                     "placeholderCode": "        heapq.heapify(self.minHeap)",
                     "validationRegex": "^\\s+heapq\\.heapify\\(self\\.minHeap\\)$",
-                    "hint": "The heapify function reorders the list to satisfy the heap property.",
+                    "hint": "Use the heapify function to organize self.minHeap.",
                     "solutionCode": "        heapq.heapify(self.minHeap)"
                 },
                 {
+                    "id": 5,
+                    "instruction": "Remove the smallest elements from the heap until k elements remain.",
+                    "placeholderCode": "        while len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)",
+                    "validationRegex": "^\\s+while\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:\\s*heapq\\.heappop\\(self\\.minHeap\\)$",
+                    "hint": "A min-heap's root is the smallest value; popping it leaves larger values behind.",
+                    "solutionCode": "        while len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Define the add method to insert new values into the stream.",
+                    "placeholderCode": "    def add(self, val):",
+                    "validationRegex": "^\\s+def\\s+add\\(self,\\s*val\\):$",
+                    "hint": "This method handles subsequent additions to the stream.",
+                    "solutionCode": "    def add(self, val):"
+                },
+                {
                     "id": 7,
-                    "instruction": "Loop while the size of the heap is greater than k.",
-                    "placeholderCode": "        while len(self.minHeap) > self.k:",
-                    "validationRegex": "^\\s+while\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:$",
-                    "hint": "We only need to keep the k largest elements; the smallest one is at the root of a min-heap.",
-                    "solutionCode": "        while len(self.minHeap) > self.k:"
+                    "instruction": "Push the new value to the heap.",
+                    "placeholderCode": "        heapq.heappush(self.minHeap, val)",
+                    "validationRegex": "^\\s+heapq\\.heappush\\(self\\.minHeap,\\s*val\\)$",
+                    "hint": "Add the new value while maintaining the heap property.",
+                    "solutionCode": "        heapq.heappush(self.minHeap, val)"
                 },
                 {
                     "id": 8,
-                    "instruction": "Remove the smallest element from the heap until only k elements remain.",
-                    "placeholderCode": "            heapq.heappop(self.minHeap)",
-                    "validationRegex": "^\\s+heapq\\.heappop\\(self\\.minHeap\\)$",
-                    "hint": "Use heappop to remove the smallest element from the min-heap.",
-                    "solutionCode": "            heapq.heappop(self.minHeap)"
+                    "instruction": "Remove the smallest element if the heap size exceeds k.",
+                    "placeholderCode": "        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)",
+                    "validationRegex": "^\\s+if\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:\\s*heapq\\.heappop\\(self\\.minHeap\\)$",
+                    "hint": "Keep only the k largest elements in the heap.",
+                    "solutionCode": "        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)"
                 },
                 {
                     "id": 9,
-                    "instruction": "Implement the add method.",
-                    "placeholderCode": "    def add(self, val):\n        heapq.heappush(self.minHeap, val)\n        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)\n        return self.minHeap[0]",
-                    "validationRegex": "^\\s+def\\s+add\\(self,\\s*val\\):\\s*heapq\\.heappush\\(self\\.minHeap,\\s*val\\)\\s*if\\s+len\\(self\\.minHeap\\)\\s*>\\s*self\\.k:\\s*heapq\\.heappop\\(self\\.minHeap\\)\\s*return\\s+self\\.minHeap\\[0\\]$",
-                    "hint": "Push the new value to the heap. If the heap size exceeds k, pop the smallest element.\\n\\nExample:\\nHeap=[4, 5, 8], k=3. Add 10.\\nHeap becomes [4, 5, 8, 10]. Pop smallest (4).\\nHeap=[5, 8, 10]. Return 5 (root).",
-                    "solutionCode": "    def add(self, val):\n        heapq.heappush(self.minHeap, val)\n        if len(self.minHeap) > self.k:\n            heapq.heappop(self.minHeap)\n        return self.minHeap[0]"
+                    "instruction": "Return the current kth largest element (the root of the min-heap).",
+                    "placeholderCode": "        return self.minHeap[0]",
+                    "validationRegex": "^\\s+return\\s+self\\.minHeap\\[0\\]$",
+                    "hint": "In a min-heap of size k, the smallest of those k elements is the kth largest overall.",
+                    "solutionCode": "        return self.minHeap[0]"
                 }
             ]
         }
