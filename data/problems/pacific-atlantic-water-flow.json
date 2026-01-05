@@ -163,14 +163,54 @@
                 },
                 {
                     "id": 12,
-                    "instruction": "Run DFS from all borders.",
-                    "placeholderCode": "    for c in range(cols):\n        dfs(0, c, pac, heights[0][c])\n        dfs(rows - 1, c, atl, heights[rows - 1][c])\n    for r in range(rows):\n        dfs(r, 0, pac, heights[r][0])\n        dfs(r, cols - 1, atl, heights[r][cols - 1])",
-                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):\\s*dfs\\(0,\\s*c,\\s*pac,\\s*heights\\[0\\]\\[c\\]\\)\\s*dfs\\(rows\\s*-\\s*1,\\s*c,\\s*atl,\\s*heights\\[rows\\s*-\\s*1\\]\\s*\\[c\\]\\)\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*dfs\\(r,\\s*0,\\s*pac,\\s*heights\\[r\\]\\[0\\]\\)\\s*dfs\\(r,\\s*cols\\s*-\\s*1,\\s*atl,\\s*heights\\[r\\]\\[cols\\s*-\\s*1\\]\\)$",
-                    "hint": "Start DFS from top/left (Pacific) and bottom/right (Atlantic) borders.",
-                    "solutionCode": "    for c in range(cols):\n        dfs(0, c, pac, heights[0][c])\n        dfs(rows - 1, c, atl, heights[rows - 1][c])\n    for r in range(rows):\n        dfs(r, 0, pac, heights[r][0])\n        dfs(r, cols - 1, atl, heights[r][cols - 1])"
+                    "instruction": "Iterate through every column in the grid.",
+                    "placeholderCode": "    for c in range(cols):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):$",
+                    "hint": "Use a for loop to iterate from 0 to cols - 1.",
+                    "solutionCode": "    for c in range(cols):"
                 },
                 {
                     "id": 13,
+                    "instruction": "Start DFS from the top border (Pacific Ocean) for each column.",
+                    "placeholderCode": "        dfs(0, c, pac, heights[0][c])",
+                    "validationRegex": "^\\s+dfs\\(0,\\s*c,\\s*pac,\\s*heights\\[0\\]\\[c\\]\\)$",
+                    "hint": "Call the DFS helper starting at row 0.",
+                    "solutionCode": "        dfs(0, c, pac, heights[0][c])"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Start DFS from the bottom border (Atlantic Ocean) for each column.",
+                    "placeholderCode": "        dfs(rows - 1, c, atl, heights[rows - 1][c])",
+                    "validationRegex": "^\\s+dfs\\(rows\\s*-\\s*1,\\s*c,\\s*atl,\\s*heights\\[rows\\s*-\\s*1\\]\\[c\\]\\)$",
+                    "hint": "Call the DFS helper starting at the last row.",
+                    "solutionCode": "        dfs(rows - 1, c, atl, heights[rows - 1][c])"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Iterate through every row in the grid.",
+                    "placeholderCode": "    for r in range(rows):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):$",
+                    "hint": "Use a for loop to iterate from 0 to rows - 1.",
+                    "solutionCode": "    for r in range(rows):"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Start DFS from the left border (Pacific Ocean) for each row.",
+                    "placeholderCode": "        dfs(r, 0, pac, heights[r][0])",
+                    "validationRegex": "^\\s+dfs\\(r,\\s*0,\\s*pac,\\s*heights\\[r\\]\\[0\\]\\)$",
+                    "hint": "Call the DFS helper starting at column 0.",
+                    "solutionCode": "        dfs(r, 0, pac, heights[r][0])"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Start DFS from the right border (Atlantic Ocean) for each row.",
+                    "placeholderCode": "        dfs(r, cols - 1, atl, heights[r][cols - 1])",
+                    "validationRegex": "^\\s+dfs\\(r,\\s*cols\\s*-\\s*1,\\s*atl,\\s*heights\\[r\\]\\[cols\\s*-\\s*1\\]\\)$",
+                    "hint": "Call the DFS helper starting at the last column.",
+                    "solutionCode": "        dfs(r, cols - 1, atl, heights[r][cols - 1])"
+                },
+                {
+                    "id": 18,
                     "instruction": "Return intersection of reachable sets.",
                     "placeholderCode": "    return list(pac.intersection(atl))",
                     "validationRegex": "^\\s+return\\s+list\\(pac\\.intersection\\(atl\\)\\)$",
