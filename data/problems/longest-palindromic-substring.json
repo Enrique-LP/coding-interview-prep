@@ -22,7 +22,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Expand Around Center",
+            "name": "Brute Force",
             "description": "Check palindrome expanding from each character.",
             "steps": [
                 {
@@ -54,7 +54,7 @@
                     "instruction": "Check odd length palindromes.",
                     "placeholderCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1",
                     "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*if\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*>\\s*resLen:\\s*res\\s*=\\s*s\\[l:r\\+1\\]\\s*resLen\\s*=\\s*r\\s*-\\s*l\\s*\\+\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
-                    "hint": "Expand outwards from single character center (odd length). Update max length if found.\\n\\nExample:\\nS=\"aba\". i=1 ('b').\\nL=1, R=1. S[1]==S[1] ('b'). Res=\"b\".\\nL=0, R=2. S[0]==S[2] ('a'). Res=\"aba\".\\nL=-1. Stop.",
+                    "hint": "Expand outwards from single character center (odd length). Update max length if found.",
                     "solutionCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1"
                 },
                 {
@@ -77,8 +77,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Expand Around Center",
-            "description": "Same as brute force, O(n^2).",
+            "name": "Optimal",
+            "description": "Same as brute force, O(n^2) time and O(1) space.",
             "steps": [
                 {
                     "id": 1,
@@ -90,42 +90,50 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize result string and length.",
-                    "placeholderCode": "    res = \"\"\n    resLen = 0",
-                    "validationRegex": "^\\s+res\\s*=\\s*\"\"\\s*resLen\\s*=\\s*0$",
-                    "hint": "Initialize variables to store the longest palindrome found so far.",
-                    "solutionCode": "    res = \"\"\n    resLen = 0"
+                    "instruction": "Initialize the result string as empty.",
+                    "placeholderCode": "    res = \"\"",
+                    "validationRegex": "^\\s+res\\s*=\\s*\"\"$",
+                    "hint": "This variable will store the actual palindromic substring.",
+                    "solutionCode": "    res = \"\""
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate through string.",
-                    "placeholderCode": "    for i in range(len(s)):",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\):$",
-                    "hint": "Iterate through each character in the string, treating it as the center of a potential palindrome.",
-                    "solutionCode": "    for i in range(len(s)):"
+                    "instruction": "Initialize the length of the longest palindrome found to zero.",
+                    "placeholderCode": "    resLen = 0",
+                    "validationRegex": "^\\s+resLen\\s*=\\s*0$",
+                    "hint": "Use this to track and compare the lengths of various centered palindromes.",
+                    "solutionCode": "    resLen = 0"
                 },
                 {
                     "id": 4,
-                    "instruction": "Check odd length palindromes.",
-                    "placeholderCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1",
-                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*if\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*>\\s*resLen:\\s*res\\s*=\\s*s\\[l:r\\+1\\]\\s*resLen\\s*=\\s*r\\s*-\\s*l\\s*\\+\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
-                    "hint": "Expand outwards from single character center (odd length). Update max length if found.\\n\\nExample:\\nS=\"aba\". i=1 ('b').\\nL=1, R=1. S[1]==S[1] ('b'). Res=\"b\".\\nL=0, R=2. S[0]==S[2] ('a'). Res=\"aba\".\\nL=-1. Stop.",
-                    "solutionCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1"
+                    "instruction": "Iterate through each character in the string, treating it as a potential center.",
+                    "placeholderCode": "    for i in range(len(s)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\):$",
+                    "hint": "Every character (or space between) can be the center of a palindrome.",
+                    "solutionCode": "    for i in range(len(s)):"
                 },
                 {
                     "id": 5,
-                    "instruction": "Check even length palindromes.",
-                    "placeholderCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1",
-                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*\\+\\s*1\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*if\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*>\\s*resLen:\\s*res\\s*=\\s*s\\[l:r\\+1\\]\\s*resLen\\s*=\\s*r\\s*-\\s*l\\s*\\+\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
-                    "hint": "Expand outwards from between characters (even length). Update max length if found.",
-                    "solutionCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1"
+                    "instruction": "Expand outwards for odd-length palindromes centered at index 'i'.",
+                    "placeholderCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*if\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*>\\s*resLen:\\s*res\\s*=\\s*s\\[l:r\\+1\\]\\s*resLen\\s*=\\s*r\\s*-\\s*l\\s*\\+\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
+                    "hint": "Check palindromes like 'aba' where 'b' is the center.",
+                    "solutionCode": "        l, r = i, i\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1"
                 },
                 {
                     "id": 6,
-                    "instruction": "Return result.",
+                    "instruction": "Expand outwards for even-length palindromes centered between index 'i' and 'i+1'.",
+                    "placeholderCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*i,\\s*i\\s*\\+\\s*1\\s*while\\s+l\\s*>=\\s*0\\s+and\\s+r\\s*<\\s+len\\(s\\)\\s+and\\s+s\\[l\\]\\s*==\\s+s\\[r\\]:\\s*if\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1\\)\\s*>\\s*resLen:\\s*res\\s*=\\s*s\\[l:r\\+1\\]\\s*resLen\\s*=\\s*r\\s*-\\s*l\\s*\\+\\s*1\\s*l\\s*-=\\s*1\\s*r\\s*\\+=\\s*1$",
+                    "hint": "Check palindromes like 'abba' where the center is between the 'b's.",
+                    "solutionCode": "        l, r = i, i + 1\n        while l >= 0 and r < len(s) and s[l] == s[r]:\n            if (r - l + 1) > resLen:\n                res = s[l:r+1]\n                resLen = r - l + 1\n            l -= 1\n            r += 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return the final result string representing the longest palindrome found.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "Return the longest palindrome string found.",
+                    "hint": "The answer is finally stored in 'res'.",
                     "solutionCode": "    return res"
                 }
             ]
