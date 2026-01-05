@@ -130,11 +130,19 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "Final check: compare current root with subRoot or recurse down.",
-                    "placeholderCode": "    if same_tree(root, subRoot): return True\n    return is_subtree(root.left, subRoot) or is_subtree(root.right, subRoot)",
-                    "validationRegex": "^\\s+if\\s+same_tree\\(root,\\s*subRoot\\):\\s*return\\s+True\\s*return\\s+is_subtree\\(root\\.left,\\s*subRoot\\)\\s+or\\s+is_subtree\\(root\\.right,\\s*subRoot\\)$",
-                    "hint": "Check if subRoot starts at the current node, or search left and right children recursively.",
-                    "solutionCode": "    if same_tree(root, subRoot): return True\n    return is_subtree(root.left, subRoot) or is_subtree(root.right, subRoot)"
+                    "instruction": "Check if the current 'root' and 'subRoot' are identical using 'same_tree'.",
+                    "placeholderCode": "    if same_tree(root, subRoot):\n        return True",
+                    "validationRegex": "^\\s+if\\s+same_tree\\(root,\\s*subRoot\\):\\s*return\\s+True$",
+                    "hint": "If the current node matches the subRoot exactly, we've found our subtree.",
+                    "solutionCode": "    if same_tree(root, subRoot):\n        return True"
+                },
+                {
+                    "id": 9,
+                    "instruction": "If not a match at the current node, recursively search in the left and right children.",
+                    "placeholderCode": "    return is_subtree(root.left, subRoot) or is_subtree(root.right, subRoot)",
+                    "validationRegex": "^\\s+return\\s+is_subtree\\(root\\.left,\\s*subRoot\\)\\s+or\\s+is_subtree\\(root\\.right,\\s*subRoot\\)$",
+                    "hint": "We only need to find the subRoot in ONE of the branches, so we use 'or'.",
+                    "solutionCode": "    return is_subtree(root.left, subRoot) or is_subtree(root.right, subRoot)"
                 }
             ]
         }
