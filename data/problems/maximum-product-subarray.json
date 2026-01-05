@@ -124,14 +124,30 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "Update current min and max products by considering the element 'n' itself and the previous products.",
-                    "placeholderCode": "        tmp = curMax * n\n        curMax = max(n * curMax, n * curMin, n)\n        curMin = min(tmp, n * curMin, n)",
-                    "validationRegex": "^\\s+tmp\\s*=\\s*curMax\\s*\\*\\s*n\\s*curMax\\s*=\\s*max\\(n\\s*\\*\\s*curMax,\\s*n\\s*\\*\\s*curMin,\\s*n\\)\\s*curMin\\s*=\\s*min\\(tmp,\\s*n\\s*\\*\\s*curMin,\\s*n\\)$",
-                    "hint": "Since n can be negative, multiplying it by curMin could result in a new maximum.",
-                    "solutionCode": "        tmp = curMax * n\n        curMax = max(n * curMax, n * curMin, n)\n        curMin = min(tmp, n * curMin, n)"
+                    "instruction": "Store the current maximum product multiplied by 'n' in a temporary variable.",
+                    "placeholderCode": "        tmp = curMax * n",
+                    "validationRegex": "^\\s+tmp\\s*=\\s*curMax\\s*\\*\\s*n$",
+                    "hint": "We need to save this value because 'curMax' will be updated in the next step.",
+                    "solutionCode": "        tmp = curMax * n"
                 },
                 {
                     "id": 9,
+                    "instruction": "Update 'curMax' by taking the maximum among 'n * curMax', 'n * curMin', and 'n' itself.",
+                    "placeholderCode": "        curMax = max(n * curMax, n * curMin, n)",
+                    "validationRegex": "^\\s+curMax\\s*=\\s*max\\(n\\s*\\*\\s*curMax,\\s*n\\s*\\*\\s*curMin,\\s*n\\)$",
+                    "hint": "Multiplying a negative 'n' by a negative 'curMin' can result in a new maximum.",
+                    "solutionCode": "        curMax = max(n * curMax, n * curMin, n)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Update 'curMin' by taking the minimum among 'tmp', 'n * curMin', and 'n' itself.",
+                    "placeholderCode": "        curMin = min(tmp, n * curMin, n)",
+                    "validationRegex": "^\\s+curMin\\s*=\\s*min\\(tmp,\\s*n\\s*\\*\\s*curMin,\\s*n\\)$",
+                    "hint": "We track the minimum to handle future negative multiplications correctly.",
+                    "solutionCode": "        curMin = min(tmp, n * curMin, n)"
+                },
+                {
+                    "id": 11,
                     "instruction": "Update the global maximum product with the newly calculated current maximum.",
                     "placeholderCode": "        res = max(res, curMax)",
                     "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*curMax\\)$",
@@ -139,7 +155,7 @@
                     "solutionCode": "        res = max(res, curMax)"
                 },
                 {
-                    "id": 10,
+                    "id": 12,
                     "instruction": "Return the global maximum product found.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
