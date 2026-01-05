@@ -20,8 +20,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
-            "description": "Recursively sum paths from right and down moves.",
+            "name": "Brute Force",
+            "description": "Recursively sum the number of paths from target coordinates by moving either right or down.",
             "steps": [
                 {
                     "id": 1,
@@ -36,7 +36,7 @@
                     "instruction": "Define recursive helper with memoization.",
                     "placeholderCode": "    memo = {}\n    def dfs(r, c):\n        if r == m - 1 and c == n - 1: return 1\n        if r >= m or c >= n: return 0\n        if (r, c) in memo: return memo[(r, c)]",
                     "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(r,\\s*c\\):\\s*if\\s+r\\s*==\\s*m\\s*-\\s*1\\s+and\\s+c\\s*==\\s*n\\s*-\\s*1:\\s*return\\s+1\\s*if\\s+r\\s*>=\\s*m\\s+or\\s+c\\s*>=\\s*n:\\s*return\\s+0\\s*if\\s*\\(r,\\s*c\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(r,\\s*c\\)\\]$",
-                    "hint": "Recursive function `dfs(r, c)` returns paths from (r, c) to bottom-right. Base cases: reached target -> 1, out of bounds -> 0. Check memo.\\n\\nExample:\\nM=3, N=2.\\nDFS(0,0) = DFS(1,0) + DFS(0,1).\\nDFS(2,1) (Target) -> Returns 1.\\nDFS(3,0) (Out) -> Returns 0.",
+                    "hint": "Recursive function `dfs(r, c)` returns paths from (r, c) to bottom-right. Base cases: reached target -> 1, out of bounds -> 0. Check memo.",
                     "solutionCode": "    memo = {}\n    def dfs(r, c):\n        if r == m - 1 and c == n - 1: return 1\n        if r >= m or c >= n: return 0\n        if (r, c) in memo: return memo[(r, c)]"
                 },
                 {
@@ -59,8 +59,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "Fill bottom row and iterate upwards.",
+            "name": "Optimal",
+            "description": "Iterative dynamic programming using a single row to save memory while calculating path counts from bottom-up.",
             "steps": [
                 {
                     "id": 1,
@@ -75,23 +75,55 @@
                     "instruction": "Initialize row with 1s.",
                     "placeholderCode": "    row = [1] * n",
                     "validationRegex": "^\\s+row\\s*=\\s*\\[1\\]\\s*\\*\\s*n$",
-                    "hint": "Initialize a row of size n with 1s. This represents the bottom row where there is only 1 way to reach the target (move right).",
+                    "hint": "Initialize a row of size n with 1s. This represents the bottom row.",
                     "solutionCode": "    row = [1] * n"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate through rows (except last one).",
-                    "placeholderCode": "    for i in range(m - 1):\n        newRow = [1] * n\n        for j in range(n - 2, -1, -1):\n            newRow[j] = newRow[j + 1] + row[j]\n        row = newRow",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(m\\s*-\\s*1\\):\\s*newRow\\s*=\\s*\\[1\\]\\s*\\*\\s*n\\s*for\\s+j\\s+in\\s+range\\(n\\s*-\\s*2,\\s*-1,\\s*-1\\):\\s*newRow\\[j\\]\\s*=\\s*newRow\\[j\\s*\\+\\s*1\\]\\s*\\+\\s*row\\[j\\]\\s*row\\s*=\\s*newRow$",
-                    "hint": "Iterate upwards from the second to last row. Compute new row values based on the row below and the value to the right.\\n\\nExample:\\nM=3, N=2. Init Row=[1, 1] (Bottom row).\\nIter 1 (Row 1): NewRow=[1, 1].\\n  j=0: NewRow[0] = NewRow[1] (1) + Row[0] (1) = 2.\\n  Row becomes [2, 1].\\nIter 2 (Row 0): NewRow=[1, 1].\\n  j=0: NewRow[0] = NewRow[1] (1) + Row[0] (2) = 3.\\nResult: 3.",
-                    "solutionCode": "    for i in range(m - 1):\n        newRow = [1] * n\n        for j in range(n - 2, -1, -1):\n            newRow[j] = newRow[j + 1] + row[j]\n        row = newRow"
+                    "instruction": "Iterate through each row upwards starting from the second to last one.",
+                    "placeholderCode": "    for i in range(m - 1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(m\\s*-\\s*1\\):$",
+                    "hint": "We process rows one by one from bottom to top.",
+                    "solutionCode": "    for i in range(m - 1):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return first element.",
+                    "instruction": "Initialize a temporary row 'newRow' for the current row's path counts.",
+                    "placeholderCode": "        newRow = [1] * n",
+                    "validationRegex": "^\\s+newRow\\s*=\\s*\\[1\\]\\s*\\*\\s*n$",
+                    "hint": "Pre-fill with 1s since the last column's value is always 1.",
+                    "solutionCode": "        newRow = [1] * n"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate backwards through the columns of the current row.",
+                    "placeholderCode": "        for j in range(n - 2, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(n\\s*-\\s*2,\\s*-1,\\s*-1\\):$",
+                    "hint": "Start from the second to last column because we need the value to the right.",
+                    "solutionCode": "        for j in range(n - 2, -1, -1):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update the count at the current cell by adding paths from the right cell and the cell below.",
+                    "placeholderCode": "            newRow[j] = newRow[j + 1] + row[j]",
+                    "validationRegex": "^\\s+newRow\\[j\\]\\s*=\\s*newRow\\[j\\s*\\+\\s*1\\]\\s*\\+\\s*row\\[j\\]$",
+                    "hint": "The value to the right is in 'newRow[j+1]' and the value below is in 'row[j]'.",
+                    "solutionCode": "            newRow[j] = newRow[j + 1] + row[j]"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Set the current row to be the new row for the next iteration.",
+                    "placeholderCode": "        row = newRow",
+                    "validationRegex": "^\\s+row\\s*=\\s*newRow$",
+                    "hint": "Prepare for the next row above.",
+                    "solutionCode": "        row = newRow"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return the first element of the row, representing total paths from top-left.",
                     "placeholderCode": "    return row[0]",
                     "validationRegex": "^\\s+return\\s+row\\[0\\]$",
-                    "hint": "The result is stored in the first element of the top row.",
+                    "hint": "The result is stored in the first element of the final calculated row (index 0, 0).",
                     "solutionCode": "    return row[0]"
                 }
             ]
