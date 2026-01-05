@@ -141,14 +141,46 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "Initialize 'res' to 1 and update it with the maximum path length found by recursively calling DFS in all four directions.",
-                    "placeholderCode": "        res = 1\n        res = max(res, 1 + dfs(r + 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r - 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c + 1, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c - 1, matrix[r][c]))",
-                    "validationRegex": "^\\s+res\\s*=\\s*1\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*matrix\\[r\\]\\[c\\]\\)\\)\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*matrix\\[r\\]\\[c\\]\\)\\)\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*matrix\\[r\\]\\[c\\]\\)\\)\\s*res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*matrix\\[r\\]\\[c\\]\\)\\)$",
-                    "hint": "We check all possible moves: down, up, right, and left.",
-                    "solutionCode": "        res = 1\n        res = max(res, 1 + dfs(r + 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r - 1, c, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c + 1, matrix[r][c]))\n        res = max(res, 1 + dfs(r, c - 1, matrix[r][c]))"
+                    "instruction": "Initialize 'res' to 1, representing the minimum possible path length for the current cell.",
+                    "placeholderCode": "        res = 1",
+                    "validationRegex": "^\\s+res\\s*=\\s*1$",
+                    "hint": "Even if no neighbors are larger, the cell itself forms a path of length 1.",
+                    "solutionCode": "        res = 1"
                 },
                 {
                     "id": 9,
+                    "instruction": "Update 'res' with the potential path through the neighbor below (r + 1, c).",
+                    "placeholderCode": "        res = max(res, 1 + dfs(r + 1, c, matrix[r][c]))",
+                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r\\s*\\+\\s*1,\\s*c,\\s*matrix\\[r\\]\\[c\\]\\)\\)$",
+                    "hint": "We call DFS recursively for the neighbor and add 1 to its result.",
+                    "solutionCode": "        res = max(res, 1 + dfs(r + 1, c, matrix[r][c]))"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Update 'res' with the potential path through the neighbor above (r - 1, c).",
+                    "placeholderCode": "        res = max(res, 1 + dfs(r - 1, c, matrix[r][c]))",
+                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r\\s*-\\s*1,\\s*c,\\s*matrix\\[r\\]\\[c\\]\\)\\)$",
+                    "hint": "We take the maximum between our current 'res' and the new path found.",
+                    "solutionCode": "        res = max(res, 1 + dfs(r - 1, c, matrix[r][c]))"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Update 'res' with the potential path through the neighbor to the right (r, c + 1).",
+                    "placeholderCode": "        res = max(res, 1 + dfs(r, c + 1, matrix[r][c]))",
+                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r,\\s*c\\s*\\+\\s*1,\\s*matrix\\[r\\]\\[c\\]\\)\\)$",
+                    "hint": "Continue checking all four cardinal directions.",
+                    "solutionCode": "        res = max(res, 1 + dfs(r, c + 1, matrix[r][c]))"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Update 'res' with the potential path through the neighbor to the left (r, c - 1).",
+                    "placeholderCode": "        res = max(res, 1 + dfs(r, c - 1, matrix[r][c]))",
+                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*1\\s*\\+\\s*dfs\\(r,\\s*c\\s*-\\s*1,\\s*matrix\\[r\\]\\[c\\]\\)\\)$",
+                    "hint": "This is the final directional check in the DFS.",
+                    "solutionCode": "        res = max(res, 1 + dfs(r, c - 1, matrix[r][c]))"
+                },
+                {
+                    "id": 13,
                     "instruction": "Store the computed maximum path length for the current cell in the DP table and return it.",
                     "placeholderCode": "        dp[(r, c)] = res\n        return res",
                     "validationRegex": "^\\s+dp\\[\\(r,\\s*c\\)\\]\\s*=\\s*res\\s*return\\s+res$",
@@ -156,7 +188,7 @@
                     "solutionCode": "        dp[(r, c)] = res\n        return res"
                 },
                 {
-                    "id": 10,
+                    "id": 14,
                     "instruction": "Trigger the DFS for every single cell in the matrix and return the maximum value found in the DP table.",
                     "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            dfs(r, c, -1)\n    return max(dp.values())",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*dfs\\(r,\\s*c,\\s*-1\\)\\s*return\\s+max\\(dp\\.values\\(\\)\\)$",
