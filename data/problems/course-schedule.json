@@ -124,14 +124,94 @@
                 },
                 {
                     "id": 6,
-                    "instruction": "Define DFS helper.",
-                    "placeholderCode": "    def dfs(crs):\n        if crs in visitSet:\n            return False\n        if preMap[crs] == []:\n            return True\n        visitSet.add(crs)\n        for pre in preMap[crs]:\n            if not dfs(pre): return False\n        visitSet.remove(crs)\n        preMap[crs] = []\n        return True",
-                    "validationRegex": "^\\s+def\\s+dfs\\(crs\\):\\s*if\\s+crs\\s+in\\s+visitSet:\\s*return\\s+False\\s*if\\s+preMap\\[crs\\]\\s*==\\s*\\[\\]:\\s*return\\s+True\\s*visitSet\\.add\\(crs\\)\\s*for\\s+pre\\s+in\\s+preMap\\[crs\\]:\\s*if\\s+not\\s+dfs\\(pre\\):\\s*return\\s+False\\s*visitSet\\.remove\\(crs\\)\\s*preMap\\[crs\\]\\s*=\\s*\\[\\]\\s*return\\s+True$",
-                    "hint": "Recursive DFS. If node in current path, cycle detected (return False). If no prereqs, return True. Add to path, recurse, remove from path. Memoize by clearing prereqs.",
-                    "solutionCode": "    def dfs(crs):\n        if crs in visitSet:\n            return False\n        if preMap[crs] == []:\n            return True\n        visitSet.add(crs)\n        for pre in preMap[crs]:\n            if not dfs(pre): return False\n        visitSet.remove(crs)\n        preMap[crs] = []\n        return True"
+                    "instruction": "Define a DFS helper function to detect cycles.",
+                    "placeholderCode": "    def dfs(crs):",
+                    "validationRegex": "^\\s+def\\s+dfs\\(crs\\):$",
+                    "hint": "Start the recursive function definition.",
+                    "solutionCode": "    def dfs(crs):"
                 },
                 {
                     "id": 7,
+                    "instruction": "Check if the course is already in the current visit path.",
+                    "placeholderCode": "        if crs in visitSet:",
+                    "validationRegex": "^\\s+if\\s+crs\\s+in\\s+visitSet:$",
+                    "hint": "A cycle is detected if we revisit a node in the same recursion path.",
+                    "solutionCode": "        if crs in visitSet:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Return False if a cycle is detected.",
+                    "placeholderCode": "            return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "Stop the recursion because the schedule is impossible.",
+                    "solutionCode": "            return False"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if the course has no prerequisites or has been processed.",
+                    "placeholderCode": "        if preMap[crs] == []:",
+                    "validationRegex": "^\\s+if\\s+preMap\\[crs\\]\\s*==\\s*\\[\\]:$",
+                    "hint": "This acts as our base case and memoization check.",
+                    "solutionCode": "        if preMap[crs] == []:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Return True if the course is safely completable.",
+                    "placeholderCode": "            return True",
+                    "validationRegex": "^\\s+return\\s+True$",
+                    "hint": "No prerequisites mean this course can be taken.",
+                    "solutionCode": "            return True"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Add the course to the current visit set.",
+                    "placeholderCode": "        visitSet.add(crs)",
+                    "validationRegex": "^\\s+visitSet\\.add\\(crs\\)$",
+                    "hint": "Mark the node as part of the current path.",
+                    "solutionCode": "        visitSet.add(crs)"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Iterate through each prerequisite of the current course.",
+                    "placeholderCode": "        for pre in preMap[crs]:",
+                    "validationRegex": "^\\s+for\\s+pre\\s+in\\s+preMap\\[crs\\]:$",
+                    "hint": "Use a for loop to check all dependencies.",
+                    "solutionCode": "        for pre in preMap[crs]:"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Recursively check if the prerequisite can be completed.",
+                    "placeholderCode": "            if not dfs(pre):",
+                    "validationRegex": "^\\s+if\\s+not\\s+dfs\\(pre\\):$",
+                    "hint": "Call the DFS function for the dependency.",
+                    "solutionCode": "            if not dfs(pre):"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Return False if any dependency contains a cycle.",
+                    "placeholderCode": "                return False",
+                    "validationRegex": "^\\s+return\\s+False$",
+                    "hint": "Propagate the cycle detection upwards.",
+                    "solutionCode": "                return False"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Remove the course from the visit set after processing.",
+                    "placeholderCode": "        visitSet.remove(crs)",
+                    "validationRegex": "^\\s+visitSet\\.remove\\(crs\\)$",
+                    "hint": "Backtrack by clearing the course from the current path.",
+                    "solutionCode": "        visitSet.remove(crs)"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Clear prerequisites (memoization) and return True.",
+                    "placeholderCode": "        preMap[crs] = []\n        return True",
+                    "validationRegex": "^\\s+preMap\\[crs\\]\\s*=\\s*\\[\\]\\s*return\\s+True$",
+                    "hint": "Empty the prerequisite list so we don't process this course again.",
+                    "solutionCode": "        preMap[crs] = []\n        return True"
+                },
+                {
+                    "id": 17,
                     "instruction": "Run DFS on all courses.",
                     "placeholderCode": "    for crs in range(numCourses):\n        if not dfs(crs): return False",
                     "validationRegex": "^\\s+for\\s+crs\\s+in\\s+range\\(numCourses\\):\\s*if\\s+not\\s+dfs\\(crs\\):\\s*return\\s+False$",
@@ -139,7 +219,7 @@
                     "solutionCode": "    for crs in range(numCourses):\n        if not dfs(crs): return False"
                 },
                 {
-                    "id": 8,
+                    "id": 18,
                     "instruction": "Return True if no cycle detected.",
                     "placeholderCode": "    return True",
                     "validationRegex": "^\\s+return\\s+True$",
