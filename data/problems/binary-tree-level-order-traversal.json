@@ -113,14 +113,54 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Process current level nodes and track their values.",
-                    "placeholderCode": "        val = []\n        for i in range(len(q)):\n            node = q.pop(0)\n            val.append(node.val)\n            if node.left: q.append(node.left)\n            if node.right: q.append(node.right)",
-                    "validationRegex": "^\\s+val\\s*=\\s*\\[\\]\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*node\\s*=\\s*q\\.pop\\(0\\)\\s*val\\.append\\(node\\.val\\)\\s*if\\s+node\\.left:\\s*q\\.append\\(node\\.left\\)\\s*if\\s+node\\.right:\\s*q\\.append\\(node\\.right\\)$",
-                    "hint": "Collect values of current level nodes and add their children to the queue for the next level.",
-                    "solutionCode": "        val = []\n        for i in range(len(q)):\n            node = q.pop(0)\n            val.append(node.val)\n            if node.left: q.append(node.left)\n            if node.right: q.append(node.right)"
+                    "instruction": "Initialize a list 'val' to store the values of nodes at the current level.",
+                    "placeholderCode": "        val = []",
+                    "validationRegex": "^\\s+val\\s*=\\s*\\[\\]$",
+                    "hint": "This list will be cleared and refilled for every level of the tree.",
+                    "solutionCode": "        val = []"
                 },
                 {
                     "id": 6,
+                    "instruction": "Iterate through each node currently in the queue.",
+                    "placeholderCode": "        for i in range(len(q)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):$",
+                    "hint": "The length of the queue at this moment represents the number of nodes at the current level.",
+                    "solutionCode": "        for i in range(len(q)):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Remove the node from the front of the queue.",
+                    "placeholderCode": "            node = q.pop(0)",
+                    "validationRegex": "^\\s+node\\s*=\\s*q\\.pop\\(0\\)$",
+                    "hint": "Standard BFS pops from the beginning of the queue.",
+                    "solutionCode": "            node = q.pop(0)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Add the value of the current node to the level list.",
+                    "placeholderCode": "            val.append(node.val)",
+                    "validationRegex": "^\\s+val\\.append\\(node\\.val\\)$",
+                    "hint": "Accumulate values in the correct left-to-right order.",
+                    "solutionCode": "            val.append(node.val)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Add the left child to the queue if it exists.",
+                    "placeholderCode": "            if node.left: q.append(node.left)",
+                    "validationRegex": "^\\s+if\\s+node\\.left:\\s*q\\.append\\(node\\.left\\)$",
+                    "hint": "Children will be processed in the next level iteration.",
+                    "solutionCode": "            if node.left: q.append(node.left)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Add the right child to the queue if it exists.",
+                    "placeholderCode": "            if node.right: q.append(node.right)",
+                    "validationRegex": "^\\s+if\\s+node\\.right:\\s*q\\.append\\(node\\.right\\)$",
+                    "hint": "Always check for existence before adding children to the queue.",
+                    "solutionCode": "            if node.right: q.append(node.right)"
+                },
+                {
+                    "id": 11,
                     "instruction": "Append the list of current level values to the result.",
                     "placeholderCode": "        res.append(val)",
                     "validationRegex": "^\\s+res\\.append\\(val\\)$",
@@ -128,7 +168,7 @@
                     "solutionCode": "        res.append(val)"
                 },
                 {
-                    "id": 7,
+                    "id": 12,
                     "instruction": "Return the final result after traversing all levels.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
