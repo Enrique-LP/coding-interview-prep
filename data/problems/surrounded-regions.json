@@ -163,14 +163,46 @@
                 },
                 {
                     "id": 12,
-                    "instruction": "Run DFS on border 'O's.",
-                    "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if (board[r][c] == 'O' and\n                (r in [0, rows - 1] or c in [0, cols - 1])):\n                capture(r, c)",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s*\\(board\\[r\\]\\[c\\]\\s*==\\s*'O'\\s+and\\s*\\(r\\s+in\\s+\\[0,\\s*rows\\s*-\\s*1\\]\\s+or\\s+c\\s+in\\s+\\[0,\\s*cols\\s*-\\s*1\\]\\)\\):\\s*capture\\(r,\\s*c\\)$",
-                    "hint": "Iterate through the board and start capture from border 'O's.",
-                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            if (board[r][c] == 'O' and\n                (r in [0, rows - 1] or c in [0, cols - 1])):\n                capture(r, c)"
+                    "instruction": "Iterate through every row of the board.",
+                    "placeholderCode": "    for r in range(rows):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):$",
+                    "hint": "Use a for loop to iterate from 0 to rows - 1.",
+                    "solutionCode": "    for r in range(rows):"
                 },
                 {
                     "id": 13,
+                    "instruction": "Iterate through every column of the board.",
+                    "placeholderCode": "        for c in range(cols):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):$",
+                    "hint": "Use a nested for loop to iterate from 0 to cols - 1.",
+                    "solutionCode": "        for c in range(cols):"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Check if the current cell contains an 'O'.",
+                    "placeholderCode": "            if board[r][c] == 'O':",
+                    "validationRegex": "^\\s+if\\s+board\\[r\\]\\[c\\]\\s*==\\s*'O':$",
+                    "hint": "We only care about 'O' cells that are on the border.",
+                    "solutionCode": "            if board[r][c] == 'O':"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Check if the cell is located on any of the four borders.",
+                    "placeholderCode": "                if (r == 0 or r == rows - 1 or c == 0 or c == cols - 1):",
+                    "validationRegex": "^\\s+if\\s*\\(r\\s*==\\s*0\\s+or\\s+r\\s*==\\s*rows\\s*-\\s*1\\s+or\\s+c\\s*==\\s*0\\s+or\\s+c\\s*==\\s*cols\\s*-\\s*1\\):$",
+                    "hint": "A cell is on the border if its row is 0 or rows-1, or its column is 0 or cols-1.",
+                    "solutionCode": "                if (r == 0 or r == rows - 1 or c == 0 or c == cols - 1):"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Call the capture helper function for the border 'O'.",
+                    "placeholderCode": "                    capture(r, c)",
+                    "validationRegex": "^\\s+capture\\(r,\\s*c\\)$",
+                    "hint": "Start the DFS/recursion from this cell to mark all connected 'O's as safe.",
+                    "solutionCode": "                    capture(r, c)"
+                },
+                {
+                    "id": 17,
                     "instruction": "Flip 'O' to 'X' and 'T' back to 'O'.",
                     "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            if board[r][c] == 'O':\n                board[r][c] = 'X'\n            elif board[r][c] == 'T':\n                board[r][c] = 'O'",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+board\\[r\\]\\[c\\]\\s*==\\s*'O':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'X'\\s*elif\\s+board\\[r\\]\\[c\\]\\s*==\\s*'T':\\s*board\\[r\\]\\[c\\]\\s*=\\s*'O'$",
