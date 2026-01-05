@@ -155,14 +155,22 @@
                 },
                 {
                     "id": 11,
-                    "instruction": "Recursively call capture for the East and West neighbors.",
-                    "placeholderCode": "        capture(r, c + 1)\n        capture(r, c - 1)",
-                    "validationRegex": "^\\s+capture\\(r,\\s*c\\s*\\+\\s*1\\)\\s*capture\\(r,\\s*c\\s*-\\s*1\\)$",
-                    "hint": "Call capture for the cells to the right and left.",
-                    "solutionCode": "        capture(r, c + 1)\n        capture(r, c - 1)"
+                    "instruction": "Recursively call capture for the East neighbor.",
+                    "placeholderCode": "        capture(r, c + 1)",
+                    "validationRegex": "^\\s+capture\\(r,\\s*c\\s*\\+\\s*1\\)$",
+                    "hint": "Check the cell to the right.",
+                    "solutionCode": "        capture(r, c + 1)"
                 },
                 {
                     "id": 12,
+                    "instruction": "Recursively call capture for the West neighbor.",
+                    "placeholderCode": "        capture(r, c - 1)",
+                    "validationRegex": "^\\s+capture\\(r,\\s*c\\s*-\\s*1\\)$",
+                    "hint": "Check the cell to the left.",
+                    "solutionCode": "        capture(r, c - 1)"
+                },
+                {
+                    "id": 13,
                     "instruction": "Iterate through every row of the board.",
                     "placeholderCode": "    for r in range(rows):",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):$",
@@ -170,7 +178,7 @@
                     "solutionCode": "    for r in range(rows):"
                 },
                 {
-                    "id": 13,
+                    "id": 14,
                     "instruction": "Iterate through every column of the board.",
                     "placeholderCode": "        for c in range(cols):",
                     "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):$",
@@ -178,7 +186,7 @@
                     "solutionCode": "        for c in range(cols):"
                 },
                 {
-                    "id": 14,
+                    "id": 15,
                     "instruction": "Check if the current cell contains an 'O'.",
                     "placeholderCode": "            if board[r][c] == 'O':",
                     "validationRegex": "^\\s+if\\s+board\\[r\\]\\[c\\]\\s*==\\s*'O':$",
@@ -186,7 +194,7 @@
                     "solutionCode": "            if board[r][c] == 'O':"
                 },
                 {
-                    "id": 15,
+                    "id": 16,
                     "instruction": "Check if the cell is located on any of the four borders.",
                     "placeholderCode": "                if (r == 0 or r == rows - 1 or c == 0 or c == cols - 1):",
                     "validationRegex": "^\\s+if\\s*\\(r\\s*==\\s*0\\s+or\\s+r\\s*==\\s*rows\\s*-\\s*1\\s+or\\s+c\\s*==\\s*0\\s+or\\s+c\\s*==\\s*cols\\s*-\\s*1\\):$",
@@ -194,7 +202,7 @@
                     "solutionCode": "                if (r == 0 or r == rows - 1 or c == 0 or c == cols - 1):"
                 },
                 {
-                    "id": 16,
+                    "id": 17,
                     "instruction": "Call the capture helper function for the border 'O'.",
                     "placeholderCode": "                    capture(r, c)",
                     "validationRegex": "^\\s+capture\\(r,\\s*c\\)$",
@@ -202,7 +210,7 @@
                     "solutionCode": "                    capture(r, c)"
                 },
                 {
-                    "id": 17,
+                    "id": 18,
                     "instruction": "Iterate through every row once more.",
                     "placeholderCode": "    for r in range(rows):",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):$",
@@ -210,7 +218,7 @@
                     "solutionCode": "    for r in range(rows):"
                 },
                 {
-                    "id": 18,
+                    "id": 19,
                     "instruction": "Iterate through every column index.",
                     "placeholderCode": "        for c in range(cols):",
                     "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):$",
@@ -218,7 +226,7 @@
                     "solutionCode": "        for c in range(cols):"
                 },
                 {
-                    "id": 19,
+                    "id": 20,
                     "instruction": "Check if the current cell is still an 'O'.",
                     "placeholderCode": "            if board[r][c] == 'O':",
                     "validationRegex": "^\\s+if\\s+board\\[r\\]\\[c\\]\\s*==\\s*'O':$",
@@ -226,7 +234,7 @@
                     "solutionCode": "            if board[r][c] == 'O':"
                 },
                 {
-                    "id": 20,
+                    "id": 21,
                     "instruction": "Capture the surrounded region by flipping 'O' to 'X'.",
                     "placeholderCode": "                board[r][c] = 'X'",
                     "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*=\\s*'X'$",
@@ -234,7 +242,7 @@
                     "solutionCode": "                board[r][c] = 'X'"
                 },
                 {
-                    "id": 21,
+                    "id": 22,
                     "instruction": "Check if the current cell is marked as temporarily safe ('T').",
                     "placeholderCode": "            elif board[r][c] == 'T':",
                     "validationRegex": "^\\s+elif\\s+board\\[r\\]\\[c\\]\\s*==\\s*'T':$",
@@ -242,7 +250,7 @@
                     "solutionCode": "            elif board[r][c] == 'T':"
                 },
                 {
-                    "id": 22,
+                    "id": 23,
                     "instruction": "Revert the safe cell back from 'T' to 'O'.",
                     "placeholderCode": "                board[r][c] = 'O'",
                     "validationRegex": "^\\s+board\\[r\\]\\[c\\]\\s*=\\s*'O'$",
