@@ -106,14 +106,22 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Pop the two heaviest stones (the smallest negative values).",
-                    "placeholderCode": "        first = heapq.heappop(stones)\n        second = heapq.heappop(stones)",
-                    "validationRegex": "^\\s+first\\s*=\\s*heapq\\.heappop\\(stones\\)\\s*second\\s*=\\s*heapq\\.heappop\\(stones\\)$",
-                    "hint": "Use heappop twice to get the stones with the largest original weights.",
-                    "solutionCode": "        first = heapq.heappop(stones)\n        second = heapq.heappop(stones)"
+                    "instruction": "Pop the heaviest stone from the heap.",
+                    "placeholderCode": "        first = heapq.heappop(stones)",
+                    "validationRegex": "^\\s+first\\s*=\\s*heapq\\.heappop\\(stones\\)$",
+                    "hint": "The heaviest stone has the smallest negative value in the heap.",
+                    "solutionCode": "        first = heapq.heappop(stones)"
                 },
                 {
                     "id": 6,
+                    "instruction": "Pop the second heaviest stone from the heap.",
+                    "placeholderCode": "        second = heapq.heappop(stones)",
+                    "validationRegex": "^\\s+second\\s*=\\s*heapq\\.heappop\\(stones\\)$",
+                    "hint": "Use heappop again to get the next largest weight.",
+                    "solutionCode": "        second = heapq.heappop(stones)"
+                },
+                {
+                    "id": 7,
                     "instruction": "If the stones have different weights, push the difference back into the heap.",
                     "placeholderCode": "        if second > first:\n            heapq.heappush(stones, first - second)",
                     "validationRegex": "^\\s+if\\s+second\\s*>\\s+first:\\s*heapq\\.heappush\\(stones,\\s*first\\s*-\\s*second\\)$",
@@ -121,7 +129,7 @@
                     "solutionCode": "        if second > first:\n            heapq.heappush(stones, first - second)"
                 },
                 {
-                    "id": 7,
+                    "id": 8,
                     "instruction": "Ensure the heap is not empty by adding a zero if necessary.",
                     "placeholderCode": "    stones.append(0)",
                     "validationRegex": "^\\s+stones\\.append\\(0\\)$",
@@ -129,7 +137,7 @@
                     "solutionCode": "    stones.append(0)"
                 },
                 {
-                    "id": 8,
+                    "id": 9,
                     "instruction": "Return the absolute value of the remaining stone.",
                     "placeholderCode": "    return abs(stones[0])",
                     "validationRegex": "^\\s+return\\s+abs\\(stones\\[0\\]\\)$",
