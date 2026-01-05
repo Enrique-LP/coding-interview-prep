@@ -27,7 +27,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
+            "name": "Brute Force",
             "description": "Recursively check 1 or 2 digit decodings.",
             "steps": [
                 {
@@ -82,8 +82,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "Iterate backwards to find decodings.",
+            "name": "Optimal",
+            "description": "Iterate backwards to find decodings in O(n) time and O(n) space.",
             "steps": [
                 {
                     "id": 1,
@@ -95,34 +95,66 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize DP map.",
+                    "instruction": "Initialize the DP table with the base case: an empty string has one way to be decoded.",
                     "placeholderCode": "    dp = {len(s): 1}",
                     "validationRegex": "^\\s+dp\\s*=\\s*\\{len\\(s\\):\\s*1\\}$",
-                    "hint": "Initialize DP map with base case: empty string has 1 way to decode.",
+                    "hint": "We use a dictionary/table where index 'len(s)' is the base case.",
                     "solutionCode": "    dp = {len(s): 1}"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate backwards through string.",
-                    "placeholderCode": "    for i in range(len(s) - 1, -1, -1):\n        if s[i] == \"0\":\n            dp[i] = 0\n        else:\n            dp[i] = dp[i + 1]",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+s\\[i\\]\\s*==\\s*\"0\":\\s*dp\\[i\\]\\s*=\\s*0\\s*else:\\s*dp\\[i\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]$",
-                    "hint": "Iterate backwards. If char is '0', ways is 0. Else, it's at least equal to ways for next char (single digit).\\n\\nExample:\\nS=\"12\". DP=[0, 0, 1].\\ni=1 ('2'): DP[1] = DP[2] = 1.\\ni=0 ('1'): DP[0] = DP[1] = 1. Check \"12\": Valid. DP[0] += DP[2] -> 2.\\nResult: 2.",
-                    "solutionCode": "    for i in range(len(s) - 1, -1, -1):\n        if s[i] == \"0\":\n            dp[i] = 0\n        else:\n            dp[i] = dp[i + 1]"
+                    "instruction": "Iterate backwards through the string starting from the last character.",
+                    "placeholderCode": "    for i in range(len(s) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "Dynamic programming works here by solving subproblems from right to left.",
+                    "solutionCode": "    for i in range(len(s) - 1, -1, -1):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Check two digit decoding.",
-                    "placeholderCode": "        if (i + 1 < len(s) and (s[i] == \"1\" or\n            (s[i] == \"2\" and s[i + 1] in \"0123456\"))):\n            dp[i] += dp[i + 2]",
-                    "validationRegex": "^\\s+if\\s*\\(i\\s*\\+\\s*1\\s*<\\s+len\\(s\\)\\s+and\\s*\\(s\\[i\\]\\s*==\\s*\"1\"\\s+or\\s*\\(s\\[i\\]\\s*==\\s*\"2\"\\s+and\\s+s\\[i\\s*\\+\\s*1\\]\\s+in\\s*\"0123456\"\\)\\)\\):\\s*dp\\[i\\]\\s*\\+=\\s*dp\\[i\\s*\\+\\s*2\\]$",
-                    "hint": "If two digits form valid number, add ways from i+2.",
-                    "solutionCode": "        if (i + 1 < len(s) and (s[i] == \"1\" or\n            (s[i] == \"2\" and s[i + 1] in \"0123456\"))):\n            dp[i] += dp[i + 2]"
+                    "instruction": "Check if the current character is '0', which cannot start a valid decoding.",
+                    "placeholderCode": "        if s[i] == \"0\":",
+                    "validationRegex": "^\\s+if\\s+s\\[i\\]\\s*==\\s*\"0\":$",
+                    "hint": "If s[i] is '0', there are 0 ways to decode any substring starting at this index.",
+                    "solutionCode": "        if s[i] == \"0\":"
                 },
                 {
                     "id": 5,
-                    "instruction": "Return result.",
+                    "instruction": "Assign 0 to the current DP state if it starts with '0'.",
+                    "placeholderCode": "            dp[i] = 0",
+                    "validationRegex": "^\\s+dp\\[i\\]\\s*=\\s*0$",
+                    "hint": "A leading zero makes the current decoding path invalid.",
+                    "solutionCode": "            dp[i] = 0"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Handle the case where the current character is a valid single digit (1-9).",
+                    "placeholderCode": "        else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "If s[i] is not '0', it can at least be decoded as a single character.",
+                    "solutionCode": "        else:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Set the current DP state to the value of the next state.",
+                    "placeholderCode": "            dp[i] = dp[i + 1]",
+                    "validationRegex": "^\\s+dp\\[i\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]$",
+                    "hint": "The number of ways is at least the ways available for the remainder of the string.",
+                    "solutionCode": "            dp[i] = dp[i + 1]"
+                },
+                {
+                    "id": 8,
+                    "instruction": "If the next two digits form a valid number (10-26), add those possibilities to the current state.",
+                    "placeholderCode": "        if (i + 1 < len(s) and (s[i] == \"1\" or\n            (s[i] == \"2\" and s[i + 1] in \"0123456\"))):\n            dp[i] += dp[i + 2]",
+                    "validationRegex": "^\\s+if\\s*\\(i\\s*\\+\\s*1\\s*<\\s+len\\(s\\)\\s+and\\s*\\(s\\[i\\]\\s*==\\s*\"1\"\\s+or\\s*\\(s\\[i\\]\\s*==\\s*\"2\"\\s+and\\s+s\\[i\\s*\\+\\s*1\\]\\s+in\\s*\"0123456\"\\)\\)\\):\\s*dp\\[i\\]\\s*\\+=\\s*dp\\[i\\s*\\+\\s*2\\]$",
+                    "hint": "Check if s[i]s[i+1] is between 10 and 26.",
+                    "solutionCode": "        if (i + 1 < len(s) and (s[i] == \"1\" or\n            (s[i] == \"2\" and s[i + 1] in \"0123456\"))):\n            dp[i] += dp[i + 2]"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return the total number of ways to decode the message starting from index 0.",
                     "placeholderCode": "    return dp[0]",
                     "validationRegex": "^\\s+return\\s+dp\\[0\\]$",
-                    "hint": "Return total ways starting from index 0.",
+                    "hint": "After completing the loop, the first entry in our table holds the answer.",
                     "solutionCode": "    return dp[0]"
                 }
             ]
