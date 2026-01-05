@@ -83,226 +83,218 @@
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Import the collections module.",
-                    "placeholderCode": "import collections",
-                    "validationRegex": "^import\\s+collections$",
-                    "hint": "Required for deque.",
-                    "solutionCode": "import collections"
+                    "instruction": "Import collections and define the function num_islands.",
+                    "placeholderCode": "import collections\ndef num_islands(grid):",
+                    "validationRegex": "^import\\s+collections\\s+def\\s+num_islands\\(grid\\):$",
+                    "hint": "Use `import collections` and `def num_islands(grid):`",
+                    "solutionCode": "import collections\ndef num_islands(grid):"
                 },
                 {
                     "id": 2,
-                    "instruction": "Define the function num_islands.",
-                    "placeholderCode": "def num_islands(grid):",
-                    "validationRegex": "^def\\s+num_islands\\(grid\\):$",
-                    "hint": "Entry point.",
-                    "solutionCode": "def num_islands(grid):"
-                },
-                {
-                    "id": 3,
                     "instruction": "Check for empty grid.",
                     "placeholderCode": "    if not grid:\n        return 0",
                     "validationRegex": "^\\s+if\\s+not\\s+grid:\\s*return\\s+0$",
-                    "hint": "Edge case.",
+                    "hint": "Handle empty input.",
                     "solutionCode": "    if not grid:\n        return 0"
                 },
                 {
-                    "id": 4,
-                    "instruction": "Store grid dimensions.",
+                    "id": 3,
+                    "instruction": "Get grid dimensions.",
                     "placeholderCode": "    rows, cols = len(grid), len(grid[0])",
                     "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(grid\\),\\s*len\\(grid\\[0\\]\\)$",
-                    "hint": "Get rows and cols.",
+                    "hint": "Store len(grid) and len(grid[0]).",
                     "solutionCode": "    rows, cols = len(grid), len(grid[0])"
                 },
                 {
-                    "id": 5,
+                    "id": 4,
                     "instruction": "Initialize visited set.",
                     "placeholderCode": "    visit = set()",
                     "validationRegex": "^\\s+visit\\s*=\\s*set\\(\\)$",
-                    "hint": "Keep track of seen cells.",
+                    "hint": "Track visited coordinates.",
                     "solutionCode": "    visit = set()"
                 },
                 {
-                    "id": 6,
-                    "instruction": "Initialize island counter.",
+                    "id": 5,
+                    "instruction": "Initialize islands counter.",
                     "placeholderCode": "    islands = 0",
                     "validationRegex": "^\\s+islands\\s*=\\s*0$",
-                    "hint": "Start at 0.",
+                    "hint": "Set starting count to 0.",
                     "solutionCode": "    islands = 0"
                 },
                 {
-                    "id": 7,
-                    "instruction": "Define BFS helper function signature.",
+                    "id": 6,
+                    "instruction": "Define the BFS helper function signature.",
                     "placeholderCode": "    def bfs(r, c):",
                     "validationRegex": "^\\s+def\\s+bfs\\(r,\\s*c\\):$",
-                    "hint": "Helper for island exploration.",
+                    "hint": "Firma de la función BFS.",
                     "solutionCode": "    def bfs(r, c):"
                 },
                 {
-                    "id": 8,
+                    "id": 7,
                     "instruction": "Create the BFS queue.",
                     "placeholderCode": "        q = collections.deque()",
                     "validationRegex": "^\\s+q\\s*=\\s*collections\\.deque\\(\\)$",
-                    "hint": "Use deque for efficiency.",
+                    "hint": "Use collections.deque().",
                     "solutionCode": "        q = collections.deque()"
                 },
                 {
-                    "id": 9,
-                    "instruction": "Mark the initial cell as visited.",
+                    "id": 8,
+                    "instruction": "Mark starting cell as visited.",
                     "placeholderCode": "        visit.add((r, c))",
                     "validationRegex": "^\\s+visit\\.add\\(\\(r,\\s*c\\)\\)$",
-                    "hint": "Prevents revisiting the start.",
+                    "hint": "Add (r, c) to visit.",
                     "solutionCode": "        visit.add((r, c))"
                 },
                 {
-                    "id": 10,
-                    "instruction": "Add the initial cell to the queue.",
+                    "id": 9,
+                    "instruction": "Add starting cell to queue.",
                     "placeholderCode": "        q.append((r, c))",
                     "validationRegex": "^\\s+q\\.append\\(\\(r,\\s*c\\)\\)$",
-                    "hint": "Start processing from here.",
+                    "hint": "Append (r, c) to q.",
                     "solutionCode": "        q.append((r, c))"
                 },
                 {
-                    "id": 11,
-                    "instruction": "Begin while loop to empty the queue.",
+                    "id": 10,
+                    "instruction": "Loop while queue is not empty.",
                     "placeholderCode": "        while q:",
                     "validationRegex": "^\\s+while\\s+q:$",
-                    "hint": "Process layer by layer.",
+                    "hint": "Manten la búsqueda mientras haya celdas.",
                     "solutionCode": "        while q:"
                 },
                 {
-                    "id": 12,
-                    "instruction": "Pop cell from the queue.",
+                    "id": 11,
+                    "instruction": "Pop cell from queue.",
                     "placeholderCode": "            row, col = q.popleft()",
                     "validationRegex": "^\\s+row,\\s*col\\s*=\\s*q\\.popleft\\(\\)$",
-                    "hint": "Standard BFS pop.",
+                    "hint": "Get (row, col) from q.popleft().",
                     "solutionCode": "            row, col = q.popleft()"
                 },
                 {
-                    "id": 13,
-                    "instruction": "Define possible directions.",
+                    "id": 12,
+                    "instruction": "Define directions.",
                     "placeholderCode": "            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]",
                     "validationRegex": "^\\s+directions\\s*=\\s*\\[\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\],\\s*\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\]\\]$",
-                    "hint": "4-way connectivity.",
+                    "hint": "Up, down, left, right.",
                     "solutionCode": "            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]"
                 },
                 {
-                    "id": 14,
-                    "instruction": "Loop through directions.",
+                    "id": 13,
+                    "instruction": "Iterate through directions.",
                     "placeholderCode": "            for dr, dc in directions:",
                     "validationRegex": "^\\s+for\\s+dr,\\s+dc\\s+in\\s+directions:$",
-                    "hint": "Check neighbors.",
+                    "hint": "Recorre cada movimiento.",
                     "solutionCode": "            for dr, dc in directions:"
                 },
                 {
-                    "id": 15,
-                    "instruction": "Update row coordinate.",
+                    "id": 14,
+                    "instruction": "Calculate neighbor row.",
                     "placeholderCode": "                r_n = row + dr",
                     "validationRegex": "^\\s+r_n\\s*=\\s*row\\s*\\+\\s*dr$",
-                    "hint": "New row index.",
+                    "hint": "r_n = row + dr",
                     "solutionCode": "                r_n = row + dr"
                 },
                 {
-                    "id": 16,
-                    "instruction": "Update column coordinate.",
+                    "id": 15,
+                    "instruction": "Calculate neighbor column.",
                     "placeholderCode": "                c_n = col + dc",
                     "validationRegex": "^\\s+c_n\\s*=\\s*col\\s*\\+\\s*dc$",
-                    "hint": "New col index.",
+                    "hint": "c_n = col + dc",
                     "solutionCode": "                c_n = col + dc"
                 },
                 {
-                    "id": 17,
+                    "id": 16,
                     "instruction": "Check row bounds.",
                     "placeholderCode": "                if r_n not in range(rows): continue",
                     "validationRegex": "^\\s+if\\s+r_n\\s+not\\s+in\\s+range\\(rows\\):\\s*continue$",
-                    "hint": "Avoid index errors.",
+                    "hint": "Skip if out of bounds.",
                     "solutionCode": "                if r_n not in range(rows): continue"
                 },
                 {
-                    "id": 18,
+                    "id": 17,
                     "instruction": "Check column bounds.",
                     "placeholderCode": "                if c_n not in range(cols): continue",
                     "validationRegex": "^\\s+if\\s+c_n\\s+not\\s+in\\s+range\\(cols\\):\\s*continue$",
-                    "hint": "Avoid index errors.",
+                    "hint": "Skip if out of bounds.",
                     "solutionCode": "                if c_n not in range(cols): continue"
                 },
                 {
-                    "id": 19,
-                    "instruction": "Verify if the cell is land.",
+                    "id": 18,
+                    "instruction": "Check if cell is land.",
                     "placeholderCode": "                if grid[r_n][c_n] != '1': continue",
                     "validationRegex": "^\\s+if\\s+grid\\[r_n\\]\\[c_n\\]\\s*!=\\s*'1':\\s*continue$",
-                    "hint": "Only follow land nodes.",
+                    "hint": "Skip if water.",
                     "solutionCode": "                if grid[r_n][c_n] != '1': continue"
                 },
                 {
-                    "id": 20,
-                    "instruction": "Check if cell has been visited.",
+                    "id": 19,
+                    "instruction": "Check if cell visited.",
                     "placeholderCode": "                if (r_n, c_n) in visit: continue",
                     "validationRegex": "^\\s+if\\s+\\(r_n,\\s*c_n\\)\\s+in\\s+visit:\\s*continue$",
-                    "hint": "Don't loop back.",
+                    "hint": "Skip if seen.",
                     "solutionCode": "                if (r_n, c_n) in visit: continue"
                 },
                 {
-                    "id": 21,
-                    "instruction": "Add neighbor to queue.",
+                    "id": 20,
+                    "instruction": "Add valid neighbor to queue.",
                     "placeholderCode": "                q.append((r_n, c_n))",
                     "validationRegex": "^\\s+q\\.append\\(\\(r_n,\\s*c_n\\)\\)$",
                     "hint": "Expand queue.",
                     "solutionCode": "                q.append((r_n, c_n))"
                 },
                 {
-                    "id": 22,
-                    "instruction": "Mark neighbor as visited.",
+                    "id": 21,
+                    "instruction": "Mark valid neighbor as visited.",
                     "placeholderCode": "                visit.add((r_n, c_n))",
                     "validationRegex": "^\\s+visit\\.add\\(\\(r_n,\\s*c_n\\)\\)$",
                     "hint": "Mark as seen.",
                     "solutionCode": "                visit.add((r_n, c_n))"
                 },
                 {
-                    "id": 23,
-                    "instruction": "Loop through all rows.",
+                    "id": 22,
+                    "instruction": "Iterate through rows.",
                     "placeholderCode": "    for r in range(rows):",
                     "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):$",
-                    "hint": "Grid scan (rows).",
+                    "hint": "Escanea filas.",
                     "solutionCode": "    for r in range(rows):"
                 },
                 {
-                    "id": 24,
-                    "instruction": "Loop through all columns.",
+                    "id": 23,
+                    "instruction": "Iterate through columns.",
                     "placeholderCode": "        for c in range(cols):",
                     "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):$",
-                    "hint": "Grid scan (cols).",
+                    "hint": "Escanea columnas.",
                     "solutionCode": "        for c in range(cols):"
                 },
                 {
-                    "id": 25,
-                    "instruction": "Start BFS if land and not visited.",
+                    "id": 24,
+                    "instruction": "Condition for new island.",
                     "placeholderCode": "            if grid[r][c] == '1' and (r, c) not in visit:",
                     "validationRegex": "^\\s+if\\s+grid\\[r\\]\\[c\\]\\s*==\\s*'1'\\s+and\\s+\\(r,\\s*c\\)\\s+not\\s+in\\s+visit:$",
-                    "hint": "Found an island.",
+                    "hint": "Check land and visit.",
                     "solutionCode": "            if grid[r][c] == '1' and (r, c) not in visit:"
                 },
                 {
-                    "id": 26,
-                    "instruction": "Execute BFS exploration.",
+                    "id": 25,
+                    "instruction": "Start BFS.",
                     "placeholderCode": "                bfs(r, c)",
                     "validationRegex": "^\\s+bfs\\(r,\\s*c\\)$",
-                    "hint": "Explore connected land.",
+                    "hint": "Explora la isla.",
                     "solutionCode": "                bfs(r, c)"
                 },
                 {
-                    "id": 27,
-                    "instruction": "Increment island count.",
+                    "id": 26,
+                    "instruction": "Increment counter.",
                     "placeholderCode": "                islands += 1",
                     "validationRegex": "^\\s+islands\\s*\\+=\\s*1$",
-                    "hint": "Count the island.",
+                    "hint": "Suma 1 isla.",
                     "solutionCode": "                islands += 1"
                 },
                 {
-                    "id": 28,
-                    "instruction": "Return final count.",
+                    "id": 27,
+                    "instruction": "Return count.",
                     "placeholderCode": "    return islands",
                     "validationRegex": "^\\s+return\\s+islands$",
-                    "hint": "Result.",
+                    "hint": "Final count.",
                     "solutionCode": "    return islands"
                 }
             ]
