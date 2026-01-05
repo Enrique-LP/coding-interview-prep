@@ -24,8 +24,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
-            "description": "Recursively try + and -.",
+            "name": "Brute Force",
+            "description": "Recursively explore all possible combinations of adding or subtracting each number from the target using memoization.",
             "steps": [
                 {
                     "id": 1,
@@ -40,7 +40,7 @@
                     "instruction": "Define recursive helper with memoization.",
                     "placeholderCode": "    memo = {}\n    def dfs(i, total):\n        if i == len(nums):\n            return 1 if total == target else 0\n        if (i, total) in memo: return memo[(i, total)]",
                     "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*total\\):\\s*if\\s+i\\s*==\\s*len\\(nums\\):\\s*return\\s+1\\s+if\\s+total\\s*==\\s*target\\s+else\\s+0\\s*if\\s*\\(i,\\s*total\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*total\\)\\]$",
-                    "hint": "Recursive function `dfs(i, total)` returns ways to reach target from index `i` with current sum `total`. Base case: end of nums -> check if total == target. Check memo.\\n\\nExample:\\nNums=[1], Target=1.\\nDFS(0, 0): DFS(1, 1) + DFS(1, -1).\\n  DFS(1, 1): Total=1=Target. Return 1.\\n  DFS(1, -1): Total=-1!=Target. Return 0.",
+                    "hint": "Recursive function `dfs(i, total)` returns ways to reach target from index `i` with current sum `total`. Base case: end of nums -> check if total == target. Check memo.",
                     "solutionCode": "    memo = {}\n    def dfs(i, total):\n        if i == len(nums):\n            return 1 if total == target else 0\n        if (i, total) in memo: return memo[(i, total)]"
                 },
                 {
@@ -63,8 +63,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "Track counts of each sum.",
+            "name": "Optimal",
+            "description": "Iterative dynamic programming approach using a dictionary to map possible sums to the number of ways to achieve them.",
             "steps": [
                 {
                     "id": 1,
@@ -76,26 +76,66 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize DP dictionary.",
+                    "instruction": "Initialize the DP dictionary with sum 0 having 1 way.",
                     "placeholderCode": "    dp = {0: 1}",
                     "validationRegex": "^\\s+dp\\s*=\\s*\\{0:\\s*1\\}$",
-                    "hint": "Use a dictionary `dp` to map sum -> count of ways. Start with sum 0 having 1 way.",
+                    "hint": "The dictionary will track 'sum: number_of_ways'. Starting at 0 ways for 0 sum.",
                     "solutionCode": "    dp = {0: 1}"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate through nums.",
-                    "placeholderCode": "    for n in nums:\n        next_dp = {}\n        for total, count in dp.items():\n            next_dp[total + n] = next_dp.get(total + n, 0) + count\n            next_dp[total - n] = next_dp.get(total - n, 0) + count\n        dp = next_dp",
-                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:\\s*next_dp\\s*=\\s*\\{\\}\\s*for\\s+total,\\s*count\\s+in\\s+dp\\.items\\(\\):\\s*next_dp\\[total\\s*\\+\\s*n\\]\\s*=\\s*next_dp\\.get\\(total\\s*\\+\\s*n,\\s*0\\)\\s*\\+\\s*count\\s*next_dp\\[total\\s*-\\s*n\\]\\s*=\\s*next_dp\\.get\\(total\\s*-\\s*n,\\s*0\\)\\s*\\+\\s*count\\s*dp\\s*=\\s*next_dp$",
-                    "hint": "For each number, update the possible sums. New sums are `total + n` and `total - n`.\\n\\nExample:\\nNums=[1, 1], Target=0.\\nInit: DP={0: 1}.\\nN=1: Next={1: 1, -1: 1}.\\nN=1: Next={2: 1, 0: 1, 0: 1, -2: 1} -> {2: 1, 0: 2, -2: 1}.\\nResult: DP[0] = 2.",
-                    "solutionCode": "    for n in nums:\n        next_dp = {}\n        for total, count in dp.items():\n            next_dp[total + n] = next_dp.get(total + n, 0) + count\n            next_dp[total - n] = next_dp.get(total - n, 0) + count\n        dp = next_dp"
+                    "instruction": "Initiate a loop to iterate through each number 'n' in 'nums'.",
+                    "placeholderCode": "    for n in nums:",
+                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:$",
+                    "hint": "Each number can either be added or subtracted to influence the total sum.",
+                    "solutionCode": "    for n in nums:"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result for target.",
+                    "instruction": "Initialize a dictionary 'next_dp' to store sum counts for the next iteration.",
+                    "placeholderCode": "        next_dp = {}",
+                    "validationRegex": "^\\s+next_dp\\s*=\\s*\\{\\}$",
+                    "hint": "This will hold the updated counts after applying the current number 'n'.",
+                    "solutionCode": "        next_dp = {}"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate through the current sums and their counts in the 'dp' dictionary.",
+                    "placeholderCode": "        for total, count in dp.items():",
+                    "validationRegex": "^\\s+for\\s+total,\\s*count\\s+in\\s+dp\\.items\\(\\):$",
+                    "hint": "We apply the current number 'n' to every sum reached so far.",
+                    "solutionCode": "        for total, count in dp.items():"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update 'next_dp' by adding the current count to the result of 'total + n'.",
+                    "placeholderCode": "            next_dp[total + n] = next_dp.get(total + n, 0) + count",
+                    "validationRegex": "^\\s+next_dp\\[total\\s*\\+\\s*n\\]\\s*=\\s*next_dp\\.get\\(total\\s*\\+\\s*n,\\s*0\\)\\s*\\+\\s*count$",
+                    "hint": "Adding 'n' to 'total' creates a new set of possible expressions.",
+                    "solutionCode": "            next_dp[total + n] = next_dp.get(total + n, 0) + count"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Update 'next_dp' by adding the current count to the result of 'total - n'.",
+                    "placeholderCode": "            next_dp[total - n] = next_dp.get(total - n, 0) + count",
+                    "validationRegex": "^\\s+next_dp\\[total\\s*-\\s*n\\]\\s*=\\s*next_dp\\.get\\(total\\s*-\\s*n,\\s*0\\)\\s*\\+\\s*count$",
+                    "hint": "Subtracting 'n' from 'total' is the other possible expression for this number.",
+                    "solutionCode": "            next_dp[total - n] = next_dp.get(total - n, 0) + count"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Replace the 'dp' dictionary with 'next_dp' to prepare for the next number in 'nums'.",
+                    "placeholderCode": "        dp = next_dp",
+                    "validationRegex": "^\\s+dp\\s*=\\s*next_dp$",
+                    "hint": "We carry forward only the results after the latest number has been processed.",
+                    "solutionCode": "        dp = next_dp"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return the number of ways to achieve the target sum, or 0 if it's not possible.",
                     "placeholderCode": "    return dp.get(target, 0)",
                     "validationRegex": "^\\s+return\\s+dp\\.get\\(target,\\s*0\\)$",
-                    "hint": "Return the count of ways to reach `target`.",
+                    "hint": "The count of ways to reach 'target' is stored in the DP dictionary.",
                     "solutionCode": "    return dp.get(target, 0)"
                 }
             ]
