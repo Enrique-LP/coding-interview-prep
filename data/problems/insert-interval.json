@@ -26,7 +26,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Linear Scan",
+            "name": "Brute Force",
             "description": "Iterate and merge intervals.",
             "steps": [
                 {
@@ -65,7 +65,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Linear Scan",
+            "name": "Optimal",
             "description": "Same as brute force, O(n).",
             "steps": [
                 {

@@ -24,7 +24,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Sorting",
+            "name": "Brute Force",
             "description": "Sort and merge overlapping intervals.",
             "steps": [
                 {
@@ -63,7 +63,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Sorting",
+            "name": "Optimal",
             "description": "Same as brute force, O(n log n).",
             "steps": [
                 {
