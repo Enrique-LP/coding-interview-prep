@@ -62,7 +62,7 @@
                     "id": 4,
                     "instruction": "Handle the case where the next character in the pattern is a '*' wildcard, allowing for zero or more occurrences.",
                     "placeholderCode": "        if j + 1 < len(p) and p[j + 1] == '*':\n            ans = dfs(i, j + 2) or (first_match and dfs(i + 1, j))\n        else:\n            ans = first_match and dfs(i + 1, j + 1)",
-                    "validationRegex": "^\\s+if\\s+j\\s*\\+\\s*1\\s*<\\s+len\\(p\\)\\s+and\\s+p\\[j\\s*\\+\\s*1\\]\\s*==\\s*'*':\\s*ans\\s*=\\s*dfs\\(i,\\s*j\\s*\\+\\s*2\\)\\s+or\\s*\\(first_match\\s+and\\s+dfs\\(i\\s*\\+\\s*1,\\s*j\\)\\)\\s*else:\\s*ans\\s*=\\s*first_match\\s+and\\s+dfs\\(i\\s*\\+\\s*1,\\s*j\\s*\\+\\s*1\\)$",
+                    "validationRegex": "^\\s+if\\s+j\\s*\\+\\s*1\\s*<\\s+len\\(p\\)\\s+and\\s+p\\[j\\s*\\+\\s*1\\]\\s*==\\s*'\\*':\\s*ans\\s*=\\s*dfs\\(i,\\s*j\\s*\\+\\s*2\\)\\s+or\\s*\\(first_match\\s+and\\s+dfs\\(i\\s*\\+\\s*1,\\s*j\\)\\)\\s*else:\\s*ans\\s*=\\s*first_match\\s+and\\s+dfs\\(i\\s*\\+\\s*1,\\s*j\\s*\\+\\s*1\\)$",
                     "hint": "If next char is '*', either skip '*' (j+2) or use '*' (match s[i] and recurse i+1). Else, match char and recurse i+1, j+1.",
                     "solutionCode": "        if j + 1 < len(p) and p[j + 1] == '*':\n            ans = dfs(i, j + 2) or (first_match and dfs(i + 1, j))\n        else:\n            ans = first_match and dfs(i + 1, j + 1)"
                 },
@@ -141,7 +141,7 @@
                     "id": 7,
                     "instruction": "If the next character in the pattern is a '*' wildcard, handle the zero-or-more match case.",
                     "placeholderCode": "            if j + 1 < len(p) and p[j + 1] == '*':",
-                    "validationRegex": "^\\s+if\\s+j\\s*\\+\\s*1\\s*<\\s+len\\(p\\)\\s+and\\s+p\\[j\\s*\\+\\s*1\\]\\s*==\\s*'*':$",
+                    "validationRegex": "^\\s+if\\s+j\\s*\\+\\s*1\\s*<\\s+len\\(p\\)\\s+and\\s+p\\[j\\s*\\+\\s*1\\]\\s*==\\s*'\\*':$",
                     "hint": "The '*' affects how we evaluate the current and next characters.",
                     "solutionCode": "            if j + 1 < len(p) and p[j + 1] == '*':"
                 },
