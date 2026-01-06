@@ -115,14 +115,62 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Iterate backwards through both strings to populate the DP table based on character matches and wildcards.",
-                    "placeholderCode": "    for i in range(len(s), -1, -1):\n        for j in range(len(p) - 1, -1, -1):\n            first_match = i < len(s) and (p[j] == s[i] or p[j] == '.')\n            if j + 1 < len(p) and p[j + 1] == '*':\n                dp[i][j] = dp[i][j + 2] or (first_match and dp[i + 1][j])\n            else:\n                dp[i][j] = first_match and dp[i + 1][j + 1]",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\),\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(p\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*first_match\\s*=\\s*i\\s*<\\s+len\\(s\\)\\s+and\\s*\\(p\\[j\\]\\s*==\\s+s\\[i\\]\\s+or\\s+p\\[j\\]\\s*==\\s*'.'\\)\\s*if\\s+j\\s*\\+\\s*1\\s*<\\s+len\\(p\\)\\s+and\\s+p\\[j\\s*\\+\\s*1\\]\\s*==\\s*'*':\\s*dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\]\\[j\\s*\\+\\s*2\\]\\s+or\\s*\\(first_match\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\]\\)\\s*else:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*first_match\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]$",
-                    "hint": "Implement the core recursive logic bottom-up.",
-                    "solutionCode": "    for i in range(len(s), -1, -1):\n        for j in range(len(p) - 1, -1, -1):\n            first_match = i < len(s) and (p[j] == s[i] or p[j] == '.')\n            if j + 1 < len(p) and p[j + 1] == '*':\n                dp[i][j] = dp[i][j + 2] or (first_match and dp[i + 1][j])\n            else:\n                dp[i][j] = first_match and dp[i + 1][j + 1]"
+                    "instruction": "Initiate the outer loop to iterate backwards through string 's', including the index for an empty string.",
+                    "placeholderCode": "    for i in range(len(s), -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\),\\s*-1,\\s*-1\\):$",
+                    "hint": "We start from the end of the string to build the matching results bottom-up.",
+                    "solutionCode": "    for i in range(len(s), -1, -1):"
                 },
                 {
                     "id": 5,
+                    "instruction": "Initiate the inner loop to iterate backwards through pattern 'p'.",
+                    "placeholderCode": "        for j in range(len(p) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(len\\(p\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "The pattern index starts from the last character.",
+                    "solutionCode": "        for j in range(len(p) - 1, -1, -1):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check if the current character in 's' matches the current character in 'p' or if 'p' has the '.' wildcard.",
+                    "placeholderCode": "            first_match = i < len(s) and (p[j] == s[i] or p[j] == '.')",
+                    "validationRegex": "^\\s+first_match\\s*=\\s*i\\s*<\\s+len\\(s\\)\\s+and\\s*\\(p\\[j\\]\\s*==\\s+s\\[i\\]\\s+or\\s+p\\[j\\]\\s*==\\s*'.'\\)$",
+                    "hint": "Match if chars are equal or pattern char is '.'. Ensure i is within bounds.",
+                    "solutionCode": "            first_match = i < len(s) and (p[j] == s[i] or p[j] == '.')"
+                },
+                {
+                    "id": 7,
+                    "instruction": "If the next character in the pattern is a '*' wildcard, handle the zero-or-more match case.",
+                    "placeholderCode": "            if j + 1 < len(p) and p[j + 1] == '*':",
+                    "validationRegex": "^\\s+if\\s+j\\s*\\+\\s*1\\s*<\\s+len\\(p\\)\\s+and\\s+p\\[j\\s*\\+\\s*1\\]\\s*==\\s*'*':$",
+                    "hint": "The '*' affects how we evaluate the current and next characters.",
+                    "solutionCode": "            if j + 1 < len(p) and p[j + 1] == '*':"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Assign the result by either skipping the '*' (j + 2) or using it if there was a 'first_match' (i + 1).",
+                    "placeholderCode": "                dp[i][j] = dp[i][j + 2] or (first_match and dp[i + 1][j])",
+                    "validationRegex": "^\\s+dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\]\\[j\\s*\\+\\s*2\\]\\s+or\\s*\\(first_match\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\]\\)$",
+                    "hint": "Skip the '*' (match 0) or consume one char in 's' if first_match is true.",
+                    "solutionCode": "                dp[i][j] = dp[i][j + 2] or (first_match and dp[i + 1][j])"
+                },
+                {
+                    "id": 9,
+                    "instruction": "If the next character in the pattern is not a '*', handle the simple match case.",
+                    "placeholderCode": "            else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "Standard character matching.",
+                    "solutionCode": "            else:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Assign the result based on whether the current characters match and the subsequent substrings match.",
+                    "placeholderCode": "                dp[i][j] = first_match and dp[i + 1][j + 1]",
+                    "validationRegex": "^\\s+dp\\[i\\]\\[j\\]\\s*=\\s*first_match\\s+and\\s+dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]$",
+                    "hint": "Requires first_match to be true and the rest of the strings to match.",
+                    "solutionCode": "                dp[i][j] = first_match and dp[i + 1][j + 1]"
+                },
+                {
+                    "id": 11,
                     "instruction": "Return the final result from the top-left of the DP table.",
                     "placeholderCode": "    return dp[0][0]",
                     "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
