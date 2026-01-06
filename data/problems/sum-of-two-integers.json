@@ -56,15 +56,47 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Loop while carry exists.",
-                    "placeholderCode": "    mask = 0xffffffff\n    while (b & mask) > 0:\n        carry = (a & b) << 1\n        a = (a ^ b)\n        b = carry",
-                    "validationRegex": "^\\s+mask\\s*=\\s*0xffffffff\\s*while\\s*\\(b\\s*&\\s*mask\\)\\s*>\\s*0:\\s*carry\\s*=\\s*\\(a\\s*&\\s*b\\)\\s*<<\\s*1\\s*a\\s*=\\s*\\(a\\s*\\^\\s*b\\)\\s*b\\s*=\\s*carry$",
-                    "hint": "Use a mask to handle overflow for 32-bit integers. Loop while `b` (carry) is non-zero (masked). Calculate carry with `(a & b) << 1`, sum with `a ^ b`, and update `b` to carry.",
-                    "solutionCode": "    mask = 0xffffffff\n    while (b & mask) > 0:\n        carry = (a & b) << 1\n        a = (a ^ b)\n        b = carry"
+                    "instruction": "Initialize mask for 32-bit integer overflow.",
+                    "placeholderCode": "    mask = 0xffffffff",
+                    "validationRegex": "^\\s+mask\\s*=\\s*0xffffffff$",
+                    "hint": "Set `mask` to `0xffffffff` to constrain numbers to 32 bits.",
+                    "solutionCode": "    mask = 0xffffffff"
                 },
                 {
                     "id": 3,
-                    "instruction": "Handle negative numbers.",
+                    "instruction": "Loop while carry is non-zero.",
+                    "placeholderCode": "    while (b & mask) > 0:",
+                    "validationRegex": "^\\s+while\\s*\\(b\\s*&\\s*mask\\)\\s*>\\s*0:$",
+                    "hint": "Continue loop as long as `b` (masked) is greater than 0.",
+                    "solutionCode": "    while (b & mask) > 0:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Calculate carry.",
+                    "placeholderCode": "        carry = (a & b) << 1",
+                    "validationRegex": "^\\s+carry\\s*=\\s*\\(a\\s*&\\s*b\\)\\s*<<\\s*1$",
+                    "hint": "Carry is generated where both bits are 1 (`a & b`), shifted left.",
+                    "solutionCode": "        carry = (a & b) << 1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Calculate sum without carry.",
+                    "placeholderCode": "        a = (a ^ b)",
+                    "validationRegex": "^\\s+a\\s*=\\s*\\(a\\s*\\^\\s*b\\)$",
+                    "hint": "Sum without carry is XOR of `a` and `b`.",
+                    "solutionCode": "        a = (a ^ b)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update carry for next iteration.",
+                    "placeholderCode": "        b = carry",
+                    "validationRegex": "^\\s+b\\s*=\\s*carry$",
+                    "hint": "Assign `carry` to `b`.",
+                    "solutionCode": "        b = carry"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Handle negative numbers and return.",
                     "placeholderCode": "    return (a & mask) if b > 0 else a",
                     "validationRegex": "^\\s+return\\s*\\(a\\s*&\\s*mask\\)\\s+if\\s+b\\s*>\\s*0\\s+else\\s+a$",
                     "hint": "Return masked `a` if `b` is positive (handling overflow for positive sum), otherwise return `a`.",
