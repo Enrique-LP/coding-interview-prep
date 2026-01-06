@@ -23,7 +23,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "BFS from Gates",
+            "name": "Brute Force",
             "description": "Run BFS starting from all gates simultaneously.",
             "steps": [
                 {
@@ -47,14 +47,14 @@
                     "instruction": "Run BFS.",
                     "placeholderCode": "    dist = 0\n    while q:\n        for i in range(len(q)):\n            r, c = q.popleft()\n            rooms[r][c] = dist\n            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or col < 0 or row == ROWS or col == COLS or\n                    (row, col) in visit or rooms[row][col] == -1):\n                    continue\n                visit.add((row, col))\n                q.append((row, col))\n        dist += 1",
                     "validationRegex": "^\\s+dist\\s*=\\s*0\\s*while\\s+q:\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*r,\\s*c\\s*=\\s*q\\.popleft\\(\\)\\s*rooms\\[r\\]\\[c\\]\\s*=\\s*dist\\s*directions\\s*=\\s*\\[\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\],\\s*\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\]\\]\\s*for\\s+dr,\\s*dc\\s+in\\s+directions:\\s*row,\\s*col\\s*=\\s*r\\s*\\+\\s*dr,\\s*c\\s*\\+\\s*dc\\s*if\\s*\\(row\\s*<\\s*0\\s+or\\s+col\\s*<\\s*0\\s+or\\s+row\\s*==\\s*ROWS\\s+or\\s+col\\s*==\\s*COLS\\s+or\\s*\\(row,\\s*col\\)\\s+in\\s+visit\\s+or\\s+rooms\\[row\\]\\[col\\]\\s*==\\s*-1\\):\\s*continue\\s*visit\\.add\\(\\(row,\\s*col\\)\\)\\s*q\\.append\\(\\(row,\\s*col\\)\\)\\s*dist\\s*\\+=\\s*1$",
-                    "hint": "Process level by level. Update distance. Explore neighbors. If valid and not visited/wall, add to queue.\\n\\nExample:\\nGate at (0,0). INF at (0,1).\\nQ=[(0,0)]. Dist=0.\\nPop (0,0). Neighbor (0,1) is INF. Update (0,1)=1. Add (0,1) to Q.\\nDist increases to 1.",
+                    "hint": "Process level by level. Update distance. Explore neighbors. If valid and not visited/wall, add to queue.",
                     "solutionCode": "    dist = 0\n    while q:\n        for i in range(len(q)):\n            r, c = q.popleft()\n            rooms[r][c] = dist\n            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or col < 0 or row == ROWS or col == COLS or\n                    (row, col) in visit or rooms[row][col] == -1):\n                    continue\n                visit.add((row, col))\n                q.append((row, col))\n        dist += 1"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
-            "name": "BFS from Gates",
+            "name": "Optimal",
             "description": "Same as brute force.",
             "steps": [
                 {
@@ -67,18 +67,74 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize queue with all gates.",
-                    "placeholderCode": "    ROWS, COLS = len(rooms), len(rooms[0])\n    q = collections.deque()\n    visit = set()\n    for r in range(ROWS):\n        for c in range(COLS):\n            if rooms[r][c] == 0:\n                q.append((r, c))\n                visit.add((r, c))",
-                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(rooms\\),\\s*len\\(rooms\\[0\\]\\)\\s*q\\s*=\\s*collections\\.deque\\(\\)\\s*visit\\s*=\\s*set\\(\\)\\s*for\\s+r\\s+in\\s+range\\(ROWS\\):\\s*for\\s+c\\s+in\\s+range\\(COLS\\):\\s*if\\s+rooms\\[r\\]\\[c\\]\\s*==\\s*0:\\s*q\\.append\\(\\(r,\\s*c\\)\\)\\s*visit\\.add\\(\\(r,\\s*c\\)\\)$",
-                    "hint": "Find all gates (0) and add them to the queue. Mark them as visited.",
-                    "solutionCode": "    ROWS, COLS = len(rooms), len(rooms[0])\n    q = collections.deque()\n    visit = set()\n    for r in range(ROWS):\n        for c in range(COLS):\n            if rooms[r][c] == 0:\n                q.append((r, c))\n                visit.add((r, c))"
+                    "instruction": "Get grid dimensions.",
+                    "placeholderCode": "    ROWS, COLS = len(rooms), len(rooms[0])",
+                    "validationRegex": "^\\s+ROWS,\\s*COLS\\s*=\\s*len\\(rooms\\),\\s*len\\(rooms\\[0\\]\\)$",
+                    "hint": "Store the number of rows and columns.",
+                    "solutionCode": "    ROWS, COLS = len(rooms), len(rooms[0])"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize visited set.",
+                    "placeholderCode": "    visit = set()",
+                    "validationRegex": "^\\s+visit\\s*=\\s*set\\(\\)$",
+                    "hint": "Create a set to keep track of visited cells.",
+                    "solutionCode": "    visit = set()"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Initialize queue.",
+                    "placeholderCode": "    q = collections.deque()",
+                    "validationRegex": "^\\s+q\\s*=\\s*collections\\.deque\\(\\)$",
+                    "hint": "Create a deque for BFS.",
+                    "solutionCode": "    q = collections.deque()"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate through rows.",
+                    "placeholderCode": "    for r in range(ROWS):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(ROWS\\):$",
+                    "hint": "Loop through each row index.",
+                    "solutionCode": "    for r in range(ROWS):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Iterate through columns.",
+                    "placeholderCode": "        for c in range(COLS):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(COLS\\):$",
+                    "hint": "Loop through each column index.",
+                    "solutionCode": "        for c in range(COLS):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check for gate.",
+                    "placeholderCode": "            if rooms[r][c] == 0:",
+                    "validationRegex": "^\\s+if\\s+rooms\\[r\\]\\[c\\]\\s*==\\s*0:$",
+                    "hint": "If the current cell contains a gate (0).",
+                    "solutionCode": "            if rooms[r][c] == 0:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Add gate to queue.",
+                    "placeholderCode": "                q.append((r, c))",
+                    "validationRegex": "^\\s+q\\.append\\(\\(r,\\s*c\\)\\)$",
+                    "hint": "Add the gate's coordinates to the queue.",
+                    "solutionCode": "                q.append((r, c))"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Mark gate as visited.",
+                    "placeholderCode": "                visit.add((r, c))",
+                    "validationRegex": "^\\s+visit\\.add\\(\\(r,\\s*c\\)\\)$",
+                    "hint": "Add the gate's coordinates to the visited set.",
+                    "solutionCode": "                visit.add((r, c))"
+                },
+                {
+                    "id": 10,
                     "instruction": "Run BFS.",
                     "placeholderCode": "    dist = 0\n    while q:\n        for i in range(len(q)):\n            r, c = q.popleft()\n            rooms[r][c] = dist\n            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or col < 0 or row == ROWS or col == COLS or\n                    (row, col) in visit or rooms[row][col] == -1):\n                    continue\n                visit.add((row, col))\n                q.append((row, col))\n        dist += 1",
                     "validationRegex": "^\\s+dist\\s*=\\s*0\\s*while\\s+q:\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*r,\\s*c\\s*=\\s*q\\.popleft\\(\\)\\s*rooms\\[r\\]\\[c\\]\\s*=\\s*dist\\s*directions\\s*=\\s*\\[\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\],\\s*\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\]\\]\\s*for\\s+dr,\\s*dc\\s+in\\s+directions:\\s*row,\\s*col\\s*=\\s*r\\s*\\+\\s*dr,\\s*c\\s*\\+\\s*dc\\s*if\\s*\\(row\\s*<\\s*0\\s+or\\s+col\\s*<\\s*0\\s+or\\s+row\\s*==\\s*ROWS\\s+or\\s+col\\s*==\\s*COLS\\s+or\\s*\\(row,\\s*col\\)\\s+in\\s+visit\\s+or\\s+rooms\\[row\\]\\[col\\]\\s*==\\s*-1\\):\\s*continue\\s*visit\\.add\\(\\(row,\\s*col\\)\\)\\s*q\\.append\\(\\(row,\\s*col\\)\\)\\s*dist\\s*\\+=\\s*1$",
-                    "hint": "Process level by level. Update distance. Explore neighbors. If valid and not visited/wall, add to queue.\\n\\nExample:\\nGate at (0,0). INF at (0,1).\\nQ=[(0,0)]. Dist=0.\\nPop (0,0). Neighbor (0,1) is INF. Update (0,1)=1. Add (0,1) to Q.\\nDist increases to 1.",
+                    "hint": "Process level by level. Update distance. Explore neighbors. If valid and not visited/wall, add to queue.",
                     "solutionCode": "    dist = 0\n    while q:\n        for i in range(len(q)):\n            r, c = q.popleft()\n            rooms[r][c] = dist\n            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or col < 0 or row == ROWS or col == COLS or\n                    (row, col) in visit or rooms[row][col] == -1):\n                    continue\n                visit.add((row, col))\n                q.append((row, col))\n        dist += 1"
                 }
             ]
