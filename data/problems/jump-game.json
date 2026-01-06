@@ -23,8 +23,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
-            "description": "Recursively try all jumps.",
+            "name": "Brute Force",
+            "description": "Recursively try all possible jump lengths from the current position using memoization to handle overlapping subproblems.",
             "steps": [
                 {
                     "id": 1,
@@ -36,23 +36,23 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Define recursive helper with memoization.",
+                    "instruction": "Define a recursive helper function with memoization to store whether each index can reach the end.",
                     "placeholderCode": "    memo = {}\n    def dfs(i):\n        if i >= len(nums) - 1: return True\n        if i in memo: return memo[i]",
                     "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i\\):\\s*if\\s+i\\s*>=\\s+len\\(nums\\)\\s*-\\s*1:\\s*return\\s+True\\s*if\\s+i\\s+in\\s+memo:\\s*return\\s+memo\\[i\\]$",
-                    "hint": "Recursive function `dfs(i)` returns true if end is reachable from `i`. Base case: i >= last index -> True. Check memo.",
+                    "hint": "Base case: if we reach or exceed the last index, return True.",
                     "solutionCode": "    memo = {}\n    def dfs(i):\n        if i >= len(nums) - 1: return True\n        if i in memo: return memo[i]"
                 },
                 {
                     "id": 3,
-                    "instruction": "Try all possible jumps.",
+                    "instruction": "Iterate through all possible jump lengths from the current index `i` up to `nums[i]`, and return True if any jump leads to the destination.",
                     "placeholderCode": "        for j in range(1, nums[i] + 1):\n            if dfs(i + j):\n                memo[i] = True\n                return True",
                     "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(1,\\s*nums\\[i\\]\\s*\\+\\s*1\\):\\s*if\\s+dfs\\(i\\s*\\+\\s*j\\):\\s*memo\\[i\\]\\s*=\\s*True\\s*return\\s+True$",
-                    "hint": "Try jumping from 1 to nums[i] steps. If any jump leads to a solution, return True.\\n\\nExample:\\nNums=[2, 3, 1...]. i=0. Jump sizes 1, 2.\\nJump 1 -> DFS(1). If True, return True.\\nJump 2 -> DFS(2). If True, return True.",
+                    "hint": "Try jumping from 1 to nums[i] steps.",
                     "solutionCode": "        for j in range(1, nums[i] + 1):\n            if dfs(i + j):\n                memo[i] = True\n                return True"
                 },
                 {
                     "id": 4,
-                    "instruction": "Memoize and return.",
+                    "instruction": "If no jump from the current index leads to the destination, memoize the failure and return False.",
                     "placeholderCode": "        memo[i] = False\n        return False",
                     "validationRegex": "^\\s+memo\\[i\\]\\s*=\\s*False\\s*return\\s+False$",
                     "hint": "If no jumps work, store False in memo and return.",
@@ -60,7 +60,7 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Call helper.",
+                    "instruction": "Initiate the recursive process by calling the helper function for the starting index 0.",
                     "placeholderCode": "    return dfs(0)",
                     "validationRegex": "^\\s+return\\s+dfs\\(0\\)$",
                     "hint": "Start recursion from index 0.",
@@ -70,8 +70,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Greedy",
-            "description": "Track the furthest reachable index.",
+            "name": "Optimal",
+            "description": "Use a greedy approach by tracking the leftmost index that can reach the end, moving the goal backwards from the end to the start.",
             "steps": [
                 {
                     "id": 1,
@@ -83,26 +83,42 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize goal as last index.",
+                    "instruction": "Initialize the variable 'goal' to the last index of the array.",
                     "placeholderCode": "    goal = len(nums) - 1",
                     "validationRegex": "^\\s+goal\\s*=\\s*len\\(nums\\)\\s*-\\s*1$",
-                    "hint": "Start from the last index and move backwards. The goal is to reach index 0.",
+                    "hint": "The initial target is the very last element.",
                     "solutionCode": "    goal = len(nums) - 1"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate backwards.",
-                    "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):\n        if i + nums[i] >= goal:\n            goal = i",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+i\\s*\\+\\s*nums\\[i\\]\\s*>=\\s+goal:\\s*goal\\s*=\\s*i$",
-                    "hint": "Iterate backwards. If current index `i` can reach the current `goal` (i + nums[i] >= goal), then `i` becomes the new goal.\\n\\nExample:\\nNums=[2, 3, 1, 1, 4]. Goal=4.\\ni=3 (Val 1): 3+1 >= 4. Goal=3.\\ni=2 (Val 1): 2+1 >= 3. Goal=2.\\ni=1 (Val 3): 1+3 >= 2. Goal=1.\\ni=0 (Val 2): 0+2 >= 1. Goal=0.\\nResult: Goal is 0 -> True.",
-                    "solutionCode": "    for i in range(len(nums) - 1, -1, -1):\n        if i + nums[i] >= goal:\n            goal = i"
+                    "instruction": "Initiate a loop to iterate through the array indices in reverse order.",
+                    "placeholderCode": "    for i in range(len(nums) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "We check each index backwards to see if it can reach the current goal.",
+                    "solutionCode": "    for i in range(len(nums) - 1, -1, -1):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return True if goal is 0.",
+                    "instruction": "Check if the current index plus its maximum jump length is enough to reach the current goal.",
+                    "placeholderCode": "        if i + nums[i] >= goal:",
+                    "validationRegex": "^\\s+if\\s+i\\s*\\+\\s*nums\\[i\\]\\s*>=\\s+goal:$",
+                    "hint": "If we can reach the current goal from index i, then reaching i becomes the new objective.",
+                    "solutionCode": "        if i + nums[i] >= goal:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "If the goal is reachable from the current index, update 'goal' to the current index 'i'.",
+                    "placeholderCode": "            goal = i",
+                    "validationRegex": "^\\s+goal\\s*=\\s*i$",
+                    "hint": "Since i can reach the goal, we now only need to find if we can reach i.",
+                    "solutionCode": "            goal = i"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return True if the goal has been successfully moved back to the starting index 0.",
                     "placeholderCode": "    return goal == 0",
                     "validationRegex": "^\\s+return\\s+goal\\s*==\\s*0$",
-                    "hint": "If the goal reaches 0, it means we can reach the end from the start.",
+                    "hint": "If the goal reaches index 0, the entire path is possible.",
                     "solutionCode": "    return goal == 0"
                 }
             ]
