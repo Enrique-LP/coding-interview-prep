@@ -66,14 +66,38 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Loop 32 times to check each bit.",
-                    "placeholderCode": "    res = 0\n    for _ in range(32):\n        res = (res << 1) + (n & 1)\n        n >>= 1",
-                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*for\\s+_\\s+in\\s+range\\(32\\):\\s*res\\s*=\\s*\\(res\\s*<<\\s*1\\)\\s*\\+\\s*\\(n\\s*&\\s*1\\)\\s*n\\s*>>=\\s*1$",
-                    "hint": "Initialize `res` to 0. Iterate 32 times. Shift `res` left, add the last bit of `n` (`n & 1`), and then shift `n` right.",
-                    "solutionCode": "    res = 0\n    for _ in range(32):\n        res = (res << 1) + (n & 1)\n        n >>= 1"
+                    "instruction": "Initialize result variable.",
+                    "placeholderCode": "    res = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*0$",
+                    "hint": "Start with result as 0.",
+                    "solutionCode": "    res = 0"
                 },
                 {
                     "id": 3,
+                    "instruction": "Loop 32 times.",
+                    "placeholderCode": "    for _ in range(32):",
+                    "validationRegex": "^\\s+for\\s+_\\s+in\\s+range\\(32\\):$",
+                    "hint": "Iterate for each bit in a 32-bit integer.",
+                    "solutionCode": "    for _ in range(32):"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Update result: shift left and add last bit of n.",
+                    "placeholderCode": "        res = (res << 1) + (n & 1)",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\(res\\s*<<\\s*1\\)\\s*\\+\\s*\\(n\\s*&\\s*1\\)$",
+                    "hint": "Shift `res` to make room, extract LSB of `n` with `& 1`, and add it.",
+                    "solutionCode": "        res = (res << 1) + (n & 1)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Shift n to right.",
+                    "placeholderCode": "        n >>= 1",
+                    "validationRegex": "^\\s+n\\s*>>=\\s*1$",
+                    "hint": "Process next bit of `n`.",
+                    "solutionCode": "        n >>= 1"
+                },
+                {
+                    "id": 6,
                     "instruction": "Return result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
