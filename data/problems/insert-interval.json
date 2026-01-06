@@ -86,19 +86,83 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate through intervals.",
-                    "placeholderCode": "    for i in range(len(intervals)):\n        if newInterval[1] < intervals[i][0]:\n            res.append(newInterval)\n            return res + intervals[i:]\n        elif newInterval[0] > intervals[i][1]:\n            res.append(intervals[i])\n        else:\n            newInterval = [min(newInterval[0], intervals[i][0]),\n                           max(newInterval[1], intervals[i][1])]",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(intervals\\)\\):\\s*if\\s+newInterval\\[1\\]\\s*<\\s+intervals\\[i\\]\\[0\\]:\\s*res\\.append\\(newInterval\\)\\s*return\\s+res\\s*\\+\\s*intervals\\[i:\\]\\s*elif\\s+newInterval\\[0\\]\\s*>\\s+intervals\\[i\\]\\[1\\]:\\s*res\\.append\\(intervals\\[i\\]\\)\\s*else:\\s*newInterval\\s*=\\s*\\[min\\(newInterval\\[0\\],\\s*intervals\\[i\\]\\[0\\]\\),\\s*max\\(newInterval\\[1\\],\\s*intervals\\[i\\]\\[1\\]\\)\\]$",
-                    "hint": "Handle 3 cases: no overlap (before), no overlap (after), overlap (merge).",
-                    "solutionCode": "    for i in range(len(intervals)):\n        if newInterval[1] < intervals[i][0]:\n            res.append(newInterval)\n            return res + intervals[i:]\n        elif newInterval[0] > intervals[i][1]:\n            res.append(intervals[i])\n        else:\n            newInterval = [min(newInterval[0], intervals[i][0]),\n                           max(newInterval[1], intervals[i][1])]"
+                    "instruction": "Iterate through the intervals using their index.",
+                    "placeholderCode": "    for i in range(len(intervals)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(intervals\\)\\):$",
+                    "hint": "Use a for loop with a range based on the length of intervals.",
+                    "solutionCode": "    for i in range(len(intervals)):"
                 },
                 {
                     "id": 4,
-                    "instruction": "Append remaining newInterval.",
-                    "placeholderCode": "    res.append(newInterval)\n    return res",
-                    "validationRegex": "^\\s+res\\.append\\(newInterval\\)\\s*return\\s+res$",
-                    "hint": "Append the final interval.",
-                    "solutionCode": "    res.append(newInterval)\n    return res"
+                    "instruction": "Check if the new interval ends before the current interval starts.",
+                    "placeholderCode": "        if newInterval[1] < intervals[i][0]:",
+                    "validationRegex": "^\\s+if\\s+newInterval\\[1\\]\\s*<\\s+intervals\\[i\\]\\[0\\]:$",
+                    "hint": "If the end of newInterval is less than the start of intervals[i], there's no overlap.",
+                    "solutionCode": "        if newInterval[1] < intervals[i][0]:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Append the new interval to the result list.",
+                    "placeholderCode": "            res.append(newInterval)",
+                    "validationRegex": "^\\s+res\\.append\\(newInterval\\)$",
+                    "hint": "Add newInterval to your res list.",
+                    "solutionCode": "            res.append(newInterval)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return the current result plus the remaining intervals.",
+                    "placeholderCode": "            return res + intervals[i:]",
+                    "validationRegex": "^\\s+return\\s+res\\s*\\+\\s*intervals\\[i:\\]$",
+                    "hint": "Since intervals are sorted, we can return the result and the rest of the list.",
+                    "solutionCode": "            return res + intervals[i:]"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check if the new interval starts after the current interval ends.",
+                    "placeholderCode": "        elif newInterval[0] > intervals[i][1]:",
+                    "validationRegex": "^\\s+elif\\s+newInterval\\[0\\]\\s*>\\s+intervals\\[i\\]\\[1\\]:$",
+                    "hint": "If the start of newInterval is greater than the end of intervals[i], they don't overlap.",
+                    "solutionCode": "        elif newInterval[0] > intervals[i][1]:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Append the current interval to the result list.",
+                    "placeholderCode": "            res.append(intervals[i])",
+                    "validationRegex": "^\\s+res\\.append\\(intervals\\[i\\]\\)$",
+                    "hint": "Add the current interval to the results list.",
+                    "solutionCode": "            res.append(intervals[i])"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Handle the case where the intervals overlap.",
+                    "placeholderCode": "        else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "If neither previous condition is met, the intervals must overlap.",
+                    "solutionCode": "        else:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Update the new interval by merging it with the current interval.",
+                    "placeholderCode": "            newInterval = [min(newInterval[0], intervals[i][0]), max(newInterval[1], intervals[i][1])]",
+                    "validationRegex": "^\\s+newInterval\\s*=\\s*\\[min\\(newInterval\\[0\\],\\s*intervals\\[i\\]\\[0\\]\\),\\s*max\\(newInterval\\[1\\],\\s*intervals\\[i\\]\\[1\\]\\)\\]$",
+                    "hint": "Set newInterval to [min of starts, max of ends].",
+                    "solutionCode": "            newInterval = [min(newInterval[0], intervals[i][0]), max(newInterval[1], intervals[i][1])]"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Append the (possibly merged) new interval to result.",
+                    "placeholderCode": "    res.append(newInterval)",
+                    "validationRegex": "^\\s+res\\.append\\(newInterval\\)$",
+                    "hint": "Add the final state of newInterval to the results list.",
+                    "solutionCode": "    res.append(newInterval)"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Return the result list.",
+                    "placeholderCode": "    return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the final list of intervals.",
+                    "solutionCode": "    return res"
                 }
             ]
         }
