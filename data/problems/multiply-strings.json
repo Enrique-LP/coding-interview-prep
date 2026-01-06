@@ -82,18 +82,58 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Multiply digits.",
-                    "placeholderCode": "    for i1 in range(len(num1)):\n        for i2 in range(len(num2)):\n            digit = int(num1[i1]) * int(num2[i2])\n            res[i1 + i2] += digit\n            res[i1 + i2 + 1] += res[i1 + i2] // 10\n            res[i1 + i2] = res[i1 + i2] % 10",
-                    "validationRegex": "^\\s+for\\s+i1\\s+in\\s+range\\(len\\(num1\\)\\):\\s*for\\s+i2\\s+in\\s+range\\(len\\(num2\\)\\):\\s*digit\\s*=\\s*int\\(num1\\[i1\\]\\)\\s*\\*\\s*int\\(num2\\[i2\\]\\)\\s*res\\[i1\\s*\\+\\s*i2\\]\\s*\\+=\\s*digit\\s*res\\[i1\\s*\\+\\s*i2\\s*\\+\\s*1\\]\\s*\\+=\\s*res\\[i1\\s*\\+\\s*i2\\]\\s*//\\s*10\\s*res\\[i1\\s*\\+\\s*i2\\]\\s*=\\s*res\\[i1\\s*\\+\\s*i2\\]\\s*%\\s*10$",
-                    "hint": "Iterate through each digit of both numbers, multiply them, and add the result to the corresponding position in the `res` array. Handle carry-over.",
-                    "solutionCode": "    for i1 in range(len(num1)):\n        for i2 in range(len(num2)):\n            digit = int(num1[i1]) * int(num2[i2])\n            res[i1 + i2] += digit\n            res[i1 + i2 + 1] += res[i1 + i2] // 10\n            res[i1 + i2] = res[i1 + i2] % 10"
+                    "instruction": "Iterate through each digit of num1.",
+                    "placeholderCode": "    for i1 in range(len(num1)):",
+                    "validationRegex": "^\\s+for\\s+i1\\s+in\\s+range\\(len\\(num1\\)\\):$",
+                    "hint": "Outer loop for num1 digits.",
+                    "solutionCode": "    for i1 in range(len(num1)):"
                 },
                 {
                     "id": 6,
-                    "instruction": "Reverse and join.",
+                    "instruction": "Iterate through each digit of num2.",
+                    "placeholderCode": "        for i2 in range(len(num2)):",
+                    "validationRegex": "^\\s+for\\s+i2\\s+in\\s+range\\(len\\(num2\\)\\):$",
+                    "hint": "Inner loop for num2 digits.",
+                    "solutionCode": "        for i2 in range(len(num2)):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Calculate the product of the current digits.",
+                    "placeholderCode": "            digit = int(num1[i1]) * int(num2[i2])",
+                    "validationRegex": "^\\s+digit\\s*=\\s*int\\(num1\\[i1\\]\\)\\s*\\*\\s*int\\(num2\\[i2\\]\\)$",
+                    "hint": "Multiply digits at i1 and i2.",
+                    "solutionCode": "            digit = int(num1[i1]) * int(num2[i2])"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Add the product to the current position in the result array.",
+                    "placeholderCode": "            res[i1 + i2] += digit",
+                    "validationRegex": "^\\s+res\\[i1\\s*\\+\\s*i2\\]\\s*\\+=\\s*digit$",
+                    "hint": "Add to position i1 + i2.",
+                    "solutionCode": "            res[i1 + i2] += digit"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Handle the carry by adding it to the next position.",
+                    "placeholderCode": "            res[i1 + i2 + 1] += res[i1 + i2] // 10",
+                    "validationRegex": "^\\s+res\\[i1\\s*\\+\\s*i2\\s*\\+\\s*1\\]\\s*\\+=\\s*res\\[i1\\s*\\+\\s*i2\\]\\s*//\\s*10$",
+                    "hint": "Carry over to i1 + i2 + 1.",
+                    "solutionCode": "            res[i1 + i2 + 1] += res[i1 + i2] // 10"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Update the current position to keep only the last digit.",
+                    "placeholderCode": "            res[i1 + i2] = res[i1 + i2] % 10",
+                    "validationRegex": "^\\s+res\\[i1\\s*\\+\\s*i2\\]\\s*=\\s*res\\[i1\\s*\\+\\s*i2\\]\\s*%\\s*10$",
+                    "hint": "Keep only the single digit at i1 + i2.",
+                    "solutionCode": "            res[i1 + i2] = res[i1 + i2] % 10"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Reverse the result array and convert back to string, skipping leading zeros.",
                     "placeholderCode": "    res, beg = res[::-1], 0\n    while beg < len(res) and res[beg] == 0:\n        beg += 1\n    res = map(str, res[beg:])\n    return \"\".join(res)",
                     "validationRegex": "^\\s+res,\\s*beg\\s*=\\s*res\\[::-1\\],\\s*0\\s*while\\s+beg\\s*<\\s+len\\(res\\)\\s+and\\s+res\\[beg\\]\\s*==\\s*0:\\s*beg\\s*\\+=\\s*1\\s*res\\s*=\\s*map\\(str,\\s*res\\[beg:\\]\\)\\s*return\\s+\"\"\\.join\\(res\\)$",
-                    "hint": "Reverse the result array, skip leading zeros, convert digits to strings, and join them.",
+                    "hint": "Reverse, remove leading zeros, and join.",
                     "solutionCode": "    res, beg = res[::-1], 0\n    while beg < len(res) and res[beg] == 0:\n        beg += 1\n    res = map(str, res[beg:])\n    return \"\".join(res)"
                 }
             ]
