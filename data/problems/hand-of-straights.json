@@ -196,14 +196,30 @@
                 },
                 {
                     "id": 14,
-                    "instruction": "If the count of a card becomes zero, check if it is the current minimum in the heap and remove it.",
-                    "placeholderCode": "            if count[i] == 0:\n                if i != minH[0]: return False\n                heapq.heappop(minH)",
-                    "validationRegex": "^\\s+if\\s+count\\[i\\]\\s*==\\s*0:\\s*if\\s+i\\s*!=\\s*minH\\[0\\]:\\s*return\\s+False\\s*heapq\\.heappop\\(minH\\)$",
-                    "hint": "If we use up all instances of a card, it MUST be the smallest one in our heap to keep the sequence valid. Pop it from the heap.",
-                    "solutionCode": "            if count[i] == 0:\n                if i != minH[0]: return False\n                heapq.heappop(minH)"
+                    "instruction": "Check if the frequency of the current card has dropped to zero.",
+                    "placeholderCode": "            if count[i] == 0:",
+                    "validationRegex": "^\\s+if\\s+count\\[i\\]\\s*==\\s*0:$",
+                    "hint": "If we've used all instances of this card, we need to remove it from our tracking.",
+                    "solutionCode": "            if count[i] == 0:"
                 },
                 {
                     "id": 15,
+                    "instruction": "Verify that the card being removed is the current minimum in the heap to maintain sequence validity.",
+                    "placeholderCode": "                if i != minH[0]: return False",
+                    "validationRegex": "^\\s+if\\s+i\\s*!=\\s*minH\\[0\\]:\\s*return\\s+False$",
+                    "hint": "Because we process cards in order, the smallest card whose count reaches zero MUST be the smallest card in the heap.",
+                    "solutionCode": "                if i != minH[0]: return False"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Remove the card from the top of the min-heap.",
+                    "placeholderCode": "                heapq.heappop(minH)",
+                    "validationRegex": "^\\s+heapq\\.heappop\\(minH\\)$",
+                    "hint": "Pop the element from the heap.",
+                    "solutionCode": "                heapq.heappop(minH)"
+                },
+                {
+                    "id": 17,
                     "instruction": "Return True after successfully forming all required groups.",
                     "placeholderCode": "    return True",
                     "validationRegex": "^\\s+return\\s+True$",
