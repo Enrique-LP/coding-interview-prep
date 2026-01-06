@@ -24,7 +24,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Sorting + Greedy",
+            "name": "Brute Force",
             "description": "Sort and remove intervals that end late.",
             "steps": [
                 {
@@ -63,7 +63,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Sorting + Greedy",
+            "name": "Optimal",
             "description": "Same as brute force, O(n log n).",
             "steps": [
                 {
@@ -84,18 +84,74 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate and count removals.",
-                    "placeholderCode": "    res = 0\n    prevEnd = intervals[0][1]\n    for start, end in intervals[1:]:\n        if start >= prevEnd:\n            prevEnd = end\n        else:\n            res += 1\n            prevEnd = min(prevEnd, end)",
-                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*prevEnd\\s*=\\s*intervals\\[0\\]\\[1\\]\\s*for\\s+start,\\s*end\\s+in\\s+intervals\\[1:\\]:\\s*if\\s+start\\s*>=\\s+prevEnd:\\s*prevEnd\\s*=\\s*end\\s*else:\\s*res\\s*\\+=\\s*1\\s*prevEnd\\s*=\\s*min\\(prevEnd,\\s*end\\)$",
-                    "hint": "Greedily remove overlapping intervals.",
-                    "solutionCode": "    res = 0\n    prevEnd = intervals[0][1]\n    for start, end in intervals[1:]:\n        if start >= prevEnd:\n            prevEnd = end\n        else:\n            res += 1\n            prevEnd = min(prevEnd, end)"
+                    "instruction": "Initialize the variable to count the number of removed intervals.",
+                    "placeholderCode": "    res = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*0$",
+                    "hint": "Start with res equal to 0.",
+                    "solutionCode": "    res = 0"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Initialize prevEnd with the end time of the first interval.",
+                    "placeholderCode": "    prevEnd = intervals[0][1]",
+                    "validationRegex": "^\\s+prevEnd\\s*=\\s*intervals\\[0\\]\\[1\\]$",
+                    "hint": "Set prevEnd to the end time of the interval at index 0.",
+                    "solutionCode": "    prevEnd = intervals[0][1]"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate through the rest of the intervals.",
+                    "placeholderCode": "    for start, end in intervals[1:]:",
+                    "validationRegex": "^\\s+for\\s+start,\\s*end\\s+in\\s+intervals\\[1:\\]:$",
+                    "hint": "Use a for loop to iterate from the second interval onwards.",
+                    "solutionCode": "    for start, end in intervals[1:]:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check if the current interval starts after or at the previous interval's end.",
+                    "placeholderCode": "        if start >= prevEnd:",
+                    "validationRegex": "^\\s+if\\s+start\\s*>=\\s+prevEnd:$",
+                    "hint": "Compare the current start time with prevEnd.",
+                    "solutionCode": "        if start >= prevEnd:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "If no overlap, update prevEnd to the current interval's end.",
+                    "placeholderCode": "            prevEnd = end",
+                    "validationRegex": "^\\s+prevEnd\\s*=\\s*end$",
+                    "hint": "Update the boundary for non-overlapping intervals.",
+                    "solutionCode": "            prevEnd = end"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Else, there is an overlap.",
+                    "placeholderCode": "        else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "Use an else block for the overlapping case.",
+                    "solutionCode": "        else:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Increment the counter of removed intervals.",
+                    "placeholderCode": "            res += 1",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*1$",
+                    "hint": "Increase res by 1 because we found an overlap.",
+                    "solutionCode": "            res += 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Update prevEnd to the minimum end time to minimize further overlaps.",
+                    "placeholderCode": "            prevEnd = min(prevEnd, end)",
+                    "validationRegex": "^\\s+prevEnd\\s*=\\s*min\\(prevEnd,\\s*end\\)$",
+                    "hint": "Set prevEnd to the minimum of its current value and the current end time.",
+                    "solutionCode": "            prevEnd = min(prevEnd, end)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Return the final count of removed intervals.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "Return result.",
+                    "hint": "Return res.",
                     "solutionCode": "    return res"
                 }
             ]
