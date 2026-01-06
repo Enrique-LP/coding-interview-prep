@@ -62,11 +62,19 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize the class with a dictionary and a list.",
-                    "placeholderCode": "    def __init__(self):\n        self.ptsCount = defaultdict(int)",
-                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):\\s*self\\.ptsCount\\s*=\\s*defaultdict\\(int\\)$",
-                    "hint": "Use `defaultdict` to count point occurrences.",
-                    "solutionCode": "    def __init__(self):\n        self.ptsCount = defaultdict(int)"
+                    "instruction": "Define the __init__ method.",
+                    "placeholderCode": "    def __init__(self):",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):$",
+                    "hint": "Constructor for the class.",
+                    "solutionCode": "    def __init__(self):"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initialize a dictionary to count point occurrences.",
+                    "placeholderCode": "        self.ptsCount = defaultdict(int)",
+                    "validationRegex": "^\\s+self\\.ptsCount\\s*=\\s*defaultdict\\(int\\)$",
+                    "hint": "Use `defaultdict` for easier counting.",
+                    "solutionCode": "        self.ptsCount = defaultdict(int)"
                 },
                 {
                     "id": 3,
