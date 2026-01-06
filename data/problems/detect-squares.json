@@ -110,11 +110,67 @@
                 },
                 {
                     "id": 8,
-                    "instruction": "Implement count method.",
-                    "placeholderCode": "    def count(self, point):\n        res = 0\n        px, py = point\n        for x, y in self.pts:\n            if (abs(py - y) != abs(px - x)) or x == px or y == py:\n                continue\n            res += self.ptsCount[(x, py)] * self.ptsCount[(px, y)]\n        return res",
-                    "validationRegex": "^\\s+def\\s+count\\(self,\\s*point\\):\\s*res\\s*=\\s*0\\s*px,\\s*py\\s*=\\s*point\\s*for\\s+x,\\s*y\\s+in\\s+self\\.pts:\\s*if\\s*\\(abs\\(py\\s*-\\s*y\\)\\s*!=\\s*abs\\(px\\s*-\\s*x\\)\\)\\s+or\\s+x\\s*==\\s*px\\s+or\\s+y\\s*==\\s*py:\\s*continue\\s*res\\s*\\+=\\s*self\\.ptsCount\\[\\(x,\\s*py\\)\\]\\s*\\*\\s*self\\.ptsCount\\[\\(px,\\s*y\\)\\]\\s*return\\s+res$",
-                    "hint": "Count squares.",
-                    "solutionCode": "    def count(self, point):\n        res = 0\n        px, py = point\n        for x, y in self.pts:\n            if (abs(py - y) != abs(px - x)) or x == px or y == py:\n                continue\n            res += self.ptsCount[(x, py)] * self.ptsCount[(px, y)]\n        return res"
+                    "instruction": "Define the count method.",
+                    "placeholderCode": "    def count(self, point):",
+                    "validationRegex": "^\\s+def\\s+count\\(self,\\s*point\\):$",
+                    "hint": "Method to count squares.",
+                    "solutionCode": "    def count(self, point):"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Initialize result variable.",
+                    "placeholderCode": "        res = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*0$",
+                    "hint": "Initialize counter.",
+                    "solutionCode": "        res = 0"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Unpack the query point coordinates.",
+                    "placeholderCode": "        px, py = point",
+                    "validationRegex": "^\\s+px,\\s*py\\s*=\\s*point$",
+                    "hint": "Get x and y from point.",
+                    "solutionCode": "        px, py = point"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Iterate through all stored points.",
+                    "placeholderCode": "        for x, y in self.pts:",
+                    "validationRegex": "^\\s+for\\s+x,\\s*y\\s+in\\s+self\\.pts:$",
+                    "hint": "Loop through `self.pts`.",
+                    "solutionCode": "        for x, y in self.pts:"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Check if the current point forms a diagonal of a square with the query point.",
+                    "placeholderCode": "            if (abs(py - y) != abs(px - x)) or x == px or y == py:",
+                    "validationRegex": "^\\s+if\\s*\\(abs\\(py\\s*-\\s*y\\)\\s*!=\\s*abs\\(px\\s*-\\s*x\\)\\)\\s+or\\s+x\\s*==\\s*px\\s+or\\s+y\\s*==\\s*py:$",
+                    "hint": "Condition: `abs(py - y) == abs(px - x)` ensures diagonal, and `x != px` and `y != py` ensures non-zero area.",
+                    "solutionCode": "            if (abs(py - y) != abs(px - x)) or x == px or y == py:"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Skip if it's not a valid diagonal.",
+                    "placeholderCode": "                continue",
+                    "validationRegex": "^\\s+continue$",
+                    "hint": "Continue to next point.",
+                    "solutionCode": "                continue"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Add to result: count of point (x, py) * count of point (px, y).",
+                    "placeholderCode": "            res += self.ptsCount[(x, py)] * self.ptsCount[(px, y)]",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*self\\.ptsCount\\[\\(x,\\s*py\\)\\]\\s*\\*\\s*self\\.ptsCount\\[\\(px,\\s*y\\)\\]$",
+                    "hint": "Multiply counts of the other two corners forming the square.",
+                    "solutionCode": "            res += self.ptsCount[(x, py)] * self.ptsCount[(px, y)]"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Return the final count.",
+                    "placeholderCode": "        return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return total count.",
+                    "solutionCode": "        return res"
                 }
             ]
         }
