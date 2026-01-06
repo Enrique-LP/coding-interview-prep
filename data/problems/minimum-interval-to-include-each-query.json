@@ -118,14 +118,70 @@
                 },
                 {
                     "id": 7,
-                    "instruction": "Process queries.",
-                    "placeholderCode": "    for q in sorted_queries:\n        while i < len(intervals) and intervals[i][0] <= q:\n            l, r = intervals[i]\n            heapq.heappush(minHeap, (r - l + 1, r))\n            i += 1\n        while minHeap and minHeap[0][1] < q:\n            heapq.heappop(minHeap)\n        res[q] = minHeap[0][0] if minHeap else -1",
-                    "validationRegex": "^\\s+for\\s+q\\s+in\\s+sorted_queries:\\s*while\\s+i\\s*<\\s+len\\(intervals\\)\\s+and\\s+intervals\\[i\\]\\[0\\]\\s*<=\\s*q:\\s*l,\\s*r\\s*=\\s*intervals\\[i\\]\\s*heapq\\.heappush\\(minHeap,\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1,\\s*r\\)\\)\\s*i\\s*\\+=\\s*1\\s*while\\s+minHeap\\s+and\\s+minHeap\\[0\\]\\[1\\]\\s*<\\s*q:\\s*heapq\\.heappop\\(minHeap\\)\\s*res\\[q\\]\\s*=\\s*minHeap\\[0\\]\\[0\\]\\s+if\\s+minHeap\\s+else\\s+-1$",
-                    "hint": "Add intervals starting before q to heap. Remove intervals ending before q from heap. Top of heap is the smallest valid interval.",
-                    "solutionCode": "    for q in sorted_queries:\n        while i < len(intervals) and intervals[i][0] <= q:\n            l, r = intervals[i]\n            heapq.heappush(minHeap, (r - l + 1, r))\n            i += 1\n        while minHeap and minHeap[0][1] < q:\n            heapq.heappop(minHeap)\n        res[q] = minHeap[0][0] if minHeap else -1"
+                    "instruction": "Iterate through sorted queries.",
+                    "placeholderCode": "    for q in sorted_queries:",
+                    "validationRegex": "^\\s+for\\s+q\\s+in\\s+sorted_queries:$",
+                    "hint": "Loop through each query in the sorted order.",
+                    "solutionCode": "    for q in sorted_queries:"
                 },
                 {
                     "id": 8,
+                    "instruction": "Check for new intervals starting before query.",
+                    "placeholderCode": "        while i < len(intervals) and intervals[i][0] <= q:",
+                    "validationRegex": "^\\s+while\\s+i\\s*<\\s+len\\(intervals\\)\\s+and\\s+intervals\\[i\\]\\[0\\]\\s*<=\\s*q:$",
+                    "hint": "Loop while there are intervals that start before or at the current query `q`.",
+                    "solutionCode": "        while i < len(intervals) and intervals[i][0] <= q:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Get interval bounds.",
+                    "placeholderCode": "            l, r = intervals[i]",
+                    "validationRegex": "^\\s+l,\\s*r\\s*=\\s*intervals\\[i\\]$",
+                    "hint": "Unpack the start and end of the current interval.",
+                    "solutionCode": "            l, r = intervals[i]"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Add interval to minHeap.",
+                    "placeholderCode": "            heapq.heappush(minHeap, (r - l + 1, r))",
+                    "validationRegex": "^\\s+heapq\\.heappush\\(minHeap,\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1,\\s*r\\)\\)$",
+                    "hint": "Push a tuple containing the size of the interval and its end point onto the min-heap.",
+                    "solutionCode": "            heapq.heappush(minHeap, (r - l + 1, r))"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Increment interval index.",
+                    "placeholderCode": "            i += 1",
+                    "validationRegex": "^\\s+i\\s*\\+=\\s*1$",
+                    "hint": "Move to the next interval.",
+                    "solutionCode": "            i += 1"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Remove invalid intervals from heap.",
+                    "placeholderCode": "        while minHeap and minHeap[0][1] < q:",
+                    "validationRegex": "^\\s+while\\s+minHeap\\s+and\\s+minHeap\\[0\\]\\[1\\]\\s*<\\s*q:$",
+                    "hint": "Loop while the heap is not empty and the top interval ends before the current query `q`.",
+                    "solutionCode": "        while minHeap and minHeap[0][1] < q:"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Pop invalid interval.",
+                    "placeholderCode": "            heapq.heappop(minHeap)",
+                    "validationRegex": "^\\s+heapq\\.heappop\\(minHeap\\)$",
+                    "hint": "Remove the invalid interval from the heap.",
+                    "solutionCode": "            heapq.heappop(minHeap)"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Store result for current query.",
+                    "placeholderCode": "        res[q] = minHeap[0][0] if minHeap else -1",
+                    "validationRegex": "^\\s+res\\[q\\]\\s*=\\s*minHeap\\[0\\]\\[0\\]\\s+if\\s+minHeap\\s+else\\s+-1$",
+                    "hint": "If the heap is not empty, the top element has the smallest size. Otherwise store -1.",
+                    "solutionCode": "        res[q] = minHeap[0][0] if minHeap else -1"
+                },
+                {
+                    "id": 15,
                     "instruction": "Return result mapped to original queries.",
                     "placeholderCode": "    return [res[q] for q in queries]",
                     "validationRegex": "^\\s+return\\s+\\[res\\[q\\]\\s+for\\s+q\\s+in\\s+queries\\]$",
