@@ -98,14 +98,70 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Iterate through the string again, extending the partition's end based on 'lastIndex' and recording the size once the end is reached.",
-                    "placeholderCode": "    res = []\n    size, end = 0, 0\n    for i, c in enumerate(s):\n        size += 1\n        end = max(end, lastIndex[c])\n        if i == end:\n            res.append(size)\n            size = 0",
-                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]\\s*size,\\s*end\\s*=\\s*0,\\s*0\\s*for\\s+i,\\s*c\\s+in\\s+enumerate\\(s\\):\\s*size\\s*\\+=\\s*1\\s*end\\s*=\\s*max\\(end,\\s*lastIndex\\[c\\]\\)\\s*if\\s+i\\s*==\\s*end:\\s*res\\.append\\(size\\)\\s*size\\s*=\\s*0$",
-                    "hint": "Maintain the current window end.",
-                    "solutionCode": "    res = []\n    size, end = 0, 0\n    for i, c in enumerate(s):\n        size += 1\n        end = max(end, lastIndex[c])\n        if i == end:\n            res.append(size)\n            size = 0"
+                    "instruction": "Initialize an empty list 'res' to store the sizes of the partitions.",
+                    "placeholderCode": "    res = []",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\[\\]$",
+                    "hint": "This list will be our final output.",
+                    "solutionCode": "    res = []"
                 },
                 {
                     "id": 6,
+                    "instruction": "Initialize 'size' and 'end' variables to 0 to track the current partition.",
+                    "placeholderCode": "    size, end = 0, 0",
+                    "validationRegex": "^\\s+size,\\s*end\\s*=\\s*0,\\s*0$",
+                    "hint": "'size' tracks the length of the current part, and 'end' tracks its furthest point.",
+                    "solutionCode": "    size, end = 0, 0"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Initiate a second loop to iterate through the string to perform the partitioning.",
+                    "placeholderCode": "    for i, c in enumerate(s):",
+                    "validationRegex": "^\\s+for\\s+i,\\s*c\\s+in\\s+enumerate\\(s\\):$",
+                    "hint": "We'll use index and character to decide where to cut.",
+                    "solutionCode": "    for i, c in enumerate(s):"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Increment the current partition 'size' for the current character.",
+                    "placeholderCode": "        size += 1",
+                    "validationRegex": "^\\s+size\\s*\\+=\\s*1$",
+                    "hint": "Each character increases the length of the potential part.",
+                    "solutionCode": "        size += 1"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Update the partition 'end' by choosing the maximum between the current end and the last index of the current character.",
+                    "placeholderCode": "        end = max(end, lastIndex[c])",
+                    "validationRegex": "^\\s+end\\s*=\\s*max\\(end,\\s*lastIndex\\[c\\]\\)$",
+                    "hint": "This greedy step ensures every character within the partition appears only in this part.",
+                    "solutionCode": "        end = max(end, lastIndex[c])"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Check if the current index has reached the furthest point of the current partition.",
+                    "placeholderCode": "        if i == end:",
+                    "validationRegex": "^\\s+if\\s+i\\s*==\\s*end:$",
+                    "hint": "When i == end, we've reached a point where all characters seen so far won't appear later.",
+                    "solutionCode": "        if i == end:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Append the calculated 'size' of the completed partition to the 'res' list.",
+                    "placeholderCode": "            res.append(size)",
+                    "validationRegex": "^\\s+res\\.append\\(size\\)$",
+                    "hint": "Save the partition length.",
+                    "solutionCode": "            res.append(size)"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Reset the 'size' to 0 to begin tracking the next partition.",
+                    "placeholderCode": "            size = 0",
+                    "validationRegex": "^\\s+size\\s*=\\s*0$",
+                    "hint": "Start fresh for the new part.",
+                    "solutionCode": "            size = 0"
+                },
+                {
+                    "id": 13,
                     "instruction": "Return the list of partition sizes.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
