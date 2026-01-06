@@ -138,14 +138,22 @@
                 },
                 {
                     "id": 12,
-                    "instruction": "Find the index of the first non-zero digit.",
-                    "placeholderCode": "    while beg < len(res) and res[beg] == 0:\n        beg += 1",
-                    "validationRegex": "^\\s+while\\s+beg\\s*<\\s+len\\(res\\)\\s+and\\s+res\\[beg\\]\\s*==\\s*0:\\s*beg\\s*\\+=\\s*1$",
-                    "hint": "Skip leading zeros.",
-                    "solutionCode": "    while beg < len(res) and res[beg] == 0:\n        beg += 1"
+                    "instruction": "Initiate a loop to skip leading zeros.",
+                    "placeholderCode": "    while beg < len(res) and res[beg] == 0:",
+                    "validationRegex": "^\\s+while\\s+beg\\s*<\\s+len\\(res\\)\\s+and\\s+res\\[beg\\]\\s*==\\s*0:$",
+                    "hint": "Loop while `beg` is within bounds and the digit at `beg` is 0.",
+                    "solutionCode": "    while beg < len(res) and res[beg] == 0:"
                 },
                 {
                     "id": 13,
+                    "instruction": "Increment the pointer.",
+                    "placeholderCode": "        beg += 1",
+                    "validationRegex": "^\\s+beg\\s*\\+=\\s*1$",
+                    "hint": "Move to the next digit.",
+                    "solutionCode": "        beg += 1"
+                },
+                {
+                    "id": 14,
                     "instruction": "Convert the digits to strings.",
                     "placeholderCode": "    res = map(str, res[beg:])",
                     "validationRegex": "^\\s+res\\s*=\\s*map\\(str,\\s*res\\[beg:\\]\\)$",
@@ -153,7 +161,7 @@
                     "solutionCode": "    res = map(str, res[beg:])"
                 },
                 {
-                    "id": 14,
+                    "id": 15,
                     "instruction": "Join the strings to form the final result.",
                     "placeholderCode": "    return \"\".join(res)",
                     "validationRegex": "^\\s+return\\s+\"\"\\.join\\(res\\)$",
