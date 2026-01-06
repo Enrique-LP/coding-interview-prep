@@ -29,7 +29,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Loop",
+            "name": "Brute Force",
             "description": "Multiply x by itself n times. (Will TLE for large n)",
             "steps": [
                 {
@@ -68,7 +68,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Binary Exponentiation",
+            "name": "Optimal",
             "description": "Recursive approach with O(log n).",
             "steps": [
                 {
@@ -81,15 +81,55 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Define recursive helper.",
-                    "placeholderCode": "    def helper(x, n):\n        if x == 0: return 0\n        if n == 0: return 1\n        res = helper(x, n // 2)\n        res = res * res\n        return x * res if n % 2 else res",
-                    "validationRegex": "^\\s+def\\s+helper\\(x,\\s*n\\):\\s*if\\s+x\\s*==\\s*0:\\s*return\\s+0\\s*if\\s+n\\s*==\\s*0:\\s*return\\s+1\\s*res\\s*=\\s*helper\\(x,\\s*n\\s*//\\s*2\\)\\s*res\\s*=\\s*res\\s*\\*\\s*res\\s*return\\s+x\\s*\\*\\s*res\\s+if\\s+n\\s*%\\s*2\\s+else\\s+res$",
-                    "hint": "Use recursion. Calculate `x^(n/2)` once and square it. If n is odd, multiply by x one more time.",
-                    "solutionCode": "    def helper(x, n):\n        if x == 0: return 0\n        if n == 0: return 1\n        res = helper(x, n // 2)\n        res = res * res\n        return x * res if n % 2 else res"
+                    "instruction": "Define a helper function that takes x and n.",
+                    "placeholderCode": "    def helper(x, n):",
+                    "validationRegex": "^\\s+def\\s+helper\\(x,\\s*n\\):$",
+                    "hint": "Define a recursive helper function.",
+                    "solutionCode": "    def helper(x, n):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Handle negative n.",
+                    "instruction": "Base case: if x is 0, return 0.",
+                    "placeholderCode": "        if x == 0: return 0",
+                    "validationRegex": "^\\s+if\\s+x\\s*==\\s*0:\\s*return\\s+0$",
+                    "hint": "Handle the base case where x is 0.",
+                    "solutionCode": "        if x == 0: return 0"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Base case: if n is 0, return 1.",
+                    "placeholderCode": "        if n == 0: return 1",
+                    "validationRegex": "^\\s+if\\s+n\\s*==\\s*0:\\s*return\\s+1$",
+                    "hint": "Handle the base case where n is 0.",
+                    "solutionCode": "        if n == 0: return 1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Recursively call the helper with n divided by 2.",
+                    "placeholderCode": "        res = helper(x, n // 2)",
+                    "validationRegex": "^\\s+res\\s*=\\s*helper\\(x,\\s*n\\s*//\\s*2\\)$",
+                    "hint": "Calculate the result for n // 2.",
+                    "solutionCode": "        res = helper(x, n // 2)"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Square the result.",
+                    "placeholderCode": "        res = res * res",
+                    "validationRegex": "^\\s+res\\s*=\\s*res\\s*\\*\\s*res$",
+                    "hint": "Multiply the result by itself.",
+                    "solutionCode": "        res = res * res"
+                },
+                {
+                    "id": 7,
+                    "instruction": "If n is odd, multiply by x, otherwise return res.",
+                    "placeholderCode": "        return x * res if n % 2 else res",
+                    "validationRegex": "^\\s+return\\s+x\\s*\\*\\s*res\\s+if\\s+n\\s*%\\s*2\\s+else\\s+res$",
+                    "hint": "If n is odd, multiply by x one more time.",
+                    "solutionCode": "        return x * res if n % 2 else res"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Call helper with absolute value of n and handle negative exponent.",
                     "placeholderCode": "    res = helper(x, abs(n))\n    return res if n >= 0 else 1 / res",
                     "validationRegex": "^\\s+res\\s*=\\s*helper\\(x,\\s*abs\\(n\\)\\)\\s*return\\s+res\\s+if\\s+n\\s*>=\\s*0\\s+else\\s+1\\s*/\\s*res$",
                     "hint": "Calculate power for absolute value of n. If n was negative, return reciprocal.",
