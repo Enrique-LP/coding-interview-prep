@@ -115,14 +115,54 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Iterate backwards through both strings and fill the DP table based on character matches and operations.",
-                    "placeholderCode": "    for i in range(len(word1) - 1, -1, -1):\n        for j in range(len(word2) - 1, -1, -1):\n            if word1[i] == word2[j]:\n                dp[i][j] = dp[i + 1][j + 1]\n            else:\n                dp[i][j] = 1 + min(dp[i + 1][j], dp[i][j + 1], dp[i + 1][j + 1])",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(word1\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(word2\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+word1\\[i\\]\\s*==\\s+word2\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\s*else:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*1\\s*\\+\\s*min\\(dp\\[i\\s*\\+\\s*1\\]\\[j\\],\\s*dp\\[i\\]\\[j\\s*\\+\\s*1\\],\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\)$",
-                    "hint": "If characters match, take the diagonal result. Else, take 1 + the minimum of delete, insert, or replace.",
-                    "solutionCode": "    for i in range(len(word1) - 1, -1, -1):\n        for j in range(len(word2) - 1, -1, -1):\n            if word1[i] == word2[j]:\n                dp[i][j] = dp[i + 1][j + 1]\n            else:\n                dp[i][j] = 1 + min(dp[i + 1][j], dp[i][j + 1], dp[i + 1][j + 1])"
+                    "instruction": "Initiate the outer loop to iterate backwards through string 'word1'.",
+                    "placeholderCode": "    for i in range(len(word1) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(word1\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "We fill the table bottom-up based on character suffixes.",
+                    "solutionCode": "    for i in range(len(word1) - 1, -1, -1):"
                 },
                 {
                     "id": 6,
+                    "instruction": "Initiate the inner loop to iterate backwards through string 'word2'.",
+                    "placeholderCode": "        for j in range(len(word2) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(len\\(word2\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "Each cell (i, j) will represent the subproblem for word1[i:] and word2[j:].",
+                    "solutionCode": "        for j in range(len(word2) - 1, -1, -1):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check if the current characters from both strings are identical.",
+                    "placeholderCode": "            if word1[i] == word2[j]:",
+                    "validationRegex": "^\\s+if\\s+word1\\[i\\]\\s*==\\s+word2\\[j\\]:$",
+                    "hint": "If they are the same, no edit operation is costed for this position.",
+                    "solutionCode": "            if word1[i] == word2[j]:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "If they match, assign the value from the diagonal cell (i + 1, j + 1).",
+                    "placeholderCode": "                dp[i][j] = dp[i + 1][j + 1]",
+                    "validationRegex": "^\\s+dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]$",
+                    "hint": "The cost is same as converting the remaining suffixes.",
+                    "solutionCode": "                dp[i][j] = dp[i + 1][j + 1]"
+                },
+                {
+                    "id": 9,
+                    "instruction": "If the characters do not match, handle the alternative case.",
+                    "placeholderCode": "            else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "A mismatch requires one of the three edit operations.",
+                    "solutionCode": "            else:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "If they don't match, set the current cell to 1 plus the minimum of the results for delete, insert, or replace.",
+                    "placeholderCode": "                dp[i][j] = 1 + min(dp[i + 1][j], dp[i][j + 1], dp[i + 1][j + 1])",
+                    "validationRegex": "^\\s+dp\\[i\\]\\[j\\]\\s*=\\s*1\\s*\\+\\s*min\\(dp\\[i\\s*\\+\\s*1\\]\\[j\\],\\s*dp\\[i\\]\\[j\\s*\\+\\s*1\\],\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\)$",
+                    "hint": "Compare costs of deletion (i+1), insertion (j+1), and substitution (diagonal).",
+                    "solutionCode": "                dp[i][j] = 1 + min(dp[i + 1][j], dp[i][j + 1], dp[i + 1][j + 1])"
+                },
+                {
+                    "id": 11,
                     "instruction": "Return the final edit distance from the top-left of the DP table.",
                     "placeholderCode": "    return dp[0][0]",
                     "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
