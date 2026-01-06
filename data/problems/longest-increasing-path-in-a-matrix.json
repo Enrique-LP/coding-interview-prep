@@ -181,19 +181,51 @@
                 },
                 {
                     "id": 13,
-                    "instruction": "Store the computed maximum path length for the current cell in the DP table and return it.",
-                    "placeholderCode": "        dp[(r, c)] = res\n        return res",
-                    "validationRegex": "^\\s+dp\\[\\(r,\\s*c\\)\\]\\s*=\\s*res\\s*return\\s+res$",
+                    "instruction": "Store the computed maximum path length for the current cell in the DP table.",
+                    "placeholderCode": "        dp[(r, c)] = res",
+                    "validationRegex": "^\\s+dp\\[\\(r,\\s*c\\)\\]\\s*=\\s*res$",
                     "hint": "Caching the result is essential for the DFS with memoization strategy.",
-                    "solutionCode": "        dp[(r, c)] = res\n        return res"
+                    "solutionCode": "        dp[(r, c)] = res"
                 },
                 {
                     "id": 14,
-                    "instruction": "Trigger the DFS for every single cell in the matrix and return the maximum value found in the DP table.",
-                    "placeholderCode": "    for r in range(rows):\n        for c in range(cols):\n            dfs(r, c, -1)\n    return max(dp.values())",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*dfs\\(r,\\s*c,\\s*-1\\)\\s*return\\s+max\\(dp\\.values\\(\\)\\)$",
-                    "hint": "Since the path could start anywhere, we must ensure every cell is considered as a potential starting point.",
-                    "solutionCode": "    for r in range(rows):\n        for c in range(cols):\n            dfs(r, c, -1)\n    return max(dp.values())"
+                    "instruction": "Return the calculated maximum path length for the current cell.",
+                    "placeholderCode": "        return res",
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "This value will be used by the caller to build up the path length.",
+                    "solutionCode": "        return res"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Initiate a loop to iterate through each row of the matrix.",
+                    "placeholderCode": "    for r in range(rows):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):$",
+                    "hint": "We need to check every cell to ensure we find the global maximum.",
+                    "solutionCode": "    for r in range(rows):"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Initiate a nested loop to iterate through each column of the matrix.",
+                    "placeholderCode": "        for c in range(cols):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):$",
+                    "hint": "This nested loop ensures we visit every cell (r, c).",
+                    "solutionCode": "        for c in range(cols):"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Call the 'dfs' helper function for the current cell, starting with a previous value of -1.",
+                    "placeholderCode": "            dfs(r, c, -1)",
+                    "validationRegex": "^\\s+dfs\\(r,\\s*c,\\s*-1\\)$",
+                    "hint": "-1 is used as 'prevVal' because any cell value (>=0) will be strictly greater than it.",
+                    "solutionCode": "            dfs(r, c, -1)"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Find and return the maximum value stored in the 'dp' dictionary.",
+                    "placeholderCode": "    return max(dp.values())",
+                    "validationRegex": "^\\s+return\\s+max\\(dp\\.values\\(\\)\\)$",
+                    "hint": "After processing all cells, 'dp' contains the longest path starting from each cell.",
+                    "solutionCode": "    return max(dp.values())"
                 }
             ]
         }
