@@ -20,45 +20,55 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Built-in Sum (Not Allowed)",
+            "name": "Brute Force",
             "description": "Use sum function. (Violates constraints)",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function get_sum that takes a and b.",
                     "placeholderCode": "def get_sum(a, b):",
-                    "validationRegex": "^def\\s+get_sum\\(a,\\s*b\\):$"
+                    "validationRegex": "^def\\s+get_sum\\(a,\\s*b\\):$",
+                    "hint": "Use the `def` keyword to define the function.",
+                    "solutionCode": "def get_sum(a, b):"
                 },
                 {
                     "id": 2,
                     "instruction": "Return sum.",
                     "placeholderCode": "    return sum([a, b])",
-                    "validationRegex": "^\\s+return\\s+sum\\(\\[a,\\s*b\\]\\)$"
+                    "validationRegex": "^\\s+return\\s+sum\\(\\[a,\\s*b\\]\\)$",
+                    "hint": "Use the built-in `sum` function with a list containing `a` and `b`.",
+                    "solutionCode": "    return sum([a, b])"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
-            "name": "Bitwise Operators",
+            "name": "Optimal",
             "description": "Use XOR for sum and AND for carry.",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function get_sum that takes a and b.",
                     "placeholderCode": "def get_sum(a, b):",
-                    "validationRegex": "^def\\s+get_sum\\(a,\\s*b\\):$"
+                    "validationRegex": "^def\\s+get_sum\\(a,\\s*b\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def get_sum(a, b):"
                 },
                 {
                     "id": 2,
                     "instruction": "Loop while carry exists.",
                     "placeholderCode": "    mask = 0xffffffff\n    while (b & mask) > 0:\n        carry = (a & b) << 1\n        a = (a ^ b)\n        b = carry",
-                    "validationRegex": "^\\s+mask\\s*=\\s*0xffffffff\\s*while\\s*\\(b\\s*&\\s*mask\\)\\s*>\\s*0:\\s*carry\\s*=\\s*\\(a\\s*&\\s*b\\)\\s*<<\\s*1\\s*a\\s*=\\s*\\(a\\s*\\^\\s*b\\)\\s*b\\s*=\\s*carry$"
+                    "validationRegex": "^\\s+mask\\s*=\\s*0xffffffff\\s*while\\s*\\(b\\s*&\\s*mask\\)\\s*>\\s*0:\\s*carry\\s*=\\s*\\(a\\s*&\\s*b\\)\\s*<<\\s*1\\s*a\\s*=\\s*\\(a\\s*\\^\\s*b\\)\\s*b\\s*=\\s*carry$",
+                    "hint": "Use a mask to handle overflow for 32-bit integers. Loop while `b` (carry) is non-zero (masked). Calculate carry with `(a & b) << 1`, sum with `a ^ b`, and update `b` to carry.",
+                    "solutionCode": "    mask = 0xffffffff\n    while (b & mask) > 0:\n        carry = (a & b) << 1\n        a = (a ^ b)\n        b = carry"
                 },
                 {
                     "id": 3,
                     "instruction": "Handle negative numbers.",
                     "placeholderCode": "    return (a & mask) if b > 0 else a",
-                    "validationRegex": "^\\s+return\\s*\\(a\\s*&\\s*mask\\)\\s+if\\s+b\\s*>\\s*0\\s+else\\s+a$"
+                    "validationRegex": "^\\s+return\\s*\\(a\\s*&\\s*mask\\)\\s+if\\s+b\\s*>\\s*0\\s+else\\s+a$",
+                    "hint": "Return masked `a` if `b` is positive (handling overflow for positive sum), otherwise return `a`.",
+                    "solutionCode": "    return (a & mask) if b > 0 else a"
                 }
             ]
         }
