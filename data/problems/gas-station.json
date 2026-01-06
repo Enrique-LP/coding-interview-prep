@@ -24,8 +24,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Simulation",
-            "description": "Simulate starting from each station.",
+            "name": "Brute Force",
+            "description": "Iteratively simulate starting the journey from each gas station to determine if a full circuit is possible.",
             "steps": [
                 {
                     "id": 1,
@@ -37,7 +37,7 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Iterate through each station as start.",
+                    "instruction": "Iterate through each station index as a potential starting point.",
                     "placeholderCode": "    n = len(gas)\n    for i in range(n):",
                     "validationRegex": "^\\s+n\\s*=\\s*len\\(gas\\)\\s*for\\s+i\\s+in\\s+range\\(n\\):$",
                     "hint": "Try every index `i` as the starting point.",
@@ -45,15 +45,15 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Simulate trip.",
+                    "instruction": "For each starting station, simulate the trip around the circuit, tracking the gas tank and checking if it ever drops below zero.",
                     "placeholderCode": "        tank = 0\n        possible = True\n        for j in range(n):\n            idx = (i + j) % n\n            tank += gas[idx] - cost[idx]\n            if tank < 0:\n                possible = False\n                break",
                     "validationRegex": "^\\s+tank\\s*=\\s*0\\s*possible\\s*=\\s*True\\s*for\\s+j\\s+in\\s+range\\(n\\):\\s*idx\\s*=\\s*\\(i\\s*\\+\\s*j\\)\\s*%\\s*n\\s*tank\\s*\\+=\\s*gas\\[idx\\]\\s*-\\s*cost\\[idx\\]\\s*if\\s+tank\\s*<\\s*0:\\s*possible\\s*=\\s*False\\s*break$",
-                    "hint": "Simulate the journey. Add gas, subtract cost. If tank drops below 0, this start is invalid.\\n\\nExample:\\nGas=[1, 2], Cost=[2, 1]. Start i=0.\\nStation 0: Tank=0+1-2=-1. Invalid.\\nStart i=1.\\nStation 1: Tank=0+2-1=1.\\nStation 0: Tank=1+1-2=0. Valid.",
+                    "hint": "Simulate the journey. Add gas, subtract cost. If tank drops below 0, this start is invalid.",
                     "solutionCode": "        tank = 0\n        possible = True\n        for j in range(n):\n            idx = (i + j) % n\n            tank += gas[idx] - cost[idx]\n            if tank < 0:\n                possible = False\n                break"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return index if possible.",
+                    "instruction": "If a full circuit is successfully simulated, return the current starting index.",
                     "placeholderCode": "        if possible: return i",
                     "validationRegex": "^\\s+if\\s+possible:\\s*return\\s+i$",
                     "hint": "If the loop completes without tank < 0, return the start index.",
@@ -61,7 +61,7 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Return -1 if no solution.",
+                    "instruction": "If no starting point allows for a full circuit, return -1.",
                     "placeholderCode": "    return -1",
                     "validationRegex": "^\\s+return\\s+-1$",
                     "hint": "If no start index works, return -1.",
@@ -71,8 +71,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Greedy",
-            "description": "Check total gas vs cost, find start.",
+            "name": "Optimal",
+            "description": "Use a greedy approach to find the unique starting station in a single pass O(n), assuming total gas is sufficient for total cost.",
             "steps": [
                 {
                     "id": 1,
@@ -84,7 +84,7 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Check if total gas < total cost.",
+                    "instruction": "Check if the total amount of gas is less than the total cost of the trip; if so, returning -1 as a circuit is impossible.",
                     "placeholderCode": "    if sum(gas) < sum(cost): return -1",
                     "validationRegex": "^\\s+if\\s+sum\\(gas\\)\\s*<\\s+sum\\(cost\\):\\s*return\\s+-1$",
                     "hint": "If total gas is less than total cost, it's impossible to complete the circuit.",
@@ -92,18 +92,66 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Find valid start index.",
-                    "placeholderCode": "    total = 0\n    res = 0\n    for i in range(len(gas)):\n        total += (gas[i] - cost[i])\n        if total < 0:\n            total = 0\n            res = i + 1",
-                    "validationRegex": "^\\s+total\\s*=\\s*0\\s*res\\s*=\\s*0\\s*for\\s+i\\s+in\\s+range\\(len\\(gas\\)\\):\\s*total\\s*\\+=\\s*\\(gas\\[i\\]\\s*-\\s*cost\\[i\\]\\)\\s*if\\s+total\\s*<\\s*0:\\s*total\\s*=\\s*0\\s*res\\s*=\\s*i\\s*\\+\\s*1$",
-                    "hint": "Iterate through stations. Accumulate gas-cost. If total drops below 0, reset total to 0 and try starting from the next station (i+1).\\n\\nExample:\\nGas=[1, 2, 3], Cost=[3, 4, 1]. Total Diff = -2 (Impossible, but for logic check:)\\ni=0: Diff=1-3=-2. Total=-2. Reset Total=0, Start=1.\\ni=1: Diff=2-4=-2. Total=-2. Reset Total=0, Start=2.\\ni=2: Diff=3-1=2. Total=2. Valid so far.",
-                    "solutionCode": "    total = 0\n    res = 0\n    for i in range(len(gas)):\n        total += (gas[i] - cost[i])\n        if total < 0:\n            total = 0\n            res = i + 1"
+                    "instruction": "Initialize 'total' to 0 to keep track of the current gas balance in the tank.",
+                    "placeholderCode": "    total = 0",
+                    "validationRegex": "^\\s+total\\s*=\\s*0$",
+                    "hint": "This will track your net gas as you move between stations.",
+                    "solutionCode": "    total = 0"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Initialize 'res' to 0 to store the potential starting station index.",
+                    "placeholderCode": "    res = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*0$",
+                    "hint": "This variable will hold our answer.",
+                    "solutionCode": "    res = 0"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Initiate a loop to iterate through all gas stations by their index 'i'.",
+                    "placeholderCode": "    for i in range(len(gas)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(gas\\)\\):$",
+                    "hint": "We'll check each station one by one.",
+                    "solutionCode": "    for i in range(len(gas)):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Update 'total' by adding the gas gained at the current station and subtracting the cost to reach the next station.",
+                    "placeholderCode": "        total += (gas[i] - cost[i])",
+                    "validationRegex": "^\\s+total\\s*\\+=\\s*\\(gas\\[i\\]\\s*-\\s*cost\\[i\\]\\)$",
+                    "hint": "Calculate the net change in gas for this leg of the journey.",
+                    "solutionCode": "        total += (gas[i] - cost[i])"
+                },
+                {
+                    "id": 7,
+                    "instruction": "If 'total' becomes negative, it means the current starting station (and any station before it) cannot complete the current leg.",
+                    "placeholderCode": "        if total < 0:",
+                    "validationRegex": "^\\s+if\\s+total\\s*<\\s*0:$",
+                    "hint": "Check if we ran out of gas.",
+                    "solutionCode": "        if total < 0:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "If 'total' is negative, reset it to 0 as we must start our search fresh from the next station.",
+                    "placeholderCode": "            total = 0",
+                    "validationRegex": "^\\s+total\\s*=\\s*0$",
+                    "hint": "The current station cannot be the start, nor can any station within the current failed segment.",
+                    "solutionCode": "            total = 0"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Update 'res' to the next station index (i + 1) as the new potential starting station.",
+                    "placeholderCode": "            res = i + 1",
+                    "validationRegex": "^\\s+res\\s*=\\s*i\\s*\\+\\s*1$",
+                    "hint": "Our next guess for the start is the station right after the failure.",
+                    "solutionCode": "            res = i + 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Return the final value of 'res' as the starting gas station's index.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "Return the valid start index found.",
+                    "hint": "Since we already checked if a solution exists, 'res' will be the unique start.",
                     "solutionCode": "    return res"
                 }
             ]
