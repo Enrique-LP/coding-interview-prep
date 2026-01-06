@@ -115,14 +115,54 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Iterate backwards through both strings and fill the DP table based on character matches.",
-                    "placeholderCode": "    for i in range(len(s) - 1, -1, -1):\n        for j in range(len(t) - 1, -1, -1):\n            if s[i] == t[j]:\n                dp[i][j] = dp[i + 1][j + 1] + dp[i + 1][j]\n            else:\n                dp[i][j] = dp[i + 1][j]",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(t\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+s\\[i\\]\\s*==\\s+t\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\s*\\+\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\]\\s*else:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\]$",
-                    "hint": "If characters match, you can either use the current character or skip it. If they don't match, you must skip it.",
-                    "solutionCode": "    for i in range(len(s) - 1, -1, -1):\n        for j in range(len(t) - 1, -1, -1):\n            if s[i] == t[j]:\n                dp[i][j] = dp[i + 1][j + 1] + dp[i + 1][j]\n            else:\n                dp[i][j] = dp[i + 1][j]"
+                    "instruction": "Initiate the outer loop to iterate backwards through string 's'.",
+                    "placeholderCode": "    for i in range(len(s) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(s\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "We process the string from the end to build solutions using previously computed subproblems.",
+                    "solutionCode": "    for i in range(len(s) - 1, -1, -1):"
                 },
                 {
                     "id": 6,
+                    "instruction": "Initiate the inner loop to iterate backwards through string 't'.",
+                    "placeholderCode": "        for j in range(len(t) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(len\\(t\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "Each cell dp[i][j] depends on cells with larger i or j indices.",
+                    "solutionCode": "        for j in range(len(t) - 1, -1, -1):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check if the current characters from 's' and 't' match.",
+                    "placeholderCode": "            if s[i] == t[j]:",
+                    "validationRegex": "^\\s+if\\s+s\\[i\\]\\s*==\\s+t\\[j\\]:$",
+                    "hint": "When characters match, we have multiple ways to proceed.",
+                    "solutionCode": "            if s[i] == t[j]:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "If they match, add the ways to form the subsequence using the character (diagonal) and skipping the character (down).",
+                    "placeholderCode": "                dp[i][j] = dp[i + 1][j + 1] + dp[i + 1][j]",
+                    "validationRegex": "^\\s+dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\s*\\+\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\]$",
+                    "hint": "Using s[i] reduces both targets, skipping it only moves the s index.",
+                    "solutionCode": "                dp[i][j] = dp[i + 1][j + 1] + dp[i + 1][j]"
+                },
+                {
+                    "id": 9,
+                    "instruction": "If the characters do not match, handle the alternative case.",
+                    "placeholderCode": "            else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "When no match is found, we only have one option.",
+                    "solutionCode": "            else:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "If they don't match, the result is simply the ways to form the subsequence skipping the current character in 's'.",
+                    "placeholderCode": "                dp[i][j] = dp[i + 1][j]",
+                    "validationRegex": "^\\s+dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\]$",
+                    "hint": "Transition to the subproblem where we only skip the current character in s.",
+                    "solutionCode": "                dp[i][j] = dp[i + 1][j]"
+                },
+                {
+                    "id": 11,
                     "instruction": "Return the final count from the top-left of the DP table.",
                     "placeholderCode": "    return dp[0][0]",
                     "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
