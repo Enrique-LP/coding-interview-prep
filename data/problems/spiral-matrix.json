@@ -99,18 +99,130 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Loop while boundaries are valid.",
-                    "placeholderCode": "    while left < right and top < bottom:\n        # Top row\n        for i in range(left, right):\n            res.append(matrix[top][i])\n        top += 1\n        # Right col\n        for i in range(top, bottom):\n            res.append(matrix[i][right - 1])\n        right -= 1\n        if not (left < right and top < bottom):\n            break\n        # Bottom row\n        for i in range(right - 1, left - 1, -1):\n            res.append(matrix[bottom - 1][i])\n        bottom -= 1\n        # Left col\n        for i in range(bottom - 1, top - 1, -1):\n            res.append(matrix[i][left])\n        left += 1",
-                    "validationRegex": "^\\s+while\\s+left\\s*<\\s+right\\s+and\\s+top\\s*<\\s+bottom:\\s*for\\s+i\\s+in\\s+range\\(left,\\s*right\\):\\s*res\\.append\\(matrix\\[top\\]\\[i\\]\\)\\s*top\\s*\\+=\\s*1\\s*for\\s+i\\s+in\\s+range\\(top,\\s*bottom\\):\\s*res\\.append\\(matrix\\[i\\]\\[right\\s*-\\s*1\\]\\)\\s*right\\s*-=\\s*1\\s*if\\s+not\\s*\\(left\\s*<\\s+right\\s+and\\s+top\\s*<\\s+bottom\\):\\s*break\\s*for\\s+i\\s+in\\s+range\\(right\\s*-\\s*1,\\s*left\\s*-\\s*1,\\s*-1\\):\\s*res\\.append\\(matrix\\[bottom\\s*-\\s*1\\]\\[i\\]\\)\\s*bottom\\s*-=\\s*1\\s*for\\s+i\\s+in\\s+range\\(bottom\\s*-\\s*1,\\s*top\\s*-\\s*1,\\s*-1\\):\\s*res\\.append\\(matrix\\[i\\]\\[left\\]\\)\\s*left\\s*\\+=\\s*1$",
-                    "hint": "Spiral traversal.",
-                    "solutionCode": "    while left < right and top < bottom:\n        # Top row\n        for i in range(left, right):\n            res.append(matrix[top][i])\n        top += 1\n        # Right col\n        for i in range(top, bottom):\n            res.append(matrix[i][right - 1])\n        right -= 1\n        if not (left < right and top < bottom):\n            break\n        # Bottom row\n        for i in range(right - 1, left - 1, -1):\n            res.append(matrix[bottom - 1][i])\n        bottom -= 1\n        # Left col\n        for i in range(bottom - 1, top - 1, -1):\n            res.append(matrix[i][left])\n        left += 1"
+                    "instruction": "Start a while loop that continues as long as the boundaries are valid.",
+                    "placeholderCode": "    while left < right and top < bottom:",
+                    "validationRegex": "^\\s+while\\s+left\\s*<\\s+right\\s+and\\s+top\\s*<\\s+bottom:$",
+                    "hint": "The loop should run while left is less than right AND top is less than bottom.",
+                    "solutionCode": "    while left < right and top < bottom:"
                 },
                 {
                     "id": 6,
-                    "instruction": "Return result.",
+                    "instruction": "Iterate through the current top row from left to right.",
+                    "placeholderCode": "        for i in range(left, right):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(left,\\s*right\\):$",
+                    "hint": "Use a for loop with a range from left to right.",
+                    "solutionCode": "        for i in range(left, right):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Append the elements from the top row to the result list.",
+                    "placeholderCode": "            res.append(matrix[top][i])",
+                    "validationRegex": "^\\s+res\\.append\\(matrix\\[top\\]\\[i\\]\\)$",
+                    "hint": "Access matrix[top][i] and add it to res.",
+                    "solutionCode": "            res.append(matrix[top][i])"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Move the top boundary down by one.",
+                    "placeholderCode": "        top += 1",
+                    "validationRegex": "^\\s+top\\s*\\+=\\s*1$",
+                    "hint": "Increment the top variable.",
+                    "solutionCode": "        top += 1"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Iterate through the current right column from top to bottom.",
+                    "placeholderCode": "        for i in range(top, bottom):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(top,\\s*bottom\\):$",
+                    "hint": "Use a for loop with a range from top to bottom.",
+                    "solutionCode": "        for i in range(top, bottom):"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Append the elements from the right column to the result list.",
+                    "placeholderCode": "            res.append(matrix[i][right - 1])",
+                    "validationRegex": "^\\s+res\\.append\\(matrix\\[i\\]\\[right\\s*-\\s*1\\]\\)$",
+                    "hint": "Access matrix[i][right-1] and add it to res.",
+                    "solutionCode": "            res.append(matrix[i][right - 1])"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Move the right boundary to the left by one.",
+                    "placeholderCode": "        right -= 1",
+                    "validationRegex": "^\\s+right\\s*-=\\s*1$",
+                    "hint": "Decrement the right variable.",
+                    "solutionCode": "        right -= 1"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Check if the boundaries are still valid before proceeding to bottom and left.",
+                    "placeholderCode": "        if not (left < right and top < bottom):",
+                    "validationRegex": "^\\s+if\\s+not\\s*\\(left\\s*<\\s+right\\s+and\\s+top\\s*<\\s+bottom\\):$",
+                    "hint": "Re-verify the loop condition.",
+                    "solutionCode": "        if not (left < right and top < bottom):"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Exit the loop if the boundaries are no longer valid.",
+                    "placeholderCode": "            break",
+                    "validationRegex": "^\\s+break$",
+                    "hint": "Use the break keyword.",
+                    "solutionCode": "            break"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Iterate through the current bottom row from right to left.",
+                    "placeholderCode": "        for i in range(right - 1, left - 1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(right\\s*-\\s*1,\\s*left\\s*-\\s*1,\\s*-1\\):$",
+                    "hint": "Use range with a step of -1 to go backwards.",
+                    "solutionCode": "        for i in range(right - 1, left - 1, -1):"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Append the elements from the bottom row to the result list.",
+                    "placeholderCode": "            res.append(matrix[bottom - 1][i])",
+                    "validationRegex": "^\\s+res\\.append\\(matrix\\[bottom\\s*-\\s*1\\]\\[i\\]\\)$",
+                    "hint": "Access matrix[bottom-1][i] and add it to res.",
+                    "solutionCode": "            res.append(matrix[bottom - 1][i])"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Move the bottom boundary up by one.",
+                    "placeholderCode": "        bottom -= 1",
+                    "validationRegex": "^\\s+bottom\\s*-=\\s*1$",
+                    "hint": "Decrement the bottom variable.",
+                    "solutionCode": "        bottom -= 1"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Iterate through the current left column from bottom to top.",
+                    "placeholderCode": "        for i in range(bottom - 1, top - 1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(bottom\\s*-\\s*1,\\s*top\\s*-\\s*1,\\s*-1\\):$",
+                    "hint": "Use range with a step of -1 to go backwards.",
+                    "solutionCode": "        for i in range(bottom - 1, top - 1, -1):"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Append the elements from the left column to the result list.",
+                    "placeholderCode": "            res.append(matrix[i][left])",
+                    "validationRegex": "^\\s+res\\.append\\(matrix\\[i\\]\\[left\\]\\)$",
+                    "hint": "Access matrix[i][left] and add it to res.",
+                    "solutionCode": "            res.append(matrix[i][left])"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Move the left boundary to the right by one.",
+                    "placeholderCode": "        left += 1",
+                    "validationRegex": "^\\s+left\\s*\\+=\\s*1$",
+                    "hint": "Increment the left variable.",
+                    "solutionCode": "        left += 1"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Return the final result list containing all elements order.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "Return result.",
+                    "hint": "Return res.",
                     "solutionCode": "    return res"
                 }
             ]
