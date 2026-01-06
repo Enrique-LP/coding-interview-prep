@@ -23,55 +23,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Greedy Filter",
+            "name": "Brute Force",
             "description": "Filter invalid triplets and check if target components exist.",
-            "steps": [
-                {
-                    "id": 1,
-                    "instruction": "Define the function merge_triplets that takes triplets and target.",
-                    "placeholderCode": "def merge_triplets(triplets, target):",
-                    "validationRegex": "^def\\s+merge_triplets\\(triplets,\\s*target\\):$",
-                    "hint": "Use `def` to define the function.",
-                    "solutionCode": "def merge_triplets(triplets, target):"
-                },
-                {
-                    "id": 2,
-                    "instruction": "Initialize set to track found target components.",
-                    "placeholderCode": "    good = set()",
-                    "validationRegex": "^\\s+good\\s*=\\s*set\\(\\)$",
-                    "hint": "Use a set to keep track of which indices (0, 1, 2) of the target triplet have been satisfied.",
-                    "solutionCode": "    good = set()"
-                },
-                {
-                    "id": 3,
-                    "instruction": "Iterate through triplets.",
-                    "placeholderCode": "    for t in triplets:\n        if t[0] > target[0] or t[1] > target[1] or t[2] > target[2]:\n            continue",
-                    "validationRegex": "^\\s+for\\s+t\\s+in\\s+triplets:\\s*if\\s+t\\[0\\]\\s*>\\s+target\\[0\\]\\s+or\\s+t\\[1\\]\\s*>\\s+target\\[1\\]\\s+or\\s+t\\[2\\]\\s*>\\s+target\\[2\\]:\\s*continue$",
-                    "hint": "Ignore any triplet that has any component greater than the corresponding target component, as it can never be part of the solution.\\n\\nExample:\\nTarget=[2, 7, 5].\\nTriplet [3, 4, 5]: 3 > 2. Invalid.\\nTriplet [1, 8, 4]: 8 > 7. Invalid.\\nTriplet [2, 5, 3]: Valid.",
-                    "solutionCode": "    for t in triplets:\n        if t[0] > target[0] or t[1] > target[1] or t[2] > target[2]:\n            continue"
-                },
-                {
-                    "id": 4,
-                    "instruction": "Check if components match target.",
-                    "placeholderCode": "        for i, v in enumerate(t):\n            if v == target[i]:\n                good.add(i)",
-                    "validationRegex": "^\\s+for\\s+i,\\s*v\\s+in\\s+enumerate\\(t\\):\\s*if\\s+v\\s*==\\s+target\\[i\\]:\\s*good\\.add\\(i\\)$",
-                    "hint": "For valid triplets, check if any component matches the target component. If so, add the index to the set.",
-                    "solutionCode": "        for i, v in enumerate(t):\n            if v == target[i]:\n                good.add(i)"
-                },
-                {
-                    "id": 5,
-                    "instruction": "Return True if all components found.",
-                    "placeholderCode": "    return len(good) == 3",
-                    "validationRegex": "^\\s+return\\s+len\\(good\\)\\s*==\\s*3$",
-                    "hint": "If we found matches for all 3 positions, return True.",
-                    "solutionCode": "    return len(good) == 3"
-                }
-            ]
-        },
-        "optimal": {
-            "id": "optimal",
-            "name": "Greedy Filter",
-            "description": "Same as brute force, O(n).",
             "steps": [
                 {
                     "id": 1,
@@ -111,6 +64,85 @@
                     "placeholderCode": "    return len(good) == 3",
                     "validationRegex": "^\\s+return\\s+len\\(good\\)\\s*==\\s*3$",
                     "hint": "Return True if the set contains 0, 1, and 2.",
+                    "solutionCode": "    return len(good) == 3"
+                }
+            ]
+        },
+        "optimal": {
+            "id": "optimal",
+            "name": "Optimal",
+            "description": "Identify triplets that can be merged without exceeding target values and track satisfied components in O(n) time.",
+            "steps": [
+                {
+                    "id": 1,
+                    "instruction": "Define the function merge_triplets that takes triplets and target.",
+                    "placeholderCode": "def merge_triplets(triplets, target):",
+                    "validationRegex": "^def\\s+merge_triplets\\(triplets,\\s*target\\):$",
+                    "hint": "Use `def` to define the function.",
+                    "solutionCode": "def merge_triplets(triplets, target):"
+                },
+                {
+                    "id": 2,
+                    "instruction": "Initialize a set 'good' to keep track of the indices (0, 1, or 2) where a component value from a valid triplet matches the target value.",
+                    "placeholderCode": "    good = set()",
+                    "validationRegex": "^\\s+good\\s*=\\s*set\\(\\)$",
+                    "hint": "We need to check if we can satisfy all three positions of the target triplet.",
+                    "solutionCode": "    good = set()"
+                },
+                {
+                    "id": 3,
+                    "instruction": "Initiate a loop to iterate through each triplet 't' in the input list.",
+                    "placeholderCode": "    for t in triplets:",
+                    "validationRegex": "^\\s+for\\s+t\\s+in\\s+triplets:$",
+                    "hint": "Process each triplet to see if it can contribute to the target.",
+                    "solutionCode": "    for t in triplets:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Check if any component of the current triplet is greater than its corresponding component in the target.",
+                    "placeholderCode": "        if t[0] > target[0] or t[1] > target[1] or t[2] > target[2]:",
+                    "validationRegex": "^\\s+if\\s+t\\[0\\]\\s*>\\s+target\\[0\\]\\s+or\\s+t\\[1\\]\\s*>\\s+target\\[1\\]\\s+or\\s+t\\[2\\]\\s*>\\s+target\\[2\\]:$",
+                    "hint": "If even one component is larger, this triplet will permanently exceed the target since we only apply the 'max' operation.",
+                    "solutionCode": "        if t[0] > target[0] or t[1] > target[1] or t[2] > target[2]:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Skip the current triplet if it's invalid by continuing to the next iteration of the loop.",
+                    "placeholderCode": "            continue",
+                    "validationRegex": "^\\s+continue$",
+                    "hint": "Use the 'continue' keyword to bypass invalid triplets.",
+                    "solutionCode": "            continue"
+                },
+                {
+                    "id": 6,
+                    "instruction": "For valid triplets, iterate through their components to see which target requirements they satisfy.",
+                    "placeholderCode": "        for i, v in enumerate(t):",
+                    "validationRegex": "^\\s+for\\s+i,\\s*v\\s+in\\s+enumerate\\(t\\):$",
+                    "hint": "Use enumerate to get both the index (0, 1, 2) and the value of each component.",
+                    "solutionCode": "        for i, v in enumerate(t):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "If a component's value matches the target value at that same index, add the index to the 'good' set.",
+                    "placeholderCode": "            if v == target[i]:",
+                    "validationRegex": "^\\s+if\\s+v\\s*==\\s*target\\[i\\]:$",
+                    "hint": "We found a valid component for this position.",
+                    "solutionCode": "            if v == target[i]:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Record the satisfied index in the set.",
+                    "placeholderCode": "                good.add(i)",
+                    "validationRegex": "^\\s+good\\.add\\(i\\)$",
+                    "hint": "Store the index i in our set.",
+                    "solutionCode": "                good.add(i)"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Finally, return True if we have found valid components for all three target indices.",
+                    "placeholderCode": "    return len(good) == 3",
+                    "validationRegex": "^\\s+return\\s+len\\(good\\)\\s*==\\s*3$",
+                    "hint": "Check if our set 'good' has gathered indices 0, 1, and 2.",
                     "solutionCode": "    return len(good) == 3"
                 }
             ]
