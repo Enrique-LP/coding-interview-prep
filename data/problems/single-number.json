@@ -26,7 +26,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "HashSet",
+            "name": "Brute Force",
             "description": "Use set to track seen numbers.",
             "steps": [
                 {
@@ -49,7 +49,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "XOR",
+            "name": "Optimal",
             "description": "XOR all numbers. Duplicates cancel out.",
             "steps": [
                 {
@@ -62,15 +62,31 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "XOR all elements.",
-                    "placeholderCode": "    res = 0\n    for n in nums:\n        res = n ^ res",
-                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*for\\s+n\\s+in\\s+nums:\\s*res\\s*=\\s*n\\s*\\^\\s*res$",
-                    "hint": "Initialize result to 0. Iterate through the array and XOR each element with the result.",
-                    "solutionCode": "    res = 0\n    for n in nums:\n        res = n ^ res"
+                    "instruction": "Initialize result variable.",
+                    "placeholderCode": "    res = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*0$",
+                    "hint": "Initialize res to 0.",
+                    "solutionCode": "    res = 0"
                 },
                 {
                     "id": 3,
-                    "instruction": "Return result.",
+                    "instruction": "Iterate through the numbers.",
+                    "placeholderCode": "    for n in nums:",
+                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:$",
+                    "hint": "Loop through each number in the array.",
+                    "solutionCode": "    for n in nums:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "XOR the current number with the result.",
+                    "placeholderCode": "        res = n ^ res",
+                    "validationRegex": "^\\s+res\\s*=\\s*n\\s*\\^\\s*res$",
+                    "hint": "Update res using XOR.",
+                    "solutionCode": "        res = n ^ res"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return the result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
                     "hint": "Return the result.",
