@@ -22,7 +22,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Loop and Shift",
+            "name": "Brute Force",
             "description": "Check each bit by shifting.",
             "steps": [
                 {
@@ -53,7 +53,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "n & (n - 1)",
+            "name": "Optimal",
             "description": "Remove the last set bit repeatedly.",
             "steps": [
                 {
@@ -66,14 +66,38 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Loop while n is not 0.",
-                    "placeholderCode": "    res = 0\n    while n:\n        n = n & (n - 1)\n        res += 1",
-                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*while\\s+n:\\s*n\\s*=\\s*n\\s*&\\s*\\(n\\s*-\\s*1\\)\\s*res\\s*\\+=\\s*1$",
-                    "hint": "Use the trick `n & (n - 1)` to remove the rightmost set bit. Increment count in each iteration.",
-                    "solutionCode": "    res = 0\n    while n:\n        n = n & (n - 1)\n        res += 1"
+                    "instruction": "Initialize result variable.",
+                    "placeholderCode": "    res = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*0$",
+                    "hint": "Initialize counter.",
+                    "solutionCode": "    res = 0"
                 },
                 {
                     "id": 3,
+                    "instruction": "Loop while n is not 0.",
+                    "placeholderCode": "    while n:",
+                    "validationRegex": "^\\s+while\\s+n:$",
+                    "hint": "Continue until all bits are processed.",
+                    "solutionCode": "    while n:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Remove the last set bit.",
+                    "placeholderCode": "        n = n & (n - 1)",
+                    "validationRegex": "^\\s+n\\s*=\\s*n\\s*&\\s*\\(n\\s*-\\s*1\\)$",
+                    "hint": "Use the trick `n & (n - 1)`.",
+                    "solutionCode": "        n = n & (n - 1)"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Increment the count.",
+                    "placeholderCode": "        res += 1",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*1$",
+                    "hint": "Add 1 to the result.",
+                    "solutionCode": "        res += 1"
+                },
+                {
+                    "id": 6,
                     "instruction": "Return result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
