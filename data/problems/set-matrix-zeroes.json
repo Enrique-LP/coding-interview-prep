@@ -147,14 +147,38 @@
                 },
                 {
                     "id": 12,
-                    "instruction": "Iterate through the matrix again starting from index 1,1 to zero out cells based on markers.",
-                    "placeholderCode": "    for r in range(1, rows):\n        for c in range(1, cols):\n            if matrix[0][c] == 0 or matrix[r][0] == 0:\n                matrix[r][c] = 0",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(1,\\s*rows\\):\\s*for\\s+c\\s+in\\s+range\\(1,\\s*cols\\):\\s*if\\s+matrix\\[0\\]\\[c\\]\\s*==\\s*0\\s+or\\s+matrix\\[r\\]\\[0\\]\\s*==\\s*0:\\s*matrix\\[r\\]\\[c\\]\\s*=\\s*0$",
-                    "hint": "Skip the first row and col.",
-                    "solutionCode": "    for r in range(1, rows):\n        for c in range(1, cols):\n            if matrix[0][c] == 0 or matrix[r][0] == 0:\n                matrix[r][c] = 0"
+                    "instruction": "Iterate through each row starting from index 1.",
+                    "placeholderCode": "    for r in range(1, rows):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(1,\\s*rows\\):$",
+                    "hint": "Use a for loop for r from 1 to rows-1.",
+                    "solutionCode": "    for r in range(1, rows):"
                 },
                 {
                     "id": 13,
+                    "instruction": "Iterate through each column starting from index 1.",
+                    "placeholderCode": "        for c in range(1, cols):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(1,\\s*cols\\):$",
+                    "hint": "Use a nested for loop for c from 1 to cols-1.",
+                    "solutionCode": "        for c in range(1, cols):"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Check if either the column or the row is marked with a 0.",
+                    "placeholderCode": "            if matrix[0][c] == 0 or matrix[r][0] == 0:",
+                    "validationRegex": "^\\s+if\\s+matrix\\[0\\]\\[c\\]\\s*==\\s*0\\s+or\\s+matrix\\[r\\]\\[0\\]\\s*==\\s*0:$",
+                    "hint": "Check the markers in the first row and first column.",
+                    "solutionCode": "            if matrix[0][c] == 0 or matrix[r][0] == 0:"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Set the current cell matrix[r][c] to 0 if marked.",
+                    "placeholderCode": "                matrix[r][c] = 0",
+                    "validationRegex": "^\\s+matrix\\[r\\]\\[c\\]\\s*=\\s*0$",
+                    "hint": "Set the cell value to 0.",
+                    "solutionCode": "                matrix[r][c] = 0"
+                },
+                {
+                    "id": 16,
                     "instruction": "Finally, zero out the first row and column separately if needed.",
                     "placeholderCode": "    if matrix[0][0] == 0:\n        for r in range(rows): matrix[r][0] = 0\n    if row_zero:\n        for c in range(cols): matrix[0][c] = 0",
                     "validationRegex": "^\\s+if\\s+matrix\\[0\\]\\[0\\]\\s*==\\s*0:\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*matrix\\[r\\]\\[0\\]\\s*=\\s*0\\s*if\\s+row_zero:\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*matrix\\[0\\]\\[c\\]\\s*=\\s*0$",
