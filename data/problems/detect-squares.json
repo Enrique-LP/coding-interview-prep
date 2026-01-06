@@ -18,7 +18,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "HashMap",
+            "name": "Brute Force",
             "description": "Store points in a map and check diagonals.",
             "steps": [
                 {
@@ -49,27 +49,43 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "HashMap",
+            "name": "Optimal",
             "description": "Same as brute force.",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the class DetectSquares.",
-                    "placeholderCode": "class DetectSquares:\n    def __init__(self):\n        self.ptsCount = defaultdict(int)\n        self.pts = []",
-                    "validationRegex": "^class\\s+DetectSquares:\\s*def\\s+__init__\\(self\\):\\s*self\\.ptsCount\\s*=\\s*defaultdict\\(int\\)\\s*self\\.pts\\s*=\\s*\\[\\]$",
-                    "hint": "Initialize data structures.",
-                    "solutionCode": "class DetectSquares:\n    def __init__(self):\n        self.ptsCount = defaultdict(int)\n        self.pts = []"
+                    "placeholderCode": "class DetectSquares:",
+                    "validationRegex": "^class\\s+DetectSquares:$",
+                    "hint": "Define the class.",
+                    "solutionCode": "class DetectSquares:"
                 },
                 {
                     "id": 2,
-                    "instruction": "Implement add method.",
-                    "placeholderCode": "    def add(self, point):\n        self.ptsCount[tuple(point)] += 1\n        self.pts.append(point)",
-                    "validationRegex": "^\\s+def\\s+add\\(self,\\s*point\\):\\s*self\\.ptsCount\\[tuple\\(point\\)\\]\\s*\\+=\\s*1\\s*self\\.pts\\.append\\(point\\)$",
-                    "hint": "Add point.",
-                    "solutionCode": "    def add(self, point):\n        self.ptsCount[tuple(point)] += 1\n        self.pts.append(point)"
+                    "instruction": "Initialize the class with a dictionary and a list.",
+                    "placeholderCode": "    def __init__(self):\n        self.ptsCount = defaultdict(int)",
+                    "validationRegex": "^\\s+def\\s+__init__\\(self\\):\\s*self\\.ptsCount\\s*=\\s*defaultdict\\(int\\)$",
+                    "hint": "Use `defaultdict` to count point occurrences.",
+                    "solutionCode": "    def __init__(self):\n        self.ptsCount = defaultdict(int)"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize a list to store unique points if desired (or just all points).",
+                    "placeholderCode": "        self.pts = []",
+                    "validationRegex": "^\\s+self\\.pts\\s*=\\s*\\[\\]$",
+                    "hint": "List to store points for iteration.",
+                    "solutionCode": "        self.pts = []"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Implement add method to update the data structures.",
+                    "placeholderCode": "    def add(self, point):\n        self.ptsCount[tuple(point)] += 1\n        self.pts.append(point)",
+                    "validationRegex": "^\\s+def\\s+add\\(self,\\s*point\\):\\s*self\\.ptsCount\\[tuple\\(point\\)\\]\\s*\\+=\\s*1\\s*self\\.pts\\.append\\(point\\)$",
+                    "hint": "Add point to dictionary and list.",
+                    "solutionCode": "    def add(self, point):\n        self.ptsCount[tuple(point)] += 1\n        self.pts.append(point)"
+                },
+                {
+                    "id": 5,
                     "instruction": "Implement count method.",
                     "placeholderCode": "    def count(self, point):\n        res = 0\n        px, py = point\n        for x, y in self.pts:\n            if (abs(py - y) != abs(px - x)) or x == px or y == py:\n                continue\n            res += self.ptsCount[(x, py)] * self.ptsCount[(px, y)]\n        return res",
                     "validationRegex": "^\\s+def\\s+count\\(self,\\s*point\\):\\s*res\\s*=\\s*0\\s*px,\\s*py\\s*=\\s*point\\s*for\\s+x,\\s*y\\s+in\\s+self\\.pts:\\s*if\\s*\\(abs\\(py\\s*-\\s*y\\)\\s*!=\\s*abs\\(px\\s*-\\s*x\\)\\)\\s+or\\s+x\\s*==\\s*px\\s+or\\s+y\\s*==\\s*py:\\s*continue\\s*res\\s*\\+=\\s*self\\.ptsCount\\[\\(x,\\s*py\\)\\]\\s*\\*\\s*self\\.ptsCount\\[\\(px,\\s*y\\)\\]\\s*return\\s+res$",
