@@ -24,57 +24,71 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "String Manipulation",
+            "name": "Brute Force",
             "description": "Convert to string, reverse, handle sign.",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function reverse that takes x.",
                     "placeholderCode": "def reverse(x):",
-                    "validationRegex": "^def\\s+reverse\\(x\\):$"
+                    "validationRegex": "^def\\s+reverse\\(x\\):$",
+                    "hint": "Use the `def` keyword to define the function.",
+                    "solutionCode": "def reverse(x):"
                 },
                 {
                     "id": 2,
                     "instruction": "Handle sign and reverse.",
                     "placeholderCode": "    sign = -1 if x < 0 else 1\n    res = int(str(abs(x))[::-1]) * sign",
-                    "validationRegex": "^\\s+sign\\s*=\\s*-1\\s+if\\s+x\\s*<\\s*0\\s+else\\s+1\\s*res\\s*=\\s*int\\(str\\(abs\\(x\\)\\)\\[::-1\\]\\)\\s*\\*\\s*sign$"
+                    "validationRegex": "^\\s+sign\\s*=\\s*-1\\s+if\\s+x\\s*<\\s*0\\s+else\\s+1\\s*res\\s*=\\s*int\\(str\\(abs\\(x\\)\\)\\[::-1\\]\\)\\s*\\*\\s*sign$",
+                    "hint": "Store the sign. Convert absolute value of `x` to string, reverse it, convert back to int, and re-apply sign.",
+                    "solutionCode": "    sign = -1 if x < 0 else 1\n    res = int(str(abs(x))[::-1]) * sign"
                 },
                 {
                     "id": 3,
                     "instruction": "Check overflow.",
                     "placeholderCode": "    if res < -2**31 or res > 2**31 - 1: return 0\n    return res",
-                    "validationRegex": "^\\s+if\\s+res\\s*<\\s*-2\\*\\*31\\s+or\\s+res\\s*>\\s*2\\*\\*31\\s*-\\s*1:\\s*return\\s+0\\s*return\\s+res$"
+                    "validationRegex": "^\\s+if\\s+res\\s*<\\s*-2\\*\\*31\\s+or\\s+res\\s*>\\s*2\\*\\*31\\s*-\\s*1:\\s*return\\s+0\\s*return\\s+res$",
+                    "hint": "Return 0 if `res` is outside the range [-2^31, 2^31 - 1]. Otherwise return `res`.",
+                    "solutionCode": "    if res < -2**31 or res > 2**31 - 1: return 0\n    return res"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
-            "name": "Math",
+            "name": "Optimal",
             "description": "Pop and push digits.",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function reverse that takes x.",
                     "placeholderCode": "def reverse(x):",
-                    "validationRegex": "^def\\s+reverse\\(x\\):$"
+                    "validationRegex": "^def\\s+reverse\\(x\\):$",
+                    "hint": "Use the `def` keyword to define the function.",
+                    "solutionCode": "def reverse(x):"
                 },
                 {
                     "id": 2,
                     "instruction": "Initialize result.",
                     "placeholderCode": "    res = 0\n    sign = -1 if x < 0 else 1\n    x = abs(x)",
-                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*sign\\s*=\\s*-1\\s+if\\s+x\\s*<\\s*0\\s+else\\s+1\\s*x\\s*=\\s*abs\\(x\\)$"
+                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*sign\\s*=\\s*-1\\s+if\\s+x\\s*<\\s*0\\s+else\\s+1\\s*x\\s*=\\s*abs\\(x\\)$",
+                    "hint": "Initialize `res` to 0. Store sign and work with absolute value of `x`.",
+                    "solutionCode": "    res = 0\n    sign = -1 if x < 0 else 1\n    x = abs(x)"
                 },
                 {
                     "id": 3,
                     "instruction": "Loop and reverse.",
                     "placeholderCode": "    while x:\n        digit = x % 10\n        x //= 10\n        if res > (2**31 - 1) // 10: return 0\n        res = res * 10 + digit",
-                    "validationRegex": "^\\s+while\\s+x:\\s*digit\\s*=\\s*x\\s*%\\s*10\\s*x\\s*//=\\s*10\\s*if\\s+res\\s*>\\s*\\(2\\*\\*31\\s*-\\s*1\\)\\s*//\\s*10:\\s*return\\s+0\\s*res\\s*=\\s*res\\s*\\*\\s*10\\s*\\+\\s*digit$"
+                    "validationRegex": "^\\s+while\\s+x:\\s*digit\\s*=\\s*x\\s*%\\s*10\\s*x\\s*//=\\s*10\\s*if\\s+res\\s*>\\s*\\(2\\*\\*31\\s*-\\s*1\\)\\s*//\\s*10:\\s*return\\s+0\\s*res\\s*=\\s*res\\s*\\*\\s*10\\s*\\+\\s*digit$",
+                    "hint": "Extract last digit. Check if adding it would overflow. Add it to `res`.",
+                    "solutionCode": "    while x:\n        digit = x % 10\n        x //= 10\n        if res > (2**31 - 1) // 10: return 0\n        res = res * 10 + digit"
                 },
                 {
                     "id": 4,
                     "instruction": "Return result with sign.",
                     "placeholderCode": "    return res * sign",
-                    "validationRegex": "^\\s+return\\s+res\\s*\\*\\s*sign$"
+                    "validationRegex": "^\\s+return\\s+res\\s*\\*\\s*sign$",
+                    "hint": "Multiply by sign to restore original polarity.",
+                    "solutionCode": "    return res * sign"
                 }
             ]
         }
