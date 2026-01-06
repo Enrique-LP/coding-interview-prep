@@ -22,7 +22,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Allocate New Matrix",
+            "name": "Brute Force",
             "description": "Create a new matrix and map values. (Not allowed by problem statement but good for understanding)",
             "steps": [
                 {
@@ -61,7 +61,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "In-place Rotation",
+            "name": "Optimal",
             "description": "Rotate layer by layer or transpose then reverse.",
             "steps": [
                 {
@@ -74,19 +74,51 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Transpose the matrix.",
-                    "placeholderCode": "    n = len(matrix)\n    for i in range(n):\n        for j in range(i, n):\n            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]",
-                    "validationRegex": "^\\s+n\\s*=\\s*len\\(matrix\\)\\s*for\\s+i\\s+in\\s+range\\(n\\):\\s*for\\s+j\\s+in\\s+range\\(i,\\s*n\\):\\s*matrix\\[i\\]\\[j\\],\\s*matrix\\[j\\]\\[i\\]\\s*=\\s*matrix\\[j\\]\\[i\\],\\s*matrix\\[i\\]\\[j\\]$",
-                    "hint": "Transpose the matrix (swap rows and columns). Iterate through the upper triangle and swap `matrix[i][j]` with `matrix[j][i]`.",
-                    "solutionCode": "    n = len(matrix)\n    for i in range(n):\n        for j in range(i, n):\n            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]"
+                    "instruction": "Get the size of the matrix n.",
+                    "placeholderCode": "    n = len(matrix)",
+                    "validationRegex": "^\\s+n\\s*=\\s*len\\(matrix\\)$",
+                    "hint": "Use len(matrix) to get the size.",
+                    "solutionCode": "    n = len(matrix)"
                 },
                 {
                     "id": 3,
-                    "instruction": "Reverse each row.",
-                    "placeholderCode": "    for i in range(n):\n        matrix[i].reverse()",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(n\\):\\s*matrix\\[i\\]\\.reverse\\(\\)$",
-                    "hint": "Reverse each row of the transposed matrix to achieve the 90-degree clockwise rotation.",
-                    "solutionCode": "    for i in range(n):\n        matrix[i].reverse()"
+                    "instruction": "Iterate through each row i to begin the transposition.",
+                    "placeholderCode": "    for i in range(n):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(n\\):$",
+                    "hint": "Use a for loop for i from 0 to n-1.",
+                    "solutionCode": "    for i in range(n):"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Iterate through each column j starting from i to the end of the row.",
+                    "placeholderCode": "        for j in range(i, n):",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(i,\\s*n\\):$",
+                    "hint": "Use a nested for loop for j from i to n-1.",
+                    "solutionCode": "        for j in range(i, n):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Swap the elements at matrix[i][j] and matrix[j][i].",
+                    "placeholderCode": "            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]",
+                    "validationRegex": "^\\s+matrix\\[i\\]\\[j\\],\\s*matrix\\[j\\]\\[i\\]\\s*=\\s*matrix\\[j\\]\\[i\\],\\s*matrix\\[i\\]\\[j\\]$",
+                    "hint": "Perform an in-place swap of the elements.",
+                    "solutionCode": "            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Iterate through each row to reverse its elements.",
+                    "placeholderCode": "    for i in range(n):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(n\\):$",
+                    "hint": "Iterate through the rows again.",
+                    "solutionCode": "    for i in range(n):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Reverse the current row.",
+                    "placeholderCode": "        matrix[i].reverse()",
+                    "validationRegex": "^\\s+matrix\\[i\\]\\.reverse\\(\\)$",
+                    "hint": "Use the built-in reverse() method on the row.",
+                    "solutionCode": "        matrix[i].reverse()"
                 }
             ]
         }
