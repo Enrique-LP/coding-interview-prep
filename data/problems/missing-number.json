@@ -69,14 +69,30 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "XOR all indices and values.",
-                    "placeholderCode": "    res = len(nums)\n    for i in range(len(nums)):\n        res ^= i ^ nums[i]",
-                    "validationRegex": "^\\s+res\\s*=\\s*len\\(nums\\)\\s*for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):\\s*res\\s*\\^=\\s*i\\s*\\^\\s*nums\\[i\\]$",
-                    "hint": "Initialize `res` with `len(nums)`. Iterate through `nums` and XOR `res` with both the index `i` and the value `nums[i]`.",
-                    "solutionCode": "    res = len(nums)\n    for i in range(len(nums)):\n        res ^= i ^ nums[i]"
+                    "instruction": "Initialize result with length of array.",
+                    "placeholderCode": "    res = len(nums)",
+                    "validationRegex": "^\\s+res\\s*=\\s*len\\(nums\\)$",
+                    "hint": "Start with `res` equal to `n` (which is `len(nums)`).",
+                    "solutionCode": "    res = len(nums)"
                 },
                 {
                     "id": 3,
+                    "instruction": "Iterate through the array.",
+                    "placeholderCode": "    for i in range(len(nums)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):$",
+                    "hint": "Loop from 0 to n-1 using `range(len(nums))`.",
+                    "solutionCode": "    for i in range(len(nums)):"
+                },
+                {
+                    "id": 4,
+                    "instruction": "XOR result with index and value.",
+                    "placeholderCode": "        res ^= i ^ nums[i]",
+                    "validationRegex": "^\\s+res\\s*\\^=\\s*i\\s*\\^\\s*nums\\[i\\]$",
+                    "hint": "Update `res` by XORing it with the current index `i` and the value `nums[i]`.",
+                    "solutionCode": "        res ^= i ^ nums[i]"
+                },
+                {
+                    "id": 5,
                     "instruction": "Return result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
