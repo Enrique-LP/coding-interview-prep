@@ -86,14 +86,30 @@
                 },
                 {
                     "id": 5,
-                    "instruction": "Implement add method to update the data structures.",
-                    "placeholderCode": "    def add(self, point):\n        self.ptsCount[tuple(point)] += 1\n        self.pts.append(point)",
-                    "validationRegex": "^\\s+def\\s+add\\(self,\\s*point\\):\\s*self\\.ptsCount\\[tuple\\(point\\)\\]\\s*\\+=\\s*1\\s*self\\.pts\\.append\\(point\\)$",
-                    "hint": "Add point to dictionary and list.",
-                    "solutionCode": "    def add(self, point):\n        self.ptsCount[tuple(point)] += 1\n        self.pts.append(point)"
+                    "instruction": "Define the add method.",
+                    "placeholderCode": "    def add(self, point):",
+                    "validationRegex": "^\\s+def\\s+add\\(self,\\s*point\\):$",
+                    "hint": "Method to add a point.",
+                    "solutionCode": "    def add(self, point):"
                 },
                 {
                     "id": 6,
+                    "instruction": "Update the count of the point in the dictionary.",
+                    "placeholderCode": "        self.ptsCount[tuple(point)] += 1",
+                    "validationRegex": "^\\s+self\\.ptsCount\\[tuple\\(point\\)\\]\\s*\\+=\\s*1$",
+                    "hint": "Increment count. Remember to cast point to tuple for dictionary key.",
+                    "solutionCode": "        self.ptsCount[tuple(point)] += 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Append the point to the list.",
+                    "placeholderCode": "        self.pts.append(point)",
+                    "validationRegex": "^\\s+self\\.pts\\.append\\(point\\)$",
+                    "hint": "Add to list.",
+                    "solutionCode": "        self.pts.append(point)"
+                },
+                {
+                    "id": 8,
                     "instruction": "Implement count method.",
                     "placeholderCode": "    def count(self, point):\n        res = 0\n        px, py = point\n        for x, y in self.pts:\n            if (abs(py - y) != abs(px - x)) or x == px or y == py:\n                continue\n            res += self.ptsCount[(x, py)] * self.ptsCount[(px, y)]\n        return res",
                     "validationRegex": "^\\s+def\\s+count\\(self,\\s*point\\):\\s*res\\s*=\\s*0\\s*px,\\s*py\\s*=\\s*point\\s*for\\s+x,\\s*y\\s+in\\s+self\\.pts:\\s*if\\s*\\(abs\\(py\\s*-\\s*y\\)\\s*!=\\s*abs\\(px\\s*-\\s*x\\)\\)\\s+or\\s+x\\s*==\\s*px\\s+or\\s+y\\s*==\\s*py:\\s*continue\\s*res\\s*\\+=\\s*self\\.ptsCount\\[\\(x,\\s*py\\)\\]\\s*\\*\\s*self\\.ptsCount\\[\\(px,\\s*y\\)\\]\\s*return\\s+res$",
