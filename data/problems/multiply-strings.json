@@ -130,11 +130,35 @@
                 },
                 {
                     "id": 11,
-                    "instruction": "Reverse the result array and convert back to string, skipping leading zeros.",
-                    "placeholderCode": "    res, beg = res[::-1], 0\n    while beg < len(res) and res[beg] == 0:\n        beg += 1\n    res = map(str, res[beg:])\n    return \"\".join(res)",
-                    "validationRegex": "^\\s+res,\\s*beg\\s*=\\s*res\\[::-1\\],\\s*0\\s*while\\s+beg\\s*<\\s+len\\(res\\)\\s+and\\s+res\\[beg\\]\\s*==\\s*0:\\s*beg\\s*\\+=\\s*1\\s*res\\s*=\\s*map\\(str,\\s*res\\[beg:\\]\\)\\s*return\\s+\"\"\\.join\\(res\\)$",
-                    "hint": "Reverse, remove leading zeros, and join.",
-                    "solutionCode": "    res, beg = res[::-1], 0\n    while beg < len(res) and res[beg] == 0:\n        beg += 1\n    res = map(str, res[beg:])\n    return \"\".join(res)"
+                    "instruction": "Reverse the result array.",
+                    "placeholderCode": "    res, beg = res[::-1], 0",
+                    "validationRegex": "^\\s+res,\\s*beg\\s*=\\s*res\\[::-1\\],\\s*0$",
+                    "hint": "Reverse `res` to restore correct order and initialize a pointer `beg`.",
+                    "solutionCode": "    res, beg = res[::-1], 0"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Find the index of the first non-zero digit.",
+                    "placeholderCode": "    while beg < len(res) and res[beg] == 0:\n        beg += 1",
+                    "validationRegex": "^\\s+while\\s+beg\\s*<\\s+len\\(res\\)\\s+and\\s+res\\[beg\\]\\s*==\\s*0:\\s*beg\\s*\\+=\\s*1$",
+                    "hint": "Skip leading zeros.",
+                    "solutionCode": "    while beg < len(res) and res[beg] == 0:\n        beg += 1"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Convert the digits to strings.",
+                    "placeholderCode": "    res = map(str, res[beg:])",
+                    "validationRegex": "^\\s+res\\s*=\\s*map\\(str,\\s*res\\[beg:\\]\\)$",
+                    "hint": "Map each integer digit to a string starting from index `beg`.",
+                    "solutionCode": "    res = map(str, res[beg:])"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Join the strings to form the final result.",
+                    "placeholderCode": "    return \"\".join(res)",
+                    "validationRegex": "^\\s+return\\s+\"\"\\.join\\(res\\)$",
+                    "hint": "Join the list of strings.",
+                    "solutionCode": "    return \"\".join(res)"
                 }
             ]
         }
