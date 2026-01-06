@@ -21,7 +21,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Chronological Ordering",
+            "name": "Brute Force",
             "description": "Sort start and end times separately.",
             "steps": [
                 {
@@ -60,7 +60,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Chronological Ordering",
+            "name": "Optimal",
             "description": "Same as brute force, O(n log n).",
             "steps": [
                 {
@@ -73,14 +73,22 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Separate and sort start and end times.",
-                    "placeholderCode": "    start = sorted([i[0] for i in intervals])\n    end = sorted([i[1] for i in intervals])",
-                    "validationRegex": "^\\s+start\\s*=\\s*sorted\\(\\[i\\[0\\]\\s+for\\s+i\\s+in\\s+intervals\\]\\)\\s*end\\s*=\\s*sorted\\(\\[i\\[1\\]\\s+for\\s+i\\s+in\\s+intervals\\]\\)$",
-                    "hint": "Sort start and end times.",
-                    "solutionCode": "    start = sorted([i[0] for i in intervals])\n    end = sorted([i[1] for i in intervals])"
+                    "instruction": "Create a sorted list of the start times of all meetings.",
+                    "placeholderCode": "    start = sorted([i[0] for i in intervals])",
+                    "validationRegex": "^\\s+start\\s*=\\s*sorted\\(\\[i\\[0\\]\\s+for\\s+i\\s+in\\s+intervals\\]\\)$",
+                    "hint": "Use list comprehension to extract the start times and sort them.",
+                    "solutionCode": "    start = sorted([i[0] for i in intervals])"
                 },
                 {
                     "id": 3,
+                    "instruction": "Create a sorted list of the end times of all meetings.",
+                    "placeholderCode": "    end = sorted([i[1] for i in intervals])",
+                    "validationRegex": "^\\s+end\\s*=\\s*sorted\\(\\[i\\[1\\]\\s+for\\s+i\\s+in\\s+intervals\\]\\)$",
+                    "hint": "Use list comprehension to extract the end times and sort them.",
+                    "solutionCode": "    end = sorted([i[1] for i in intervals])"
+                },
+                {
+                    "id": 4,
                     "instruction": "Iterate and count rooms.",
                     "placeholderCode": "    res, count = 0, 0\n    s, e = 0, 0\n    while s < len(intervals):\n        if start[s] < end[e]:\n            s += 1\n            count += 1\n        else:\n            e += 1\n            count -= 1\n        res = max(res, count)",
                     "validationRegex": "^\\s+res,\\s*count\\s*=\\s*0,\\s*0\\s*s,\\s*e\\s*=\\s*0,\\s*0\\s*while\\s+s\\s*<\\s+len\\(intervals\\):\\s*if\\s+start\\[s\\]\\s*<\\s+end\\[e\\]:\\s*s\\s*\\+=\\s*1\\s*count\\s*\\+=\\s*1\\s*else:\\s*e\\s*\\+=\\s*1\\s*count\\s*-=\\s*1\\s*res\\s*=\\s*max\\(res,\\s*count\\)$",
@@ -88,7 +96,7 @@
                     "solutionCode": "    res, count = 0, 0\n    s, e = 0, 0\n    while s < len(intervals):\n        if start[s] < end[e]:\n            s += 1\n            count += 1\n        else:\n            e += 1\n            count -= 1\n        res = max(res, count)"
                 },
                 {
-                    "id": 4,
+                    "id": 5,
                     "instruction": "Return result.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
