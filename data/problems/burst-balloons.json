@@ -23,8 +23,8 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
-            "description": "Recursively try bursting each balloon last.",
+            "name": "Brute Force",
+            "description": "Recursively try bursting each balloon last with memoization to find the maximum coins.",
             "steps": [
                 {
                     "id": 1,
@@ -36,7 +36,7 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Pad nums with 1s.",
+                    "instruction": "Pad nums with 1s at both ends to handle boundary cases where i-1 or i+1 are out of bounds.",
                     "placeholderCode": "    nums = [1] + nums + [1]",
                     "validationRegex": "^\\s+nums\\s*=\\s*\\[1\\]\\s*\\+\\s*nums\\s*\\+\\s*\\[1\\]$",
                     "hint": "Add 1 to the beginning and end of nums to handle boundary conditions.",
@@ -47,20 +47,20 @@
                     "instruction": "Define recursive helper with memoization.",
                     "placeholderCode": "    memo = {}\n    def dfs(l, r):\n        if l > r: return 0\n        if (l, r) in memo: return memo[(l, r)]",
                     "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(l,\\s*r\\):\\s*if\\s+l\\s*>\\s+r:\\s*return\\s+0\\s*if\\s*\\(l,\\s*r\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(l,\\s*r\\)\\]$",
-                    "hint": "Recursive function `dfs(l, r)` returns max coins for bursting balloons between indices `l` and `r` (exclusive). Base case: l > r -> 0. Check memo.\\n\\nExample:\\nNums=[3]. Pad=[1, 3, 1]. Range (1, 1).\\nDFS(1, 1): i=1.\\n  Coins = 1*3*1 + DFS(1, 0) + DFS(2, 1) = 3 + 0 + 0 = 3.",
+                    "hint": "Recursive function `dfs(l, r)` returns max coins for bursting balloons between indices `l` and `r` (exclusive).",
                     "solutionCode": "    memo = {}\n    def dfs(l, r):\n        if l > r: return 0\n        if (l, r) in memo: return memo[(l, r)]"
                 },
                 {
                     "id": 4,
-                    "instruction": "Try bursting each balloon i last.",
+                    "instruction": "For each balloon i in the current range, calculate the coins gained if i is the LAST balloon burst in that range.",
                     "placeholderCode": "        memo[(l, r)] = 0\n        for i in range(l, r + 1):\n            coins = nums[l - 1] * nums[i] * nums[r + 1]\n            coins += dfs(l, i - 1) + dfs(i + 1, r)\n            memo[(l, r)] = max(memo[(l, r)], coins)",
                     "validationRegex": "^\\s+memo\\[\\(l,\\s*r\\)\\]\\s*=\\s*0\\s*for\\s+i\\s+in\\s+range\\(l,\\s*r\\s*\\+\\s*1\\):\\s*coins\\s*=\\s*nums\\[l\\s*-\\s*1\\]\\s*\\*\\s*nums\\[i\\]\\s*\\*\\s*nums\\[r\\s*\\+\\s*1\\]\\s*coins\\s*\\+=\\s*dfs\\(l,\\s*i\\s*-\\s*1\\)\\s*\\+\\s*dfs\\(i\\s*\\+\\s*1,\\s*r\\)\\s*memo\\[\\(l,\\s*r\\)\\]\\s*=\\s*max\\(memo\\[\\(l,\\s*r\\)\\],\\s*coins\\)$",
-                    "hint": "Iterate through each balloon `i` from `l` to `r`. Assume `i` is the LAST balloon to burst in this range. Coins gained = nums[l-1] * nums[i] * nums[r+1] + coins from left subproblem + coins from right subproblem.",
+                    "hint": "Iterate through each balloon `i` from `l` to `r`. Assume `i` is the LAST balloon to burst.",
                     "solutionCode": "        memo[(l, r)] = 0\n        for i in range(l, r + 1):\n            coins = nums[l - 1] * nums[i] * nums[r + 1]\n            coins += dfs(l, i - 1) + dfs(i + 1, r)\n            memo[(l, r)] = max(memo[(l, r)], coins)"
                 },
                 {
                     "id": 5,
-                    "instruction": "Return result.",
+                    "instruction": "Return the maximum coins found for the current range.",
                     "placeholderCode": "        return memo[(l, r)]",
                     "validationRegex": "^\\s+return\\s+memo\\[\\(l,\\s*r\\)\\]$",
                     "hint": "Return the maximum coins found for this range.",
@@ -68,7 +68,7 @@
                 },
                 {
                     "id": 6,
-                    "instruction": "Call helper.",
+                    "instruction": "Call the recursive helper function for the full range of original balloons.",
                     "placeholderCode": "    return dfs(1, len(nums) - 2)",
                     "validationRegex": "^\\s+return\\s+dfs\\(1,\\s*len\\(nums\\)\\s*-\\s*2\\)$",
                     "hint": "Start recursion for the range of original balloons (indices 1 to len(nums)-2).",
@@ -78,8 +78,8 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "Iterative DP solution.",
+            "name": "Optimal",
+            "description": "Use 2D bottom-up dynamic programming to calculate the maximum coins gained by bursting balloons in O(n^3) time.",
             "steps": [
                 {
                     "id": 1,
@@ -91,7 +91,7 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Pad nums with 1s.",
+                    "instruction": "Pad nums with 1s at both ends.",
                     "placeholderCode": "    nums = [1] + nums + [1]",
                     "validationRegex": "^\\s+nums\\s*=\\s*\\[1\\]\\s*\\+\\s*nums\\s*\\+\\s*\\[1\\]$",
                     "hint": "Add 1 to the beginning and end of nums.",
@@ -99,18 +99,74 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Initialize DP grid.",
-                    "placeholderCode": "    dp = {}\n    for offset in range(2, len(nums)):\n        for l in range(len(nums) - offset):\n            r = l + offset\n            for i in range(l + 1, r):\n                coins = nums[l] * nums[i] * nums[r]\n                coins += dp.get((l, i), 0) + dp.get((i, r), 0)\n                dp[(l, r)] = max(dp.get((l, r), 0), coins)",
-                    "validationRegex": "^\\s+dp\\s*=\\s*\\{\\}\\s*for\\s+offset\\s+in\\s+range\\(2,\\s*len\\(nums\\)\\):\\s*for\\s+l\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*offset\\):\\s*r\\s*=\\s*l\\s*\\+\\s*offset\\s*for\\s+i\\s+in\\s+range\\(l\\s*\\+\\s*1,\\s*r\\):\\s*coins\\s*=\\s*nums\\[l\\]\\s*\\*\\s*nums\\[i\\]\\s*\\*\\s*nums\\[r\\s*\\+\\s*1\\]\\s*coins\\s*\\+=\\s*dp\\.get\\(\\(l,\\s*i\\),\\s*0\\)\\s*\\+\\s*dp\\.get\\(\\(i,\\s*r\\),\\s*0\\)\\s*dp\\[\\(l,\\s*r\\)\\]\\s*=\\s*max\\(dp\\.get\\(\\(l,\\s*r\\),\\s*0\\),\\s*coins\\)$",
-                    "hint": "Iterate over window sizes (offset). For each window (l, r), try every possible last balloon `i` to burst. Update dp table.\\n\\nExample:\\nNums=[3, 1, 5]. Pad -> [1, 3, 1, 5, 1].\\nLen 1 (e.g., 3): Coins = 1*3*1 = 3.\\nLen 2 (e.g., 3, 1):\\n  Burst 3 last: 1*3*5 + Coins(1) = 15 + 1*1*5 = 20.\\n  Burst 1 last: 1*1*5 + Coins(3) = 5 + 1*3*1 = 8.\\n  Max = 20.",
-                    "solutionCode": "    dp = {}\n    for offset in range(2, len(nums)):\n        for l in range(len(nums) - offset):\n            r = l + offset\n            for i in range(l + 1, r):\n                coins = nums[l] * nums[i] * nums[r]\n                coins += dp.get((l, i), 0) + dp.get((i, r), 0)\n                dp[(l, r)] = max(dp.get((l, r), 0), coins)"
+                    "instruction": "Initialize a DP dictionary (or 2D array) to store results for subproblems.",
+                    "placeholderCode": "    dp = {}",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\{\\}$",
+                    "hint": "We'll store the max coins for ranges (l, r).",
+                    "solutionCode": "    dp = {}"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Initiate a loop for the 'offset' (window size), starting from 2 up to the length of the padded array.",
+                    "placeholderCode": "    for offset in range(2, len(nums)):",
+                    "validationRegex": "^\\s+for\\s+offset\\s+in\\s+range\\(2,\\s*len\\(nums\\)\\):$",
+                    "hint": "Offset represents the distance between left and right boundaries of our current window.",
+                    "solutionCode": "    for offset in range(2, len(nums)):"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Initiate a loop for the left boundary 'l'.",
+                    "placeholderCode": "        for l in range(len(nums) - offset):",
+                    "validationRegex": "^\\s+for\\s+l\\s+in\\s+range\\(len\\(nums\\)\\s*-\\s*offset\\):$",
+                    "hint": "Iterate through all possible start positions for the current window size.",
+                    "solutionCode": "        for l in range(len(nums) - offset):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Calculate the right boundary 'r' based on the current 'l' and 'offset'.",
+                    "placeholderCode": "            r = l + offset",
+                    "validationRegex": "^\\s+r\\s*=\\s*l\\s*\\+\\s*offset$",
+                    "hint": "r is the end of the current window.",
+                    "solutionCode": "            r = l + offset"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Initiate a loop for 'i', which represents the index of the balloon burst LAST in the current range (l, r).",
+                    "placeholderCode": "            for i in range(l + 1, r):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(l\\s*\\+\\s*1,\\s*r\\):$",
+                    "hint": "Balloon 'i' is the last one to be burst among those between 'l' and 'r'.",
+                    "solutionCode": "            for i in range(l + 1, r):"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Calculate the coins gained from bursting balloon 'i', based on its current neighbors at boundaries 'l' and 'r'.",
+                    "placeholderCode": "                coins = nums[l] * nums[i] * nums[r]",
+                    "validationRegex": "^\\s+coins\\s*=\\s*nums\\[l\\]\\s*\\*\\s*nums\\[i\\]\\s*\\*\\s*nums\\[r\\]$",
+                    "hint": "Since 'i' is burst last, its immediate neighbors when it bursts are nums[l] and nums[r].",
+                    "solutionCode": "                coins = nums[l] * nums[i] * nums[r]"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Add the max coins collected from subproblems on the left (l, i) and right (i, r) of balloon 'i'.",
+                    "placeholderCode": "                coins += dp.get((l, i), 0) + dp.get((i, r), 0)",
+                    "validationRegex": "^\\s+coins\\s*\\+=\\s*dp\\.get\\(\\(l,\\s*i\\),\\s*0\\)\\s*\\+\\s*dp\\.get\\(\\(i,\\s*r\\),\\s*0\\)$",
+                    "hint": "The subproblems are already stored in our DP table.",
+                    "solutionCode": "                coins += dp.get((l, i), 0) + dp.get((i, r), 0)"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Update the DP table for range (l, r) with the maximum coins found across all choice of 'i'.",
+                    "placeholderCode": "                dp[(l, r)] = max(dp.get((l, r), 0), coins)",
+                    "validationRegex": "^\\s+dp\\[\\(l,\\s*r\\)\\]\\s*=\\s*max\\(dp\\.get\\(\\(l,\\s*r\\),\\s*0\\),\\s*coins\\)$",
+                    "hint": "Keep track of the maximum coins for the current window.",
+                    "solutionCode": "                dp[(l, r)] = max(dp.get((l, r), 0), coins)"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Return the final maximum coins for the full range from index 0 to the end of the padded array.",
                     "placeholderCode": "    return dp.get((0, len(nums) - 1), 0)",
                     "validationRegex": "^\\s+return\\s+dp\\.get\\(\\(0,\\s*len\\(nums\\)\\s*-\\s*1\\),\\s*0\\)$",
-                    "hint": "Return the max coins for the full range (0 to len(nums)-1).",
+                    "hint": "The final answer is stored in the entry for (0, n-1).",
                     "solutionCode": "    return dp.get((0, len(nums) - 1), 0)"
                 }
             ]
