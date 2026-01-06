@@ -91,14 +91,46 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Iterate through each number in nums, resetting curr_sum to 0 if it becomes negative before adding the current number.",
-                    "placeholderCode": "    for n in nums:\n        if curr_sum < 0:\n            curr_sum = 0\n        curr_sum += n\n        max_sum = max(max_sum, curr_sum)",
-                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:\\s*if\\s+curr_sum\\s*<\\s*0:\\s*curr_sum\\s*=\\s*0\\s*curr_sum\\s*\\+=\\s*n\\s*max_sum\\s*=\\s*max\\(max_sum,\\s*curr_sum\\)$",
-                    "hint": "If curr_sum < 0, it means the current prefix will only decrease any future sum, so we discard it by resetting to 0.",
-                    "solutionCode": "    for n in nums:\n        if curr_sum < 0:\n            curr_sum = 0\n        curr_sum += n\n        max_sum = max(max_sum, curr_sum)"
+                    "instruction": "Initiate a loop to iterate through each number in the array.",
+                    "placeholderCode": "    for n in nums:",
+                    "validationRegex": "^\\s+for\\s+n\\s+in\\s+nums:$",
+                    "hint": "We process each element one by one to find the maximum subarray sum ending at each position.",
+                    "solutionCode": "    for n in nums:"
                 },
                 {
                     "id": 5,
+                    "instruction": "Check if the current window sum is negative.",
+                    "placeholderCode": "        if curr_sum < 0:",
+                    "validationRegex": "^\\s+if\\s+curr_sum\\s*<\\s*0:$",
+                    "hint": "A negative prefix will only decrease the sum of any subsequent subarray.",
+                    "solutionCode": "        if curr_sum < 0:"
+                },
+                {
+                    "id": 6,
+                    "instruction": "If the current sum is negative, reset it to zero to start a new subarray window.",
+                    "placeholderCode": "            curr_sum = 0",
+                    "validationRegex": "^\\s+curr_sum\\s*=\\s*0$",
+                    "hint": "Discarding a negative prefix is the core greedy choice in Kadane's algorithm.",
+                    "solutionCode": "            curr_sum = 0"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Add the current number to the running subarray sum.",
+                    "placeholderCode": "        curr_sum += n",
+                    "validationRegex": "^\\s+curr_sum\\s*\\+=\\s*n$",
+                    "hint": "Extend the current subarray by including the element 'n'.",
+                    "solutionCode": "        curr_sum += n"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Update the global maximum sum if the current running sum is greater.",
+                    "placeholderCode": "        max_sum = max(max_sum, curr_sum)",
+                    "validationRegex": "^\\s+max_sum\\s*=\\s*max\\(max_sum,\\s*curr_sum\\)$",
+                    "hint": "Keep track of the highest sum encountered so far.",
+                    "solutionCode": "        max_sum = max(max_sum, curr_sum)"
+                },
+                {
+                    "id": 9,
                     "instruction": "Return the final maximum sum stored in max_sum.",
                     "placeholderCode": "    return max_sum",
                     "validationRegex": "^\\s+return\\s+max_sum$",
