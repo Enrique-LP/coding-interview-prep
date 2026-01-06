@@ -68,14 +68,30 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize result.",
-                    "placeholderCode": "    res = 0\n    sign = -1 if x < 0 else 1\n    x = abs(x)",
-                    "validationRegex": "^\\s+res\\s*=\\s*0\\s*sign\\s*=\\s*-1\\s+if\\s+x\\s*<\\s*0\\s+else\\s+1\\s*x\\s*=\\s*abs\\(x\\)$",
-                    "hint": "Initialize `res` to 0. Store sign and work with absolute value of `x`.",
-                    "solutionCode": "    res = 0\n    sign = -1 if x < 0 else 1\n    x = abs(x)"
+                    "instruction": "Initialize result variable.",
+                    "placeholderCode": "    res = 0",
+                    "validationRegex": "^\\s+res\\s*=\\s*0$",
+                    "hint": "Initialize `res` to 0 to store the reversed number.",
+                    "solutionCode": "    res = 0"
                 },
                 {
                     "id": 3,
+                    "instruction": "Determine the sign of x.",
+                    "placeholderCode": "    sign = -1 if x < 0 else 1",
+                    "validationRegex": "^\\s+sign\\s*=\\s*-1\\s+if\\s+x\\s*<\\s*0\\s+else\\s+1$",
+                    "hint": "Store the sign: -1 if `x` is negative, else 1.",
+                    "solutionCode": "    sign = -1 if x < 0 else 1"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Work with absolute value of x.",
+                    "placeholderCode": "    x = abs(x)",
+                    "validationRegex": "^\\s+x\\s*=\\s*abs\\(x\\)$",
+                    "hint": "Update `x` to be its absolute value for easier digit processing.",
+                    "solutionCode": "    x = abs(x)"
+                },
+                {
+                    "id": 5,
                     "instruction": "Loop and reverse.",
                     "placeholderCode": "    while x:\n        digit = x % 10\n        x //= 10\n        if res > (2**31 - 1) // 10: return 0\n        res = res * 10 + digit",
                     "validationRegex": "^\\s+while\\s+x:\\s*digit\\s*=\\s*x\\s*%\\s*10\\s*x\\s*//=\\s*10\\s*if\\s+res\\s*>\\s*\\(2\\*\\*31\\s*-\\s*1\\)\\s*//\\s*10:\\s*return\\s+0\\s*res\\s*=\\s*res\\s*\\*\\s*10\\s*\\+\\s*digit$",
@@ -83,7 +99,7 @@
                     "solutionCode": "    while x:\n        digit = x % 10\n        x //= 10\n        if res > (2**31 - 1) // 10: return 0\n        res = res * 10 + digit"
                 },
                 {
-                    "id": 4,
+                    "id": 6,
                     "instruction": "Return result with sign.",
                     "placeholderCode": "    return res * sign",
                     "validationRegex": "^\\s+return\\s+res\\s*\\*\\s*sign$",
