@@ -21,7 +21,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "HashSet",
+            "name": "Brute Force",
             "description": "Detect cycle using a hash set.",
             "steps": [
                 {
@@ -60,7 +60,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Floyd's Cycle-Finding",
+            "name": "Optimal",
             "description": "Use slow and fast pointers to detect cycle.",
             "steps": [
                 {
@@ -73,30 +73,70 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Define helper for sum of squares.",
-                    "placeholderCode": "    def sum_sq(num):\n        output = 0\n        while num:\n            output += (num % 10) ** 2\n            num //= 10\n        return output",
-                    "validationRegex": "^\\s+def\\s+sum_sq\\(num\\):\\s*output\\s*=\\s*0\\s*while\\s+num:\\s*output\\s*\\+=\\s*\\(num\\s*%\\s*10\\)\\s*\\*\\*\\s*2\\s*num\\s*//=\\s*10\\s*return\\s+output$",
-                    "hint": "Helper function to calculate sum of squares of digits.",
-                    "solutionCode": "    def sum_sq(num):\n        output = 0\n        while num:\n            output += (num % 10) ** 2\n            num //= 10\n        return output"
+                    "instruction": "Define a helper function sum_sq that takes num.",
+                    "placeholderCode": "    def sum_sq(num):",
+                    "validationRegex": "^\\s+def\\s+sum_sq\\(num\\):$",
+                    "hint": "Define a nested helper function.",
+                    "solutionCode": "    def sum_sq(num):"
                 },
                 {
                     "id": 3,
-                    "instruction": "Initialize pointers.",
+                    "instruction": "Initialize the variable output to 0.",
+                    "placeholderCode": "        output = 0",
+                    "validationRegex": "^\\s+output\\s*=\\s*0$",
+                    "hint": "Set output to zero.",
+                    "solutionCode": "        output = 0"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Start a while loop while num is non-zero.",
+                    "placeholderCode": "        while num:",
+                    "validationRegex": "^\\s+while\\s+num:$",
+                    "hint": "The loop will extract digits.",
+                    "solutionCode": "        while num:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Extract the last digit, square it, and add it to output.",
+                    "placeholderCode": "            output += (num % 10) ** 2",
+                    "validationRegex": "^\\s+output\\s*\\+=\\s*\\(num\\s*%\\s*10\\)\\s*\\*\\*\\s*2$",
+                    "hint": "Use modulo 10 to get the last digit.",
+                    "solutionCode": "            output += (num % 10) ** 2"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Remove the last digit from num.",
+                    "placeholderCode": "            num //= 10",
+                    "validationRegex": "^\\s+num\\s*//=\\s*10$",
+                    "hint": "Use floor division by 10.",
+                    "solutionCode": "            num //= 10"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Return the calculated output.",
+                    "placeholderCode": "        return output",
+                    "validationRegex": "^\\s+return\\s+output$",
+                    "hint": "Return output from the helper function.",
+                    "solutionCode": "        return output"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Initialize pointers slow and fast.",
                     "placeholderCode": "    slow, fast = n, sum_sq(n)",
                     "validationRegex": "^\\s+slow,\\s*fast\\s*=\\s*n,\\s*sum_sq\\(n\\)$",
                     "hint": "Initialize slow and fast pointers.",
                     "solutionCode": "    slow, fast = n, sum_sq(n)"
                 },
                 {
-                    "id": 4,
+                    "id": 9,
                     "instruction": "Loop until pointers meet.",
                     "placeholderCode": "    while slow != fast:\n        fast = sum_sq(sum_sq(fast))\n        slow = sum_sq(slow)",
                     "validationRegex": "^\\s+while\\s+slow\\s*!=\\s*fast:\\s*fast\\s*=\\s*sum_sq\\(sum_sq\\(fast\\)\\)\\s*slow\\s*=\\s*sum_sq\\(slow\\)$",
-                    "hint": "Move slow pointer by one step and fast pointer by two steps until they meet.",
+                    "hint": "Move pointers until convergence.",
                     "solutionCode": "    while slow != fast:\n        fast = sum_sq(sum_sq(fast))\n        slow = sum_sq(slow)"
                 },
                 {
-                    "id": 5,
+                    "id": 10,
                     "instruction": "Return True if fast is 1.",
                     "placeholderCode": "    return fast == 1",
                     "validationRegex": "^\\s+return\\s+fast\\s*==\\s*1$",
