@@ -78,14 +78,46 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Sort intervals and queries.",
-                    "placeholderCode": "    intervals.sort()\n    minHeap = []\n    res = {}\n    i = 0\n    sorted_queries = sorted(queries)",
-                    "validationRegex": "^\\s+intervals\\.sort\\(\\)\\s*minHeap\\s*=\\s*\\[\\]\\s*res\\s*=\\s*\\{\\}\\s*i\\s*=\\s*0\\s*sorted_queries\\s*=\\s*sorted\\(queries\\)$",
-                    "hint": "Sort intervals by start time. Sort queries to process in order. Use a min heap to store [size, end] of active intervals.",
-                    "solutionCode": "    intervals.sort()\n    minHeap = []\n    res = {}\n    i = 0\n    sorted_queries = sorted(queries)"
+                    "instruction": "Sort intervals.",
+                    "placeholderCode": "    intervals.sort()",
+                    "validationRegex": "^\\s+intervals\\.sort\\(\\)$",
+                    "hint": "Sort the intervals in place by their start time.",
+                    "solutionCode": "    intervals.sort()"
                 },
                 {
                     "id": 3,
+                    "instruction": "Initialize minHeap.",
+                    "placeholderCode": "    minHeap = []",
+                    "validationRegex": "^\\s+minHeap\\s*=\\s*\\[\\]$",
+                    "hint": "Create a list to be used as a min-heap.",
+                    "solutionCode": "    minHeap = []"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Initialize result dictionary.",
+                    "placeholderCode": "    res = {}",
+                    "validationRegex": "^\\s+res\\s*=\\s*\\{\\}$",
+                    "hint": "Create a dictionary to store the result for each query.",
+                    "solutionCode": "    res = {}"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Initialize interval index.",
+                    "placeholderCode": "    i = 0",
+                    "validationRegex": "^\\s+i\\s*=\\s*0$",
+                    "hint": "Initialize an index to iterate through the sorted intervals.",
+                    "solutionCode": "    i = 0"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Sort queries.",
+                    "placeholderCode": "    sorted_queries = sorted(queries)",
+                    "validationRegex": "^\\s+sorted_queries\\s*=\\s*sorted\\(queries\\)$",
+                    "hint": "Create a new sorted list of the queries.",
+                    "solutionCode": "    sorted_queries = sorted(queries)"
+                },
+                {
+                    "id": 7,
                     "instruction": "Process queries.",
                     "placeholderCode": "    for q in sorted_queries:\n        while i < len(intervals) and intervals[i][0] <= q:\n            l, r = intervals[i]\n            heapq.heappush(minHeap, (r - l + 1, r))\n            i += 1\n        while minHeap and minHeap[0][1] < q:\n            heapq.heappop(minHeap)\n        res[q] = minHeap[0][0] if minHeap else -1",
                     "validationRegex": "^\\s+for\\s+q\\s+in\\s+sorted_queries:\\s*while\\s+i\\s*<\\s+len\\(intervals\\)\\s+and\\s+intervals\\[i\\]\\[0\\]\\s*<=\\s*q:\\s*l,\\s*r\\s*=\\s*intervals\\[i\\]\\s*heapq\\.heappush\\(minHeap,\\s*\\(r\\s*-\\s*l\\s*\\+\\s*1,\\s*r\\)\\)\\s*i\\s*\\+=\\s*1\\s*while\\s+minHeap\\s+and\\s+minHeap\\[0\\]\\[1\\]\\s*<\\s*q:\\s*heapq\\.heappop\\(minHeap\\)\\s*res\\[q\\]\\s*=\\s*minHeap\\[0\\]\\[0\\]\\s+if\\s+minHeap\\s+else\\s+-1$",
@@ -93,7 +125,7 @@
                     "solutionCode": "    for q in sorted_queries:\n        while i < len(intervals) and intervals[i][0] <= q:\n            l, r = intervals[i]\n            heapq.heappush(minHeap, (r - l + 1, r))\n            i += 1\n        while minHeap and minHeap[0][1] < q:\n            heapq.heappop(minHeap)\n        res[q] = minHeap[0][0] if minHeap else -1"
                 },
                 {
-                    "id": 4,
+                    "id": 8,
                     "instruction": "Return result mapped to original queries.",
                     "placeholderCode": "    return [res[q] for q in queries]",
                     "validationRegex": "^\\s+return\\s+\\[res\\[q\\]\\s+for\\s+q\\s+in\\s+queries\\]$",
