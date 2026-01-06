@@ -24,7 +24,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Conversion",
+            "name": "Brute Force",
             "description": "Convert to int, add 1, convert back.",
             "steps": [
                 {
@@ -55,7 +55,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "In-place",
+            "name": "Optimal",
             "description": "Iterate backwards and handle carry.",
             "steps": [
                 {
@@ -68,18 +68,50 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Iterate backwards.",
-                    "placeholderCode": "    for i in range(len(digits) - 1, -1, -1):\n        if digits[i] < 9:\n            digits[i] += 1\n            return digits\n        digits[i] = 0",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(digits\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+digits\\[i\\]\\s*<\\s*9:\\s*digits\\[i\\]\\s*\\+=\\s*1\\s*return\\s+digits\\s*digits\\[i\\]\\s*=\\s*0$",
-                    "hint": "Iterate from the last digit. If it's less than 9, increment it and return. If it's 9, set it to 0 and continue to the next digit.",
-                    "solutionCode": "    for i in range(len(digits) - 1, -1, -1):\n        if digits[i] < 9:\n            digits[i] += 1\n            return digits\n        digits[i] = 0"
+                    "instruction": "Iterate backwards through the digits.",
+                    "placeholderCode": "    for i in range(len(digits) - 1, -1, -1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(digits\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):$",
+                    "hint": "Use a for loop to iterate from the last index to 0.",
+                    "solutionCode": "    for i in range(len(digits) - 1, -1, -1):"
                 },
                 {
                     "id": 3,
+                    "instruction": "Check if the current digit is less than 9.",
+                    "placeholderCode": "        if digits[i] < 9:",
+                    "validationRegex": "^\\s+if\\s+digits\\[i\\]\\s*<\\s*9:$",
+                    "hint": "If digit is < 9, no carry is needed.",
+                    "solutionCode": "        if digits[i] < 9:"
+                },
+                {
+                    "id": 4,
+                    "instruction": "Increment the current digit.",
+                    "placeholderCode": "            digits[i] += 1",
+                    "validationRegex": "^\\s+digits\\[i\\]\\s*\\+=\\s*1$",
+                    "hint": "Add 1 to the digit.",
+                    "solutionCode": "            digits[i] += 1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Return the digits array immediately.",
+                    "placeholderCode": "            return digits",
+                    "validationRegex": "^\\s+return\\s+digits$",
+                    "hint": "Returning here handles the case where no further carry is needed.",
+                    "solutionCode": "            return digits"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Set the current digit to 0 if it was 9.",
+                    "placeholderCode": "        digits[i] = 0",
+                    "validationRegex": "^\\s+digits\\[i\\]\\s*=\\s*0$",
+                    "hint": "If it was 9, it becomes 0 and the carry continues to the next iteration.",
+                    "solutionCode": "        digits[i] = 0"
+                },
+                {
+                    "id": 7,
                     "instruction": "Handle overflow (e.g., 999 -> 1000).",
                     "placeholderCode": "    return [1] + digits",
                     "validationRegex": "^\\s+return\\s*\\[1\\]\\s*\\+\\s*digits$",
-                    "hint": "If all digits were 9, prepend 1 to the result.",
+                    "hint": "If the loop finishes, prepending 1 handles cases like 99 -> 100.",
                     "solutionCode": "    return [1] + digits"
                 }
             ]
