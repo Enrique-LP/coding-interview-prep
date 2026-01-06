@@ -25,51 +25,63 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Math Sum",
+            "name": "Brute Force",
             "description": "Compare sum of range with sum of array.",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function missing_number that takes nums.",
                     "placeholderCode": "def missing_number(nums):",
-                    "validationRegex": "^def\\s+missing_number\\(nums\\):$"
+                    "validationRegex": "^def\\s+missing_number\\(nums\\):$",
+                    "hint": "Use the `def` keyword to define the function.",
+                    "solutionCode": "def missing_number(nums):"
                 },
                 {
                     "id": 2,
                     "instruction": "Calculate expected sum.",
                     "placeholderCode": "    n = len(nums)\n    expected_sum = n * (n + 1) // 2",
-                    "validationRegex": "^\\s+n\\s*=\\s*len\\(nums\\)\\s*expected_sum\\s*=\\s*n\\s*\\*\\s*\\(n\\s*\\+\\s*1\\)\\s*//\\s*2$"
+                    "validationRegex": "^\\s+n\\s*=\\s*len\\(nums\\)\\s*expected_sum\\s*=\\s*n\\s*\\*\\s*\\(n\\s*\\+\\s*1\\)\\s*//\\s*2$",
+                    "hint": "Get length `n`. Use the formula `n * (n + 1) // 2` to find the sum of numbers from 0 to n.",
+                    "solutionCode": "    n = len(nums)\n    expected_sum = n * (n + 1) // 2"
                 },
                 {
                     "id": 3,
                     "instruction": "Return difference.",
                     "placeholderCode": "    return expected_sum - sum(nums)",
-                    "validationRegex": "^\\s+return\\s+expected_sum\\s*-\\s*sum\\(nums\\)$"
+                    "validationRegex": "^\\s+return\\s+expected_sum\\s*-\\s*sum\\(nums\\)$",
+                    "hint": "Subtract the sum of the array from the expected sum to find the missing number.",
+                    "solutionCode": "    return expected_sum - sum(nums)"
                 }
             ]
         },
         "optimal": {
             "id": "optimal",
-            "name": "XOR",
+            "name": "Optimal",
             "description": "XOR index and value. Missing number remains.",
             "steps": [
                 {
                     "id": 1,
                     "instruction": "Define the function missing_number that takes nums.",
                     "placeholderCode": "def missing_number(nums):",
-                    "validationRegex": "^def\\s+missing_number\\(nums\\):$"
+                    "validationRegex": "^def\\s+missing_number\\(nums\\):$",
+                    "hint": "Use the `def` keyword to define the function.",
+                    "solutionCode": "def missing_number(nums):"
                 },
                 {
                     "id": 2,
                     "instruction": "XOR all indices and values.",
-                    "placeholderCode": "    res = len(nums)\n    for i in range(len(nums)):\n        res += (i - nums[i])",
-                    "validationRegex": "^\\s+res\\s*=\\s*len\\(nums\\)\\s*for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):\\s*res\\s*\\+=\\s*\\(i\\s*-\\s*nums\\[i\\]\\)$"
+                    "placeholderCode": "    res = len(nums)\n    for i in range(len(nums)):\n        res ^= i ^ nums[i]",
+                    "validationRegex": "^\\s+res\\s*=\\s*len\\(nums\\)\\s*for\\s+i\\s+in\\s+range\\(len\\(nums\\)\\):\\s*res\\s*\\^=\\s*i\\s*\\^\\s*nums\\[i\\]$",
+                    "hint": "Initialize `res` with `len(nums)`. Iterate through `nums` and XOR `res` with both the index `i` and the value `nums[i]`.",
+                    "solutionCode": "    res = len(nums)\n    for i in range(len(nums)):\n        res ^= i ^ nums[i]"
                 },
                 {
                     "id": 3,
                     "instruction": "Return result.",
                     "placeholderCode": "    return res",
-                    "validationRegex": "^\\s+return\\s+res$"
+                    "validationRegex": "^\\s+return\\s+res$",
+                    "hint": "Return the accumulated XOR result `res`.",
+                    "solutionCode": "    return res"
                 }
             ]
         }
