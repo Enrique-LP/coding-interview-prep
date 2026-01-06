@@ -25,7 +25,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
+            "name": "Brute Force",
             "description": "Recursively check all possibilities for '*'.",
             "steps": [
                 {
@@ -72,7 +72,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "Greedy",
+            "name": "Optimal",
             "description": "Track min and max possible open parentheses.",
             "steps": [
                 {
@@ -93,18 +93,58 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate through s.",
-                    "placeholderCode": "    for c in s:\n        if c == '(': leftMin, leftMax = leftMin + 1, leftMax + 1\n        elif c == ')': leftMin, leftMax = leftMin - 1, leftMax - 1\n        else: leftMin, leftMax = leftMin - 1, leftMax + 1\n        if leftMax < 0: return False\n        if leftMin < 0: leftMin = 0",
-                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+s:\\s*if\\s+c\\s*==\\s*'\\(':\\s*leftMin,\\s*leftMax\\s*=\\s*leftMin\\s*\\+\\s*1,\\s*leftMax\\s*\\+\\s*1\\s*elif\\s+c\\s*==\\s*'\\)':\\s*leftMin,\\s*leftMax\\s*=\\s*leftMin\\s*-\\s*1,\\s*leftMax\\s*-\\s*1\\s*else:\\s*leftMin,\\s*leftMax\\s*=\\s*leftMin\\s*-\\s*1,\\s*leftMax\\s*\\+\\s*1\\s*if\\s+leftMax\\s*<\\s*0:\\s*return\\s+False\\s*if\\s+leftMin\\s*<\\s*0:\\s*leftMin\\s*=\\s*0$",
-                    "hint": "Update range. '(' adds 1 to both. ')' subtracts 1. '*' expands range (subtract 1 from min, add 1 to max). If max < 0, invalid. If min < 0, reset min to 0 (can't have negative open parens).\\n\\nExample:\\nS=\"(*)\".\\nInit: Min=0, Max=0.\\n'(': Min=1, Max=1.\\n'*': Min=1-1=0, Max=1+1=2. Range [0, 2].\\n')': Min=0-1=-1 -> 0, Max=2-1=1. Range [0, 1].\\nResult: Min is 0 -> True.",
-                    "solutionCode": "    for c in s:\n        if c == '(': leftMin, leftMax = leftMin + 1, leftMax + 1\n        elif c == ')': leftMin, leftMax = leftMin - 1, leftMax - 1\n        else: leftMin, leftMax = leftMin - 1, leftMax + 1\n        if leftMax < 0: return False\n        if leftMin < 0: leftMin = 0"
+                    "instruction": "Iterate through each character in s.",
+                    "placeholderCode": "    for c in s:",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+s:$",
+                    "hint": "Start a loop to process the string character by character.",
+                    "solutionCode": "    for c in s:"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return True if leftMin is 0.",
+                    "instruction": "If the character is '(', increment both min and max boundary.",
+                    "placeholderCode": "        if c == '(': leftMin, leftMax = leftMin + 1, leftMax + 1",
+                    "validationRegex": "^\\s+if\\s+c\\s*==\\s*'\\(':\\s*leftMin,\\s*leftMax\\s*=\\s*leftMin\\s*\\+\\s*1,\\s*leftMax\\s*\\+\\s*1$",
+                    "hint": "A '(' must be balanced later, so it increases both possible boundaries.",
+                    "solutionCode": "        if c == '(': leftMin, leftMax = leftMin + 1, leftMax + 1"
+                },
+                {
+                    "id": 5,
+                    "instruction": "If it is ')', decrement both boundaries.",
+                    "placeholderCode": "        elif c == ')': leftMin, leftMax = leftMin - 1, leftMax - 1",
+                    "validationRegex": "^\\s+elif\\s+c\\s*==\\s*'\\)':\\s*leftMin,\\s*leftMax\\s*=\\s*leftMin\\s*-\\s*1,\\s*leftMax\\s*-\\s*1$",
+                    "hint": "A ')' closes a parenthesis, decreasing the range of needed balances.",
+                    "solutionCode": "        elif c == ')': leftMin, leftMax = leftMin - 1, leftMax - 1"
+                },
+                {
+                    "id": 6,
+                    "instruction": "For '*', expand the range: decrement min and increment max.",
+                    "placeholderCode": "        else: leftMin, leftMax = leftMin - 1, leftMax + 1",
+                    "validationRegex": "^\\s+else:\\s*leftMin,\\s*leftMax\\s*=\\s*leftMin\\s*-\\s*1,\\s*leftMax\\s*\\+\\s*1$",
+                    "hint": "A '*' can be '(', ')', or empty. This expands the range of possible open counts.",
+                    "solutionCode": "        else: leftMin, leftMax = leftMin - 1, leftMax + 1"
+                },
+                {
+                    "id": 7,
+                    "instruction": "If the max possible open count becomes negative, it's invalid.",
+                    "placeholderCode": "        if leftMax < 0: return False",
+                    "validationRegex": "^\\s+if\\s+leftMax\\s*<\\s*0:\\s*return\\s+False$",
+                    "hint": "If even by treating all '*' as '(', we still have more ')' than '(', it's impossible.",
+                    "solutionCode": "        if leftMax < 0: return False"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Correct the min possible open count if it drops below zero.",
+                    "placeholderCode": "        if leftMin < 0: leftMin = 0",
+                    "validationRegex": "^\\s+if\\s+leftMin\\s*<\\s*0:\\s*leftMin\\s*=\\s*0$",
+                    "hint": "We cannot have fewer than 0 open parentheses at any point. Reset to 0 if it goes below.",
+                    "solutionCode": "        if leftMin < 0: leftMin = 0"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Return True if 0 is a possible count of open parentheses.",
                     "placeholderCode": "    return leftMin == 0",
                     "validationRegex": "^\\s+return\\s+leftMin\\s*==\\s*0$",
-                    "hint": "If 0 is within the possible range [leftMin, leftMax], then it's valid. Since we reset leftMin to 0, we just check if leftMin == 0.",
+                    "hint": "If 0 is within the [leftMin, leftMax] range, the string can be valid.",
                     "solutionCode": "    return leftMin == 0"
                 }
             ]
