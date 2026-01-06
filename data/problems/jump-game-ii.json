@@ -100,13 +100,61 @@
                 {
                     "id": 4,
                     "instruction": "Initiate a loop that continues until the right boundary 'r' reaches or passes the last index.",
-                    "placeholderCode": "    while r < len(nums) - 1:\n        farthest = 0\n        for i in range(l, r + 1):\n            farthest = max(farthest, i + nums[i])\n        l = r + 1\n        r = farthest\n        res += 1",
-                    "validationRegex": "^\\s+while\\s+r\\s*<\\s+len\\(nums\\)\\s*-\\s*1:\\s*farthest\\s*=\\s*0\\s*for\\s+i\\s+in\\s+range\\(l,\\s*r\\s*\\+\\s*1\\):\\s*farthest\\s*=\\s*max\\(farthest,\\s*i\\s*\\+\\s*nums\\[i\\]\\)\\s*l\\s*=\\s*r\\s*\\+\\s*1\\s*r\\s*=\\s*farthest\\s*res\\s*\\+=\\s*1$",
-                    "hint": "Within the loop, find the farthest index reachable from indices in [l, r], then update l and r for the next level.",
-                    "solutionCode": "    while r < len(nums) - 1:\n        farthest = 0\n        for i in range(l, r + 1):\n            farthest = max(farthest, i + nums[i])\n        l = r + 1\n        r = farthest\n        res += 1"
+                    "placeholderCode": "    while r < len(nums) - 1:",
+                    "validationRegex": "^\\s+while\\s+r\\s*<\\s+len\\(nums\\)\\s*-\\s*1:$",
+                    "hint": "We keep jumping as long as we haven't reached the end.",
+                    "solutionCode": "    while r < len(nums) - 1:"
                 },
                 {
                     "id": 5,
+                    "instruction": "Initialize 'farthest' to 0 to keep track of the maximum reach from the current jump level.",
+                    "placeholderCode": "        farthest = 0",
+                    "validationRegex": "^\\s+farthest\\s*=\\s*0$",
+                    "hint": "This will tell us how far we can go in the next jump.",
+                    "solutionCode": "        farthest = 0"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Iterate through all indices in the current reachable range [l, r].",
+                    "placeholderCode": "        for i in range(l, r + 1):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(l,\\s*r\\s*\\+\\s*1\\):$",
+                    "hint": "We check every position in our current 'level' to find the best next jump.",
+                    "solutionCode": "        for i in range(l, r + 1):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Update 'farthest' with the maximum distance reachable from index 'i'.",
+                    "placeholderCode": "            farthest = max(farthest, i + nums[i])",
+                    "validationRegex": "^\\s+farthest\\s*=\\s*max\\(farthest,\\s*i\\s*\\+\\s*nums\\[i\\]\\)$",
+                    "hint": "Try jumping from the current index 'i' and see if it goes further.",
+                    "solutionCode": "            farthest = max(farthest, i + nums[i])"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Update the left boundary 'l' to the index immediately following the current right boundary.",
+                    "placeholderCode": "        l = r + 1",
+                    "validationRegex": "^\\s+l\\s*=\\s*r\\s*\\+\\s*1$",
+                    "hint": "The next level starts just after the current one.",
+                    "solutionCode": "        l = r + 1"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Update the right boundary 'r' to the overall farthest index reachable from the current level.",
+                    "placeholderCode": "        r = farthest",
+                    "validationRegex": "^\\s+r\\s*=\\s*farthest$",
+                    "hint": "This marks the end of our new reachable range.",
+                    "solutionCode": "        r = farthest"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Increment the jump counter 'res' to record that another jump level has been completed.",
+                    "placeholderCode": "        res += 1",
+                    "validationRegex": "^\\s+res\\s*\\+=\\s*1$",
+                    "hint": "Each expansion of our window counts as one jump.",
+                    "solutionCode": "        res += 1"
+                },
+                {
+                    "id": 11,
                     "instruction": "Return the total number of jumps stored in 'res'.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
