@@ -23,12 +23,12 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Recursive",
-            "description": "Recursively try insert, delete, replace.",
+            "name": "Brute Force",
+            "description": "Recursively try insert, delete, and replace operations with memoization to find the minimum edit distance.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function min_distance that takes word1 and word2.",
+                    "instruction": "Define the function min_distance that takes strings word1 and word2.",
                     "placeholderCode": "def min_distance(word1, word2):",
                     "validationRegex": "^def\\s+min_distance\\(word1,\\s*word2\\):$",
                     "hint": "Use `def` to define the function.",
@@ -36,31 +36,31 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Define recursive helper with memoization.",
+                    "instruction": "Define a recursive helper function with a memoization dictionary to store intermediate results.",
                     "placeholderCode": "    memo = {}\n    def dfs(i, j):\n        if i == len(word1): return len(word2) - j\n        if j == len(word2): return len(word1) - i\n        if (i, j) in memo: return memo[(i, j)]",
                     "validationRegex": "^\\s+memo\\s*=\\s*\\{\\}\\s*def\\s+dfs\\(i,\\s*j\\):\\s*if\\s+i\\s*==\\s*len\\(word1\\):\\s*return\\s+len\\(word2\\)\\s*-\\s*j\\s*if\\s+j\\s*==\\s*len\\(word2\\):\\s*return\\s+len\\(word1\\)\\s*-\\s*i\\s*if\\s*\\(i,\\s*j\\)\\s+in\\s+memo:\\s*return\\s+memo\\[\\(i,\\s*j\\)\\]$",
-                    "hint": "Recursive function `dfs(i, j)` returns min ops to convert word1[i:] to word2[j:]. Base cases: if one string empty, return length of other (insertions/deletions). Check memo.\\n\\nExample:\\nW1=\"a\", W2=\"b\".\\nDFS(0,0): 'a'!='b'. 1 + Min(\\n  DFS(1,0) (Delete 'a') -> \"\" vs \"b\" -> 1,\\n  DFS(0,1) (Insert 'b') -> \"a\" vs \"\" -> 1,\\n  DFS(1,1) (Replace 'a'->'b') -> \"\" vs \"\" -> 0\\n) = 1 + 0 = 1.",
+                    "hint": "Recursive function `dfs(i, j)` returns min ops to convert word1[i:] to word2[j:].",
                     "solutionCode": "    memo = {}\n    def dfs(i, j):\n        if i == len(word1): return len(word2) - j\n        if j == len(word2): return len(word1) - i\n        if (i, j) in memo: return memo[(i, j)]"
                 },
                 {
                     "id": 3,
-                    "instruction": "If match, recurse.",
+                    "instruction": "If the current characters match, no operation is required; simply proceed to the next pair of characters.",
                     "placeholderCode": "        if word1[i] == word2[j]:\n            res = dfs(i + 1, j + 1)",
                     "validationRegex": "^\\s+if\\s+word1\\[i\\]\\s*==\\s+word2\\[j\\]:\\s*res\\s*=\\s*dfs\\(i\\s*\\+\\s*1,\\s*j\\s*\\+\\s*1\\)$",
-                    "hint": "If characters match, no operation needed. Move both pointers.",
+                    "hint": "If characters match, move both pointers forward.",
                     "solutionCode": "        if word1[i] == word2[j]:\n            res = dfs(i + 1, j + 1)"
                 },
                 {
                     "id": 4,
-                    "instruction": "If no match, try all 3 ops.",
+                    "instruction": "If characters do not match, recursively calculate the cost for all three possible operations (insert, delete, replace) and take the minimum plus one.",
                     "placeholderCode": "        else:\n            res = 1 + min(dfs(i + 1, j),    # delete\n                          dfs(i, j + 1),    # insert\n                          dfs(i + 1, j + 1)) # replace",
                     "validationRegex": "^\\s+else:\\s*res\\s*=\\s*1\\s*\\+\\s*min\\(dfs\\(i\\s*\\+\\s*1,\\s*j\\),\\s*dfs\\(i,\\s*j\\s*\\+\\s*1\\),\\s*dfs\\(i\\s*\\+\\s*1,\\s*j\\s*\\+\\s*1\\)\\)$",
-                    "hint": "If no match, try delete (skip i), insert (skip j), or replace (skip both). Take min + 1.",
+                    "hint": "Try delete (skip i), insert (skip j), or replace (skip both). Take min + 1.",
                     "solutionCode": "        else:\n            res = 1 + min(dfs(i + 1, j),    # delete\n                          dfs(i, j + 1),    # insert\n                          dfs(i + 1, j + 1)) # replace"
                 },
                 {
                     "id": 5,
-                    "instruction": "Memoize and return.",
+                    "instruction": "Store the computed result in the memoization dictionary and return it.",
                     "placeholderCode": "        memo[(i, j)] = res\n        return res",
                     "validationRegex": "^\\s+memo\\[\\(i,\\s*j\\)\\]\\s*=\\s*res\\s*return\\s+res$",
                     "hint": "Store result in memo and return.",
@@ -68,7 +68,7 @@
                 },
                 {
                     "id": 6,
-                    "instruction": "Call helper.",
+                    "instruction": "Initiate the recursive process by calling the helper function from indices (0, 0).",
                     "placeholderCode": "    return dfs(0, 0)",
                     "validationRegex": "^\\s+return\\s+dfs\\(0,\\s*0\\)$",
                     "hint": "Start recursion from beginning.",
@@ -78,12 +78,12 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "DP (Iterative)",
-            "description": "Use 2D grid to build solution bottom-up.",
+            "name": "Optimal",
+            "description": "Use 2D bottom-up dynamic programming to find the minimum edit distance in O(m*n) time and space complexity.",
             "steps": [
                 {
                     "id": 1,
-                    "instruction": "Define the function min_distance that takes word1 and word2.",
+                    "instruction": "Define the function min_distance that takes strings word1 and word2.",
                     "placeholderCode": "def min_distance(word1, word2):",
                     "validationRegex": "^def\\s+min_distance\\(word1,\\s*word2\\):$",
                     "hint": "Use `def` to define the function.",
@@ -91,26 +91,42 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Initialize DP grid.",
-                    "placeholderCode": "    dp = [[float('inf')] * (len(word2) + 1) for _ in range(len(word1) + 1)]\n    for j in range(len(word2) + 1): dp[len(word1)][j] = len(word2) - j\n    for i in range(len(word1) + 1): dp[i][len(word2)] = len(word1) - i",
-                    "validationRegex": "^\\s+dp\\s*=\\s*\\[\\[float\\('inf'\\)\\]\\s*\\*\\s*\\(len\\(word2\\)\\s*\\+\\s*1\\)\\s+for\\s+_\\s+in\\s+range\\(len\\(word1\\)\\s*\\+\\s*1\\)\\]\\s*for\\s+j\\s+in\\s+range\\(len\\(word2\\)\\s*\\+\\s*1\\):\\s*dp\\[len\\(word1\\)\\]\\[j\\]\\s*=\\s*len\\(word2\\)\\s*-\\s*j\\s*for\\s+i\\s+in\\s+range\\(len\\(word1\\)\\s*\\+\\s*1\\):\\s*dp\\[i\\]\\[len\\(word2\\)\\]\\s*=\\s*len\\(word1\\)\\s*-\\s*i$",
-                    "hint": "Initialize DP grid. Base cases: converting empty string to string of length k requires k insertions/deletions.",
-                    "solutionCode": "    dp = [[float('inf')] * (len(word2) + 1) for _ in range(len(word1) + 1)]\n    for j in range(len(word2) + 1): dp[len(word1)][j] = len(word2) - j\n    for i in range(len(word1) + 1): dp[i][len(word2)] = len(word1) - i"
+                    "instruction": "Initialize the DP grid with 'inf' values for dimensions (len(word1)+1) by (len(word2)+1).",
+                    "placeholderCode": "    dp = [[float('inf')] * (len(word2) + 1) for _ in range(len(word1) + 1)]",
+                    "validationRegex": "^\\s+dp\\s*=\\s*\\[\\[float\\('inf'\\)\\]\\s*\\*\\s*\\(len\\(word2\\)\\s*\\+\\s*1\\)\\s+for\\s+_\\s+in\\s+range\\(len\\(word1\\)\\s*\\+\\s*1\\)\\]$",
+                    "hint": "dp[i][j] stores the min operations to convert word1[i:] to word2[j:].",
+                    "solutionCode": "    dp = [[float('inf')] * (len(word2) + 1) for _ in range(len(word1) + 1)]"
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate backwards through strings.",
-                    "placeholderCode": "    for i in range(len(word1) - 1, -1, -1):\n        for j in range(len(word2) - 1, -1, -1):\n            if word1[i] == word2[j]:\n                dp[i][j] = dp[i + 1][j + 1]\n            else:\n                dp[i][j] = 1 + min(dp[i + 1][j], dp[i][j + 1], dp[i + 1][j + 1])",
-                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(word1\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(word2\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+word1\\[i\\]\\s*==\\s+word2\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\s*else:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*1\\s*\\+\\s*min\\(dp\\[i\\s*\\+\\s*1\\]\\[j\\],\\s*dp\\[i\\]\\[j\\s*\\+\\s*1\\],\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\)$",
-                    "hint": "Iterate backwards. If match, take diagonal. Else, take 1 + min(down, right, diagonal).\\n\\nExample:\\nW1=\"a\", W2=\"b\".\\nDP 2x2. Base: DP[1][1]=0, DP[0][1]=1, DP[1][0]=1.\\ni=0, j=0: 'a'!='b'.\\nDP[0][0] = 1 + min(DP[1][0], DP[0][1], DP[1][1])\\n         = 1 + min(1, 1, 0) = 1 (Replace).",
-                    "solutionCode": "    for i in range(len(word1) - 1, -1, -1):\n        for j in range(len(word2) - 1, -1, -1):\n            if word1[i] == word2[j]:\n                dp[i][j] = dp[i + 1][j + 1]\n            else:\n                dp[i][j] = 1 + min(dp[i + 1][j], dp[i][j + 1], dp[i + 1][j + 1])"
+                    "instruction": "Populate the bottom row of the DP table as the base case for an empty suffix of word1.",
+                    "placeholderCode": "    for j in range(len(word2) + 1): dp[len(word1)][j] = len(word2) - j",
+                    "validationRegex": "^\\s+for\\s+j\\s+in\\s+range\\(len\\(word2\\)\\s*\\+\\s*1\\):\\s*dp\\[len\\(word1\\)\\]\\[j\\]\\s*=\\s*len\\(word2\\)\\s*-\\s*j$",
+                    "hint": "If word1 is empty, we must insert all remaining characters of word2.",
+                    "solutionCode": "    for j in range(len(word2) + 1): dp[len(word1)][j] = len(word2) - j"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return result.",
+                    "instruction": "Populate the rightmost column of the DP table as the base case for an empty suffix of word2.",
+                    "placeholderCode": "    for i in range(len(word1) + 1): dp[i][len(word2)] = len(word1) - i",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(word1\\)\\s*\\+\\s*1\\):\\s*dp\\[i\\]\\[len\\(word2\\)\\]\\s*=\\s*len\\(word1\\)\\s*-\\s*i$",
+                    "hint": "If word2 is empty, we must delete all remaining characters of word1.",
+                    "solutionCode": "    for i in range(len(word1) + 1): dp[i][len(word2)] = len(word1) - i"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate backwards through both strings and fill the DP table based on character matches and operations.",
+                    "placeholderCode": "    for i in range(len(word1) - 1, -1, -1):\n        for j in range(len(word2) - 1, -1, -1):\n            if word1[i] == word2[j]:\n                dp[i][j] = dp[i + 1][j + 1]\n            else:\n                dp[i][j] = 1 + min(dp[i + 1][j], dp[i][j + 1], dp[i + 1][j + 1])",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(word1\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*for\\s+j\\s+in\\s+range\\(len\\(word2\\)\\s*-\\s*1,\\s*-1,\\s*-1\\):\\s*if\\s+word1\\[i\\]\\s*==\\s+word2\\[j\\]:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\s*else:\\s*dp\\[i\\]\\[j\\]\\s*=\\s*1\\s*\\+\\s*min\\(dp\\[i\\s*\\+\\s*1\\]\\[j\\],\\s*dp\\[i\\]\\[j\\s*\\+\\s*1\\],\\s*dp\\[i\\s*\\+\\s*1\\]\\[j\\s*\\+\\s*1\\]\\)$",
+                    "hint": "If characters match, take the diagonal result. Else, take 1 + the minimum of delete, insert, or replace.",
+                    "solutionCode": "    for i in range(len(word1) - 1, -1, -1):\n        for j in range(len(word2) - 1, -1, -1):\n            if word1[i] == word2[j]:\n                dp[i][j] = dp[i + 1][j + 1]\n            else:\n                dp[i][j] = 1 + min(dp[i + 1][j], dp[i][j + 1], dp[i + 1][j + 1])"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Return the final edit distance from the top-left of the DP table.",
                     "placeholderCode": "    return dp[0][0]",
                     "validationRegex": "^\\s+return\\s+dp\\[0\\]\\[0\\]$",
-                    "hint": "Return result for start of strings.",
+                    "hint": "The result dp[0][0] represents the minimum operations for the full strings.",
                     "solutionCode": "    return dp[0][0]"
                 }
             ]
