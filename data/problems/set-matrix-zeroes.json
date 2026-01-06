@@ -23,7 +23,7 @@
     "strategies": {
         "brute-force": {
             "id": "brute-force",
-            "name": "Additional Memory",
+            "name": "Brute Force",
             "description": "Use sets to store rows and cols to zero out.",
             "steps": [
                 {
@@ -54,7 +54,7 @@
         },
         "optimal": {
             "id": "optimal",
-            "name": "O(1) Memory",
+            "name": "Optimal",
             "description": "Use first row and col as markers.",
             "steps": [
                 {
@@ -67,26 +67,98 @@
                 },
                 {
                     "id": 2,
-                    "instruction": "Use first row/col as markers.",
-                    "placeholderCode": "    rows, cols = len(matrix), len(matrix[0])\n    row_zero = False\n    for r in range(rows):\n        for c in range(cols):\n            if matrix[r][c] == 0:\n                matrix[0][c] = 0\n                if r > 0:\n                    matrix[r][0] = 0\n                else:\n                    row_zero = True",
-                    "validationRegex": "^\\s+rows,\\s*cols\\s*=\\s*len\\(matrix\\),\\s*len\\(matrix\\[0\\]\\)\\s*row_zero\\s*=\\s*False\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*if\\s+matrix\\[r\\]\\[c\\]\\s*==\\s*0:\\s*matrix\\[0\\]\\[c\\]\\s*=\\s*0\\s*if\\s+r\\s*>\\s*0:\\s*matrix\\[r\\]\\[0\\]\\s*=\\s*0\\s*else:\\s*row_zero\\s*=\\s*True$",
-                    "hint": "Use the first row and first column to store flags indicating if a row or column should be zeroed. Handle the first row separately using a boolean flag.",
-                    "solutionCode": "    rows, cols = len(matrix), len(matrix[0])\n    row_zero = False\n    for r in range(rows):\n        for c in range(cols):\n            if matrix[r][c] == 0:\n                matrix[0][c] = 0\n                if r > 0:\n                    matrix[r][0] = 0\n                else:\n                    row_zero = True"
+                    "instruction": "Get the number of rows in the matrix.",
+                    "placeholderCode": "    rows = len(matrix)",
+                    "validationRegex": "^\\s+rows\\s*=\\s*len\\(matrix\\)$",
+                    "hint": "Use len(matrix).",
+                    "solutionCode": "    rows = len(matrix)"
                 },
                 {
                     "id": 3,
-                    "instruction": "Set zeros based on markers.",
-                    "placeholderCode": "    for r in range(1, rows):\n        for c in range(1, cols):\n            if matrix[0][c] == 0 or matrix[r][0] == 0:\n                matrix[r][c] = 0",
-                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(1,\\s*rows\\):\\s*for\\s+c\\s+in\\s+range\\(1,\\s*cols\\):\\s*if\\s+matrix\\[0\\]\\[c\\]\\s*==\\s*0\\s+or\\s+matrix\\[r\\]\\[0\\]\\s*==\\s*0:\\s*matrix\\[r\\]\\[c\\]\\s*=\\s*0$",
-                    "hint": "Iterate through the matrix (skipping first row and col) and set elements to 0 based on the markers in the first row and col.",
-                    "solutionCode": "    for r in range(1, rows):\n        for c in range(1, cols):\n            if matrix[0][c] == 0 or matrix[r][0] == 0:\n                matrix[r][c] = 0"
+                    "instruction": "Get the number of columns in the matrix.",
+                    "placeholderCode": "    cols = len(matrix[0])",
+                    "validationRegex": "^\\s+cols\\s*=\\s*len\\(matrix\\[0\\]\\)$",
+                    "hint": "Use len(matrix[0]).",
+                    "solutionCode": "    cols = len(matrix[0])"
                 },
                 {
                     "id": 4,
-                    "instruction": "Handle first row and col separately.",
+                    "instruction": "Initialize a flag to False to track if the first row should be zeroed.",
+                    "placeholderCode": "    row_zero = False",
+                    "validationRegex": "^\\s+row_zero\\s*=\\s*False$",
+                    "hint": "Initialize row_zero = False.",
+                    "solutionCode": "    row_zero = False"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Iterate through each row index r.",
+                    "placeholderCode": "    for r in range(rows):",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(rows\\):$",
+                    "hint": "Use a for loop for r from 0 to rows-1.",
+                    "solutionCode": "    for r in range(rows):"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Iterate through each column index c.",
+                    "placeholderCode": "        for c in range(cols):",
+                    "validationRegex": "^\\s+for\\s+c\\s+in\\s+range\\(cols\\):$",
+                    "hint": "Use a nested for loop for c from 0 to cols-1.",
+                    "solutionCode": "        for c in range(cols):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Check if the current element is 0.",
+                    "placeholderCode": "            if matrix[r][c] == 0:",
+                    "validationRegex": "^\\s+if\\s+matrix\\[r\\]\\[c\\]\\s*==\\s*0:$",
+                    "hint": "Use an if statement to check the element.",
+                    "solutionCode": "            if matrix[r][c] == 0:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Mark the corresponding column in the first row by setting matrix[0][c] to 0.",
+                    "placeholderCode": "                matrix[0][c] = 0",
+                    "validationRegex": "^\\s+matrix\\[0\\]\\[c\\]\\s*=\\s*0$",
+                    "hint": "This marks that column c must be zeroed.",
+                    "solutionCode": "                matrix[0][c] = 0"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Check if the row index r is greater than 0.",
+                    "placeholderCode": "                if r > 0:",
+                    "validationRegex": "^\\s+if\\s+r\\s*>\\s*0:$",
+                    "hint": "Use an if statement to check r.",
+                    "solutionCode": "                if r > 0:"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Mark the corresponding row in the first column by setting matrix[r][0] to 0.",
+                    "placeholderCode": "                    matrix[r][0] = 0",
+                    "validationRegex": "^\\s+matrix\\[r\\]\\[0\\]\\s*=\\s*0$",
+                    "hint": "This marks that row r must be zeroed.",
+                    "solutionCode": "                    matrix[r][0] = 0"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Otherwise, if r is 0, set the row_zero flag to True.",
+                    "placeholderCode": "                else:\n                    row_zero = True",
+                    "validationRegex": "^\\s+else:\\s*row_zero\\s*=\\s*True$",
+                    "hint": "Handle the first row case separately.",
+                    "solutionCode": "                else:\n                    row_zero = True"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Iterate through the matrix again starting from index 1,1 to zero out cells based on markers.",
+                    "placeholderCode": "    for r in range(1, rows):\n        for c in range(1, cols):\n            if matrix[0][c] == 0 or matrix[r][0] == 0:\n                matrix[r][c] = 0",
+                    "validationRegex": "^\\s+for\\s+r\\s+in\\s+range\\(1,\\s*rows\\):\\s*for\\s+c\\s+in\\s+range\\(1,\\s*cols\\):\\s*if\\s+matrix\\[0\\]\\[c\\]\\s*==\\s*0\\s+or\\s+matrix\\[r\\]\\[0\\]\\s*==\\s*0:\\s*matrix\\[r\\]\\[c\\]\\s*=\\s*0$",
+                    "hint": "Skip the first row and col.",
+                    "solutionCode": "    for r in range(1, rows):\n        for c in range(1, cols):\n            if matrix[0][c] == 0 or matrix[r][0] == 0:\n                matrix[r][c] = 0"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Finally, zero out the first row and column separately if needed.",
                     "placeholderCode": "    if matrix[0][0] == 0:\n        for r in range(rows): matrix[r][0] = 0\n    if row_zero:\n        for c in range(cols): matrix[0][c] = 0",
                     "validationRegex": "^\\s+if\\s+matrix\\[0\\]\\[0\\]\\s*==\\s*0:\\s*for\\s+r\\s+in\\s+range\\(rows\\):\\s*matrix\\[r\\]\\[0\\]\\s*=\\s*0\\s*if\\s+row_zero:\\s*for\\s+c\\s+in\\s+range\\(cols\\):\\s*matrix\\[0\\]\\[c\\]\\s*=\\s*0$",
-                    "hint": "Finally, update the first column if `matrix[0][0]` is 0, and update the first row if `row_zero` is True.",
+                    "hint": "Handle the first row/col markers.",
                     "solutionCode": "    if matrix[0][0] == 0:\n        for r in range(rows): matrix[r][0] = 0\n    if row_zero:\n        for c in range(cols): matrix[0][c] = 0"
                 }
             ]
