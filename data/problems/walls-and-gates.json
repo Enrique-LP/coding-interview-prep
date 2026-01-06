@@ -131,11 +131,107 @@
                 },
                 {
                     "id": 10,
-                    "instruction": "Run BFS.",
-                    "placeholderCode": "    dist = 0\n    while q:\n        for i in range(len(q)):\n            r, c = q.popleft()\n            rooms[r][c] = dist\n            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or col < 0 or row == ROWS or col == COLS or\n                    (row, col) in visit or rooms[row][col] == -1):\n                    continue\n                visit.add((row, col))\n                q.append((row, col))\n        dist += 1",
-                    "validationRegex": "^\\s+dist\\s*=\\s*0\\s*while\\s+q:\\s*for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):\\s*r,\\s*c\\s*=\\s*q\\.popleft\\(\\)\\s*rooms\\[r\\]\\[c\\]\\s*=\\s*dist\\s*directions\\s*=\\s*\\[\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\],\\s*\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\]\\]\\s*for\\s+dr,\\s*dc\\s+in\\s+directions:\\s*row,\\s*col\\s*=\\s*r\\s*\\+\\s*dr,\\s*c\\s*\\+\\s*dc\\s*if\\s*\\(row\\s*<\\s*0\\s+or\\s+col\\s*<\\s*0\\s+or\\s+row\\s*==\\s*ROWS\\s+or\\s+col\\s*==\\s*COLS\\s+or\\s*\\(row,\\s*col\\)\\s+in\\s+visit\\s+or\\s+rooms\\[row\\]\\[col\\]\\s*==\\s*-1\\):\\s*continue\\s*visit\\.add\\(\\(row,\\s*col\\)\\)\\s*q\\.append\\(\\(row,\\s*col\\)\\)\\s*dist\\s*\\+=\\s*1$",
-                    "hint": "Process level by level. Update distance. Explore neighbors. If valid and not visited/wall, add to queue.",
-                    "solutionCode": "    dist = 0\n    while q:\n        for i in range(len(q)):\n            r, c = q.popleft()\n            rooms[r][c] = dist\n            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]\n            for dr, dc in directions:\n                row, col = r + dr, c + dc\n                if (row < 0 or col < 0 or row == ROWS or col == COLS or\n                    (row, col) in visit or rooms[row][col] == -1):\n                    continue\n                visit.add((row, col))\n                q.append((row, col))\n        dist += 1"
+                    "instruction": "Initialize distance variable.",
+                    "placeholderCode": "    dist = 0",
+                    "validationRegex": "^\\s+dist\\s*=\\s*0$",
+                    "hint": "Start distance at 0.",
+                    "solutionCode": "    dist = 0"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Loop while queue is not empty.",
+                    "placeholderCode": "    while q:",
+                    "validationRegex": "^\\s+while\\s+q:$",
+                    "hint": "Process nodes until the queue is empty.",
+                    "solutionCode": "    while q:"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Iterate through current level.",
+                    "placeholderCode": "        for i in range(len(q)):",
+                    "validationRegex": "^\\s+for\\s+i\\s+in\\s+range\\(len\\(q\\)\\):$",
+                    "hint": "Process all nodes at the current distance level.",
+                    "solutionCode": "        for i in range(len(q)):"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Pop cell from queue.",
+                    "placeholderCode": "            r, c = q.popleft()",
+                    "validationRegex": "^\\s+r,\\s*c\\s*=\\s*q\\.popleft\\(\\)$",
+                    "hint": "Get the next cell coordinates.",
+                    "solutionCode": "            r, c = q.popleft()"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Update room distance.",
+                    "placeholderCode": "            rooms[r][c] = dist",
+                    "validationRegex": "^\\s+rooms\\[r\\]\\[c\\]\\s*=\\s*dist$",
+                    "hint": "Set the current room's value to the distance `dist`.",
+                    "solutionCode": "            rooms[r][c] = dist"
+                },
+                {
+                    "id": 15,
+                    "instruction": "Define directions.",
+                    "placeholderCode": "            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]",
+                    "validationRegex": "^\\s+directions\\s*=\\s*\\[\\[1,\\s*0\\],\\s*\\[-1,\\s*0\\],\\s*\\[0,\\s*1\\],\\s*\\[0,\\s*-1\\]\\]$",
+                    "hint": "List the 4 possible movement directions (down, up, right, left).",
+                    "solutionCode": "            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]"
+                },
+                {
+                    "id": 16,
+                    "instruction": "Iterate through directions.",
+                    "placeholderCode": "            for dr, dc in directions:",
+                    "validationRegex": "^\\s+for\\s+dr,\\s*dc\\s+in\\s+directions:$",
+                    "hint": "Loop through each direction.",
+                    "solutionCode": "            for dr, dc in directions:"
+                },
+                {
+                    "id": 17,
+                    "instruction": "Calculate neighbor coordinates.",
+                    "placeholderCode": "                row, col = r + dr, c + dc",
+                    "validationRegex": "^\\s+row,\\s*col\\s*=\\s*r\\s*\\+\\s*dr,\\s*c\\s*\\+\\s*dc$",
+                    "hint": "Compute the new row and column indices.",
+                    "solutionCode": "                row, col = r + dr, c + dc"
+                },
+                {
+                    "id": 18,
+                    "instruction": "Check validity (bounds, visited, obstacle).",
+                    "placeholderCode": "                if (row < 0 or col < 0 or row == ROWS or col == COLS or\n                    (row, col) in visit or rooms[row][col] == -1):",
+                    "validationRegex": "^\\s+if\\s*\\(row\\s*<\\s*0\\s+or\\s+col\\s*<\\s*0\\s+or\\s+row\\s*==\\s*ROWS\\s+or\\s+col\\s*==\\s*COLS\\s+or\\s*\\(row,\\s*col\\)\\s+in\\s+visit\\s+or\\s+rooms\\[row\\]\\[col\\]\\s*==\\s*-1\\):$",
+                    "hint": "If out of bounds, already visited, or a wall, skip this neighbor.",
+                    "solutionCode": "                if (row < 0 or col < 0 or row == ROWS or col == COLS or\n                    (row, col) in visit or rooms[row][col] == -1):"
+                },
+                {
+                    "id": 19,
+                    "instruction": "Skip invalid neighbor.",
+                    "placeholderCode": "                    continue",
+                    "validationRegex": "^\\s+continue$",
+                    "hint": "Continue to the next iteration.",
+                    "solutionCode": "                    continue"
+                },
+                {
+                    "id": 20,
+                    "instruction": "Mark neighbor as visited.",
+                    "placeholderCode": "                visit.add((row, col))",
+                    "validationRegex": "^\\s+visit\\.add\\(\\(row,\\s*col\\)\\)$",
+                    "hint": "Add the neighbor to the visited set.",
+                    "solutionCode": "                visit.add((row, col))"
+                },
+                {
+                    "id": 21,
+                    "instruction": "Add neighbor to queue.",
+                    "placeholderCode": "                q.append((row, col))",
+                    "validationRegex": "^\\s+q\\.append\\(\\(row,\\s*col\\)\\)$",
+                    "hint": "Append the neighbor to the queue for processing.",
+                    "solutionCode": "                q.append((row, col))"
+                },
+                {
+                    "id": 22,
+                    "instruction": "Increment distance.",
+                    "placeholderCode": "        dist += 1",
+                    "validationRegex": "^\\s+dist\\s*\\+=\\s*1$",
+                    "hint": "Increase the distance for the next level.",
+                    "solutionCode": "        dist += 1"
                 }
             ]
         }
