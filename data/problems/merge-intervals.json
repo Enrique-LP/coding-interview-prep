@@ -84,15 +84,63 @@
                 },
                 {
                     "id": 3,
-                    "instruction": "Iterate and merge.",
-                    "placeholderCode": "    output = [intervals[0]]\n    for start, end in intervals[1:]:\n        lastEnd = output[-1][1]\n        if start <= lastEnd:\n            output[-1][1] = max(lastEnd, end)\n        else:\n            output.append([start, end])",
-                    "validationRegex": "^\\s+output\\s*=\\s*\\[intervals\\[0\\]\\]\\s*for\\s+start,\\s*end\\s+in\\s+intervals\\[1:\\]:\\s*lastEnd\\s*=\\s*output\\[-1\\]\\[1\\]\\s*if\\s+start\\s*<=\\s*lastEnd:\\s*output\\[-1\\]\\[1\\]\\s*=\\s*max\\(lastEnd,\\s*end\\)\\s*else:\\s*output\\.append\\(\\[start,\\s*end\\]\\)$",
-                    "hint": "Merge overlapping intervals.",
-                    "solutionCode": "    output = [intervals[0]]\n    for start, end in intervals[1:]:\n        lastEnd = output[-1][1]\n        if start <= lastEnd:\n            output[-1][1] = max(lastEnd, end)\n        else:\n            output.append([start, end])"
+                    "instruction": "Initialize the output list with the first interval.",
+                    "placeholderCode": "    output = [intervals[0]]",
+                    "validationRegex": "^\\s+output\\s*=\\s*\\[intervals\\[0\\]\\]$",
+                    "hint": "Add the first interval to start the merging process.",
+                    "solutionCode": "    output = [intervals[0]]"
                 },
                 {
                     "id": 4,
-                    "instruction": "Return output.",
+                    "instruction": "Iterate through the rest of the intervals.",
+                    "placeholderCode": "    for start, end in intervals[1:]:",
+                    "validationRegex": "^\\s+for\\s+start,\\s*end\\s+in\\s+intervals\\[1:\\]:$",
+                    "hint": "Use a for loop to process intervals starting from the second one.",
+                    "solutionCode": "    for start, end in intervals[1:]:"
+                },
+                {
+                    "id": 5,
+                    "instruction": "Get the end time of the last interval added to the output.",
+                    "placeholderCode": "        lastEnd = output[-1][1]",
+                    "validationRegex": "^\\s+lastEnd\\s*=\\s*output\\[-1\\]\\[1\\]$",
+                    "hint": "Access the second element of the last interval in output.",
+                    "solutionCode": "        lastEnd = output[-1][1]"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Check if the current interval starts before or at the last interval's end.",
+                    "placeholderCode": "        if start <= lastEnd:",
+                    "validationRegex": "^\\s+if\\s+start\\s*<=\\s*lastEnd:$",
+                    "hint": "Compare the current start with lastEnd.",
+                    "solutionCode": "        if start <= lastEnd:"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Merge the current interval by updating the end time of the last interval.",
+                    "placeholderCode": "            output[-1][1] = max(lastEnd, end)",
+                    "validationRegex": "^\\s+output\\[-1\\]\\[1\\]\\s*=\\s*max\\(lastEnd,\\s*end\\)$",
+                    "hint": "Set the last end to the maximum of the two end times.",
+                    "solutionCode": "            output[-1][1] = max(lastEnd, end)"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Handle the case where there is no overlap.",
+                    "placeholderCode": "        else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "Exceute this if start > lastEnd.",
+                    "solutionCode": "        else:"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Append the current interval to the output list.",
+                    "placeholderCode": "            output.append([start, end])",
+                    "validationRegex": "^\\s+output\\.append\\(\\[start,\\s*end\\]\\)$",
+                    "hint": "Since there is no overlap, add the current interval as a new entry.",
+                    "solutionCode": "            output.append([start, end])"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Return the list of merged intervals.",
                     "placeholderCode": "    return output",
                     "validationRegex": "^\\s+return\\s+output$",
                     "hint": "Return the result.",
