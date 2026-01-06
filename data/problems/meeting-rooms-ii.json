@@ -89,18 +89,90 @@
                 },
                 {
                     "id": 4,
-                    "instruction": "Iterate and count rooms.",
-                    "placeholderCode": "    res, count = 0, 0\n    s, e = 0, 0\n    while s < len(intervals):\n        if start[s] < end[e]:\n            s += 1\n            count += 1\n        else:\n            e += 1\n            count -= 1\n        res = max(res, count)",
-                    "validationRegex": "^\\s+res,\\s*count\\s*=\\s*0,\\s*0\\s*s,\\s*e\\s*=\\s*0,\\s*0\\s*while\\s+s\\s*<\\s+len\\(intervals\\):\\s*if\\s+start\\[s\\]\\s*<\\s+end\\[e\\]:\\s*s\\s*\\+=\\s*1\\s*count\\s*\\+=\\s*1\\s*else:\\s*e\\s*\\+=\\s*1\\s*count\\s*-=\\s*1\\s*res\\s*=\\s*max\\(res,\\s*count\\)$",
-                    "hint": "Two pointers approach.",
-                    "solutionCode": "    res, count = 0, 0\n    s, e = 0, 0\n    while s < len(intervals):\n        if start[s] < end[e]:\n            s += 1\n            count += 1\n        else:\n            e += 1\n            count -= 1\n        res = max(res, count)"
+                    "instruction": "Initialize the result variable 'res' and the current room 'count' to 0.",
+                    "placeholderCode": "    res, count = 0, 0",
+                    "validationRegex": "^\\s+res,\\s*count\\s*=\\s*0,\\s*0$",
+                    "hint": "Set both res and count to 0 in one line or two.",
+                    "solutionCode": "    res, count = 0, 0"
                 },
                 {
                     "id": 5,
-                    "instruction": "Return result.",
+                    "instruction": "Initialize the start pointer 's' and end pointer 'e' to index 0.",
+                    "placeholderCode": "    s, e = 0, 0",
+                    "validationRegex": "^\\s+s,\\s*e\\s*=\\s*0,\\s*0$",
+                    "hint": "Set the initial pointers to 0.",
+                    "solutionCode": "    s, e = 0, 0"
+                },
+                {
+                    "id": 6,
+                    "instruction": "Start a while loop that continues as long as 's' is less than the length of intervals.",
+                    "placeholderCode": "    while s < len(intervals):",
+                    "validationRegex": "^\\s+while\\s+s\\s*<\\s+len\\(intervals\\):$",
+                    "hint": "Use s as the condition for the loop.",
+                    "solutionCode": "    while s < len(intervals):"
+                },
+                {
+                    "id": 7,
+                    "instruction": "Compare the current start time with the current end time.",
+                    "placeholderCode": "        if start[s] < end[e]:",
+                    "validationRegex": "^\\s+if\\s+start\\[s\\]\\s*<\\s+end\\[e\\]:$",
+                    "hint": "The if statement should check if start[s] is less than end[e].",
+                    "solutionCode": "        if start[s] < end[e]:"
+                },
+                {
+                    "id": 8,
+                    "instruction": "Increment the start pointer 's' by 1.",
+                    "placeholderCode": "            s += 1",
+                    "validationRegex": "^\\s+s\\s*\\+=\\s*1$",
+                    "hint": "Move the start pointer forward.",
+                    "solutionCode": "            s += 1"
+                },
+                {
+                    "id": 9,
+                    "instruction": "Increment the current 'count' of rooms needed.",
+                    "placeholderCode": "            count += 1",
+                    "validationRegex": "^\\s+count\\s*\\+=\\s*1$",
+                    "hint": "Increase count by 1.",
+                    "solutionCode": "            count += 1"
+                },
+                {
+                    "id": 10,
+                    "instruction": "Else, handle the case where a meeting has ended.",
+                    "placeholderCode": "        else:",
+                    "validationRegex": "^\\s+else:$",
+                    "hint": "Use an else block for the alternative case.",
+                    "solutionCode": "        else:"
+                },
+                {
+                    "id": 11,
+                    "instruction": "Increment the end pointer 'e' by 1.",
+                    "placeholderCode": "            e += 1",
+                    "validationRegex": "^\\s+e\\s*\\+=\\s*1$",
+                    "hint": "Move the end pointer forward.",
+                    "solutionCode": "            e += 1"
+                },
+                {
+                    "id": 12,
+                    "instruction": "Decrement the current 'count' of rooms required.",
+                    "placeholderCode": "            count -= 1",
+                    "validationRegex": "^\\s+count\\s*-=\\s*1$",
+                    "hint": "Decrease count by 1.",
+                    "solutionCode": "            count -= 1"
+                },
+                {
+                    "id": 13,
+                    "instruction": "Update 'res' to be the maximum value found so far.",
+                    "placeholderCode": "        res = max(res, count)",
+                    "validationRegex": "^\\s+res\\s*=\\s*max\\(res,\\s*count\\)$",
+                    "hint": "Use the max() function to update res.",
+                    "solutionCode": "        res = max(res, count)"
+                },
+                {
+                    "id": 14,
+                    "instruction": "Return the maximum number of rooms required.",
                     "placeholderCode": "    return res",
                     "validationRegex": "^\\s+return\\s+res$",
-                    "hint": "Return result.",
+                    "hint": "Return res.",
                     "solutionCode": "    return res"
                 }
             ]
